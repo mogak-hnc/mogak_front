@@ -2,7 +2,7 @@ import logoWhite from "../img/mogaklogo_white.png";
 
 export default function Footer() {
   return (
-    <div className="bg-border text-text dark:bg-border-dark dark:text-text-dark rounded-t-lg p-4">
+    <div className="bg-border text-text dark:bg-border-dark dark:text-text-dark rounded-t-lg py-4 px-16">
       <img className="w-20 h-auto mb-2" src={logoWhite.src} alt="MOGAK 로고" />
       <p className="mb-1">모각 | 모여서 각자</p>
 

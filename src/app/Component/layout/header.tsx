@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <div className="relative flex items-center justify-between px-8 py-4">
+    <div className="relative flex items-center justify-between px-16 py-6">
       <Link href={`/`} className="flex items-center gap-5 cursor-pointer">
         <img className="w-20 h-auto" src={logoLight.src} />
         <span>모여서 각자!</span>
