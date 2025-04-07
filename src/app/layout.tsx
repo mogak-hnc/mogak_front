@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "./Component/header";
-import Footer from "./Component/footer";
+import Header from "./Component/layout/header";
+import Footer from "./Component/layout/footer";
 
 export const metadata: Metadata = {
   title: "모각",

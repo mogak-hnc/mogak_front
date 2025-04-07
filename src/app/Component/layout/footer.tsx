@@ -1,4 +1,4 @@
-import logoWhite from "./img/mogaklogo_white.png";
+import logoWhite from "../img/mogaklogo_white.png";
 
 export default function Footer() {
   return (

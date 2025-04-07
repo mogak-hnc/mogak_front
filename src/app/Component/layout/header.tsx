@@ -1,5 +1,5 @@
-import ThemeProvider from "./theme-provider";
-import logoLight from "./img/mogaklogo_light.png";
+import ThemeProvider from "../theme-provider";
+import logoLight from "../img/mogaklogo_light.png";
 import HeaderNavigation from "./header-navigation";
 import Link from "next/link";
 
