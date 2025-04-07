@@ -6,6 +6,9 @@ import Footer from "./Component/layout/footer";
 export const metadata: Metadata = {
   title: "모각",
   description: "모여서 각자",
+  icons: {
+    icon: `/favicon.ico`,
+  },
 };
 
 export default function RootLayout({
