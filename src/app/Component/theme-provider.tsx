@@ -23,11 +23,8 @@ export default function ThemeProvider() {
   };
 
   return (
-    <button
-      onClick={toggleTheme}
-      className="fixed top-4 right-4 z-50 px-4 py-2 rounded-md"
-    >
-      {theme === "dark" ? "☀️" : "🌙"}
+    <button onClick={toggleTheme} className="text-xs cursor-pointer">
+      {theme === "dark" ? "☀️ 일반모드" : "🌙 야간모드"}
     </button>
   );
 }
