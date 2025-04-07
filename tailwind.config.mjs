@@ -10,6 +10,9 @@ const config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Pretendard", "sans-serif"],
+      },
       colors: {
         background: "#F9FAFB",
         "background-dark": "#1F2937",
