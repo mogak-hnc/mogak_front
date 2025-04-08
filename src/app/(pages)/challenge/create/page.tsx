@@ -1,3 +1,3 @@
 export default function ChallengeCreate() {
-  return <div>challenge create</div>;
+  return <div>challenge</div>;
 }
