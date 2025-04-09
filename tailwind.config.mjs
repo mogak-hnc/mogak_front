@@ -20,7 +20,7 @@ const config = {
         text: "#374151",
         "text-dark": "#E5E7EB",
 
-        border: "#D1D6DB",
+        borders: "#D1D6DB",
         "border-dark": "#374151",
 
         primary: "#6366F1",
