@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Button from "../ui/button";
 import Input from "../ui/input";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -42,7 +43,9 @@ export default function SearchCard({
           <option>{sort}</option>
         </select>
       </div>
-      <Button>{section} 만들기</Button>
+      <Link href={section === "모각존" ? `/zone/create` : `/challenge/create`}>
+        <Button>{section} 만들기</Button>
+      </Link>
     </div>
   );
 }
