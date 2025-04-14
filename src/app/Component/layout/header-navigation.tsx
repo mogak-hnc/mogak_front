@@ -9,7 +9,7 @@ export default function HeaderNavigation() {
       <Link href={`/advice`}>고민상담</Link>
       <Link href={`/profile/${userId}`}>프로필</Link>
       {userId ? (
-        <Link href={`/profile/${userId}`}>회원정보</Link>
+        <Link href={`/login/info/${userId}`}>회원정보</Link>
       ) : (
         <Link href={`/login`}>로그인</Link>
       )}
