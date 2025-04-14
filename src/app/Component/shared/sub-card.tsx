@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Button from "../ui/button";
 
 interface SubCardProps {
@@ -27,9 +28,9 @@ export default function SubCard({
         {new Date(startDate).toLocaleDateString()}&nbsp;~&nbsp;
         {endDate ? endDate.toLocaleDateString() : "종료시"} | {count}명
       </span>
-      <div>
+      <Link href={`/zone/detail/${1}/member`}>
         <Button>모각존 관리</Button>
-      </div>
+      </Link>
     </div>
   );
 }
