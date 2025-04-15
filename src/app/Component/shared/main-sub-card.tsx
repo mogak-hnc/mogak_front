@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-interface MainSubCardProps {
+export interface MainSubCardProps {
   type: "studySpace" | "challenge";
   tag: string;
   title: string;

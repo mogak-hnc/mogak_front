@@ -1,6 +1,7 @@
 type StatusType = "공부 중" | "자리비움" | "오프라인";
 
-interface ZoneCardProps {
+export interface ZoneCardProps {
+  id: number;
   image: string;
   nickname: string;
   role?: string;
@@ -8,9 +9,12 @@ interface ZoneCardProps {
 }
 
 const statusColorMap: Record<StatusType, string> = {
-  "공부 중": "text-primary dark:text-primary-dark",
-  자리비움: "text-secondary dark:text-secondary-dark",
-  오프라인: "text-borders dark:text-border-dark",
+  "공부 중":
+    "text-primary dark:text-primary-dark border-primary dark:border-primary-dark",
+  자리비움:
+    "text-secondary dark:text-secondary-dark border-secondary dark:border-secondary-dark",
+  오프라인:
+    "text-borders dark:text-border-dark border-borders dark:border-border-dark",
 };
 
 export default function ZoneCard({
@@ -24,7 +28,7 @@ export default function ZoneCard({
       <img
         src={image}
         alt="profile"
-        className="w-20 h-20 rounded-full border-2 border-primary dark:border-primary object-cover"
+        className={`w-20 h-20 rounded-full border-2 object-cover ${statusColorMap[state]}`}
       />
       <div className="ml-4 flex flex-col justify-center">
         <p className="text-lg font-semibold ">{nickname}</p>
