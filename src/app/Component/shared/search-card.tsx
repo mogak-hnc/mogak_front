@@ -2,6 +2,7 @@ import Link from "next/link";
 import Button from "../ui/button";
 import Input from "../ui/input";
 import { AiOutlineSearch } from "react-icons/ai";
+import H1Title from "../ui/h1-title";
 
 interface SearchCardProps {
   title: string;
@@ -20,7 +21,7 @@ export default function SearchCard({
 }: SearchCardProps) {
   return (
     <div className="flex flex-col items-center gap-2 w-full">
-      <span className="text-lg font-semibold">{title}</span>
+      <H1Title>{title}</H1Title>
       <span className="text-sm text-border-dark">{description}</span>
       <div className="mt-2 flex items-center gap-2">
         <Input className="h-10 w-80 bg-white rounded-md" />

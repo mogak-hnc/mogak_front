@@ -1,37 +1,24 @@
-"use client";
+import { InputHTMLAttributes, forwardRef } from "react";
 
-import { useState } from "react";
-
-interface CheckboxProps {
+interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
-  checked?: boolean;
-  onChange?: (checked: boolean) => void;
-  id?: string;
 }
 
-export default function Checkbox({
-  label,
-  checked = false,
-  onChange,
-  id,
-}: CheckboxProps) {
-  const [isChecked, setIsChecked] = useState(checked);
+const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
+  ({ label, ...props }, ref) => {
+    return (
+      <label className="inline-flex items-center gap-2 cursor-pointer select-none">
+        <input
+          type="checkbox"
+          ref={ref}
+          className="w-4 h-4 rounded border border-gray-300 accent-primary focus:ring-primary"
+          {...props}
+        />
+        {label && <span className="text-sm text-gray-700">{label}</span>}
+      </label>
+    );
+  }
+);
 
-  const handleChange = () => {
-    setIsChecked(!isChecked);
-    onChange?.(!isChecked);
-  };
-
-  return (
-    <label className="inline-flex items-center gap-2 cursor-pointer select-none">
-      <input
-        type="checkbox"
-        id={id}
-        className="w-4 h-4 rounded border border-gray-300 accent-primary focus:ring-primary"
-        checked={isChecked}
-        onChange={handleChange}
-      />
-      {label && <span className="text-sm text-gray-700">{label}</span>}
-    </label>
-  );
-}
+Checkbox.displayName = "Checkbox";
+export default Checkbox;

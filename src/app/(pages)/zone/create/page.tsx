@@ -1,43 +1,117 @@
 "use client";
 
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import FormField from "@/app/Component/shared/form-field";
 import Checkbox from "@/app/Component/ui/checkbox";
 import Input from "@/app/Component/ui/input";
+import Button from "@/app/Component/ui/button";
+import { useState } from "react";
+import H1Title from "@/app/Component/ui/h1-title";
+
+type FormValues = {
+  spaceName: string;
+  tag: string;
+  capacity: number;
+  password: string;
+  usePassword: boolean;
+  useChat: boolean;
+  memberOnly: boolean;
+  startDate: string;
+  endDate: string;
+};
 
 export default function ZoneCreate() {
-  const [spaceName, setSpaceName] = useState("");
-  const [usePassword, setUsePassword] = useState(false);
-  const [password, setPassword] = useState("");
+  const [photo, setPhoto] = useState<File | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormValues>({
+    defaultValues: {
+      spaceName: "",
+      tag: "",
+      capacity: 3,
+      password: "",
+      usePassword: false,
+      useChat: true,
+      memberOnly: false,
+      startDate: "2024-06-10",
+      endDate: "2024-06-10",
+    },
+  });
+
+  const onSubmit = (data: FormValues) => {
+    console.log("폼 제출", { ...data, photo });
+  };
+
+  const usePassword = watch("usePassword");
 
   return (
-    <div>
-      <div className="flex flex-col gap-4">
-        <FormField label="스페이스 이름">
-          <Input
-            placeholder="입력하세요"
-            value={spaceName}
-            onChange={(e) => setSpaceName(e.target.value)}
-          />
-        </FormField>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="max-w-[500px] mx-auto px-4 flex flex-col gap-4"
+    >
+      <H1Title>모각존 만들기</H1Title>
 
-        <FormField label="비밀번호 관리">
-          <div className="flex items-center gap-2">
-            <Checkbox
-              label="비밀번호 사용하기"
-              checked={usePassword}
-              onChange={(checked) => setUsePassword(checked)}
-            />
-            <Input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              disabled={!usePassword}
-              placeholder="비밀번호"
-            />
-          </div>
-        </FormField>
-      </div>
-    </div>
+      <FormField label="모각존 이름">
+        <Input placeholder="카공해요" {...register("spaceName")} />
+      </FormField>
+
+      <FormField label="모각존 태그">
+        <Input placeholder="카페" {...register("tag")} />
+      </FormField>
+
+      <FormField label="인원 수">
+        <Input
+          type="number"
+          {...register("capacity", { valueAsNumber: true })}
+        />
+      </FormField>
+
+      <FormField label="모각존 사진">
+        <input
+          type="file"
+          onChange={(e) => setPhoto(e.target.files?.[0] ?? null)}
+          className="text-sm"
+        />
+        <p className="text-xs text-gray-500 mt-1">
+          {photo ? photo.name : "파일이 선택되지 않았습니다."}
+        </p>
+      </FormField>
+
+      <FormField label="비밀번호 관리">
+        <div className="flex items-center gap-4">
+          <Checkbox label="비밀번호 사용하기" {...register("usePassword")} />
+          <Input
+            type="password"
+            {...register("password")}
+            disabled={!usePassword}
+            className={`w-40 ${
+              usePassword && `bg-white px-5 py-1 rounded-md`
+            } `}
+          />
+        </div>
+      </FormField>
+
+      <FormField label="채팅 가능 여부">
+        <Checkbox label="채팅 사용하기" {...register("useChat")} />
+      </FormField>
+
+      <FormField label="참여 조건">
+        <Checkbox label="회원만 참여 가능" {...register("memberOnly")} />
+      </FormField>
+
+      <FormField label="모각존 기간">
+        <div className="flex items-center gap-2">
+          <Input type="date" {...register("startDate")} className="w-40" />
+          <span className="text-sm">~</span>
+          <Input type="date" {...register("endDate")} className="w-40" />
+        </div>
+      </FormField>
+
+      <Button type="submit">저장</Button>
+    </form>
   );
 }
