@@ -27,11 +27,16 @@ export default function ChatUI({ messages }: ChatUiProps) {
             </div>
           ) : (
             <div key={msg.id} className="flex items-start gap-2">
-              <img
-                src={msg.avatar}
-                alt="avatar"
-                className="w-8 h-8 rounded-full object-cover"
-              />
+              {msg.avatar ? (
+                <img
+                  src={msg.avatar}
+                  alt="avatar"
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-gray-300" />
+              )}
+
               <div>
                 <p className="text-xs text-gray-500">{msg.user}</p>
                 <div className="bg-white px-4 py-2 rounded-2xl rounded-tl-none border max-w-xs text-sm shadow-sm">
