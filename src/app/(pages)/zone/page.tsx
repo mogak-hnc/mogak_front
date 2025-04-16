@@ -36,7 +36,10 @@ export default function Zone() {
       />
       <div>
         {mockStudySpaces.map((m) => (
-          <MainSubCard {...m}></MainSubCard>
+          <MainSubCard
+            key={`main-sub-card-${m.type}-${m.title}`}
+            {...m}
+          ></MainSubCard>
         ))}
       </div>
     </div>
