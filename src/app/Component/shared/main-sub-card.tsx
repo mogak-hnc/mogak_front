@@ -9,6 +9,8 @@ export interface MainSubCardProps {
   isOfficial?: boolean;
 }
 
+// TODO : 아직 시작되지 않은 (참여 가능한) 챌린지
+
 export default function MainSubCard({
   type,
   tag,
