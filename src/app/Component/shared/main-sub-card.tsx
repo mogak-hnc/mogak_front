@@ -23,7 +23,7 @@ export default function MainSubCard({
         type === "studySpace" ? `/zone/detail/${1}` : `/challenge/detail/${1}`
       }
     >
-      <div className="rounded-3xl p-4 shadow-md bg-white dark:bg-border-dark flex flex-col justify-between min-w-[280px] max-w-[320px] h-[240px]">
+      <div className="rounded-3xl p-4 shadow-md bg-white dark:bg-border-dark flex flex-col justify-between min-w-[280px] max-w-[320px] h-[180px]">
         <div className="space-y-1">
           <div className="flex gap-2 items-center">
             {isOfficial && (
