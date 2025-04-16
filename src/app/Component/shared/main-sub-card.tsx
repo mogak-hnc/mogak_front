@@ -31,9 +31,11 @@ export default function MainSubCard({
                 공식 챌린지
               </span>
             )}
-            <span className="bg-secondary dark:bg-secondary-dark text-text font-bold px-2 py-0.5 rounded">
-              {tag}
-            </span>
+            {type === "studySpace" && (
+              <span className="bg-secondary dark:bg-secondary-dark text-text font-bold px-2 py-0.5 rounded">
+                {tag}
+              </span>
+            )}
           </div>
           <p className="text-lg font-bold text-text dark:text-text-dark">
             {title}
