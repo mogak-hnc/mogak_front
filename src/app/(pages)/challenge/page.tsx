@@ -42,7 +42,7 @@ export default function Challenge() {
       />
       <div>
         {mockChallenges.map((m) => (
-          <MainSubCard {...m}></MainSubCard>
+          <MainSubCard key={`main-sub-card-${m.title}`} {...m}></MainSubCard>
         ))}
       </div>
     </div>
