@@ -7,7 +7,7 @@ import Button from "@/app/Component/ui/button";
 import FormField from "@/app/Component/shared/form-field";
 import H1Title from "@/app/Component/ui/h1-title";
 
-type ChallengeForm = {
+export type ChallengeForm = {
   name: string;
   description: string;
   ownerOnly: boolean;
@@ -15,7 +15,15 @@ type ChallengeForm = {
   endDate: string;
 };
 
-export default function ChallengeCreate() {
+interface ChallengeCreateFormProps {
+  isAdmin?: boolean;
+  onSubmit?: (data: ChallengeForm & { isOfficial: boolean }) => void;
+}
+
+export default function ChallengeCreateForm({
+  isAdmin = false,
+  onSubmit,
+}: ChallengeCreateFormProps) {
   const {
     register,
     handleSubmit,
@@ -30,16 +38,21 @@ export default function ChallengeCreate() {
     },
   });
 
-  const onSubmit = (data: ChallengeForm) => {
-    console.log("챌린지 생성:", data);
+  const handleFormSubmit = (data: ChallengeForm) => {
+    const finalData = { ...data, isOfficial: isAdmin };
+    if (onSubmit) {
+      onSubmit(finalData);
+    } else {
+      console.log("챌린지 생성:", finalData);
+    }
   };
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(handleFormSubmit)}
       className="max-w-[500px] mx-auto mt-10 px-4 flex flex-col gap-4"
     >
-      <H1Title>챌린지 만들기</H1Title>
+      <H1Title>{isAdmin ? "공식 챌린지 생성" : "챌린지 만들기"}</H1Title>
 
       <FormField label="챌린지 이름">
         <Input placeholder="카공해요" {...register("name")} />
