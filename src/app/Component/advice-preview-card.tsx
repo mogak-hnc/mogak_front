@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-interface AdvicePreviewCardProps {
+export interface AdvicePreviewCardProps {
   title: string;
   commentCount: number;
   timeLeftText: string;
