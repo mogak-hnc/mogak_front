@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { UserProfile } from "./edit/page";
+import Button from "@/app/Component/ui/button";
 
 const mockUserProfiles: Record<string, UserProfile> = {
   "1": {
@@ -21,7 +22,17 @@ export default function Profile() {
 
   const user = mockUserProfiles[userId];
 
-  if (!user) return <div>유저 정보를 찾을 수 없습니다.</div>;
+  if (!user)
+    return (
+      <div className="max-w-4xl mx-auto py-24 px-6 flex flex-col items-center gap-6 text-center">
+        <h2 className="text-xl font-bold text-primary dark:text-primary-dark">
+          유저를 찾을 수 없습니다.
+        </h2>
+        <Link href="/">
+          <Button variant="secondary">홈 화면으로 돌아가기</Button>
+        </Link>
+      </div>
+    );
 
   return (
     <div className="max-w-4xl mx-auto py-10 px-6 flex flex-col gap-6">
