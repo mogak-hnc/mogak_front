@@ -135,14 +135,7 @@ export default function ZoneDetail() {
         />
         <div className="flex flex-col gap-2">
           {participants.map((user, index) => (
-            <ZoneCard
-              key={index}
-              id={user.id}
-              image={user.image}
-              nickname={user.nickname}
-              role={user.role}
-              state={user.state}
-            />
+            <ZoneCard key={index} {...user} />
           ))}
         </div>
       </div>
