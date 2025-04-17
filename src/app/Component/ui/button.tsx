@@ -1,5 +1,5 @@
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "secondary" | "danger";
+  variant?: "primary" | "secondary" | "danger" | "etc";
 };
 
 export default function Button({
@@ -12,7 +12,7 @@ export default function Button({
     primary: "bg-primary dark:bg-primary-dark text-white",
     secondary: "bg-secondary dark:bg-secondary-dark text-text",
     danger: "bg-red-500 text-white",
-    etc: "bg-border-dark dark:bg-borders",
+    etc: "bg-borders bg-border-dark dark:bg-borders text-text-dark dark:text-text",
   };
 
   return (

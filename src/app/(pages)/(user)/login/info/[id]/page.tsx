@@ -66,9 +66,7 @@ export default function LoginInfo() {
 
         <div className="flex gap-3 mt-6">
           <Button type="submit">저장</Button>
-          <button className="text-sm px-4 py-2 bg-gray-200 rounded text-gray-700">
-            탈퇴
-          </button>
+          <Button variant="etc">탈퇴</Button>
         </div>
       </div>
     </div>
