@@ -30,7 +30,7 @@ const mockChallenges: MainSubCardProps[] = [
   },
 ];
 
-export default function Challenge() {
+export default function ChallengePage() {
   return (
     <div>
       <SearchCard

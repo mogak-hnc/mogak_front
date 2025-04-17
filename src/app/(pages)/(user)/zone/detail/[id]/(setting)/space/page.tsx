@@ -8,7 +8,7 @@ import Button from "@/app/Component/ui/button";
 import H1Title from "@/app/Component/ui/h1-title";
 import ConfirmModal from "@/app/Component/confirm-modal";
 
-export default function ZoneDetailSpace() {
+export default function ZoneDetailSpacePage() {
   const [spaceName, setSpaceName] = useState("카공해요");
   const [tag, setTag] = useState("카페");
   const [photo, setPhoto] = useState<File | null>(null);

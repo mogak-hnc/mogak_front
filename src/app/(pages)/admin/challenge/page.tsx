@@ -22,7 +22,7 @@ const mockChallenges = [
   },
 ];
 
-export default function AdminChallenge() {
+export default function AdminChallengePage() {
   const [challenges, setChallenges] = useState(mockChallenges);
   const [showModal, setShowModal] = useState(false);
   const [targetId, setTargetId] = useState<number | null>(null);

@@ -24,7 +24,7 @@ const mockStudySpaces: MainSubCardProps[] = [
   },
 ];
 
-export default function Zone() {
+export default function ZonePage() {
   return (
     <div>
       <SearchCard

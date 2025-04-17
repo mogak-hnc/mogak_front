@@ -122,7 +122,7 @@ const mockMessages = [
   },
 ];
 
-export default function ZoneDetail() {
+export default function ZoneDetailPage() {
   return (
     <div className="flex gap-4">
       <div className="w-[65%] flex flex-col gap-4">

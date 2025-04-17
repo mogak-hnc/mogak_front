@@ -25,7 +25,7 @@ const mockAdviceCards: AdvicePreviewCardProps[] = [
   },
 ];
 
-export default function Advice() {
+export default function AdvicePage() {
   return (
     <div>
       <MainCard

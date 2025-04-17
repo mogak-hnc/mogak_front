@@ -7,7 +7,7 @@ import H1Title from "@/app/Component/ui/h1-title";
 
 const DELETE_TIMES = [1, 3, 6, 12, 24];
 
-export default function AdviceWrite() {
+export default function AdviceWritePage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [deleteAfter, setDeleteAfter] = useState(24); // 기본 24시간

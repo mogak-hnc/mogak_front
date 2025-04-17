@@ -20,7 +20,7 @@ const mockBadgeList = [
   },
 ];
 
-export default function AdminBadge() {
+export default function AdminBadgePage() {
   const [badges, setBadges] = useState(mockBadgeList);
   const [newName, setNewName] = useState("");
   const [newImage, setNewImage] = useState<File | null>(null);

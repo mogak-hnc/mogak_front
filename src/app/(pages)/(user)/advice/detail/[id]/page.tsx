@@ -38,7 +38,7 @@ const mockComments = [
   },
 ];
 
-export default function AdviceDetail() {
+export default function AdviceDetailPage() {
   return (
     <div className="flex gap-4 max-w-screen-xl mx-auto px-8 py-10">
       <div className="w-[65%] flex flex-col gap-6">

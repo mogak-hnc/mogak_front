@@ -2,7 +2,7 @@
 
 import ChallengeCreateForm from "@/app/Component/challenge-create-form";
 
-export default function AdminChallengeCreate() {
+export default function AdminChallengeCreatePage() {
   return (
     <ChallengeCreateForm
       isAdmin

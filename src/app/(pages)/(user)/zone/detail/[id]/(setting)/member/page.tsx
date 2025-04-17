@@ -10,7 +10,7 @@ const mockMembers = [
   { id: 3, nickname: "춘식이", image: "/user3.png" },
 ];
 
-export default function ZoneDetailMember() {
+export default function ZoneDetailMemberPage() {
   const [members, setMembers] = useState(mockMembers);
   const [showModal, setShowModal] = useState(false);
   const [targetId, setTargetId] = useState<number | null>(null);

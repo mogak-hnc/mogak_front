@@ -13,7 +13,7 @@ const mockLoginInfo = {
   profileImage: "/profile.png",
 };
 
-export default function LoginInfo() {
+export default function LoginInfoPage() {
   const { id } = useParams();
   const [birth, setBirth] = useState(mockLoginInfo.birth);
   const [email, setEmail] = useState(mockLoginInfo.email);

@@ -16,7 +16,7 @@ const mockUserProfiles: Record<string, UserProfile> = {
   },
 };
 
-export default function Profile() {
+export default function ProfilePage() {
   const params = useParams();
   const userId = params?.id as string;
 

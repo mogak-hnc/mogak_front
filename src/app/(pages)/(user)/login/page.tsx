@@ -4,7 +4,7 @@ import SubTitle from "@/app/Component/shared/sub-title";
 import kakaoLogin from "./kakao_login.png";
 import naverLogin from "./naver_login.png";
 
-export default function Login() {
+export default function LoginPage() {
   const handleKakaoLogin = () => {
     window.location.href = "/api/auth/kakao/login";
   };

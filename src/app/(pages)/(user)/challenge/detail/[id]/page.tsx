@@ -3,7 +3,7 @@ import ChallengeSurvivors from "./challenge-survivors";
 import ChallengeProofGrid from "./challenge-proof-grid";
 import Summary from "./summary";
 
-export default function ChallengeDetail() {
+export default function ChallengeDetailPage() {
   const mockChallenge = {
     isOfficial: true,
     title: "매일 공부 인증하기",
