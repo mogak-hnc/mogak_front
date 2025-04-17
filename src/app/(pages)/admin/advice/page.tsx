@@ -39,7 +39,11 @@ export default function AdminAdvicePage() {
 
   const columns = [
     { key: "id", label: "ID" },
-    { key: "title", label: "제목" },
+    {
+      key: "title",
+      label: "제목",
+      linkTo: (row: any) => `/advice/detail/${row.id}`,
+    },
     { key: "createdAt", label: "작성일" },
     { key: "deleteIn", label: "삭제 예정" },
     {

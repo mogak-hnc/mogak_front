@@ -42,7 +42,11 @@ export default function AdminChallenge() {
 
   const columns = [
     { key: "id", label: "ID" },
-    { key: "title", label: "제목" },
+    {
+      key: "title",
+      label: "제목",
+      linkTo: (row: any) => `/challenge/detail/${row.id}`,
+    },
     { key: "participants", label: "참가자 수" },
     {
       key: "period",
@@ -66,10 +70,12 @@ export default function AdminChallenge() {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center">
-        <h1 className="text-lg font-bold text-primary">챌린지 관리</h1>
+        <h1 className="text-lg font-bold text-primary dark:text-primary-dark">
+          챌린지 관리
+        </h1>
         <Link
           href={`/admin/challenge/create`}
-          className="text-sm px-3 py-1 bg-blue-500 text-white rounded"
+          className="text-sm px-3 py-1 bg-primary dark:bg-primary-dark text-white rounded"
         >
           생성하기
         </Link>

@@ -4,6 +4,7 @@ interface Column {
   key: string;
   label: string;
   render?: (value: any, row: any) => React.ReactNode;
+  linkTo?: (row: any) => string;
 }
 
 interface AdminTableProps {
@@ -30,9 +31,9 @@ export default function AdminTable({ columns, data }: AdminTableProps) {
               <td key={col.key} className="px-4 py-2 text-center">
                 {col.render ? (
                   col.render(row[col.key], row)
-                ) : col.key === "title" ? (
+                ) : col.linkTo ? (
                   <Link
-                    href={`/advice/detail/${row.id}`}
+                    href={col.linkTo(row)}
                     className="text-primary dark:text-primary-dark hover:underline"
                   >
                     {row[col.key]}

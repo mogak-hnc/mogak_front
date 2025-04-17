@@ -41,7 +41,11 @@ export default function AdminZonePage() {
 
   const columns = [
     { key: "id", label: "ID" },
-    { key: "name", label: "이름" },
+    {
+      key: "name",
+      label: "이름",
+      linkTo: (row: any) => `/zone/detail/${row.id}`,
+    },
     { key: "tag", label: "태그" },
     { key: "members", label: "참여 인원" },
     { key: "createdAt", label: "생성일" },
