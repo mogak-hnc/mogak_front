@@ -134,8 +134,9 @@ export default function ZoneDetail() {
           count={9}
         />
         <div className="flex flex-col gap-2">
-          {participants.map((user) => (
+          {participants.map((user, index) => (
             <ZoneCard
+              key={index}
               id={user.id}
               image={user.image}
               nickname={user.nickname}
