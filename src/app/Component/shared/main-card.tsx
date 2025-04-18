@@ -39,9 +39,11 @@ export default function MainCard({
           />
 
           <div className="absolute inset-0 flex items-center justify-center lg:hidden">
-            <div className="backdrop-blur-sm text-gray-900 text-center p-6 rounded-lg max-w-md">
-              <h2 className="text-2xl sm:text-3xl font-bold">{title}</h2>
-              <div className="text-base sm:text-lg mt-2">
+            <div className="backdrop-blur-md border border-borders text-gray-900 text-center p-6 rounded-lg max-w-md">
+              <h2 className="text-2xl sm:text-3xl text-primary dark:text-primary-dark font-bold">
+                {title}
+              </h2>
+              <div className="text-base text-text dark:text-borders sm:text-lg mt-2">
                 <p>{description1}</p>
                 {description2 && <p>{description2}</p>}
               </div>

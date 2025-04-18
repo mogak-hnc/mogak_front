@@ -1,7 +1,6 @@
-import MainSubCard, {
-  MainSubCardProps,
-} from "@/app/Component/shared/main-sub-card";
+import MainSubCard from "@/app/Component/shared/main-sub-card";
 import SearchCard from "@/app/Component/shared/search-card";
+import { MainSubCardProps } from "@/types";
 
 const mockStudySpaces: MainSubCardProps[] = [
   {
