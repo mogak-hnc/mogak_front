@@ -1,14 +1,5 @@
+import { StatusType, ZoneCardProps } from "@/types";
 import Link from "next/link";
-
-type StatusType = "공부 중" | "자리비움" | "오프라인";
-
-export interface ZoneCardProps {
-  id: number;
-  image: string;
-  nickname: string;
-  role?: string;
-  state: StatusType;
-}
 
 const statusColorMap: Record<StatusType, string> = {
   "공부 중":

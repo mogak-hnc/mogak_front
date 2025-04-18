@@ -1,8 +1,4 @@
-export interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-}
+import { ModalProps } from "@/types";
 
 export default function Modal({ isOpen, onClose, children }: ModalProps) {
   if (!isOpen) return null;

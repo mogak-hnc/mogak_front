@@ -1,13 +1,5 @@
+import { MainSubCardProps } from "@/types";
 import Link from "next/link";
-
-export interface MainSubCardProps {
-  type: "studySpace" | "challenge";
-  tag: string;
-  title: string;
-  participants: string[];
-  description?: string;
-  isOfficial?: boolean;
-}
 
 // TODO : 아직 시작되지 않은 (참여 가능한) 챌린지
 

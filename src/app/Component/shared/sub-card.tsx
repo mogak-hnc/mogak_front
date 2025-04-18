@@ -1,13 +1,6 @@
 import Link from "next/link";
 import Button from "../ui/button";
-
-interface SubCardProps {
-  subtitle: string;
-  title: string;
-  startDate: Date;
-  endDate?: Date | ``;
-  count: number;
-}
+import { SubCardProps } from "@/types";
 
 export default function SubCard({
   subtitle,

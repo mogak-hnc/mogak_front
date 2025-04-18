@@ -1,15 +1,4 @@
-interface ChatMessage {
-  id: number;
-  user: string;
-  time: string;
-  message: string;
-  isMe: boolean;
-  avatar: string;
-}
-
-interface ChatUiProps {
-  messages: ChatMessage[];
-}
+import { ChatUiProps } from "@/types";
 
 export default function ChatUI({ messages }: ChatUiProps) {
   return (

@@ -6,19 +6,7 @@ import Checkbox from "@/app/Component/ui/checkbox";
 import Button from "@/app/Component/ui/button";
 import FormField from "@/app/Component/shared/form-field";
 import H1Title from "@/app/Component/ui/h1-title";
-
-export type ChallengeForm = {
-  name: string;
-  description: string;
-  ownerOnly: boolean;
-  startDate: string;
-  endDate: string;
-};
-
-interface ChallengeCreateFormProps {
-  isAdmin?: boolean;
-  onSubmit?: (data: ChallengeForm & { isOfficial: boolean }) => void;
-}
+import { ChallengeCreateFormProps, ChallengeForm } from "@/types";
 
 export default function ChallengeCreateForm({
   isAdmin = false,

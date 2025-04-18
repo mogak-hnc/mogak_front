@@ -1,7 +1,4 @@
-interface ChallengeSurvivorsProps {
-  avatars: string[];
-  extraCount?: number;
-}
+import { ChallengeSurvivorsProps } from "@/types";
 
 export default function ChallengeSurvivors({
   avatars,

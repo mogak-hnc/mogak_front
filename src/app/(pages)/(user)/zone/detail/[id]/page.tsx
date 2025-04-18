@@ -70,7 +70,6 @@ const participants: ZoneCardProps[] = [
   },
 ];
 
-// ✅ 채팅 mock
 const mockMessages = [
   {
     id: 1,

@@ -1,16 +1,5 @@
+import { AdminTableProps } from "@/types";
 import Link from "next/link";
-
-interface Column {
-  key: string;
-  label: string;
-  render?: (value: any, row: any) => React.ReactNode;
-  linkTo?: (row: any) => string;
-}
-
-interface AdminTableProps {
-  columns: Column[];
-  data: any[];
-}
 
 export default function AdminTable({ columns, data }: AdminTableProps) {
   return (

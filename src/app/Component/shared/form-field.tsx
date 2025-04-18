@@ -1,7 +1,4 @@
-interface FormFieldProps {
-  label: string;
-  children: React.ReactNode;
-}
+import { FormFieldProps } from "@/types";
 
 export default function FormField({ label, children }: FormFieldProps) {
   return (

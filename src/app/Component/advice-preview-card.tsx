@@ -1,11 +1,5 @@
+import { AdvicePreviewCardProps } from "@/types";
 import Link from "next/link";
-
-export interface AdvicePreviewCardProps {
-  title: string;
-  commentCount: number;
-  timeLeftText: string;
-  href: string;
-}
 
 export default function AdvicePreviewCard({
   title,

@@ -1,13 +1,5 @@
+import { MainCardProps } from "@/types";
 import Link from "next/link";
-
-interface MainCardProps {
-  image: string;
-  title: string;
-  description1: string;
-  description2?: string;
-  button: string;
-  buttonUrl: string;
-}
 
 export default function MainCard({
   image,

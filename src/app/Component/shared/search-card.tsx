@@ -3,14 +3,7 @@ import Button from "../ui/button";
 import Input from "../ui/input";
 import { AiOutlineSearch } from "react-icons/ai";
 import H1Title from "../ui/h1-title";
-
-interface SearchCardProps {
-  title: string;
-  description: string;
-  tags: string[];
-  sort: string;
-  section: string;
-}
+import { SearchCardProps } from "@/types";
 
 export default function SearchCard({
   title,

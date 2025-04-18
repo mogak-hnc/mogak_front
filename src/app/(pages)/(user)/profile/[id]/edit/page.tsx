@@ -5,15 +5,7 @@ import { useState } from "react";
 import Input from "@/app/Component/ui/input";
 import Checkbox from "@/app/Component/ui/checkbox";
 import Button from "@/app/Component/ui/button";
-
-export interface UserProfile {
-  nickname: string;
-  bio: string;
-  affiliation: string;
-  profileImage: string;
-  showBadges: boolean;
-  badges?: string[];
-}
+import { UserProfile } from "@/types";
 
 const mockUserProfiles: Record<string, UserProfile> = {
   "1": {

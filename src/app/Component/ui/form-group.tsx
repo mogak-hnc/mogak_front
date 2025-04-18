@@ -1,8 +1,4 @@
-export interface FormGroupProps {
-  label: string;
-  htmlFor: string;
-  children: React.ReactNode;
-}
+import { FormGroupProps } from "@/types";
 
 export default function FormGroup({
   label,

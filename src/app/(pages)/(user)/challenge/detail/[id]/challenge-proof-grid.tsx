@@ -1,6 +1,4 @@
-interface ChallengeProofGridProps {
-  proofImages: string[];
-}
+import { ChallengeProofGridProps } from "@/types";
 
 export default function ChallengeProofGrid({
   proofImages,

@@ -1,10 +1,4 @@
-interface ChallengeHeaderProps {
-  isOfficial: boolean;
-  title: string;
-  period: string;
-  memberCount: number;
-  showManageButton?: boolean;
-}
+import { ChallengeHeaderProps } from "@/types";
 
 export default function ChallengeHeader({
   isOfficial,
