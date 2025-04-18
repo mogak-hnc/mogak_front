@@ -1,37 +1,66 @@
+"use client";
+
 import { MainCardProps } from "@/types";
 import Link from "next/link";
+import Button from "../ui/button";
 
 export default function MainCard({
-  image,
+  type,
   title,
   description1,
   description2,
   button,
   buttonUrl,
+  img1,
+  img2,
+  img3,
 }: MainCardProps) {
   return (
-    <div className="flex justify-center items-center">
-      <div className="flex flex-row items-center gap-10">
-        <img
-          className="w-100 h-auto object-contain"
-          src={image}
-          alt="preview"
-        />
+    <div className="flex justify-center w-full px-4">
+      <div className="relative w-full max-w-7xl flex flex-col lg:flex-row items-center gap-6">
+        <div
+          className="relative w-full lg:w-4/5 aspect-[5/2] bg-cover bg-left rounded-lg overflow-hidden 
+        bg-[url(@/app/Component/img/c_background_light.png)] dark:bg-[url(@/app/Component/img/c_background_dark.png)]"
+        >
+          <img
+            src={img1}
+            alt="img1"
+            className="absolute top-10 right-6 w-20 sm:w-40 lg:w-52"
+          />
+          <img
+            src={img2}
+            alt="img2"
+            className="absolute top-10 left-6 w-20 sm:w-40 lg:w-52"
+          />
+          <img
+            src={img3}
+            alt="img3"
+            className="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-20 sm:w-40 lg:w-56"
+          />
 
-        <div className="flex flex-col justify-center gap-4 max-w-sm">
-          <h2 className="text-xl font-bold text-primary">{title}</h2>
-          <div>
+          <div className="absolute inset-0 flex items-center justify-center lg:hidden">
+            <div className="backdrop-blur-sm text-gray-900 text-center p-6 rounded-lg max-w-md">
+              <h2 className="text-2xl sm:text-3xl font-bold">{title}</h2>
+              <div className="text-base sm:text-lg mt-2">
+                <p>{description1}</p>
+                {description2 && <p>{description2}</p>}
+              </div>
+              <Link href={buttonUrl}>
+                <Button variant="secondary" className="mt-4">
+                  {button}
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="hidden lg:flex flex-col justify-center gap-4 lg:w-1/5">
+          <h2 className="text-3xl font-bold text-primary">{title}</h2>
+          <div className="text-base text-gray-700 dark:text-gray-300">
             <p>{description1}</p>
             {description2 && <p>{description2}</p>}
           </div>
-          <Link
-            href={buttonUrl}
-            className="bg-secondary hover:bg-secondary-dark text-text
-            dark:bg-secondary-dark dark:hover:bg-secondary dark:text-text
-            px-4 py-2 rounded-md text-sm font-semibold w-fit
-             transition-colors duration-300"
-          >
-            {button}
+          <Link href={buttonUrl}>
+            <Button variant="secondary">{button}</Button>
           </Link>
         </div>
       </div>

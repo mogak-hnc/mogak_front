@@ -93,12 +93,16 @@ export interface FormFieldProps {
 }
 
 export interface MainCardProps {
+  type: "home" | "secret";
   image: string;
   title: string;
   description1: string;
   description2?: string;
   button: string;
   buttonUrl: string;
+  img1: string;
+  img2: string;
+  img3: string;
 }
 
 export interface MainSubCardProps {
