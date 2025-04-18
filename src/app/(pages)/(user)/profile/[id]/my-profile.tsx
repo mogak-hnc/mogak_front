@@ -1,3 +1,4 @@
+import Button from "@/app/Component/ui/button";
 import { UserProfile } from "@/types";
 import Link from "next/link";
 
@@ -16,11 +17,8 @@ export default function MyProfile(user: UserProfile) {
           <div className="text-xs text-gray-400 mt-0.5">{user.affiliation}</div>
         </div>
       </div>
-      <Link
-        href={`/profile/${user.id}/edit`}
-        className="px-3 py-1 rounded bg-yellow-400 text-white text-sm"
-      >
-        수정하기
+      <Link href={`/profile/${user.id}/edit`}>
+        <Button variant="secondary">수정하기</Button>
       </Link>
     </div>
   );

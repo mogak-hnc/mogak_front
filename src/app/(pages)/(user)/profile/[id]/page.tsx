@@ -43,8 +43,9 @@ export default function ProfilePage() {
   return (
     <div className="max-w-4xl mx-auto py-10 px-6 flex flex-col gap-6">
       <MyProfile {...user} id={userId} />
+      {/* TODO: component 별 Link 추가 */}
       {user.showBadges && (
-        <div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
           <MyBadge badges={user.badges ?? []} />
           <MyChallenge challenges={user.challenges ?? []} />
           <MyZone zones={user.zones ?? []} />
