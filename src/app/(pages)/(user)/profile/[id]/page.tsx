@@ -2,15 +2,16 @@
 
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { UserProfile } from "./edit/page";
 import Button from "@/app/Component/ui/button";
+import { UserProfile } from "@/types";
 
 const mockUserProfiles: Record<string, UserProfile> = {
   "1": {
     nickname: "다정",
     bio: "매일매일워어커구",
     affiliation: "매일매일워어커구",
-    profileImage: "/profile.png",
+    profileImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_tNhjmlgYeAgvZm86aoKUWsE1od65Ja0TCA&s",
     showBadges: true,
     badges: Array(21).fill("/badge.png"),
   },

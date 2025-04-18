@@ -10,7 +10,8 @@ const mockLoginInfo = {
   birth: "2000-01-01",
   email: "매일매일워어커구",
   userId: "매일매일워어커구",
-  profileImage: "/profile.png",
+  profileImage:
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_tNhjmlgYeAgvZm86aoKUWsE1od65Ja0TCA&s",
 };
 
 export default function LoginInfoPage() {
