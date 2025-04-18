@@ -22,49 +22,55 @@ const participants: ZoneCardProps[] = [
   },
   {
     id: 3,
-    image: "/user1.png",
+    image:
+      "https://i.namu.wiki/i/WxKy3rXTVi9Z4tp540N5SvHJAGfNfAPPBIvQsQgTaEHAxKtTTNYM1XtI5UCLOeEV4-eGQFqNdK83SxLjoswqJA.webp",
     nickname: "미니언즈",
     role: "",
     state: "공부 중",
   },
   {
     id: 4,
-    image: "/user2.png",
+    image:
+      "https://i.namu.wiki/i/TGhPJv3WWyjOQrmKrYH-kiCFEIdemLcjfcoDPvDGTph3BvNWLTGCM8pMykEsVUUdkzc2NVt7xazWT3bwu8_k2Q.webp",
     nickname: "라이언",
     role: "",
     state: "공부 중",
   },
   {
     id: 5,
-    image: "/user3.png",
+    image: "https://media.nudge-community.com/7698172",
     nickname: "춘식이",
     role: "",
     state: "공부 중",
   },
   {
     id: 6,
-    image: "/user4.png",
+    image:
+      "https://i.namu.wiki/i/Hsgfnzg--y95EQ72KmpWWv9okhDxTA0Vyyukb5NpDLk06-vIBTi6JMugHGX1BgcnmqNWXW86ISnn9a2fTUN1iA.webp",
     nickname: "구데타마",
     role: "",
     state: "자리비움",
   },
   {
     id: 7,
-    image: "/user5.png",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT16tyR3rn799XVlRKNipCupkli1YZE1mSUgg&s",
     nickname: "산리오",
     role: "",
     state: "공부 중",
   },
   {
     id: 8,
-    image: "/user6.png",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0G28eXw351gBnJ86GQmAk_hbVKM1v_KVOwQ&s",
     nickname: "어피치",
     role: "",
     state: "오프라인",
   },
   {
     id: 9,
-    image: "/user7.png",
+    image:
+      "https://www.elle.co.kr/resources_old/online/org_thumnail_image/el/20589ccb-24eb-4a18-ad58-a7a1353fc24a.jpg",
     nickname: "무지",
     role: "",
     state: "공부 중",
@@ -139,7 +145,7 @@ export default function ZoneDetailPage() {
     <div className="flex gap-4">
       <div className="w-[65%] flex flex-col gap-4">
         <SubCard {...mockInfo} />
-        <div className="flex flex-col gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {participants.map((user, index) => (
             <ZoneCard key={index} {...user} />
           ))}
