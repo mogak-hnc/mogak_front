@@ -5,7 +5,7 @@ import HeaderNavigation from "./header-navigation";
 
 export default function Header() {
   return (
-    <header className="w-full border-b">
+    <header className="w-full border-b border-borders dark:border-border-dark">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between">
         <div className="flex flex-col items-center gap-1 lg:flex-row lg:gap-3">
           <Link href="/" className="flex items-center gap-2">
