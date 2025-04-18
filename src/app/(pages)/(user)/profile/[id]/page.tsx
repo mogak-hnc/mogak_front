@@ -4,24 +4,29 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import Button from "@/app/Component/ui/button";
 import { UserProfile } from "@/types";
+import MyBadge from "./my-badge";
+import MyChallenge from "./my-challenge";
+import MyZone from "./my-zone";
+import MyProfile from "./my-profile";
 
-const mockUserProfiles: Record<string, UserProfile> = {
-  "1": {
-    nickname: "다정",
-    bio: "매일매일워어커구",
-    affiliation: "매일매일워어커구",
-    profileImage:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_tNhjmlgYeAgvZm86aoKUWsE1od65Ja0TCA&s",
-    showBadges: true,
-    badges: Array(21).fill("/badge.png"),
-  },
+const mockUserProfiles: UserProfile = {
+  id: "1",
+  nickname: "다정",
+  bio: "매일매일어쩌구",
+  affiliation: "어ㅓㅉ구",
+  profileImage:
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_tNhjmlgYeAgvZm86aoKUWsE1od65Ja0TCA&s",
+  showBadges: true,
+  badges: Array(21).fill("/badge.png"),
+  challenges: ["알고리즘 챌린지", "영어 단어 외우기"],
+  zones: ["카공해요", "스터디룸"],
 };
 
 export default function ProfilePage() {
   const params = useParams();
   const userId = params?.id as string;
 
-  const user = mockUserProfiles[userId];
+  const user = mockUserProfiles;
 
   if (!user)
     return (
@@ -37,44 +42,12 @@ export default function ProfilePage() {
 
   return (
     <div className="max-w-4xl mx-auto py-10 px-6 flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <img
-            src={user.profileImage}
-            alt="profile"
-            className="w-16 h-16 rounded-full border border-primary"
-          />
-          <div>
-            <div className="text-xl font-bold text-primary">
-              {user.nickname}
-            </div>
-            <div className="text-sm text-gray-500">{user.bio}</div>
-            <div className="text-xs text-gray-400 mt-0.5">
-              {user.affiliation}
-            </div>
-          </div>
-        </div>
-        <Link
-          href={`/profile/${userId}/edit`}
-          className="px-3 py-1 rounded bg-yellow-400 text-white text-sm"
-        >
-          수정하기
-        </Link>
-      </div>
-
+      <MyProfile {...user} id={userId} />
       {user.showBadges && (
         <div>
-          <h3 className="text-lg font-bold text-gray-700 mb-3">뱃지</h3>
-          <div className="grid grid-cols-6 gap-3">
-            {user.badges?.map((src, i) => (
-              <img
-                key={i}
-                src={src}
-                alt={`badge-${i}`}
-                className="w-full h-auto object-contain"
-              />
-            ))}
-          </div>
+          <MyBadge badges={user.badges ?? []} />
+          <MyChallenge challenges={user.challenges ?? []} />
+          <MyZone zones={user.zones ?? []} />
         </div>
       )}
     </div>
