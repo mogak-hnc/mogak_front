@@ -3,46 +3,52 @@ import ChallengeSurvivors from "./challenge-survivors";
 import ChallengeProofGrid from "./challenge-proof-grid";
 import Summary from "./summary";
 
-export default function ChallengeDetailPage() {
-  const mockChallenge = {
-    isOfficial: true,
-    title: "매일 공부 인증하기",
-    period: "2025.03.01 ~ 2025.04.01",
-    memberCount: 9,
-    avatars: [
-      "/user1.png",
-      "/user2.png",
-      "/user3.png",
-      "/user4.png",
-      "/user5.png",
-      "/user6.png",
-      "/user7.png",
-      "/user8.png",
-    ],
-    extraCount: 27,
-    proofImages: [
-      "/proof1.png",
-      "/proof2.png",
-      "/proof3.png",
-      "/proof4.png",
-      "/proof5.png",
-      "/proof6.png",
-      "/proof7.png",
-      "/proof8.png",
-      "/proof9.png",
-      "/proof10.png",
-    ],
-  };
+const mockChallenge = {
+  isOfficial: true,
+  title: "매일 공부 인증하기",
+  period: "2025.03.01 ~ 2025.04.01",
+  memberCount: 9,
+  avatars: [
+    "/user1.png",
+    "/user2.png",
+    "/user3.png",
+    "/user4.png",
+    "/user5.png",
+    "/user6.png",
+    "/user7.png",
+    "/user8.png",
+  ],
+  extraCount: 27,
+  proofImages: [
+    "/proof1.png",
+    "/proof2.png",
+    "/proof3.png",
+    "/proof4.png",
+    "/proof5.png",
+    "/proof6.png",
+    "/proof7.png",
+    "/proof8.png",
+    "/proof9.png",
+    "/proof10.png",
+  ],
+};
 
+const mockInfo = {
+  title: "하루 만보 걷기 챌린지",
+  description: "건강을 위해 매일 만보 걷기에 도전해요!",
+  creatorMemberId: 1,
+  startDate: "2025-04-18",
+  endDate: "2025-04-25",
+};
+
+export default function ChallengeDetailPage() {
   return (
     <div className="max-w-screen-xl mx-auto px-8 py-10">
       <div className="flex flex-col lg:flex-row gap-10">
         <div className="flex-1 flex flex-col gap-6">
           <ChallengeHeader
-            isOfficial={mockChallenge.isOfficial}
-            title={mockChallenge.title}
-            period={mockChallenge.period}
-            memberCount={mockChallenge.memberCount}
+            {...mockInfo}
+            // isOfficial={mockChallenge.isOfficial}
           />
 
           <ChallengeSurvivors

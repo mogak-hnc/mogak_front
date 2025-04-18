@@ -11,11 +11,11 @@ export interface SubCardProps {
 }
 
 export interface ChallengeHeaderProps {
-  isOfficial: boolean;
   title: string;
-  period: string;
-  memberCount: number;
-  showManageButton?: boolean;
+  description: string;
+  creatorMemberId: number;
+  startDate: string;
+  endDate: string;
 }
 
 export interface ChallengeProofGridProps {

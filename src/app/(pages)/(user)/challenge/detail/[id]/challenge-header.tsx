@@ -1,29 +1,30 @@
+import Button from "@/app/Component/ui/button";
 import { ChallengeHeaderProps } from "@/types";
 
 export default function ChallengeHeader({
-  isOfficial,
   title,
-  period,
-  memberCount,
-  showManageButton = true,
+  description,
+  creatorMemberId,
+  startDate,
+  endDate,
 }: ChallengeHeaderProps) {
+  const userId = 1;
   return (
     <div className="flex items-center justify-between">
       <div>
-        {isOfficial && (
+        {/* {isOfficial && (
           <span className="text-xs text-primary font-semibold">
             공식 챌린지
           </span>
-        )}
+        )} */}
         <h2 className="text-2xl font-bold text-primary mt-1">{title}</h2>
         <p className="text-sm text-border-dark dark:text-borders mt-1">
-          {period} · {memberCount}명
+          {startDate}&nbsp;~&nbsp;{endDate}
+          {/* · {memberCount}명 */}
         </p>
       </div>
-      {showManageButton && (
-        <button className="px-3 py-1 bg-yellow-400 text-white rounded">
-          챌린지 관리
-        </button>
+      {userId === creatorMemberId && (
+        <Button variant="secondary">챌린지 관리</Button>
       )}
     </div>
   );
