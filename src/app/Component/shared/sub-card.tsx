@@ -3,23 +3,31 @@ import Button from "../ui/button";
 import { SubCardProps } from "@/types";
 
 export default function SubCard({
-  subtitle,
-  title,
+  name,
+  maxCapacity,
+  imageUrl,
+  password,
+  chatEnabled,
+  loginRequired,
   startDate,
   endDate,
-  count,
+  tagNames,
 }: SubCardProps) {
+  // TODO : 인원수
   return (
     <div className="ml-4 flex flex-col justify-center mb-6">
-      <span className="text-primary dark:text-primary text-xl">
-        #{subtitle}
+      <span className="flex gap-3 text-primary dark:text-primary text-xl">
+        {tagNames.map((tagNames) => (
+          <div key={`sub-card-${tagNames}`}>#{tagNames}</div>
+        ))}
       </span>
       <span className="text-primary dark:text-primary font-bold text-2xl">
-        {title}
+        {name}
       </span>
       <span>
-        {new Date(startDate).toLocaleDateString()}&nbsp;~&nbsp;
-        {endDate ? endDate.toLocaleDateString() : "종료시"} | {count}명
+        {startDate}&nbsp;~&nbsp;
+        {endDate ? endDate : "종료시"}
+        {/* | {count}명 */}
       </span>
       <Link href={`/zone/detail/${1}/member`}>
         <Button>모각존 관리</Button>

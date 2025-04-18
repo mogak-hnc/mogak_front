@@ -1,9 +1,13 @@
 export interface SubCardProps {
-  subtitle: string;
-  title: string;
-  startDate: Date;
-  endDate?: Date | ``;
-  count: number;
+  name: string;
+  maxCapacity: number;
+  imageUrl: string;
+  password: string;
+  chatEnabled: boolean;
+  loginRequired: boolean;
+  startDate: string;
+  endDate: string;
+  tagNames: string[];
 }
 
 export interface ChallengeHeaderProps {

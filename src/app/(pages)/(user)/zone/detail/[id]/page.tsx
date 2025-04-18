@@ -1,6 +1,7 @@
 import ChatUI from "@/app/Component/shared/chat-ui";
 import SubCard from "@/app/Component/shared/sub-card";
-import ZoneCard, { ZoneCardProps } from "@/app/Component/shared/zone-card";
+import ZoneCard from "@/app/Component/shared/zone-card";
+import { ZoneCardProps } from "@/types";
 
 const participants: ZoneCardProps[] = [
   {
@@ -121,17 +122,23 @@ const mockMessages = [
   },
 ];
 
+const mockInfo = {
+  name: "열공모각코",
+  maxCapacity: 10,
+  imageUrl: "",
+  password: "1234",
+  chatEnabled: true,
+  loginRequired: true,
+  startDate: "2025-04-18",
+  endDate: "2025-04-25",
+  tagNames: ["개발", "코딩", "공부"],
+};
+
 export default function ZoneDetailPage() {
   return (
     <div className="flex gap-4">
       <div className="w-[65%] flex flex-col gap-4">
-        <SubCard
-          subtitle="카페"
-          title="카공해요"
-          startDate={new Date(`2025.03.01`)}
-          endDate=""
-          count={9}
-        />
+        <SubCard {...mockInfo} />
         <div className="flex flex-col gap-2">
           {participants.map((user, index) => (
             <ZoneCard key={index} {...user} />
