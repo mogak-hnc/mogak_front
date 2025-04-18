@@ -27,9 +27,9 @@ export default function ChatUI({ messages }: ChatUiProps) {
               )}
 
               <div>
-                <p className="text-xs text-gray-500">{msg.user}</p>
+                <p className="text-xs text-text">{msg.user}</p>
                 <div className="bg-white px-4 py-2 rounded-2xl rounded-tl-none border max-w-xs text-sm shadow-sm">
-                  <p>{msg.message}</p>
+                  <p className="text-text">{msg.message}</p>
                   <p className="text-[10px] text-right text-gray-400 mt-1">
                     {msg.time}
                   </p>
