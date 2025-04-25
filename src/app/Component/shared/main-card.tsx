@@ -22,21 +22,27 @@ export default function MainCard({
           className="relative w-full lg:w-4/5 aspect-[5/2] bg-cover bg-left rounded-lg overflow-hidden 
         bg-[url(@/app/Component/img/c_background_light.png)] dark:bg-[url(@/app/Component/img/c_background_dark.png)]"
         >
-          <img
-            src={img1!}
-            alt="img1"
-            className="absolute top-10 right-6 w-20 sm:w-40 lg:w-52"
-          />
-          <img
-            src={img2!}
-            alt="img2"
-            className="absolute top-10 left-6 w-20 sm:w-40 lg:w-52"
-          />
-          <img
-            src={img3!}
-            alt="img3"
-            className="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-20 sm:w-40 lg:w-56"
-          />
+          {img1 && (
+            <img
+              src={img1}
+              alt="img1"
+              className="absolute top-10 right-6 w-20 sm:w-40 lg:w-52"
+            />
+          )}
+          {img2 && (
+            <img
+              src={img2}
+              alt="img2"
+              className="absolute top-10 left-6 w-20 sm:w-40 lg:w-52"
+            />
+          )}
+          {img3 && (
+            <img
+              src={img3}
+              alt="img3"
+              className="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-20 sm:w-40 lg:w-56"
+            />
+          )}
 
           <div className="absolute inset-0 flex items-center justify-center lg:hidden">
             <div className="backdrop-blur-md border border-borders text-gray-900 text-center p-6 rounded-lg max-w-md">
