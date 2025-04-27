@@ -8,7 +8,7 @@ export default function HeaderNavigation() {
   return (
     <>
       <Link href="/zone">모각존</Link>
-      <Link href="/challenge">챌린지</Link>
+      <Link href="/challenge">모각챌</Link>
       <Link href="/advice">커뮤니티</Link>
       <Link href={`/profile/${userId}`}>프로필</Link>
       {userId ? (
