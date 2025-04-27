@@ -15,7 +15,9 @@ export default function SearchCard({
   return (
     <div className="flex flex-col items-center gap-2 w-full">
       <H1Title>{title}</H1Title>
-      <span className="text-sm text-border-dark">{description}</span>
+      <span className="text-sm text-border-dark dark:text-borders">
+        {description}
+      </span>
       <div className="mt-2 flex items-center gap-2">
         <Input className="h-10 w-80 bg-white rounded-md" />
         <div className="flex items-center h-10">
@@ -33,7 +35,7 @@ export default function SearchCard({
             </div>
           ))}
         </div>
-        <select className="bg-white rounded-md px-5 py-2">
+        <select className="bg-white dark:bg-border-dark dark:text-text-dark rounded-md px-5 py-2">
           <option>{sort}</option>
         </select>
       </div>
