@@ -128,11 +128,11 @@ export interface SearchCardProps {
 export type StatusType = "공부 중" | "자리비움" | "오프라인";
 
 export interface ZoneCardProps {
-  id: number;
-  image: string;
+  memberId: number;
+  image?: string;
   nickname: string;
   role?: string;
-  state: StatusType;
+  status: StatusType;
 }
 
 export interface FormGroupProps {
@@ -145,4 +145,21 @@ export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
+}
+
+export interface ZoneDetailMemberProps {
+  memberId: number;
+  nickname: string;
+  status: string;
+  image: string;
+}
+
+export interface ZoneDetailProps {
+  tagNames: string[];
+  hostMemberId: number;
+  name: string;
+  startDate: string;
+  endDate: string;
+  joinedUserCount: number;
+  zoneMemberInfoList: ZoneDetailMemberProps[];
 }

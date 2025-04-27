@@ -11,30 +11,32 @@ const statusColorMap: Record<StatusType, string> = {
 };
 
 export default function ZoneCard({
-  id,
+  memberId,
   image,
   nickname,
   role,
-  state,
+  status,
 }: ZoneCardProps) {
   return (
-    <Link href={`/profile/${id}`}>
+    <Link href={`/profile/${memberId}`}>
       <div className="flex items-center p-4 w-fit">
-        <img
-          src={image}
-          alt="profile"
-          className={`w-20 h-20 rounded-full border-2 object-cover ${statusColorMap[state]}`}
-        />
+        {image && (
+          <img
+            src={image}
+            alt="profile"
+            className={`w-20 aspect-square rounded-full border-2 object-cover ${statusColorMap[status]}`}
+          />
+        )}
         <div className="ml-4 flex flex-col justify-center">
           <p className="text-lg font-semibold ">{nickname}</p>
           {role && (
             <p className="text-sm text-border-dark dark:text-borders">{role}</p>
           )}
           <div
-            className={`flex items-center gap-1 mt-1 text-sm font-medium ${statusColorMap[state]}`}
+            className={`flex items-center gap-1 mt-1 text-sm font-medium ${statusColorMap[status]}`}
           >
             <span>✪</span>
-            <span>{state}</span>
+            <span>{status}</span>
           </div>
         </div>
       </div>

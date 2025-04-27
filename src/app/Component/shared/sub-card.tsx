@@ -1,19 +1,16 @@
 import Link from "next/link";
 import Button from "../ui/button";
-import { SubCardProps } from "@/types";
+import { ZoneDetailProps } from "@/types";
 
 export default function SubCard({
+  tagNames,
+  hostMemberId,
   name,
-  maxCapacity,
-  imageUrl,
-  password,
-  chatEnabled,
-  loginRequired,
   startDate,
   endDate,
-  tagNames,
-}: SubCardProps) {
-  // TODO : 인원수
+  joinedUserCount,
+  zoneMemberInfoList,
+}: ZoneDetailProps) {
   return (
     <div className="ml-4 flex flex-col justify-center mb-6">
       <span className="flex gap-3 text-primary dark:text-primary text-xl">
@@ -26,8 +23,7 @@ export default function SubCard({
       </span>
       <span>
         {startDate}&nbsp;~&nbsp;
-        {endDate ? endDate : "종료시"}
-        {/* | {count}명 */}
+        {endDate ? endDate : "종료시"}| {joinedUserCount}명
       </span>
       <Link href={`/zone/detail/${1}/member`}>
         <Button>모각존 관리</Button>
