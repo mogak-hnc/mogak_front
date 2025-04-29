@@ -1,14 +1,31 @@
-export interface SubCardProps {
+export interface MainZoneProps {
+  tagNames: string[];
   name: string;
-  maxCapacity: number;
-  imageUrl: string;
-  password: string;
-  chatEnabled: boolean;
-  loginRequired: boolean;
+  memberImageUrls: string[] | null[];
+}
+
+export interface MainChallengeProps {
+  official: boolean;
+  title: string;
+  memberImageUrls: string[] | null[];
   startDate: string;
   endDate: string;
-  tagNames: string[];
 }
+
+export interface SubCardProps {
+  mogakZoneMainResponses: MainZoneProps[];
+  mogakChallengeResponses: MainChallengeProps[];
+}
+
+// name: string;
+// maxCapacity: number;
+// imageUrl: string;
+// password: string;
+// chatEnabled: boolean;
+// loginRequired: boolean;
+// startDate: string;
+// endDate: string;
+// tagNames: string[];
 
 export interface ChallengeHeaderProps {
   title: string;
@@ -110,9 +127,9 @@ export interface MainCardProps {
 
 export interface MainSubCardProps {
   type: "studySpace" | "challenge";
-  tag: string;
+  tag?: string;
   title: string;
-  participants: string[];
+  participants: (string | null)[];
   description?: string;
   isOfficial?: boolean;
 }

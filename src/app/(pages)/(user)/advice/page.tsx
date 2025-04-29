@@ -1,6 +1,7 @@
 import AdvicePreviewCard from "@/app/Component/advice-preview-card";
 import MainCard from "@/app/Component/shared/main-card";
 import H1Title from "@/app/Component/ui/h1-title";
+import Background from "@/app/Component/img/s_secret.png";
 import { AdvicePreviewCardProps } from "@/types";
 
 const mockAdviceCards: AdvicePreviewCardProps[] = [
@@ -29,7 +30,7 @@ export default function AdvicePage() {
     <div>
       <MainCard
         type="secret"
-        image="https://cdn.imweb.me/thumbnail/20230228/25687782da912.png"
+        image={Background.src}
         title="비밀 고민 상담"
         description1="어쩌구.."
         description2="24시간 뒤에 자동으로 삭제돼요."
