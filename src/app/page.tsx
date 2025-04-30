@@ -1,10 +1,13 @@
-import { MainCardProps, MainSubCardProps, SubCardProps } from "@/types";
+import { SubCardProps } from "@/types";
 import { MainSubTitle } from "./Component/main-sub-title";
 import MainCard from "./Component/shared/main-card";
 import MainSubCard from "./Component/shared/main-sub-card";
 import student from "@/app/Component/img/c_student.png";
 import designer from "@/app/Component/img/c_designer.png";
 import coding from "@/app/Component/img/c_coding.png";
+
+import MainBgLight from "@/app/Component/img/c_background_light.png";
+import MainBgDark from "@/app/Component/img/c_background_dark.png";
 
 const mock: SubCardProps = {
   mogakZoneMainResponses: [
@@ -51,7 +54,6 @@ export default function Home() {
       <div className="justify-center px-4 flex flex-col gap-8">
         <MainCard
           type="home"
-          image="https://cdn.imweb.me/thumbnail/20230228/25687782da912.png"
           title="모여서 각자, 모각"
           description1="모각에 처음 오셨나요?"
           description2="간단한 챌린지로 시작해 보세요!"
@@ -60,6 +62,8 @@ export default function Home() {
           img1={student.src}
           img2={coding.src}
           img3={designer.src}
+          bgImageLight={MainBgLight.src}
+          bgImageDark={MainBgDark.src}
         ></MainCard>
         <div className="w-full max-w-screen-xl">
           <MainSubTitle
