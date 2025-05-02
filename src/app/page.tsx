@@ -28,27 +28,37 @@ const mock: SubCardProps = {
       official: false,
       title: "모각챌1",
       memberImageUrls: [null],
-      startDate: "2025-04-18",
-      endDate: "2025-04-25",
+      startDate: [2025, 5, 20],
+      endDate: [2025, 6, 25],
     },
     {
-      official: true,
+      official: false,
       title: "모각챌2",
       memberImageUrls: [null],
-      startDate: "2025-04-18",
-      endDate: "2025-04-25",
+      startDate: [2025, 6, 25],
+      endDate: [2025, 6, 25],
     },
     {
       official: false,
       title: "모각챌3",
       memberImageUrls: [null],
-      startDate: "2025-04-18",
-      endDate: "2025-04-25",
+      startDate: [2025, 6, 25],
+      endDate: [2025, 6, 25],
     },
   ],
 };
 
 export default function Home() {
+  const convertDate = (dateArray: number[]) => {
+    const [year, month, day] = dateArray;
+    const date = new Date(year, month - 1, day);
+    return date.toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   return (
     <div className="w-full flex flex-col items-center px-4 gap-8">
       <div className="w-full max-w-screen-xl flex flex-col gap-12">
@@ -96,7 +106,9 @@ export default function Home() {
                 type="challenge"
                 tag="챌린지"
                 title={challenge.title}
-                description={`${challenge.startDate} ~ ${challenge.endDate}`}
+                description={`${convertDate(
+                  challenge.startDate
+                )} ~ ${convertDate(challenge.endDate)}`}
                 participants={(challenge.memberImageUrls ?? []).filter(
                   (img): img is string => img !== null
                 )}

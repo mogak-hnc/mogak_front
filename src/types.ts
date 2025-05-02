@@ -8,8 +8,8 @@ export interface MainChallengeProps {
   official: boolean;
   title: string;
   memberImageUrls: string[] | null[];
-  startDate: string;
-  endDate: string;
+  startDate: number[];
+  endDate: number[];
 }
 
 export interface SubCardProps {
