@@ -9,6 +9,7 @@ import { UserProfile } from "@/types";
 
 const mockUserProfiles: Record<string, UserProfile> = {
   "1": {
+    id: "1",
     nickname: "다정",
     bio: "매일매일워어커구",
     affiliation: "매일매일워어커구",
