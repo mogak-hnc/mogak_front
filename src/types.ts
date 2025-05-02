@@ -181,3 +181,10 @@ export interface ZoneDetailProps {
   joinedUserCount: number;
   zoneMemberInfoList: ZoneDetailMemberProps[];
 }
+
+export interface CommentProps {
+  id: number;
+  message: string;
+  time: string;
+  isMe: boolean;
+}

@@ -2,6 +2,7 @@
 
 import Button from "@/app/Component/ui/button";
 import { AiFillHeart } from "react-icons/ai";
+import Comment from "./comment";
 
 const mockAdvicePost = {
   id: 1,
@@ -14,27 +15,21 @@ const mockAdvicePost = {
 const mockComments = [
   {
     id: 1,
-    user: "익명1",
     time: "10:11",
     message: "떡볶이",
     isMe: false,
-    avatar: "",
   },
   {
     id: 2,
-    user: "익명2",
     time: "10:14",
     message: "시리얼",
     isMe: false,
-    avatar: "",
   },
   {
     id: 3,
-    user: "나",
     time: "10:20",
     message: "감사합니ㄷ다",
     isMe: true,
-    avatar: "",
   },
 ];
 
@@ -68,17 +63,7 @@ export default function AdviceDetailPage() {
         </div>
         <div>
           {mockComments.map((comment) => (
-            <div key={comment.id} className="flex gap-5 border-b p-2">
-              <div>{comment.message}</div>
-              <div className="text-sm text-borders dark:text-border-dark">
-                {comment.time}
-              </div>
-              <div>
-                {comment.isMe && (
-                  <div className="text-error dark:text-error-dark">x</div>
-                )}
-              </div>
-            </div>
+            <Comment {...comment}></Comment>
           ))}
         </div>
       </div>
