@@ -32,7 +32,7 @@ const mock: SubCardProps = {
       endDate: "2025-04-25",
     },
     {
-      official: false,
+      official: true,
       title: "모각챌2",
       memberImageUrls: [null],
       startDate: "2025-04-18",
@@ -51,7 +51,7 @@ const mock: SubCardProps = {
 export default function Home() {
   return (
     <div className="w-full flex flex-col items-center px-4 gap-8">
-      <div className="justify-center px-4 flex flex-col gap-8">
+      <div className="w-full max-w-screen-xl flex flex-col gap-12">
         <MainCard
           type="home"
           title="모여서 각자, 모각"
@@ -64,18 +64,18 @@ export default function Home() {
           img3={designer.src}
           bgImageLight={MainBgLight.src}
           bgImageDark={MainBgDark.src}
-        ></MainCard>
-        <div className="w-full max-w-screen-xl">
+        />
+        <div className="flex flex-col gap-4">
           <MainSubTitle
-            title={`핫한 모각존`}
-            description={`현재 가장 많은 유저들이 공부 중인 모각존을 살펴 보세요.`}
+            title="핫한 모각존"
+            description="현재 가장 많은 유저들이 공부 중인 모각존을 살펴 보세요."
           />
-          <div className="flex flex-wrap gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {mock.mogakZoneMainResponses.map((space, idx) => (
               <MainSubCard
                 key={idx}
                 type="studySpace"
-                tag={space.tagNames[0]} // 첫 번째 태그 사용
+                tag={space.tagNames[0]}
                 title={space.name}
                 participants={(space.memberImageUrls ?? []).filter(
                   (img): img is string => img !== null
@@ -83,11 +83,13 @@ export default function Home() {
               />
             ))}
           </div>
+        </div>
+        <div className="flex flex-col gap-4">
           <MainSubTitle
-            title={`지금은 챌린지 할 시간`}
-            description={`현재 가장 많은 유저들이 참여 중인 챌린지를 살펴 보세요.`}
+            title="지금은 챌린지 할 시간"
+            description="현재 가장 많은 유저들이 참여 중인 챌린지를 살펴 보세요."
           />
-          <div className="flex flex-wrap gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {mock.mogakChallengeResponses.map((challenge, idx) => (
               <MainSubCard
                 key={idx}

@@ -21,10 +21,8 @@ export default function MainCard({
     <div className="flex justify-center w-full px-4">
       <div className="relative w-full max-w-7xl flex flex-col lg:flex-row items-center gap-6">
         <div
-          className={`relative w-full lg:w-4/5 aspect-[5/2] bg-cover bg-left rounded-lg overflow-hidden`}
-          style={{
-            backgroundImage: `url(${bgImageLight})`,
-          }}
+          className="relative w-full lg:w-4/5 aspect-[5/4] sm:aspect-[5/3] md:aspect-[5/2] bg-cover bg-left rounded-lg overflow-hidden"
+          style={{ backgroundImage: `url(${bgImageLight})` }}
         >
           <div
             className="hidden dark:block absolute inset-0 z-0"
