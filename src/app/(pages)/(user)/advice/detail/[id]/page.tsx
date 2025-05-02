@@ -1,6 +1,6 @@
 "use client";
 
-import ChatUI from "@/app/Component/shared/chat-ui";
+import Button from "@/app/Component/ui/button";
 import { AiFillHeart } from "react-icons/ai";
 
 const mockAdvicePost = {
@@ -44,28 +44,43 @@ export default function AdviceDetailPage() {
       <div className="w-[65%] flex flex-col gap-6">
         <div className="flex items-center justify-between border-b pb-2">
           <div>
-            <h2 className="text-lg font-bold text-primary">
+            <h2 className="text-lg font-bold text-primary dark:text-primary-dark">
               {mockAdvicePost.title}
             </h2>
             <p className="text-sm text-gray-400">{mockAdvicePost.deleteIn}</p>
           </div>
-          <button className="bg-yellow-400 px-3 py-1 text-sm rounded text-white">
-            삭제하기
-          </button>
+          <Button>삭제하기</Button>
         </div>
 
-        <p className="text-sm text-gray-800 whitespace-pre-line">
+        <p className="text-sm text-text dark:text-text-dark whitespace-pre-line">
           {mockAdvicePost.content}
         </p>
 
-        <div className="flex items-center gap-1 text-red-500 text-sm">
+        <div className="flex items-center gap-1 text-error dark:text-error-dark text-sm">
           <AiFillHeart size={18} />
           공감 {mockAdvicePost.sympathyCount}개
         </div>
       </div>
 
       <div className="w-[35%]">
-        <ChatUI messages={mockComments} />
+        <div className="text-lg font-bold text-primary dark:text-primary-dark">
+          댓글
+        </div>
+        <div>
+          {mockComments.map((comment) => (
+            <div key={comment.id} className="flex gap-5 border-b p-2">
+              <div>{comment.message}</div>
+              <div className="text-sm text-borders dark:text-border-dark">
+                {comment.time}
+              </div>
+              <div>
+                {comment.isMe && (
+                  <div className="text-error dark:text-error-dark">x</div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
