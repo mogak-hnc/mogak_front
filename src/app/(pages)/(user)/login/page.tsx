@@ -12,6 +12,7 @@ export default function LoginPage() {
   const handleNaverLogin = () => {
     window.location.href = "/api/auth/naver/login";
   };
+
   return (
     <div>
       <SubTitle contents="로그인" />
