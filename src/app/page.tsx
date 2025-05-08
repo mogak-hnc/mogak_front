@@ -9,46 +9,23 @@ import coding from "@/app/Component/img/c_coding.png";
 import MainBgLight from "@/app/Component/img/c_background_light.png";
 import MainBgDark from "@/app/Component/img/c_background_dark.png";
 
-const mock: SubCardProps = {
-  mogakZoneMainResponses: [
-    {
-      tagNames: ["독서"],
-      name: "모각존4",
-      memberImageUrls: [null],
-    },
-    {
-      tagNames: ["독서"],
-      name: "모각존3",
-      memberImageUrls: [null],
-    },
-    { tagNames: ["독서"], name: "모각존2", memberImageUrls: [null] },
-  ],
-  mogakChallengeResponses: [
-    {
-      official: false,
-      title: "모각챌1",
-      memberImageUrls: [null],
-      startDate: [2025, 5, 20],
-      endDate: [2025, 6, 25],
-    },
-    {
-      official: false,
-      title: "모각챌2",
-      memberImageUrls: [null],
-      startDate: [2025, 6, 25],
-      endDate: [2025, 6, 25],
-    },
-    {
-      official: false,
-      title: "모각챌3",
-      memberImageUrls: [null],
-      startDate: [2025, 6, 25],
-      endDate: [2025, 6, 25],
-    },
-  ],
-};
+async function ZoneChallenge() {
+  const res = await fetch(`${process.env.BACKEND_API_URL}/api/mogak`, {
+    next: { revalidate: 30 },
+  });
 
-export default function Home() {
+  if (!res.ok) {
+    throw new Error("메인 fetch 실패");
+  }
+
+  const data: SubCardProps = await res.json();
+
+  return data;
+}
+
+export default async function Home() {
+  const data = await ZoneChallenge();
+
   const convertDate = (dateArray: number[]) => {
     const [year, month, day] = dateArray;
     const date = new Date(year, month - 1, day);
@@ -81,7 +58,7 @@ export default function Home() {
             description="현재 가장 많은 유저들이 공부 중인 모각존을 살펴 보세요."
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {mock.mogakZoneMainResponses.map((space, idx) => (
+            {data.mogakZoneMainResponses.map((space, idx) => (
               <MainSubCard
                 key={idx}
                 type="studySpace"
@@ -100,7 +77,7 @@ export default function Home() {
             description="현재 가장 많은 유저들이 참여 중인 챌린지를 살펴 보세요."
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {mock.mogakChallengeResponses.map((challenge, idx) => (
+            {data.mogakChallengeResponses.map((challenge, idx) => (
               <MainSubCard
                 key={idx}
                 type="challenge"
