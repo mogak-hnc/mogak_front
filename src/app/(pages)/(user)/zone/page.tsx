@@ -28,7 +28,7 @@ export default function ZonePage() {
     <div>
       <SearchCard
         title="모각존"
-        description="모각에서.. 어쩌구.."
+        description="모여서 각자, 공부나 작업하기!"
         tags={["카페", "독서실"]}
         sort="최신순"
         section="모각존"

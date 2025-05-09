@@ -8,20 +8,7 @@ import coding from "@/app/Component/img/c_coding.png";
 
 import MainBgLight from "@/app/Component/img/c_background_light.png";
 import MainBgDark from "@/app/Component/img/c_background_dark.png";
-
-async function ZoneChallenge() {
-  const res = await fetch(`${process.env.BACKEND_API_URL}/api/mogak`, {
-    next: { revalidate: 30 },
-  });
-
-  if (!res.ok) {
-    throw new Error("메인 fetch 실패");
-  }
-
-  const data: SubCardProps = await res.json();
-
-  return data;
-}
+import { ZoneChallenge } from "@/lib/main.api";
 
 export default async function Home() {
   const data = await ZoneChallenge();
