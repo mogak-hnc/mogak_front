@@ -1,4 +1,4 @@
-import { MainSubCardProps } from "@/types";
+import { MainSubCardProps, ZoneDetailProps, ZoneFormProps } from "@/types";
 
 export async function ZoneMain() {
   const res = await fetch(`${process.env.BACKEND_API_URL}/api/mogak/zone`);
@@ -15,6 +15,28 @@ export async function ZoneMain() {
     title: item.name,
     participants: item.memberImageUrls ?? [],
   }));
+
+  return data;
+}
+
+export async function ZoneCreatePost(payload: ZoneFormProps) {
+  console.log(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/zone`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/zone`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("모각존 생성 실패");
+  }
+
+  const data: ZoneDetailProps = await res.json();
 
   return data;
 }

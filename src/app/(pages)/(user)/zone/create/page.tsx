@@ -7,20 +7,12 @@ import Input from "@/app/Component/ui/input";
 import Button from "@/app/Component/ui/button";
 import { useState } from "react";
 import H1Title from "@/app/Component/ui/h1-title";
-
-type FormValues = {
-  spaceName: string;
-  tag: string;
-  capacity: number;
-  password: string;
-  usePassword: boolean;
-  useChat: boolean;
-  memberOnly: boolean;
-  startDate: string;
-  endDate: string;
-};
+import { ZoneFormProps } from "@/types";
+import { ZoneCreatePost } from "@/lib/zone.api";
+import { useRouter } from "next/navigation";
 
 export default function ZoneCreate() {
+  const router = useRouter();
   const [photo, setPhoto] = useState<File | null>(null);
 
   const {
@@ -28,7 +20,7 @@ export default function ZoneCreate() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<ZoneFormProps>({
     defaultValues: {
       spaceName: "",
       tag: "",
@@ -42,15 +34,16 @@ export default function ZoneCreate() {
     },
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log("폼 제출", { ...data, photo });
+  const createZoneSubmit = async (data: ZoneFormProps) => {
+    const res = await ZoneCreatePost(data);
+    router.push(`/advice/detail/${res.mogakZoneId}`);
   };
 
   const usePassword = watch("usePassword");
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(createZoneSubmit)}
       className="max-w-[500px] mx-auto px-4 flex flex-col gap-4"
     >
       <H1Title>모각존 만들기</H1Title>

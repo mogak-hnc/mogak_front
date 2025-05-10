@@ -178,3 +178,28 @@ export interface CommentProps {
   time: string;
   isMe: boolean;
 }
+
+export interface ZoneFormProps {
+  spaceName: string;
+  tag: string;
+  capacity: number;
+  password: string;
+  usePassword: boolean;
+  useChat: boolean;
+  memberOnly: boolean;
+  startDate: string;
+  endDate: string;
+}
+
+export interface ZoneDetailProps {
+  mogakZoneId: number;
+  name: string;
+  maxCapacity: number;
+  imageUrl: string;
+  password: string;
+  chatEnabled: boolean;
+  loginRequired: boolean;
+  startDate: string;
+  endDate: string;
+  tagNames: string[];
+}
