@@ -7,3 +7,10 @@ export const convertDate = (dateArray: number[]) => {
     day: "numeric",
   });
 };
+
+export const convertTime = (timeArray: number[]) => {
+  const [hour, minute, second] = timeArray;
+  const pad = (n: number) => n.toString().padStart(2, "0");
+
+  return `${hour}시간 ${pad(minute)}분 ${pad(second)}초`;
+};

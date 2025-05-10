@@ -49,8 +49,8 @@ export interface ChallengeSurvivorsProps {
 export interface AdvicePreviewCardProps {
   title: string;
   commentCount: number;
-  timeLeftText: string;
-  href: string;
+  restTime: number[];
+  worryId: number;
 }
 
 export type ChallengeForm = {
