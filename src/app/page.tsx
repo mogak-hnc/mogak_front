@@ -8,20 +8,20 @@ import coding from "@/app/Component/img/c_coding.png";
 
 import MainBgLight from "@/app/Component/img/c_background_light.png";
 import MainBgDark from "@/app/Component/img/c_background_dark.png";
-import { ZoneChallenge } from "@/lib/main.api";
+import { MainZoneChallenge } from "@/lib/main.api";
+
+export const convertDate = (dateArray: number[]) => {
+  const [year, month, day] = dateArray;
+  const date = new Date(year, month - 1, day);
+  return date.toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
 
 export default async function Home() {
-  const data = await ZoneChallenge();
-
-  const convertDate = (dateArray: number[]) => {
-    const [year, month, day] = dateArray;
-    const date = new Date(year, month - 1, day);
-    return date.toLocaleDateString("ko-KR", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
+  const data = await MainZoneChallenge();
 
   return (
     <div className="w-full flex flex-col items-center px-4 gap-8">

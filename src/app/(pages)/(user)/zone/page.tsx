@@ -1,29 +1,10 @@
 import MainSubCard from "@/app/Component/shared/main-sub-card";
 import SearchCard from "@/app/Component/shared/search-card";
+import { ZoneMain } from "@/lib/zone.api";
 import { MainSubCardProps } from "@/types";
 
-const mockStudySpaces: MainSubCardProps[] = [
-  {
-    type: "studySpace",
-    tag: "#카페",
-    title: "카공해요",
-    participants: ["/user1.png", "/user2.png", "/user3.png", "/user4.png"],
-  },
-  {
-    type: "studySpace",
-    tag: "#스터디룸",
-    title: "조용한 방",
-    participants: ["/user1.png"],
-  },
-  {
-    type: "studySpace",
-    tag: "#도서관",
-    title: "같이 집중해요",
-    participants: ["/user1.png", "/user2.png"],
-  },
-];
-
-export default function ZonePage() {
+export default async function ZonePage() {
+  const data = await ZoneMain();
   return (
     <div>
       <SearchCard
@@ -34,7 +15,7 @@ export default function ZonePage() {
         section="모각존"
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {mockStudySpaces.map((m) => (
+        {data.map((m) => (
           <MainSubCard
             key={`main-sub-card-${m.type}-${m.title}`}
             {...m}

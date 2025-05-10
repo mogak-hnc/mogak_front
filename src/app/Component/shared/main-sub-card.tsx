@@ -42,18 +42,19 @@ export default function MainSubCard({
 
         <div className="flex justify-between items-center pt-4">
           <div className="flex -space-x-2">
-            {participants
-              .filter((src) => src)
-              .slice(0, 3)
-              .map((src, i) => (
-                <img
-                  key={i}
-                  src={src!}
-                  className="w-6 h-6 rounded-full border-2 border-white object-cover"
-                  alt={`participant-${i}`}
-                />
-              ))}
-            {participants.length > 3 && (
+            {participants &&
+              participants
+                .filter((src) => src)
+                .slice(0, 3)
+                .map((src, i) => (
+                  <img
+                    key={i}
+                    src={src!}
+                    className="w-6 h-6 rounded-full border-2 border-white object-cover"
+                    alt={`participant-${i}`}
+                  />
+                ))}
+            {participants && participants.length > 3 && (
               <span className="text-xs ml-2">+{participants.length - 3}</span>
             )}
           </div>

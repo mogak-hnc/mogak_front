@@ -1,6 +1,6 @@
 import { SubCardProps } from "@/types";
 
-export async function ZoneChallenge() {
+export async function MainZoneChallenge() {
   const res = await fetch(`${process.env.BACKEND_API_URL}/api/mogak`, {
     next: { revalidate: 30 },
   });
