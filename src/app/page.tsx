@@ -9,16 +9,7 @@ import coding from "@/app/Component/img/c_coding.png";
 import MainBgLight from "@/app/Component/img/c_background_light.png";
 import MainBgDark from "@/app/Component/img/c_background_dark.png";
 import { MainZoneChallenge } from "@/lib/main.api";
-
-export const convertDate = (dateArray: number[]) => {
-  const [year, month, day] = dateArray;
-  const date = new Date(year, month - 1, day);
-  return date.toLocaleDateString("ko-KR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-};
+import { convertDate } from "@/lib/date";
 
 export default async function Home() {
   const data = await MainZoneChallenge();
