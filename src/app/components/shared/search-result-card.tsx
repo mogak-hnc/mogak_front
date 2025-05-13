@@ -21,13 +21,17 @@ export default function SearchResultCard({ type }: { type: string }) {
       setData(result);
     };
     fetch();
-  }, [setData]);
+  }, []);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {data.map((m) => (
-        <MainSubCard key={`main-sub-card-${m.type}-${m.title}`} {...m} />
-      ))}
+      {data.length > 0 ? (
+        data.map((m) => (
+          <MainSubCard key={`main-sub-card-${m.type}-${m.title}`} {...m} />
+        ))
+      ) : (
+        <div>검색 결과가 없습니다.</div>
+      )}
     </div>
   );
 }

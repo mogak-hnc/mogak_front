@@ -194,3 +194,11 @@ export interface ZoneDetailProps {
   endDate: string;
   tagNames: string[];
 }
+
+export interface ZoneSearchProps {
+  search: string;
+  tag: string;
+  sort: string;
+  page: number;
+  size: number;
+}
