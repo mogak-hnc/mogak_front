@@ -2,19 +2,28 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function HeaderNavigation() {
-  const userId = 1;
+  const [memberId, setMemberId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const id = localStorage.getItem("memberId");
+    setMemberId(id);
+  }, []);
+
   const pathname = usePathname();
 
-  const navItems = [
+  const navItems: { href: string; label: string }[] = [
     { href: "/zone", label: "모각존" },
     { href: "/challenge", label: "모각챌" },
     { href: "/advice", label: "커뮤니티" },
-    { href: `/profile/${userId}`, label: "프로필" },
-    userId
-      ? { href: `/login/info/${userId}`, label: "회원정보" }
+    { href: memberId ? `/profile/${memberId}` : "/login", label: "프로필" },
+    memberId
+      ? { href: `/login/info/${memberId}`, label: "회원정보" }
       : { href: "/login", label: "로그인" },
+    // 로그아웃 로직 구현해야 함
+    ...(memberId ? [{ href: "/logout", label: "로그아웃" }] : []),
   ];
 
   return (
