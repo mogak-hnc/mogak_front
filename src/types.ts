@@ -126,6 +126,7 @@ export interface MainSubCardProps {
 }
 
 export interface SearchCardProps {
+  type: "studySpace" | "challenge";
   title: string;
   description: string;
   tags: string[];

@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Button from "../ui/button";
 import Input from "../ui/input";
@@ -6,12 +8,17 @@ import H1Title from "../ui/h1-title";
 import { SearchCardProps } from "@/types";
 
 export default function SearchCard({
+  type,
   title,
   description,
   tags,
   sort,
   section,
 }: SearchCardProps) {
+  const searchData = () => {
+    return;
+  };
+
   return (
     <div className="flex flex-col items-center gap-2 w-full">
       <H1Title>{title}</H1Title>
@@ -21,7 +28,10 @@ export default function SearchCard({
       <div className="mt-2 flex items-center gap-2">
         <Input className="h-10 w-80 bg-white rounded-md" />
         <div className="flex items-center h-10">
-          <AiOutlineSearch className="text-primary w-7 h-7" />
+          <AiOutlineSearch
+            onClick={() => searchData()}
+            className="text-primary w-7 h-7"
+          />
         </div>
       </div>
       <div className="flex gap-10">
