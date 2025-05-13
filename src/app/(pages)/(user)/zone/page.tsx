@@ -1,5 +1,5 @@
 import SearchCard from "@/app/components/shared/search-card";
-import SearchResultCardWrapper from "@/app/components/wrapper/search-result-card-wrapper";
+import SearchResultCard from "@/app/components/shared/search-result-card";
 
 export default function ZonePage() {
   return (
@@ -12,7 +12,7 @@ export default function ZonePage() {
         sort="최신순"
         section="모각존"
       />
-      <SearchResultCardWrapper type="studySpace" />
+      <SearchResultCard type="studySpace" />
     </div>
   );
 }
