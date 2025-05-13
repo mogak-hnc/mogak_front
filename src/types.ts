@@ -171,15 +171,14 @@ export interface CommentProps {
 }
 
 export interface ZoneFormProps {
-  spaceName: string;
+  name: string;
   tag: string;
-  capacity: number;
+  maxCapacity: number;
+  imageUrl: string;
   password: string;
-  usePassword: boolean;
-  useChat: boolean;
-  memberOnly: boolean;
-  startDate: string;
-  endDate: string;
+  chatEnabled: boolean;
+  loginRequired: false;
+  period: string;
 }
 
 export interface ZoneDetailProps {

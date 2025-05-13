@@ -14,13 +14,24 @@ import { useRouter } from "next/navigation";
 export default function ZoneCreate() {
   const router = useRouter();
   const [photo, setPhoto] = useState<File | null>(null);
+  type ZoneFormInputs = {
+    spaceName: string;
+    tag: string;
+    capacity: number;
+    password: string;
+    usePassword: boolean;
+    useChat: boolean;
+    memberOnly: boolean;
+    startDate: string;
+    endDate: string;
+  };
 
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<ZoneFormProps>({
+  } = useForm<ZoneFormInputs>({
     defaultValues: {
       spaceName: "",
       tag: "",
@@ -34,9 +45,24 @@ export default function ZoneCreate() {
     },
   });
 
-  const createZoneSubmit = async (data: ZoneFormProps) => {
-    const res = await ZoneCreatePost(data);
-    router.push(`/advice/detail/${res.mogakZoneId}`);
+  const createZoneSubmit = async (data: any) => {
+    const payload = {
+      name: data.spaceName,
+      tag: data.tag,
+      maxCapacity: data.capacity,
+      imageUrl: "https://cdn.imweb.me/thumbnail/20230228/25687782da912.png",
+      password: data.usePassword ? data.password : "",
+      chatEnabled: data.useChat,
+      loginRequired: data.memberOnly,
+      period: `${data.startDate}~${data.endDate}`,
+    };
+
+    try {
+      const res = await ZoneCreatePost(payload);
+      router.push(`/zone/detail/${res.mogakZoneId}`);
+    } catch (err) {
+      console.error("모각존 생성 실패", err);
+    }
   };
 
   const usePassword = watch("usePassword");

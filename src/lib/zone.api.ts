@@ -4,6 +4,7 @@ import {
   ZoneFormProps,
   ZoneSearchProps,
 } from "@/types";
+import { getJwtFromCookie } from "@/utils/auth";
 
 export async function ZoneMain() {
   const res = await fetch(
@@ -67,14 +68,23 @@ export async function ZoneSearch({
 }
 
 export async function ZoneCreatePost(payload: ZoneFormProps) {
-  console.log(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/zone`);
+  console.log(JSON.stringify(payload));
+
+  const token = getJwtFromCookie();
+
+  if (!token) {
+    throw new Error("JWT 토큰이 없음 / 로그인 필요");
+  }
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/zone`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: token,
       },
+      credentials: "include",
       body: JSON.stringify(payload),
     }
   );
