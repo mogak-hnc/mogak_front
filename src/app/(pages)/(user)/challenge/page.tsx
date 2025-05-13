@@ -1,5 +1,6 @@
 import MainSubCard from "@/app/components/shared/main-sub-card";
 import SearchCard from "@/app/components/shared/search-card";
+import SearchResultCard from "@/app/components/shared/search-result-card";
 import { ChallengeMain } from "@/lib/challenge.api";
 
 export default async function ChallengePage() {
@@ -14,14 +15,7 @@ export default async function ChallengePage() {
         sort="최신순"
         section="챌린지"
       />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {data.map((m) => (
-          <MainSubCard
-            key={`main-sub-card-${m.type}-${m.title}`}
-            {...m}
-          ></MainSubCard>
-        ))}
-      </div>
+      <SearchResultCard type="challenge" />
     </div>
   );
 }
