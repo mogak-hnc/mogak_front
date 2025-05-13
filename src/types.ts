@@ -162,16 +162,6 @@ export interface ZoneDetailMemberProps {
   image: string;
 }
 
-export interface ZoneDetailProps {
-  tagNames: string[];
-  hostMemberId: number;
-  name: string;
-  startDate: string;
-  endDate: string;
-  joinedUserCount: number;
-  zoneMemberInfoList: ZoneDetailMemberProps[];
-}
-
 export interface CommentProps {
   id: number;
   message: string;
