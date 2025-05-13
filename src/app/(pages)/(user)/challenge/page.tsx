@@ -7,6 +7,7 @@ export default async function ChallengePage() {
   return (
     <div>
       <SearchCard
+        type="studySpace"
         title="모각챌"
         description="모여서 각자 챌린지"
         tags={["공식 챌린지"]}
