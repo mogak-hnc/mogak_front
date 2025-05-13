@@ -18,12 +18,15 @@ export default function HeaderNavigation() {
     { href: "/zone", label: "모각존" },
     { href: "/challenge", label: "모각챌" },
     { href: "/advice", label: "커뮤니티" },
-    { href: memberId ? `/profile/${memberId}` : "/login", label: "프로필" },
     memberId
-      ? { href: `/login/info/${memberId}`, label: "회원정보" }
+      ? { href: `/profile/${memberId}`, label: "프로필" }
       : { href: "/login", label: "로그인" },
-    // 로그아웃 로직 구현해야 함
-    ...(memberId ? [{ href: "/logout", label: "로그아웃" }] : []),
+    ...(memberId
+      ? [
+          { href: `/login/info/${memberId}`, label: "회원정보" },
+          { href: "/logout", label: "로그아웃" },
+        ]
+      : []),
   ];
 
   return (
