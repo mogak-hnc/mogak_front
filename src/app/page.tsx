@@ -6,10 +6,11 @@ import coding from "@/app/components/img/c_coding.png";
 import MainBgLight from "@/app/components/img/c_background_light.png";
 import MainBgDark from "@/app/components/img/c_background_dark.png";
 import { MainZoneChallenge } from "@/lib/main.api";
-import { convertDate } from "@/lib/date";
+
 import MainCard from "./components/shared/main-card";
 import { MainSubTitle } from "./components/main-sub-title";
 import MainSubCard from "./components/shared/main-sub-card";
+import { convertDate } from "@/utils/date";
 
 export default async function Home() {
   const data = await MainZoneChallenge();

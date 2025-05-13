@@ -68,17 +68,17 @@ export default function SearchCard({
 
       <div className="flex gap-10">
         <div className="flex gap-2">
-          {tags.map((tag) => (
+          {tags.map((tag, index) => (
             <div
-              key={tag}
-              onClick={() => toggleTag(tag)}
+              key={`${tag}-${index}`}
+              onClick={() => toggleTag(tag.name)}
               className={`border cursor-pointer rounded-md px-5 py-1 ${
-                selectedTag === tag
+                selectedTag === tag.name
                   ? "bg-secondary text-white"
                   : "border-borders dark:border-border-dark"
               }`}
             >
-              #{tag}
+              #{tag.name}
             </div>
           ))}
         </div>

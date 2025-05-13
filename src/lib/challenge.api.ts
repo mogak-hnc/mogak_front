@@ -1,5 +1,5 @@
 import { MainSubCardProps } from "@/types";
-import { convertDate } from "./date";
+import { convertDate } from "@/utils/date";
 
 export async function ChallengeMain() {
   const res = await fetch(`${process.env.BACKEND_API_URL}/api/mogak/challenge`);

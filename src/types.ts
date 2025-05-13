@@ -125,11 +125,15 @@ export interface MainSubCardProps {
   isOfficial?: boolean;
 }
 
+export interface SearchCardPropsTags {
+  name: string;
+}
+
 export interface SearchCardProps {
   type: "studySpace" | "challenge";
   title: string;
   description: string;
-  tags: string[];
+  tags: SearchCardPropsTags[];
   sort: string;
   section: string;
 }

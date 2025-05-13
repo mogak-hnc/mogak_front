@@ -1,5 +1,6 @@
 import {
   MainSubCardProps,
+  SearchCardPropsTags,
   ZoneDetailProps,
   ZoneFormProps,
   ZoneSearchProps,
@@ -23,6 +24,20 @@ export async function ZoneMain() {
     title: item.name,
     participants: item.memberImageUrls ?? [],
   }));
+
+  return data;
+}
+
+export async function ZoneTags() {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/zone/tags`
+  );
+
+  if (!res.ok) {
+    throw new Error("모각존 태그 fetch 실패");
+  }
+
+  const data: SearchCardPropsTags[] = await res.json();
 
   return data;
 }
