@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import AdminTable from "@/app/Component/admin/admin-table";
-import ConfirmModal from "@/app/Component/confirm-modal";
+import AdminTable from "@/app/components/admin/admin-table";
+import ConfirmModal from "@/app/components/confirm-modal";
 
 const mockZones = [
   {

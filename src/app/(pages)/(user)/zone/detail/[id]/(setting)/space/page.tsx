@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import FormField from "@/app/Component/shared/form-field";
-import Input from "@/app/Component/ui/input";
-import Checkbox from "@/app/Component/ui/checkbox";
-import Button from "@/app/Component/ui/button";
-import H1Title from "@/app/Component/ui/h1-title";
-import ConfirmModal from "@/app/Component/confirm-modal";
+import FormField from "@/app/components/shared/form-field";
+import Input from "@/app/components/ui/input";
+import Checkbox from "@/app/components/ui/checkbox";
+import Button from "@/app/components/ui/button";
+import H1Title from "@/app/components/ui/h1-title";
+import ConfirmModal from "@/app/components/confirm-modal";
 
 export default function ZoneDetailSpacePage() {
   const [spaceName, setSpaceName] = useState("카공해요");

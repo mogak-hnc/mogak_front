@@ -1,5 +1,5 @@
-import MainSubCard from "@/app/Component/shared/main-sub-card";
-import SearchCard from "@/app/Component/shared/search-card";
+import MainSubCard from "@/app/components/shared/main-sub-card";
+import SearchCard from "@/app/components/shared/search-card";
 import { ChallengeMain } from "@/lib/challenge.api";
 
 export default async function ChallengePage() {

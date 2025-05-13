@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Input from "@/app/Component/ui/input";
-import Button from "@/app/Component/ui/button";
-import H1Title from "@/app/Component/ui/h1-title";
+import Input from "@/app/components/ui/input";
+import Button from "@/app/components/ui/button";
+import H1Title from "@/app/components/ui/h1-title";
 
 const DELETE_TIMES = [1, 3, 6, 12, 24];
 

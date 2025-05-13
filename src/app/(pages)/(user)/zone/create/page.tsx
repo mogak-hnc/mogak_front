@@ -1,12 +1,12 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import FormField from "@/app/Component/shared/form-field";
-import Checkbox from "@/app/Component/ui/checkbox";
-import Input from "@/app/Component/ui/input";
-import Button from "@/app/Component/ui/button";
+import FormField from "@/app/components/shared/form-field";
+import Checkbox from "@/app/components/ui/checkbox";
+import Input from "@/app/components/ui/input";
+import Button from "@/app/components/ui/button";
 import { useState } from "react";
-import H1Title from "@/app/Component/ui/h1-title";
+import H1Title from "@/app/components/ui/h1-title";
 import { ZoneFormProps } from "@/types";
 import { ZoneCreatePost } from "@/lib/zone.api";
 import { useRouter } from "next/navigation";

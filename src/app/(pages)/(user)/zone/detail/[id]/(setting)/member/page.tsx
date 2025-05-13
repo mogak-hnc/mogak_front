@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Button from "@/app/Component/ui/button";
-import ConfirmModal from "@/app/Component/confirm-modal";
+import Button from "@/app/components/ui/button";
+import ConfirmModal from "@/app/components/confirm-modal";
 
 const mockMembers = [
   { id: 1, nickname: "피자", image: "/user1.png" },

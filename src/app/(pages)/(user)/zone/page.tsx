@@ -1,5 +1,5 @@
-import SearchCard from "@/app/Component/shared/search-card";
-import SearchResultCardWrapper from "@/app/Component/wrapper/search-result-card-wrapper";
+import SearchCard from "@/app/components/shared/search-card";
+import SearchResultCardWrapper from "@/app/components/wrapper/search-result-card-wrapper";
 
 export default function ZonePage() {
   return (

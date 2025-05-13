@@ -1,6 +1,6 @@
 "use client";
 
-import SubTitle from "@/app/Component/shared/sub-title";
+import SubTitle from "@/app/components/shared/sub-title";
 import kakaoLogin from "./kakao_login.png";
 import naverLogin from "./naver_login.png";
 

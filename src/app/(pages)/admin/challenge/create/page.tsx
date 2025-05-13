@@ -1,6 +1,6 @@
 "use client";
 
-import ChallengeCreateForm from "@/app/Component/challenge-create-form";
+import ChallengeCreateForm from "@/app/components/challenge-create-form";
 
 export default function AdminChallengeCreatePage() {
   return (

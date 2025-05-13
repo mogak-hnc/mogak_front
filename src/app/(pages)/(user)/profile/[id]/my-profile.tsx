@@ -1,4 +1,4 @@
-import Button from "@/app/Component/ui/button";
+import Button from "@/app/components/ui/button";
 import { UserProfile } from "@/types";
 import Link from "next/link";
 

@@ -1,6 +1,6 @@
-import ChatUI from "@/app/Component/shared/chat-ui";
-import SubCard from "@/app/Component/shared/sub-card";
-import ZoneCard from "@/app/Component/shared/zone-card";
+import ChatUI from "@/app/components/shared/chat-ui";
+import SubCard from "@/app/components/shared/sub-card";
+import ZoneCard from "@/app/components/shared/zone-card";
 import { StatusType, ZoneCardProps, ZoneDetailProps } from "@/types";
 
 export default async function ZoneDetailPage() {

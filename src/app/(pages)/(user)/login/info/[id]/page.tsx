@@ -2,8 +2,8 @@
 
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import Input from "@/app/Component/ui/input";
-import Button from "@/app/Component/ui/button";
+import Input from "@/app/components/ui/input";
+import Button from "@/app/components/ui/button";
 
 const mockLoginInfo = {
   nickname: "다정",

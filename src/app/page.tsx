@@ -1,15 +1,15 @@
 import { SubCardProps } from "@/types";
-import { MainSubTitle } from "./Component/main-sub-title";
-import MainCard from "./Component/shared/main-card";
-import MainSubCard from "./Component/shared/main-sub-card";
-import student from "@/app/Component/img/c_student.png";
-import designer from "@/app/Component/img/c_designer.png";
-import coding from "@/app/Component/img/c_coding.png";
+import student from "@/app/components/img/c_student.png";
+import designer from "@/app/components/img/c_designer.png";
+import coding from "@/app/components/img/c_coding.png";
 
-import MainBgLight from "@/app/Component/img/c_background_light.png";
-import MainBgDark from "@/app/Component/img/c_background_dark.png";
+import MainBgLight from "@/app/components/img/c_background_light.png";
+import MainBgDark from "@/app/components/img/c_background_dark.png";
 import { MainZoneChallenge } from "@/lib/main.api";
 import { convertDate } from "@/lib/date";
+import MainCard from "./components/shared/main-card";
+import { MainSubTitle } from "./components/main-sub-title";
+import MainSubCard from "./components/shared/main-sub-card";
 
 export default async function Home() {
   const data = await MainZoneChallenge();

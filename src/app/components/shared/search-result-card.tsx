@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import MainSubCard from "@/app/Component/shared/main-sub-card";
+import MainSubCard from "@/app/components/shared/main-sub-card";
 import { ZoneMain } from "@/lib/zone.api";
 import { useSearchResultStore } from "@/store/shared/useSearchResultStore";
 

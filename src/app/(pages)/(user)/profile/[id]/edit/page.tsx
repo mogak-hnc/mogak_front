@@ -2,9 +2,9 @@
 
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import Input from "@/app/Component/ui/input";
-import Checkbox from "@/app/Component/ui/checkbox";
-import Button from "@/app/Component/ui/button";
+import Input from "@/app/components/ui/input";
+import Checkbox from "@/app/components/ui/checkbox";
+import Button from "@/app/components/ui/button";
 import { UserProfile } from "@/types";
 
 const mockUserProfiles: Record<string, UserProfile> = {

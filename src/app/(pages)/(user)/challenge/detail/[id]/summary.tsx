@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/app/Component/ui/button";
+import Button from "@/app/components/ui/button";
 
 export default function Summary({ challengeId }: { challengeId: string }) {
   return (

@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import AdminTable from "@/app/Component/admin/admin-table";
-import Input from "@/app/Component/ui/input";
-import Button from "@/app/Component/ui/button";
+import AdminTable from "@/app/components/admin/admin-table";
+import Input from "@/app/components/ui/input";
+import Button from "@/app/components/ui/button";
 
 const mockBadgeList = [
   {

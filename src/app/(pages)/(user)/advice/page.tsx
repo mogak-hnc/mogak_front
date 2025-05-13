@@ -1,9 +1,9 @@
-import AdvicePreviewCard from "@/app/Component/advice-preview-card";
-import MainCard from "@/app/Component/shared/main-card";
-import H1Title from "@/app/Component/ui/h1-title";
+import AdvicePreviewCard from "@/app/components/advice-preview-card";
+import MainCard from "@/app/components/shared/main-card";
+import H1Title from "@/app/components/ui/h1-title";
 import { AdvicePreviewCardProps } from "@/types";
-import AdviceBgLight from "@/app/Component/img/s_background_light.png";
-import AdviceBgDark from "@/app/Component/img/s_background_dark.png";
+import AdviceBgLight from "@/app/components/img/s_background_light.png";
+import AdviceBgDark from "@/app/components/img/s_background_dark.png";
 import { AdviceMain } from "@/lib/advice.api";
 
 export default async function AdvicePage() {

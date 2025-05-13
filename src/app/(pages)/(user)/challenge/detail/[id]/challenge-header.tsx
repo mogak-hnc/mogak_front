@@ -1,4 +1,4 @@
-import Button from "@/app/Component/ui/button";
+import Button from "@/app/components/ui/button";
 import { ChallengeHeaderProps } from "@/types";
 
 export default function ChallengeHeader({
