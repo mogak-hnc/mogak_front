@@ -58,10 +58,15 @@ export async function GET(req: NextRequest) {
       }
     );
 
-    const { token } = await res.json();
+    const { token, memberId } = await res.json();
 
     const response = NextResponse.redirect(`${process.env.FRONTEND_API_URL}`);
     response.cookies.set("jwt", token, { path: "/" });
+
+    response.headers.set(
+      "Location",
+      `${process.env.FRONTEND_API_URL}/login/callback?memberId=${memberId}`
+    );
 
     return response;
   } catch (err) {
