@@ -5,14 +5,14 @@ import { useState } from "react";
 import ZoneCreateForm from "./zone-create-form";
 import { useZoneCreateForm } from "./use-zone-create-form";
 import { ZoneCreatePost } from "@/lib/zone.api";
-import { ZoneFormInputs } from "@/types";
+import { ZoneCreateInput } from "@/types/zone.type";
 
 export default function ZoneCreatePage() {
   const router = useRouter();
   const [photo, setPhoto] = useState<File | null>(null);
   const form = useZoneCreateForm();
 
-  const createZoneSubmit = async (data: ZoneFormInputs) => {
+  const createZoneSubmit = async (data: ZoneCreateInput) => {
     const payload = {
       name: data.spaceName,
       tag: data.tag ?? "기타",

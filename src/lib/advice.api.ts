@@ -1,4 +1,4 @@
-import { AdvicePreviewCardProps } from "@/types";
+import { AdviceCardProps } from "@/types/advice.type";
 
 export async function AdviceMain() {
   const res = await fetch(`${process.env.BACKEND_API_URL}/api/mogak/worry`);
@@ -7,7 +7,7 @@ export async function AdviceMain() {
     throw new Error("고민 상담 메인 fetch 실패");
   }
 
-  const data: AdvicePreviewCardProps[] = await res.json();
+  const data: AdviceCardProps[] = await res.json();
 
   return data;
 }

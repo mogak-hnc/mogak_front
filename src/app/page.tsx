@@ -1,4 +1,3 @@
-import { SubCardProps } from "@/types";
 import student from "@/app/components/img/c_student.png";
 import designer from "@/app/components/img/c_designer.png";
 import coding from "@/app/components/img/c_coding.png";

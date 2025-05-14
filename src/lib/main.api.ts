@@ -1,4 +1,4 @@
-import { SubCardProps } from "@/types";
+import { MainProps } from "@/types/main.type";
 
 export async function MainZoneChallenge() {
   const res = await fetch(`${process.env.BACKEND_API_URL}/api/mogak`, {
@@ -9,7 +9,7 @@ export async function MainZoneChallenge() {
     throw new Error("메인 fetch 실패");
   }
 
-  const data: SubCardProps = await res.json();
+  const data: MainProps = await res.json();
 
   return data;
 }

@@ -1,11 +1,10 @@
 import {
-  MainSubCardProps,
-  SearchCardPropsTags,
-  ZoneDetailProps,
-  ZoneFormProps,
+  ZoneCreateRequest,
+  ZoneCreateResponse,
   ZoneMainProps,
+  ZoneResultProps,
   ZoneSearchProps,
-} from "@/types";
+} from "@/types/zone.type";
 import { getJwtFromCookie } from "@/utils/auth";
 
 export async function ZoneMain() {
@@ -38,7 +37,7 @@ export async function ZoneTags() {
     throw new Error("모각존 태그 fetch 실패");
   }
 
-  const data: SearchCardPropsTags[] = await res.json();
+  const data: ZoneResultProps[] = await res.json();
 
   return data;
 }
@@ -70,7 +69,7 @@ export async function ZoneSearch({
 
   const raw = await res.json();
 
-  const data: MainSubCardProps[] = raw.content.map((item: any) => ({
+  const data: ZoneMainProps[] = raw.content.map((item: any) => ({
     type: "studySpace",
     tag: item.tagNames?.[0] ?? "",
     title: item.name,
@@ -83,7 +82,7 @@ export async function ZoneSearch({
   };
 }
 
-export async function ZoneCreatePost(payload: ZoneFormProps) {
+export async function ZoneCreatePost(payload: ZoneCreateRequest) {
   // console.log(JSON.stringify(payload));
 
   const token = getJwtFromCookie();
@@ -109,7 +108,7 @@ export async function ZoneCreatePost(payload: ZoneFormProps) {
     throw new Error("모각존 생성 실패");
   }
 
-  const data: ZoneDetailProps = await res.json();
+  const data: ZoneCreateResponse = await res.json();
 
   return data;
 }

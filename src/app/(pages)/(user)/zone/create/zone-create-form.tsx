@@ -6,10 +6,10 @@ import Input from "@/app/components/ui/input";
 import Checkbox from "@/app/components/ui/checkbox";
 import Button from "@/app/components/ui/button";
 import H1Title from "@/app/components/ui/h1-title";
-import { ZoneFormInputs } from "@/types";
+import { ZoneCreateInput } from "@/types/zone.type";
 
 type Props = {
-  form: UseFormReturn<ZoneFormInputs>;
+  form: UseFormReturn<ZoneCreateInput>;
   onSubmit: () => void;
   photo: File | null;
   setPhoto: (file: File | null) => void;

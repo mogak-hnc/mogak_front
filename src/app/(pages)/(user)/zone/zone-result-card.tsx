@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { ZoneMain } from "@/lib/zone.api";
-import { ZoneMainProps } from "@/types";
 import ZoneMainCard from "@/app/components/shared/zone-main-card";
+import { ZoneMainProps } from "@/types/zone.type";
 
 export default function ZoneResultCard() {
   const [data, setData] = useState<ZoneMainProps[]>([]);

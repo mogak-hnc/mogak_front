@@ -1,8 +1,4 @@
-import {
-  ChallengeMainProps,
-  MainChallengeProps,
-  MainSubCardProps,
-} from "@/types";
+import { ChallengeMainProps } from "@/types/challenge.type";
 import { convertDate } from "@/utils/date";
 
 export async function ChallengeMain() {

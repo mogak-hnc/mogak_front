@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { ChallengeMain } from "@/lib/challenge.api";
-import { ChallengeMainProps } from "@/types";
+
 import ChallengeMainCard from "@/app/components/shared/challenge-main-card";
+import { ChallengeMainProps } from "@/types/challenge.type";
 
 export default function ChallengeResultCard() {
   const [data, setData] = useState<ChallengeMainProps[]>([]);
