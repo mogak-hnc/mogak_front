@@ -1,3 +1,8 @@
 export default function Loading() {
-  return <div>로딩 중</div>;
+  return (
+    <div className="flex flex-col items-center justify-center h-screen text-center text-primary dark:text-primary-dark">
+      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary dark:border-primary-dark mb-4"></div>
+      <p className="text-sm">로딩 중입니다... 잠시만 기다려 주세요.</p>
+    </div>
+  );
 }
