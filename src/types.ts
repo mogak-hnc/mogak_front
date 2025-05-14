@@ -125,6 +125,24 @@ export interface MainSubCardProps {
   isOfficial?: boolean;
 }
 
+export interface ZoneMainProps {
+  type: "studySpace" | "challenge";
+  tag?: string;
+  title: string;
+  participants: (string | null)[];
+  description?: string;
+  isOfficial?: boolean;
+}
+
+export interface ChallengeMainProps {
+  type: "studySpace" | "challenge";
+  tag?: string;
+  title: string;
+  participants: (string | null)[];
+  description?: string;
+  isOfficial?: boolean;
+}
+
 export interface SearchCardPropsTags {
   name: string;
 }

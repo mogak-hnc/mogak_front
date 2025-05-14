@@ -10,7 +10,7 @@ const statusColorMap: Record<StatusType, string> = {
     "text-borders dark:text-border-dark border-borders dark:border-border-dark",
 };
 
-export default function ZoneCard({
+export default function UserCard({
   memberId,
   image,
   nickname,

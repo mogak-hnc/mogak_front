@@ -1,4 +1,8 @@
-import { MainSubCardProps } from "@/types";
+import {
+  ChallengeMainProps,
+  MainChallengeProps,
+  MainSubCardProps,
+} from "@/types";
 import { convertDate } from "@/utils/date";
 
 export async function ChallengeMain() {
@@ -10,7 +14,7 @@ export async function ChallengeMain() {
 
   const raw = await res.json();
 
-  const data: MainSubCardProps[] = raw.map((item: any) => ({
+  const data: ChallengeMainProps[] = raw.map((item: any) => ({
     type: "challenge",
     title: item.title,
 

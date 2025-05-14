@@ -3,6 +3,7 @@ import {
   SearchCardPropsTags,
   ZoneDetailProps,
   ZoneFormProps,
+  ZoneMainProps,
   ZoneSearchProps,
 } from "@/types";
 import { getJwtFromCookie } from "@/utils/auth";
@@ -18,7 +19,7 @@ export async function ZoneMain() {
 
   const raw = await res.json();
 
-  const data: MainSubCardProps[] = raw.map((item: any) => ({
+  const data: ZoneMainProps[] = raw.map((item: any) => ({
     type: "studySpace",
     tag: item.tagNames?.[0] ?? "",
     title: item.name,
