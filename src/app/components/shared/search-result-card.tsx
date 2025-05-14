@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect } from "react";
 import MainSubCard from "@/app/components/shared/main-sub-card";
 import { ZoneMain } from "@/lib/zone.api";
@@ -33,7 +34,9 @@ export default function SearchResultCard({ type }: { type: string }) {
           />
         ))
       ) : (
-        <div>검색 결과가 없습니다.</div>
+        <div className="col-span-full text-center text-gray-500 py-10">
+          검색 결과가 없습니다.
+        </div>
       )}
     </div>
   );
