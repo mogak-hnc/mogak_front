@@ -1,9 +1,9 @@
-import { ZoneFormInputs } from "@/types";
+import { ZoneCreateInput } from "@/types/zone.type";
 import { getDateString } from "@/utils/today";
 import { useForm } from "react-hook-form";
 
 export function useZoneCreateForm() {
-  return useForm<ZoneFormInputs>({
+  return useForm<ZoneCreateInput>({
     defaultValues: {
       spaceName: "",
       tag: "",
