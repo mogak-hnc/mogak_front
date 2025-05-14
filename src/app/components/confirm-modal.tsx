@@ -1,4 +1,4 @@
-import { ConfirmModalProps } from "@/types";
+import { ConfirmModalProps } from "@/types/shared.type";
 
 export default function ConfirmModal({
   message,

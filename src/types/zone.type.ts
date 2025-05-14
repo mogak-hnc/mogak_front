@@ -14,16 +14,12 @@ export interface ZoneChatUiProps {
 }
 
 export interface ZoneMainProps {
-  type: "studySpace" | "challenge";
   tag?: string;
   title: string;
   participants: (string | null)[];
-  description?: string;
-  isOfficial?: boolean;
 }
 
-export interface ZoneResultProps {
-  type: "studySpace" | "challenge";
+export interface ZoneSearchCardProps {
   title: string;
   description: string;
   tags: TagsProps[];

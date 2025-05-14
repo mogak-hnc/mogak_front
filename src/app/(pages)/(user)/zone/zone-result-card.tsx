@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { ZoneMain } from "@/lib/zone.api";
-import ZoneMainCard from "@/app/components/shared/zone-main-card";
 import { ZoneMainProps } from "@/types/zone.type";
+import ZoneMainCard from "./zone-main-card";
 
 export default function ZoneResultCard() {
   const [data, setData] = useState<ZoneMainProps[]>([]);
@@ -25,7 +25,9 @@ export default function ZoneResultCard() {
 
   if (loading) {
     return (
-      <div className="text-center text-gray-500 py-10">불러오는 중...</div>
+      <div className="text-center text-border-dark dark:text-borders py-10">
+        불러오는 중...
+      </div>
     );
   }
 

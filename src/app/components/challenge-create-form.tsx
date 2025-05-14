@@ -6,7 +6,7 @@ import Button from "@/app/components/ui/button";
 import FormField from "@/app/components/shared/form-field";
 import H1Title from "@/app/components/ui/h1-title";
 import { UseFormReturn } from "react-hook-form";
-import { ChallengeForm } from "@/types";
+import { ChallengeForm } from "@/types/challenge.type";
 
 type Props = {
   form: UseFormReturn<ChallengeForm>;

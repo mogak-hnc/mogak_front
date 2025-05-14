@@ -1,4 +1,4 @@
-import { AdminTableProps } from "@/types";
+import { AdminTableProps } from "@/types/admin.type";
 import Link from "next/link";
 
 export default function AdminTable({ columns, data }: AdminTableProps) {

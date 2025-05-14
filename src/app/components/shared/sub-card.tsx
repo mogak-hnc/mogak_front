@@ -1,15 +1,14 @@
 import Link from "next/link";
 import Button from "../ui/button";
-import { ZoneDetailProps } from "@/types";
 
-export default function SubCard({}: // tagNames,
+export default function SubCard() { //{}:  tagNames,
 // hostMemberId,
 // name,
 // startDate,
 // endDate,
 // joinedUserCount,
 // zoneMemberInfoList,
-ZoneDetailProps) {
+// ZoneDetailProps
   return (
     <div className="ml-4 flex flex-col justify-center mb-6">
       {/* <span className="flex gap-3 text-primary dark:text-primary text-xl">

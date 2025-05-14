@@ -1,4 +1,4 @@
-import { FormFieldProps } from "@/types";
+import { FormFieldProps } from "@/types/shared.type";
 
 export default function FormField({ label, children }: FormFieldProps) {
   return (

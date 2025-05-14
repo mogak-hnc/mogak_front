@@ -1,4 +1,4 @@
-import { StatusType, ZoneCardProps } from "@/types";
+import { StatusType, ZoneMemberCardProps } from "@/types/zone.type";
 import Link from "next/link";
 
 const statusColorMap: Record<StatusType, string> = {
@@ -16,7 +16,7 @@ export default function UserCard({
   nickname,
   role,
   status,
-}: ZoneCardProps) {
+}: ZoneMemberCardProps) {
   return (
     <Link href={`/profile/${memberId}`}>
       <div className="flex items-center p-4 w-fit">

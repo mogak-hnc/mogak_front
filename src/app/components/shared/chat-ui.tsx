@@ -1,6 +1,6 @@
-import { ChatUiProps } from "@/types";
+import { ZoneChatUiProps } from "@/types/zone.type";
 
-export default function ChatUI({ messages }: ChatUiProps) {
+export default function ChatUI({ messages }: ZoneChatUiProps) {
   return (
     <div className="w-full max-w-md h-[600px] mx-auto p-4 bg-white rounded-3xl shadow border border-gray-200 flex flex-col">
       <div className="flex-1 overflow-y-auto space-y-4">

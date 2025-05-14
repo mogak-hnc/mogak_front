@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { ChallengeMain } from "@/lib/challenge.api";
 
-import ChallengeMainCard from "@/app/components/shared/challenge-main-card";
+import ChallengeMainCard from "@/app/(pages)/(user)/challenge/challenge-main-card";
 import { ChallengeMainProps } from "@/types/challenge.type";
 
 export default function ChallengeResultCard() {
@@ -26,7 +26,9 @@ export default function ChallengeResultCard() {
 
   if (loading) {
     return (
-      <div className="text-center text-gray-500 py-10">불러오는 중...</div>
+      <div className="text-center text-border-dark dark:text-borders py-10">
+        불러오는 중...
+      </div>
     );
   }
 

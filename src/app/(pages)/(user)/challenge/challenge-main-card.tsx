@@ -1,21 +1,25 @@
+import { ChallengeMainProps } from "@/types/challenge.type";
 import Link from "next/link";
-import { MainSubCardProps } from "@/types";
 
-export default function ZoneMainCard({
-  tag,
+export default function ChallengeMainCard({
   title,
+  description,
   participants,
-}: MainSubCardProps) {
+  isOfficial,
+}: ChallengeMainProps) {
   return (
-    <Link href={`/zone/detail/1`}>
+    <Link href={`/challenge/detail/1`}>
       <div className="rounded-3xl p-4 shadow-md bg-white flex flex-col justify-between min-w-[280px] max-w-[320px] h-[180px]">
         <div className="space-y-1">
-          {tag && (
-            <span className="bg-secondary text-text font-bold px-2 py-0.5 rounded">
-              {tag}
+          {isOfficial && (
+            <span className="text-xs text-primary font-semibold">
+              공식 챌린지
             </span>
           )}
           <p className="text-lg font-bold text-text truncate">{title}</p>
+          {description && (
+            <p className="text-sm text-text truncate">{description}</p>
+          )}
         </div>
 
         <div className="flex justify-between items-center pt-4">

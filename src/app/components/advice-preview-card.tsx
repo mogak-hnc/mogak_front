@@ -1,4 +1,4 @@
-import { AdvicePreviewCardProps } from "@/types";
+import { AdviceCardProps } from "@/types/advice.type";
 import { convertTime } from "@/utils/date";
 import Link from "next/link";
 
@@ -7,7 +7,7 @@ export default function AdvicePreviewCard({
   commentCount,
   restTime,
   worryId,
-}: AdvicePreviewCardProps) {
+}: AdviceCardProps) {
   return (
     <Link href={`/advice/${worryId}`}>
       <div className="rounded-3xl p-4 shadow-md bg-white dark:bg-border-dark border text-sm flex flex-col justify-between w-[200px] h-[180px]">

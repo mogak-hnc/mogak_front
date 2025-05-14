@@ -31,16 +31,13 @@ export interface ChallengeCreateFormProps {
 }
 
 export interface ChallengeMainProps {
-  type: "studySpace" | "challenge";
-  tag?: string;
   title: string;
   participants: (string | null)[];
-  description?: string;
-  isOfficial?: boolean;
+  description: string;
+  isOfficial: boolean;
 }
 
-export interface ChallengeResultProps {
-  type: "studySpace" | "challenge";
+export interface ChallengeSearchCardProps {
   title: string;
   description: string;
   tags: TagsProps[];

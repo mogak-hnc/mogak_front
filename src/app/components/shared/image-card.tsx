@@ -1,10 +1,10 @@
 "use client";
 
-import { MainCardProps } from "@/types";
 import Link from "next/link";
 import Button from "../ui/button";
+import { ImageCardProps } from "@/types/shared.type";
 
-export default function MainCard({
+export default function ImageCard({
   title,
   description1,
   description2,
@@ -15,7 +15,7 @@ export default function MainCard({
   img3,
   bgImageLight,
   bgImageDark,
-}: MainCardProps) {
+}: ImageCardProps) {
   return (
     <div className="flex justify-center w-full px-4">
       <div className="relative w-full max-w-7xl flex flex-col lg:flex-row items-center gap-6">

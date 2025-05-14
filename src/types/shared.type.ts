@@ -38,3 +38,17 @@ export interface ModalProps {
   onClose: () => void;
   children: React.ReactNode;
 }
+
+export interface ImageCardProps {
+  type: string;
+  title: string;
+  description1: string;
+  description2?: string;
+  button: string;
+  buttonUrl: string;
+  img1?: string;
+  img2?: string;
+  img3?: string;
+  bgImageLight: string;
+  bgImageDark: string;
+}
