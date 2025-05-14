@@ -12,6 +12,12 @@ export type ZoneFormInputs = {
   endDate: string;
 };
 
+const getDateString = (offset: number) => {
+  const date = new Date();
+  date.setDate(date.getDate() + offset);
+  return date.toISOString().split("T")[0];
+};
+
 export function useZoneCreateForm() {
   return useForm<ZoneFormInputs>({
     defaultValues: {
@@ -22,8 +28,8 @@ export function useZoneCreateForm() {
       usePassword: false,
       useChat: true,
       memberOnly: false,
-      startDate: "2024-06-10",
-      endDate: "2024-06-10",
+      startDate: getDateString(1),
+      endDate: getDateString(8),
     },
   });
 }
