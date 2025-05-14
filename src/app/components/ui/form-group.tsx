@@ -1,4 +1,4 @@
-import { FormGroupProps } from "@/types";
+import { FormGroupProps } from "@/types/shared.type";
 
 export default function FormGroup({
   label,
