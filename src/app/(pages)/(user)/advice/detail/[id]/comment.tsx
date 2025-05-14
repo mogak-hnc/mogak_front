@@ -1,6 +1,11 @@
-import { CommentProps } from "@/types";
+import { AdviceCommentProps } from "@/types/advice.type";
 
-export default function Comment({ id, message, time, isMe }: CommentProps) {
+export default function Comment({
+  id,
+  message,
+  time,
+  isMe,
+}: AdviceCommentProps) {
   return (
     <div key={id} className="flex gap-5 border-b p-2">
       <div>{message}</div>
