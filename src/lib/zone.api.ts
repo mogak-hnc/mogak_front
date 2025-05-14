@@ -83,7 +83,7 @@ export async function ZoneSearch({
 }
 
 export async function ZoneCreatePost(payload: ZoneFormProps) {
-  console.log(JSON.stringify(payload));
+  // console.log(JSON.stringify(payload));
 
   const token = getJwtFromCookie();
 

@@ -181,7 +181,7 @@ export interface ZoneFormProps {
   imageUrl: string;
   password: string;
   chatEnabled: boolean;
-  loginRequired: false;
+  loginRequired: boolean;
   period: string;
 }
 
