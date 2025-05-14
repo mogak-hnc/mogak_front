@@ -11,7 +11,7 @@ import { ChallengeForm } from "@/types/challenge.type";
 type Props = {
   form: UseFormReturn<ChallengeForm>;
   isAdmin?: boolean;
-  onSubmit: () => void;
+  onSubmit: (data: ChallengeForm) => void;
 };
 
 export default function ChallengeCreateForm({
@@ -27,7 +27,7 @@ export default function ChallengeCreateForm({
 
   return (
     <form
-      onSubmit={onSubmit}
+      onSubmit={form.handleSubmit(onSubmit)}
       className="max-w-[500px] mx-auto mt-10 px-4 flex flex-col gap-4"
     >
       <H1Title>{isAdmin ? "공식 챌린지 생성" : "챌린지 만들기"}</H1Title>
