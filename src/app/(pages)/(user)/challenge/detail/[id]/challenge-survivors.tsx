@@ -1,4 +1,4 @@
-import { ChallengeSurvivorsProps } from "@/types";
+import { ChallengeSurvivorsProps } from "@/types/challenge.type";
 
 export default function ChallengeSurvivors({
   avatars,

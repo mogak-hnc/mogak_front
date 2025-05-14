@@ -1,4 +1,4 @@
-import { ChallengeProofGridProps } from "@/types";
+import { ChallengeProofGridProps } from "@/types/challenge.type";
 
 export default function ChallengeProofGrid({
   proofImages,
