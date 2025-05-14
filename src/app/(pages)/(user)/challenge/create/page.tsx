@@ -2,7 +2,7 @@
 
 import ChallengeCreateForm from "@/app/components/challenge-create-form";
 import { useChallengeForm } from "@/app/components/use-challenge-form";
-import { ChallengeForm } from "@/types";
+import { ChallengeForm } from "@/types/challenge.type";
 
 export default function ChallengeCreatePage() {
   const form = useChallengeForm();
