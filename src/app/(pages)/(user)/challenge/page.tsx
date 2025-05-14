@@ -1,5 +1,4 @@
 import { ChallengeMain } from "@/lib/challenge.api";
-import ChallengeResultCard from "./challenge-result-card";
 import ChallengeSearchCard from "./challenge-search-card";
 
 export default async function ChallengePage() {
@@ -13,7 +12,6 @@ export default async function ChallengePage() {
         sort="최신순"
         section="챌린지"
       />
-      <ChallengeResultCard />
     </div>
   );
 }

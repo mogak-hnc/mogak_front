@@ -13,9 +13,7 @@ export async function ChallengeMain() {
   const raw = await res.json();
 
   const data: ChallengeMainProps[] = raw.map((item: any) => ({
-    type: "challenge",
     title: item.title,
-
     participants: item.memberImageUrls ?? [],
     description: `${convertDate(item.startDate)} ~ ${convertDate(
       item.endDate

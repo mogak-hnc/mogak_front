@@ -1,8 +1,8 @@
+import { TagsProps } from "@/types/shared.type";
 import {
   ZoneCreateRequest,
   ZoneCreateResponse,
   ZoneMainProps,
-  ZoneResultProps,
   ZoneSearchProps,
 } from "@/types/zone.type";
 import { getJwtFromCookie } from "@/utils/auth";
@@ -37,7 +37,7 @@ export async function ZoneTags() {
     throw new Error("모각존 태그 fetch 실패");
   }
 
-  const data: ZoneResultProps[] = await res.json();
+  const data: TagsProps[] = await res.json();
 
   return data;
 }
@@ -70,7 +70,6 @@ export async function ZoneSearch({
   const raw = await res.json();
 
   const data: ZoneMainProps[] = raw.content.map((item: any) => ({
-    type: "studySpace",
     tag: item.tagNames?.[0] ?? "",
     title: item.name,
     participants: item.memberImageUrls ?? [],
