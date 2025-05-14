@@ -1,5 +1,5 @@
 import { ZoneCreateInput } from "@/types/zone.type";
-import { getDateString } from "@/utils/today";
+import { getDateString } from "@/utils/today.util";
 import { useForm } from "react-hook-form";
 
 export function useZoneCreateForm() {

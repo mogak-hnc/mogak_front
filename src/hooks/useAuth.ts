@@ -1,6 +1,6 @@
 "use client";
 
-import { decodeToken, JwtPayload } from "@/utils/decode-token";
+import { decodeToken, JwtPayload } from "@/utils/decode-token.util";
 import { useEffect, useState } from "react";
 
 interface AuthState {

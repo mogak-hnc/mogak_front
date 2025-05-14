@@ -7,7 +7,7 @@ import {
   ChallengeMainProps,
   ChallengeSearchCardProps,
 } from "@/types/challenge.type";
-import { mapSort } from "@/utils/sort";
+import { mapSort } from "@/utils/sort.util";
 import ChallengeMainCard from "./challenge-main-card";
 
 export default function ChallengeSearchCard({
