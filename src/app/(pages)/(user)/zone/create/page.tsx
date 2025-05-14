@@ -3,8 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ZoneCreateForm from "./zone-create-form";
-import { useZoneCreateForm, ZoneFormInputs } from "./use-zone-create-form"; // 🔧 여기서 타입 가져옴
+import { useZoneCreateForm } from "./use-zone-create-form";
 import { ZoneCreatePost } from "@/lib/zone.api";
+import { ZoneFormInputs } from "@/types";
 
 export default function ZoneCreatePage() {
   const router = useRouter();

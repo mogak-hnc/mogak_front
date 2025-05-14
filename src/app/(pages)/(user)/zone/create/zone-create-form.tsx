@@ -1,12 +1,12 @@
 "use client";
 
 import { UseFormReturn } from "react-hook-form";
-import { ZoneFormInputs } from "./use-zone-create-form";
 import FormField from "@/app/components/shared/form-field";
 import Input from "@/app/components/ui/input";
 import Checkbox from "@/app/components/ui/checkbox";
 import Button from "@/app/components/ui/button";
 import H1Title from "@/app/components/ui/h1-title";
+import { ZoneFormInputs } from "@/types";
 
 type Props = {
   form: UseFormReturn<ZoneFormInputs>;
@@ -116,7 +116,7 @@ export default function ZoneCreateForm({
             {...register("startDate", {
               validate: (value) => {
                 const today = new Date();
-                today.setDate(today.getDate() + 1); // 내일
+                today.setDate(today.getDate() + 1);
                 const start = new Date(value);
                 if (start < today) {
                   return "시작일은 내일부터 가능해요.";

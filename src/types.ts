@@ -185,6 +185,18 @@ export interface ZoneFormProps {
   period: string;
 }
 
+export type ZoneFormInputs = {
+  spaceName: string;
+  tag: string;
+  capacity: number;
+  password: string;
+  usePassword: boolean;
+  useChat: boolean;
+  memberOnly: boolean;
+  startDate: string;
+  endDate: string;
+};
+
 export interface ZoneDetailProps {
   mogakZoneId: number;
   name: string;
