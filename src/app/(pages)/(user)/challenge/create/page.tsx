@@ -18,7 +18,10 @@ export default function ChallengeCreatePage() {
     <ChallengeCreateForm
       form={form}
       isAdmin={true}
-      onSubmit={form.handleSubmit(handleSubmit)}
+      onSubmit={(data) => {
+        console.log("관리자 챌린지 생성:", data);
+        alert("공식 챌린지 생성 완료!");
+      }}
     />
   );
 }
