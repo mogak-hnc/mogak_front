@@ -1,31 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminTable from "@/app/components/admin/admin-table";
 import ConfirmModal from "@/app/components/confirm-modal";
-
-const mockZones = [
-  {
-    id: 1,
-    name: "카공해요",
-    tag: "#카페",
-    members: 9,
-    createdAt: "2025-04-01",
-  },
-  {
-    id: 2,
-    name: "같이 공부해요",
-    tag: "#스터디룸",
-    members: 5,
-    createdAt: "2025-04-12",
-  },
-];
+import { ZoneSearch } from "@/lib/shared/zone.api";
 
 export default function AdminZonePage() {
-  const [zones, setZones] = useState(mockZones);
+  const [zones, setZones] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [targetId, setTargetId] = useState<number | null>(null);
 
+  useEffect(() => {
+    const fetchZones = async () => {
+      try {
+        const res = await ZoneSearch({
+          sort: "recent",
+          page: 0,
+          size: 20,
+        });
+        setZones(res.data);
+      } catch (e) {
+        console.error("에러:", e);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchZones();
+  }, []);
   const openModal = (id: number) => {
     setTargetId(id);
     setShowModal(true);

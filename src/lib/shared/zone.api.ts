@@ -43,13 +43,17 @@ export async function ZoneSearch({
   page,
   size,
 }: ZoneSearchProps) {
-  const query = new URLSearchParams({
-    search,
-    tag,
-    sort,
-    page: String(page),
-    size: String(size),
-  });
+  const query = new URLSearchParams();
+
+  if (search) {
+    query.set("search", search);
+  }
+  if (tag) {
+    query.set("tag", tag);
+  }
+  query.set("sort", sort);
+  query.set("page", String(page));
+  query.set("size", String(size));
 
   const url = `${
     process.env.NEXT_PUBLIC_BACKEND_API_URL

@@ -71,8 +71,8 @@ export interface ZoneCreateResponse {
 }
 
 export interface ZoneSearchProps {
-  search: string;
-  tag: string;
+  search?: string;
+  tag?: string;
   sort: string;
   page: number;
   size: number;
