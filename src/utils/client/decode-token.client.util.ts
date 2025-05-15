@@ -1,3 +1,10 @@
+/* 
+jwt 토큰을 디코딩하여 사용자 정보 (payload) 추출
+
+@param token - jwt 문자열
+@returns 디코딩된 사용자 정보 객체 혹은 null (실패시)
+*/
+
 const jwtDecode = require("jwt-decode") as <T>(token: string) => T;
 
 export interface JwtPayload {

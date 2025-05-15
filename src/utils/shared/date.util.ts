@@ -1,3 +1,10 @@
+/* 
+숫자 배열을 한국어 날짜 문자열로 변환
+
+@param dateArray - [year, month, day] 형태의 숫자 배열
+@returns "YYYY년 M월 D일" 형식의 문자열
+*/
+
 export const convertDate = (dateArray: number[]) => {
   const [year, month, day] = dateArray;
   const date = new Date(year, month - 1, day);
@@ -7,6 +14,13 @@ export const convertDate = (dateArray: number[]) => {
     day: "numeric",
   });
 };
+
+/* 
+숫자 배열을 "시:분:초" 형식의 한국어 문자열로 변환
+
+@param timeArray - [hour, minute, second] 형태의 숫자 배열 
+@returns "1시간 09분 05초" 형태의 문자열
+*/
 
 export const convertTime = (timeArray: number[]) => {
   const [hour, minute, second] = timeArray;
