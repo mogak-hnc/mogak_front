@@ -80,3 +80,31 @@ export interface ZoneSearchProps {
   page: number;
   size: number;
 }
+
+export interface ZoneDetailResponse {
+  tagNames: string[];
+  hostMemberId: number;
+  name: string;
+  startDate: string;
+  endDate: string;
+  joinedUserCount: number;
+  imageUrl: string;
+  zoneMemberInfoList: ZoneMemberInfo[];
+  chatHistoryResponses: ChatHistoryResponse[];
+}
+
+export interface ZoneMemberInfo {
+  memberId: number;
+  nickname: string;
+  imageUrl: string;
+  status: "STUDYING" | "WAITING" | "DONE" | string;
+}
+
+export interface ChatHistoryResponse {
+  memberId: number;
+  mogakZoneId: number;
+  nickname: string;
+  imageUrl: string;
+  message: string;
+  now: string;
+}

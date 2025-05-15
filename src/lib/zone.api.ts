@@ -6,6 +6,7 @@ import {
   ZoneSearchProps,
 } from "@/types/zone.type";
 import { getJwtFromCookie } from "@/utils/auth.util";
+import { getJwtFromServerCookie } from "./server-utils/jwt.server.util";
 
 export async function ZoneMain() {
   const res = await fetch(
@@ -81,13 +82,41 @@ export async function ZoneSearch({
   };
 }
 
+export async function ZoneDetail(mogakZoneId: number) {
+  const jwt = getJwtFromServerCookie();
+
+  if (!jwt) {
+    throw new Error("JWT 토큰 없음 / 로그인 필요");
+  }
+
+  const res = await fetch(
+    `${process.env.BACKEND_API_URL}/api/mogak/zone/${mogakZoneId}/detail`,
+    {
+      method: "GET",
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error(`#${mogakZoneId}번 모각존 디테일 fetch 실패`);
+  }
+
+  const data = await res.json();
+
+  return data;
+}
+
 export async function ZoneCreatePost(payload: ZoneCreateRequest) {
   // console.log(JSON.stringify(payload));
 
   const token = getJwtFromCookie();
 
   if (!token) {
-    throw new Error("JWT 토큰이 없음 / 로그인 필요");
+    throw new Error("JWT 토큰 없음 / 로그인 필요");
   }
 
   const res = await fetch(

@@ -1,8 +1,14 @@
 import ChatUI from "@/app/components/shared/chat-ui";
 import SubCard from "@/app/components/shared/sub-card";
+import { ZoneDetail } from "@/lib/zone.api";
 
-export default async function ZoneDetailPage() {
-  // const data = await
+export default async function ZoneDetailPage({
+  params,
+}: {
+  params: { id: number };
+}) {
+  const zoneId = params.id;
+  const data = await ZoneDetail(zoneId);
   return (
     <div className="flex gap-4">
       {/* <div className="w-[65%] flex flex-col gap-4">
@@ -21,7 +27,9 @@ export default async function ZoneDetailPage() {
         </div>
       </div>
 
-      <div className="w-[35%]"><ChatUI messages={mockMessages} /></div> */}
+      <div className="w-[35%]">
+        <ChatUI messages={mockMessages} />
+      </div> */}
     </div>
   );
 }
