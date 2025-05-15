@@ -37,6 +37,7 @@ export default function ZoneCreateForm({
 
       <FormField label="모각존 이름">
         <Input
+          placeholder="모각존1"
           {...register("spaceName", {
             required: "모각존 이름을 입력해 주세요.",
             minLength: { value: 2, message: "2글자 이상 입력해 주세요." },

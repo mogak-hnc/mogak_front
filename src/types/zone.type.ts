@@ -41,10 +41,8 @@ export interface ZoneCreateRequest {
   name: string;
   tag: string;
   maxCapacity: number;
-  imageUrl: string;
   password: string;
   chatEnabled: boolean;
-  loginRequired: boolean;
   period: string;
 }
 
@@ -67,7 +65,6 @@ export interface ZoneCreateResponse {
   imageUrl: string;
   password: string;
   chatEnabled: boolean;
-  loginRequired: boolean;
   startDate: string;
   endDate: string;
   tagNames: string[];
@@ -85,12 +82,22 @@ export interface ZoneDetailResponse {
   tagNames: string[];
   hostMemberId: number;
   name: string;
-  startDate: string;
-  endDate: string;
+  startDate: number[];
+  endDate: number[];
   joinedUserCount: number;
   imageUrl: string;
   zoneMemberInfoList: ZoneMemberInfo[];
   chatHistoryResponses: ChatHistoryResponse[];
+}
+
+export interface ZoneHeaderProps {
+  tag: string;
+  name: string;
+  hostId: number;
+  startDate: string;
+  endDate: string;
+  joinedUserCount: number;
+  imageUrl: string;
 }
 
 export interface ZoneMemberInfo {

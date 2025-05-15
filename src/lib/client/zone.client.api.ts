@@ -1,11 +1,28 @@
-import { ZoneCreateRequest, ZoneCreateResponse } from "@/types/zone.type";
+import { ZoneCreateInput, ZoneCreateRequest } from "@/types/zone.type";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 
-export async function ZoneCreatePost(payload: ZoneCreateRequest) {
+export async function ZoneCreatePost(input: ZoneCreateInput, imageFile?: File) {
   const token = getJwtFromCookie();
+  if (!token) throw new Error("JWT 토큰 없음 / 로그인 필요");
 
-  if (!token) {
-    throw new Error("JWT 토큰 없음 / 로그인 필요");
+  const payload: ZoneCreateRequest = {
+    name: input.spaceName,
+    tag: input.tag ?? "기타",
+    maxCapacity: input.capacity,
+    password: input.usePassword ? input.password : "",
+    chatEnabled: input.useChat,
+    period: `${input.startDate}~${input.endDate}`,
+  };
+
+  const formData = new FormData();
+
+  const jsonBlob = new Blob([JSON.stringify(payload)], {
+    type: "application/json",
+  });
+  formData.append("request", jsonBlob);
+
+  if (imageFile) {
+    formData.append("image", imageFile);
   }
 
   const res = await fetch(
@@ -13,11 +30,9 @@ export async function ZoneCreatePost(payload: ZoneCreateRequest) {
     {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Authorization: token,
       },
-      credentials: "include",
-      body: JSON.stringify(payload),
+      body: formData,
     }
   );
 
@@ -25,7 +40,5 @@ export async function ZoneCreatePost(payload: ZoneCreateRequest) {
     throw new Error("모각존 생성 실패");
   }
 
-  const data: ZoneCreateResponse = await res.json();
-
-  return data;
+  return await res.json();
 }
