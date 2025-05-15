@@ -3,7 +3,9 @@ import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 
 export async function ZoneCreatePost(input: ZoneCreateInput, imageFile?: File) {
   const token = getJwtFromCookie();
-  if (!token) throw new Error("JWT 토큰 없음 / 로그인 필요");
+  if (!token) {
+    throw new Error("JWT 토큰 없음 / 로그인 필요");
+  }
 
   const payload: ZoneCreateRequest = {
     name: input.spaceName,
