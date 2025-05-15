@@ -5,7 +5,7 @@ import {
   ZoneMainProps,
   ZoneSearchProps,
 } from "@/types/zone.type";
-import { getJwtFromCookie } from "@/utils/client/auth.util";
+import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 import { getJwtFromServerCookie } from "../utils/server/jwt.server.util";
 
 export async function ZoneMain() {
