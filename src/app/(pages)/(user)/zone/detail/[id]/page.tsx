@@ -1,14 +1,21 @@
 import ChatUI from "@/app/components/shared/chat-ui";
 import SubCard from "@/app/components/shared/sub-card";
 import { ZoneDetail } from "@/lib/server/zone.server.api";
+import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
+import { cookies } from "next/headers";
+
+export const dynamic = "force-dynamic";
 
 export default async function ZoneDetailPage({
   params,
 }: {
-  params: { id: number };
+  params: { id: string };
 }) {
-  const zoneId = params.id;
-  const data = await ZoneDetail(zoneId);
+  const zoneId = Number(params.id);
+  const jwt = getJwtFromServerCookie();
+  // console.log("jwt : " + jwt);
+
+  const data = await ZoneDetail(zoneId, jwt);
   return (
     <div className="flex gap-4">
       {/* <div className="w-[65%] flex flex-col gap-4">

@@ -1,8 +1,6 @@
 import { cookies } from "next/headers";
 
 export function getJwtFromServerCookie(): string | null {
-  const cookieStore = cookies();
-
-  const token = (cookieStore as any).get("jwt")?.value;
+  const token = (cookies() as any).get("jwt")?.value ?? null;
   return token ?? null;
 }

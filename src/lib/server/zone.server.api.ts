@@ -1,14 +1,10 @@
-import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
-
-export async function ZoneDetail(mogakZoneId: number) {
-  const jwt = getJwtFromServerCookie();
-
+export async function ZoneDetail(id: number, jwt: string | null) {
   if (!jwt) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
   }
 
   const res = await fetch(
-    `${process.env.BACKEND_API_URL}/api/mogak/zone/${mogakZoneId}/detail`,
+    `${process.env.BACKEND_API_URL}/api/mogak/zone/${id}/detail`,
     {
       method: "GET",
       cache: "no-store",
@@ -20,7 +16,7 @@ export async function ZoneDetail(mogakZoneId: number) {
   );
 
   if (!res.ok) {
-    throw new Error(`#${mogakZoneId}번 모각존 디테일 fetch 실패`);
+    throw new Error(`#${id}번 모각존 디테일 fetch 실패`);
   }
 
   const data = await res.json();
