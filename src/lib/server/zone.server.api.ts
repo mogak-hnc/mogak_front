@@ -1,6 +1,6 @@
 import { ZoneDetailResponse } from "@/types/zone.type";
 
-export async function ZoneDetail(id: number, jwt: string | null) {
+export async function ZoneDetail(id: string, jwt: string | null) {
   if (!jwt) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
   }

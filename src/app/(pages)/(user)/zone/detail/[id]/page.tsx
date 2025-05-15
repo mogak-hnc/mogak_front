@@ -16,7 +16,7 @@ export default async function ZoneDetailPage({
   const { id } = await params;
   const jwt = await getJwtFromServerCookie();
 
-  const data = await ZoneDetail(Number(id), jwt);
+  const data = await ZoneDetail(id, jwt);
 
   return (
     <div className="flex gap-4">

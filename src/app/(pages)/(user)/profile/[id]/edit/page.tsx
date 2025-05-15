@@ -7,32 +7,32 @@ import Checkbox from "@/app/components/ui/checkbox";
 import Button from "@/app/components/ui/button";
 import { ProfileProps } from "@/types/profile.type";
 
-const mockUserProfiles: Record<string, ProfileProps> = {
-  "1": {
-    id: "1",
-    nickname: "다정",
-    bio: "매일매일워어커구",
-    affiliation: "매일매일워어커구",
-    profileImage: "/profile.png",
-    showBadges: true,
-    badges: Array(21).fill("/badge.png"),
-  },
-};
+// const mockUserProfiles: Record<string, ProfileProps> = {
+//   "1": {
+//     id: "1",
+//     nickname: "다정",
+//     bio: "매일매일워어커구",
+//     affiliation: "매일매일워어커구",
+//     profileImage: "/profile.png",
+//     showBadges: true,
+//     badges: Array(21).fill("/badge.png"),
+//   },
+// };
 
 export default function ProfileEditPage() {
-  const params = useParams();
-  const userId = params?.id as string;
+  // const params = useParams();
+  // const userId = params?.id as string;
 
-  const user = mockUserProfiles[userId];
-  const [nickname, setNickname] = useState(user.nickname);
-  const [bio, setBio] = useState(user.bio);
-  const [affiliation, setAffiliation] = useState(user.affiliation);
-  const [showBadges, setShowBadges] = useState(user.showBadges);
-  const [profileImage, setProfileImage] = useState<File | null>(null);
+  // const user = mockUserProfiles[userId];
+  // const [nickname, setNickname] = useState(user.nickname);
+  // const [bio, setBio] = useState(user.bio);
+  // const [affiliation, setAffiliation] = useState(user.affiliation);
+  // const [showBadges, setShowBadges] = useState(user.showBadges);
+  // const [profileImage, setProfileImage] = useState<File | null>(null);
 
   return (
     <div className="max-w-xl mx-auto py-10 px-6">
-      <h1 className="text-center text-xl font-bold text-primary mb-6">
+      {/* <h1 className="text-center text-xl font-bold text-primary mb-6">
         프로필 수정하기
       </h1>
 
@@ -81,7 +81,7 @@ export default function ProfileEditPage() {
             초기화
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
