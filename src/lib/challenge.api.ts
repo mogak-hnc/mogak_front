@@ -1,5 +1,5 @@
 import { ChallengeMainProps } from "@/types/challenge.type";
-import { convertDate } from "@/utils/date.util";
+import { convertDate } from "@/utils/shared/date.util";
 
 export async function ChallengeMain() {
   const res = await fetch(

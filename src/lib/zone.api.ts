@@ -5,8 +5,8 @@ import {
   ZoneMainProps,
   ZoneSearchProps,
 } from "@/types/zone.type";
-import { getJwtFromCookie } from "@/utils/auth.util";
-import { getJwtFromServerCookie } from "./server-utils/jwt.server.util";
+import { getJwtFromCookie } from "@/utils/client/auth.util";
+import { getJwtFromServerCookie } from "../utils/server/jwt.server.util";
 
 export async function ZoneMain() {
   const res = await fetch(

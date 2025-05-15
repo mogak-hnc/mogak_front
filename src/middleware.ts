@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { decodeToken } from "@/utils/decode-token.util";
+import { decodeToken } from "./utils/client/decode-token.util";
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("jwt")?.value;

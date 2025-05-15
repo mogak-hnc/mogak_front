@@ -1,5 +1,5 @@
 import { cookies as nextCookies } from "next/headers";
-import { decodeToken, JwtPayload } from "@/utils/decode-token.util";
+import { decodeToken, JwtPayload } from "@/utils/client/decode-token.util";
 
 export function getServerUser(): JwtPayload | null {
   const token = (nextCookies() as any).get("jwt")?.value;

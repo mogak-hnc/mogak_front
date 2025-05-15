@@ -6,7 +6,7 @@ import MainBgDark from "@/app/components/img/c_background_dark.png";
 import { MainZoneChallenge } from "@/lib/main.api";
 import ImageCard from "./components/shared/image-card";
 import { MainSubTitle } from "./components/main-sub-title";
-import { convertDate } from "@/utils/date.util";
+import { convertDate } from "@/utils/shared/date.util";
 
 import ChallengeMainCard from "./(pages)/(user)/challenge/challenge-main-card";
 import ZoneMainCard from "./(pages)/(user)/zone/zone-main-card";

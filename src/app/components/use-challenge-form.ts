@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-import { getDateString } from "@/utils/today.util";
+import { getDateString } from "@/utils/shared/today.util";
 import { ChallengeForm } from "@/types/challenge.type";
 
 export function useChallengeForm() {

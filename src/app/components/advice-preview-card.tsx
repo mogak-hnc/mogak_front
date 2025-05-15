@@ -1,5 +1,5 @@
 import { AdviceCardProps } from "@/types/advice.type";
-import { convertTime } from "@/utils/date.util";
+import { convertTime } from "@/utils/shared/date.util";
 import Link from "next/link";
 
 export default function AdvicePreviewCard({
