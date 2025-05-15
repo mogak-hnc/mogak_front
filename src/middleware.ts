@@ -20,22 +20,22 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // 로그인 + 관리자
-  const isAdminOnly = pathname.startsWith("/admin");
+  // 로그인 + 관리자;
+  // const isAdminOnly = pathname.startsWith("/admin");
 
-  if (isAdminOnly) {
-    if (!token) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
+  // if (isAdminOnly) {
+  //   if (!token) {
+  //     return NextResponse.redirect(new URL("/login", request.url));
+  //   }
 
-    const decoded = decodeToken(token);
+  //   const decoded = decodeToken(token);
 
-    if (!decoded || decoded.role !== "ROLE_ADMIN") {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
-  }
+  //   if (!decoded || decoded.role !== "ROLE_ADMIN") {
+  //     return NextResponse.redirect(new URL("/", request.url));
+  //   }
+  // }
 
-  return NextResponse.next();
+  // return NextResponse.next();
 }
 
 export const config = {
@@ -45,6 +45,6 @@ export const config = {
     "/advice",
     "/login/info",
     "/profile",
-    "/admin/:path*",
+    // "/admin/:path*",
   ],
 };
