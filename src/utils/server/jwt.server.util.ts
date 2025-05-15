@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 
-export function getJwtFromServerCookie(): string | null {
-  const token = (cookies() as any).get("jwt")?.value ?? null;
-  return token ?? null;
+export async function getJwtFromServerCookie(): Promise<string | null> {
+  const cookieStore = await cookies();
+  return cookieStore.get("jwt")?.value ?? null;
 }
