@@ -1,9 +1,9 @@
 import Button from "@/app/components/ui/button";
-import { UserProps } from "@/types/user.type";
+import { ProfileProps } from "@/types/profile.type";
 
 import Link from "next/link";
 
-export default function MyProfile(user: UserProps) {
+export default function MyProfile(user: ProfileProps) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">

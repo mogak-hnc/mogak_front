@@ -5,9 +5,9 @@ import { useState } from "react";
 import Input from "@/app/components/ui/input";
 import Checkbox from "@/app/components/ui/checkbox";
 import Button from "@/app/components/ui/button";
-import { UserProps } from "@/types/user.type";
+import { ProfileProps } from "@/types/profile.type";
 
-const mockUserProfiles: Record<string, UserProps> = {
+const mockUserProfiles: Record<string, ProfileProps> = {
   "1": {
     id: "1",
     nickname: "다정",

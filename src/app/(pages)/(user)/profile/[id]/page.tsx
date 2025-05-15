@@ -8,9 +8,9 @@ import MyBadge from "./my-badge";
 import MyChallenge from "./my-challenge";
 import MyZone from "./my-zone";
 import MyProfile from "./my-profile";
-import { UserProps } from "@/types/user.type";
+import { ProfileProps } from "@/types/profile.type";
 
-const mockUserProfiles: UserProps = {
+const mockUserProfiles: ProfileProps = {
   id: "1",
   nickname: "다정",
   bio: "매일매일어쩌구",
