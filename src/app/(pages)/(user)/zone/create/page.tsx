@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ZoneCreateForm from "./zone-create-form";
 import { useZoneCreateForm } from "./use-zone-create-form";
-import { ZoneCreatePost } from "@/lib/zone.api";
 import { ZoneCreateInput } from "@/types/zone.type";
+import { ZoneCreatePost } from "@/lib/client/zone.client.api";
 
 export default function ZoneCreatePage() {
   const router = useRouter();

@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import SearchCardView from "@/app/components/shared/search-card-view";
-import { ZoneMain, ZoneSearch } from "@/lib/zone.api";
+
 import { ZoneMainProps, ZoneSearchCardProps } from "@/types/zone.type";
 import { mapSort } from "@/utils/shared/sort.util";
 import ZoneMainCard from "./zone-main-card";
+import { ZoneMain, ZoneSearch } from "@/lib/shared/zone.api";
 
 export default function ZoneSearchCard({
   title,

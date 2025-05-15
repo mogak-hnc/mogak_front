@@ -1,4 +1,4 @@
-import { ZoneTags } from "@/lib/zone.api";
+import { ZoneTags } from "@/lib/shared/zone.api";
 import ZoneSearchCard from "./zone-search-card";
 
 export default async function ZonePage() {

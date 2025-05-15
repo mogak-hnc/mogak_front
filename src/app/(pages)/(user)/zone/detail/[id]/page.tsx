@@ -1,6 +1,6 @@
 import ChatUI from "@/app/components/shared/chat-ui";
 import SubCard from "@/app/components/shared/sub-card";
-import { ZoneDetail } from "@/lib/zone.api";
+import { ZoneDetail } from "@/lib/server/zone.server.api";
 
 export default async function ZoneDetailPage({
   params,

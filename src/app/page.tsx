@@ -3,13 +3,12 @@ import designer from "@/app/components/img/c_designer.png";
 import coding from "@/app/components/img/c_coding.png";
 import MainBgLight from "@/app/components/img/c_background_light.png";
 import MainBgDark from "@/app/components/img/c_background_dark.png";
-import { MainZoneChallenge } from "@/lib/main.api";
 import ImageCard from "./components/shared/image-card";
 import { MainSubTitle } from "./components/main-sub-title";
 import { convertDate } from "@/utils/shared/date.util";
-
 import ChallengeMainCard from "./(pages)/(user)/challenge/challenge-main-card";
 import ZoneMainCard from "./(pages)/(user)/zone/zone-main-card";
+import { MainZoneChallenge } from "@/lib/shared/main.api";
 
 export default async function Home() {
   const data = await MainZoneChallenge();
