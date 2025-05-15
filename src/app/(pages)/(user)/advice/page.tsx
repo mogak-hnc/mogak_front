@@ -3,8 +3,9 @@ import AdvicePreviewCard from "@/app/components/advice-preview-card";
 import H1Title from "@/app/components/ui/h1-title";
 import AdviceBgLight from "@/app/components/img/s_background_light.png";
 import AdviceBgDark from "@/app/components/img/s_background_dark.png";
-import { AdviceMain } from "@/lib/advice.api";
+
 import ImageCard from "@/app/components/shared/image-card";
+import { AdviceMain } from "@/lib/shared/advice.api";
 
 export default async function AdvicePage() {
   const data = await AdviceMain();

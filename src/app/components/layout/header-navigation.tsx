@@ -18,15 +18,12 @@ export default function HeaderNavigation() {
     { href: "/zone", label: "모각존" },
     { href: "/challenge", label: "모각챌" },
     { href: "/advice", label: "커뮤니티" },
-    memberId
-      ? { href: `/profile/${memberId}`, label: "프로필" }
-      : { href: "/login", label: "로그인" },
     ...(memberId
       ? [
-          { href: `/login/info/${memberId}`, label: "회원정보" },
+          { href: `/profile/${memberId}`, label: "프로필" },
           { href: "/logout", label: "로그아웃" },
         ]
-      : []),
+      : [{ href: "/login", label: "로그인" }]),
   ];
 
   return (
