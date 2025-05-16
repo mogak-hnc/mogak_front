@@ -1,4 +1,5 @@
 import { StatusType, ZoneMemberCardProps } from "@/types/zone.type";
+import { statusMap } from "@/utils/shared/status.util";
 import Link from "next/link";
 
 const statusColorMap: Record<StatusType, string> = {
@@ -17,6 +18,10 @@ export default function UserCard({
   role,
   status,
 }: ZoneMemberCardProps) {
+  const translatedStatus = statusMap[status] ?? status;
+
+  const statusColor = statusColorMap[translatedStatus as StatusType] ?? "";
+
   return (
     <Link href={`/profile/${memberId}`}>
       <div className="flex items-center p-4 w-fit">
@@ -24,7 +29,7 @@ export default function UserCard({
           <img
             src={image}
             alt="profile"
-            className={`w-20 aspect-square rounded-full border-2 object-cover ${statusColorMap[status]}`}
+            className={`w-20 aspect-square rounded-full border-2 object-cover ${statusColor}`}
           />
         )}
         <div className="ml-4 flex flex-col justify-center">
@@ -33,10 +38,10 @@ export default function UserCard({
             <p className="text-sm text-border-dark dark:text-borders">{role}</p>
           )}
           <div
-            className={`flex items-center gap-1 mt-1 text-sm font-medium ${statusColorMap[status]}`}
+            className={`flex items-center gap-1 mt-1 text-sm font-medium ${statusColor}`}
           >
             <span>✪</span>
-            <span>{status}</span>
+            <span>{translatedStatus}</span>
           </div>
         </div>
       </div>

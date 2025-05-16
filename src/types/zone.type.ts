@@ -34,7 +34,7 @@ export interface ZoneMemberCardProps {
   image?: string;
   nickname: string;
   role?: string;
-  status: StatusType;
+  status: string;
 }
 
 export interface ZoneCreateRequest {
