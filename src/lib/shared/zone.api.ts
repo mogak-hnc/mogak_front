@@ -75,6 +75,9 @@ export async function ZoneSearch({
 
   return {
     data,
-    page: raw.page,
+    page: raw.number,
+    totalPages: raw.totalPages,
+    totalElements: raw.totalElements,
+    isLast: raw.last,
   };
 }
