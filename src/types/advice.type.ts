@@ -11,3 +11,16 @@ export interface AdviceCommentProps {
   time: string;
   isMe: boolean;
 }
+
+export interface AdviceSearchRequest {
+  sort: string;
+  page: number;
+  size: number;
+}
+
+export interface AdviceSearchResponse {
+  title: string;
+  commnetCount: number;
+  worryId: number;
+  restTime: number[];
+}
