@@ -44,3 +44,47 @@ export interface ChallengeSearchCardProps {
   sort: string;
   section: string;
 }
+
+export interface ChallengeSearchRequest {
+  search: string;
+  official: string;
+  sort: string;
+  page: number;
+  size: number;
+}
+
+export interface ChallengeSearchResponse {
+  content: ChallengeMainProps[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: {
+      empty: boolean;
+      unsorted: boolean;
+      sorted: boolean;
+    };
+    offset: number;
+    unpaged: boolean;
+    paged: boolean;
+  };
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+  size: number;
+  number: number;
+  sort: {
+    empty: boolean;
+    unsorted: boolean;
+    sorted: boolean;
+  };
+  numberOfElements: number;
+  first: boolean;
+  empty: boolean;
+}
+
+export interface ChallengePageProps {
+  size: number;
+  number: number;
+  totalElements: number;
+  totalPages: number;
+}

@@ -10,29 +10,35 @@ import { TagsProps } from "@/types/shared.type";
 type Props = {
   title: string;
   description: string;
-  tags: TagsProps[];
   section: string;
-  selectedTag: string | null;
-  onTagClick: (tag: string) => void;
   sort: string;
   onSortChange: (val: string) => void;
   search: string;
   onSearchChange: (val: string) => void;
   onSearch: () => void;
+
+  tags?: TagsProps[];
+  selectedTag?: string | null;
+  onTagClick?: (tag: string) => void;
+
+  official?: boolean;
+  onOfficialToggle?: () => void;
 };
 
 export default function SearchCardView({
   title,
   description,
-  tags,
   section,
-  selectedTag,
-  onTagClick,
   sort,
   onSortChange,
   search,
   onSearchChange,
   onSearch,
+  tags,
+  selectedTag,
+  onTagClick,
+  official,
+  onOfficialToggle,
 }: Props) {
   return (
     <div className="flex flex-col items-center gap-2 w-full">
@@ -56,19 +62,33 @@ export default function SearchCardView({
 
       <div className="flex gap-10">
         <div className="flex gap-2">
-          {tags.map((tag, index) => (
+          {tags &&
+            tags.map((tag, index) => (
+              <div
+                key={`${tag.name}-${index}`}
+                onClick={() => onTagClick?.(tag.name)}
+                className={`border cursor-pointer rounded-md px-5 py-1 ${
+                  selectedTag === tag.name
+                    ? "bg-secondary text-white"
+                    : "border-borders dark:border-border-dark"
+                }`}
+              >
+                #{tag.name}
+              </div>
+            ))}
+
+          {onOfficialToggle && (
             <div
-              key={`${tag.name}-${index}`}
-              onClick={() => onTagClick(tag.name)}
+              onClick={onOfficialToggle}
               className={`border cursor-pointer rounded-md px-5 py-1 ${
-                selectedTag === tag.name
+                official
                   ? "bg-secondary text-white"
                   : "border-borders dark:border-border-dark"
               }`}
             >
-              #{tag.name}
+              #공식 챌린지만 보기
             </div>
-          ))}
+          )}
         </div>
 
         <select
