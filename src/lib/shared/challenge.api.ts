@@ -57,6 +57,8 @@ export async function ChallengeSearch({
 
   const data: ChallengeSearchResponse = await res.json();
 
+  console.log(data);
+
   return {
     data: data.content,
     page: data.number,

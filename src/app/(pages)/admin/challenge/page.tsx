@@ -1,31 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import AdminTable from "@/app/components/admin/admin-table";
 import ConfirmModal from "@/app/components/confirm-modal";
-
-const mockChallenges = [
-  {
-    id: 1,
-    title: "매일 공부 인증하기",
-    participants: 12,
-    startDate: "2025-03-01",
-    endDate: "2025-04-01",
-  },
-  {
-    id: 2,
-    title: "알고리즘 챌린지",
-    participants: 8,
-    startDate: "2025-04-05",
-    endDate: "2025-04-30",
-  },
-];
+import { ChallengeSearch } from "@/lib/shared/challenge.api";
 
 export default function AdminChallengePage() {
-  const [challenges, setChallenges] = useState(mockChallenges);
+  const [challenges, setChallenges] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [targetId, setTargetId] = useState<number | null>(null);
+
+  useEffect(() => {
+    const fetchChallenges = async () => {
+      try {
+        const res = await ChallengeSearch({
+          search: "",
+          official: "",
+          sort: "recent",
+          page: 0,
+          size: 20,
+        });
+
+        setChallenges(res.data);
+      } catch (e) {
+        console.error("챌린지 목록 불러오기 실패", e);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchChallenges();
+  }, []);
 
   const openModal = (id: number) => {
     setTargetId(id);
@@ -81,7 +88,11 @@ export default function AdminChallengePage() {
         </Link>
       </div>
 
-      <AdminTable columns={columns} data={challenges} />
+      {loading ? (
+        <p className="text-sm text-center text-gray-400">불러오는 중...</p>
+      ) : (
+        <AdminTable columns={columns} data={challenges} />
+      )}
 
       {showModal && (
         <ConfirmModal
