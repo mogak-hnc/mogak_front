@@ -36,14 +36,14 @@ export default async function ProfilePage({
 
   return (
     <div className="max-w-4xl mx-auto py-10 px-6 flex flex-col gap-6">
-      {/* <MyProfile {...data} id={data.id} /> */}
-      {/* {user.showBadges && (
+      <MyProfile {...data} memberId={data.memberId} />
+      {data.showBadge && (
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
-          <MyBadge badges={user.badges ?? []} />
-          <MyChallenge challenges={user.challenges ?? []} />
-          <MyZone zones={user.zones ?? []} />
+          {/* <MyBadge badges={data.badges ?? []} />
+          <MyChallenge challenges={data.challenges ?? []} />
+          <MyZone zones={data.zones ?? []} /> */}
         </div>
-      )} */}
+      )}
     </div>
   );
 }
