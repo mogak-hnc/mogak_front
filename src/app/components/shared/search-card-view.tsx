@@ -60,8 +60,8 @@ export default function SearchCardView({
         </div>
       </div>
 
-      <div className="flex gap-10">
-        <div className="flex gap-2">
+      <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-10 mt-4 w-full">
+        <div className="flex flex-wrap gap-2">
           {tags &&
             tags.map((tag, index) => (
               <div

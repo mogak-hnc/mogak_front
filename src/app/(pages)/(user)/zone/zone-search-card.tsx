@@ -83,23 +83,25 @@ export default function ZoneSearchCard({
         onSearch={fetchSearch}
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-        {loading ? (
-          <div className="col-span-full text-center text-gray-500 py-10">
-            불러오는 중...
-          </div>
-        ) : data.length > 0 ? (
-          data.map((d, index) => (
-            <ZoneMainCard
-              key={`zone-main-card-${d.mogakZoneId}-${index}`}
-              {...d}
-            />
-          ))
-        ) : (
-          <div className="col-span-full text-center text-gray-500 py-10">
-            검색 결과가 없습니다.
-          </div>
-        )}
+      <div className="w-full max-w-screen-xl mx-auto px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-4 mt-8">
+          {loading ? (
+            <div className="col-span-full text-center text-gray-500 py-10">
+              불러오는 중...
+            </div>
+          ) : data.length > 0 ? (
+            data.map((d, index) => (
+              <ZoneMainCard
+                key={`zone-main-card-${d.mogakZoneId}-${index}`}
+                {...d}
+              />
+            ))
+          ) : (
+            <div className="col-span-full text-center text-gray-500 py-10">
+              검색 결과가 없습니다.
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
