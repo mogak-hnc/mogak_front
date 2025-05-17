@@ -1,15 +1,16 @@
-export interface MainProps {
-  mogakZoneMainResponses: MainZoneProps[];
-  mogakChallengeResponses: MainChallengeProps[];
+export interface MainRequest {
+  mogakZoneMainResponses: MainZoneRequest[];
+  mogakChallengeResponses: MainChallengeRequest[];
 }
 
-export interface MainZoneProps {
+export interface MainZoneRequest {
+  mogakZoneId: number;
   tagNames: string[];
   name: string;
   memberImageUrls: string[] | null[];
 }
 
-export interface MainChallengeProps {
+export interface MainChallengeRequest {
   official: boolean;
   title: string;
   memberImageUrls: string[] | null[];

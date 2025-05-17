@@ -2,6 +2,7 @@ import { ZoneMainProps } from "@/types/zone.type";
 import Link from "next/link";
 
 export default function ZoneMainCard({
+  mogakZoneId,
   tag,
   title,
   participants,

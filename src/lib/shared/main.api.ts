@@ -1,4 +1,4 @@
-import { MainProps } from "@/types/main.type";
+import { MainRequest } from "@/types/main.type";
 
 export async function MainZoneChallenge() {
   const res = await fetch(`${process.env.BACKEND_API_URL}/api/mogak`, {
@@ -9,7 +9,7 @@ export async function MainZoneChallenge() {
     throw new Error("메인 fetch 실패");
   }
 
-  const data: MainProps = await res.json();
+  const data: MainRequest = await res.json();
 
   return data;
 }

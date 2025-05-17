@@ -89,7 +89,12 @@ export default function ZoneSearchCard({
             불러오는 중...
           </div>
         ) : data.length > 0 ? (
-          data.map((item, i) => <ZoneMainCard key={i} {...item} />)
+          data.map((d, index) => (
+            <ZoneMainCard
+              key={`zone-main-card-${d.mogakZoneId}-${index}`}
+              {...d}
+            />
+          ))
         ) : (
           <div className="col-span-full text-center text-gray-500 py-10">
             검색 결과가 없습니다.

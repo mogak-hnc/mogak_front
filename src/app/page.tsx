@@ -35,9 +35,10 @@ export default async function Home() {
             description="현재 가장 많은 유저들이 공부 중인 모각존을 살펴 보세요."
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {data.mogakZoneMainResponses.map((space, idx) => (
+            {data.mogakZoneMainResponses.map((space) => (
               <ZoneMainCard
-                key={idx}
+                key={space.mogakZoneId}
+                mogakZoneId={space.mogakZoneId}
                 tag={space.tagNames[0]}
                 title={space.name}
                 participants={(space.memberImageUrls ?? []).filter(

@@ -14,6 +14,7 @@ export interface ZoneChatUiProps {
 }
 
 export interface ZoneMainProps {
+  mogakZoneId: number;
   tag?: string;
   title: string;
   participants: (string | null)[];
