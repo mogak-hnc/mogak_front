@@ -10,6 +10,7 @@ export default function AdminZonePage() {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [targetId, setTargetId] = useState<number | null>(null);
+  const [targetName, setTargetName] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchZones = async () => {
@@ -29,8 +30,10 @@ export default function AdminZonePage() {
 
     fetchZones();
   }, []);
-  const openModal = (id: number) => {
+
+  const openModal = (id: number, name: string) => {
     setTargetId(id);
+    setTargetName(name);
     setShowModal(true);
   };
 
@@ -41,6 +44,10 @@ export default function AdminZonePage() {
     setShowModal(false);
     setTargetId(null);
   };
+
+  // const zoneDelete = () => {
+
+  // }
 
   const columns = [
     { key: "id", label: "ID" },
@@ -57,8 +64,8 @@ export default function AdminZonePage() {
       label: "관리",
       render: (_: any, row: any) => (
         <button
-          className="text-sm px-2 py-1 bg-red-500 text-white rounded"
-          onClick={() => openModal(row.id)}
+          className="text-sm px-2 py-1 bg-error dark:bg-error-dark text-white rounded"
+          onClick={() => openModal(row.id, row.title)}
         >
           삭제
         </button>
@@ -68,12 +75,14 @@ export default function AdminZonePage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-lg font-bold text-primary">모각존 관리</h1>
+      <h1 className="text-lg font-bold text-primary dark:text-primary-dark">
+        모각존 관리
+      </h1>
       <AdminTable columns={columns} data={zones} />
 
       {showModal && (
         <ConfirmModal
-          message="정말로 이 모각존을 삭제하시겠습니까?"
+          message={`정말 '${targetName}' 존을 삭제하시겠습니까?`}
           onConfirm={confirmDelete}
           onCancel={() => setShowModal(false)}
         />
