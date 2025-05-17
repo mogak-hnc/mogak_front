@@ -12,7 +12,7 @@ export default function Button({
     primary: "bg-primary dark:bg-primary-dark text-white",
     secondary: "bg-secondary dark:bg-secondary-dark text-text",
     danger: "bg-error dark:bg-error-dark text-white",
-    etc: "bg-borders bg-border-dark dark:bg-borders text-text-dark dark:text-text",
+    etc: "bg-borders bg-border-dark dark:bg-borders text-text",
   };
 
   return (

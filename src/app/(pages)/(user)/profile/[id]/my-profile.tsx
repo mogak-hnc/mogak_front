@@ -16,9 +16,9 @@ export default function MyProfile(user: ProfileProps) {
           <div className="text-xl font-bold text-primary">{user.nickname}</div>
         </div>
       </div>
-      {/* <Link href={`/profile/${user.id}/edit`}>
+      <Link href={`/profile/${user.memberId}/edit`}>
         <Button variant="secondary">수정하기</Button>
-      </Link> */}
+      </Link>
     </div>
   );
 }

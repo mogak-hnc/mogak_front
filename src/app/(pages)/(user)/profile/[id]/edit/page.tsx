@@ -1,87 +1,115 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import { useState } from "react";
-import Input from "@/app/components/ui/input";
-import Checkbox from "@/app/components/ui/checkbox";
-import Button from "@/app/components/ui/button";
-import { ProfileProps } from "@/types/profile.type";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
-// const mockUserProfiles: Record<string, ProfileProps> = {
-//   "1": {
-//     id: "1",
-//     nickname: "다정",
-//     bio: "매일매일워어커구",
-//     affiliation: "매일매일워어커구",
-//     profileImage: "/profile.png",
-//     showBadges: true,
-//     badges: Array(21).fill("/badge.png"),
-//   },
-// };
+import SubTitle from "@/app/components/shared/sub-title";
+import { ProfileInfoResponse } from "@/types/profile.type";
+import { profileInfo, profilePatch } from "@/lib/client/profile.client.api";
+import { getJwtFromCookie } from "@/utils/client/auth.client.util";
+import EditImage from "./edit-image";
+import EditForm from "./edit-form";
+import EditButton from "./edit-button";
+
+type FormValues = {
+  nickname: string;
+  showBadge: boolean;
+};
 
 export default function ProfileEditPage() {
-  // const params = useParams();
-  // const userId = params?.id as string;
+  const params = useParams();
+  const router = useRouter();
+  const userId = params?.id as string;
 
-  // const user = mockUserProfiles[userId];
-  // const [nickname, setNickname] = useState(user.nickname);
-  // const [bio, setBio] = useState(user.bio);
-  // const [affiliation, setAffiliation] = useState(user.affiliation);
-  // const [showBadges, setShowBadges] = useState(user.showBadges);
-  // const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [data, setData] = useState<ProfileInfoResponse | null>(null);
+  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [deleteImage, setDeleteImage] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { isDirty },
+  } = useForm<FormValues>({
+    defaultValues: { nickname: "", showBadge: true },
+  });
+
+  useEffect(() => {
+    const fetchInitial = async () => {
+      const jwt = getJwtFromCookie();
+      if (!jwt) {
+        return;
+      }
+
+      try {
+        const fetched = await profileInfo(userId, jwt);
+        setData(fetched);
+        reset({
+          nickname: fetched.nickname,
+          showBadge: fetched.showBadge,
+        });
+        setProfileImage(null);
+        setDeleteImage(false);
+      } catch (e) {
+        console.error("유저 정보 불러오기 실패", e);
+      }
+    };
+
+    fetchInitial();
+  }, [userId, reset]);
+
+  const onSubmit = async (formData: FormValues) => {
+    const jwt = getJwtFromCookie();
+    if (!jwt || !data) {
+      return;
+    }
+
+    try {
+      await profilePatch(userId, jwt, {
+        nickname: formData.nickname,
+        showBadge: formData.showBadge,
+        deleteImage,
+        image: deleteImage ? null : profileImage,
+      });
+      router.push(`/profile/${userId}`);
+    } catch (e) {
+      console.error("수정 실패", e);
+    }
+  };
+
+  const handleReset = () => {
+    if (!data) return;
+    reset({ nickname: data.nickname, showBadge: data.showBadge });
+    setProfileImage(null);
+    setDeleteImage(false);
+  };
+
+  const nickname = watch("nickname");
+
+  if (!data) {
+    return <div className="text-center py-10">로딩 중...</div>;
+  }
 
   return (
     <div className="max-w-xl mx-auto py-10 px-6">
-      {/* <h1 className="text-center text-xl font-bold text-primary mb-6">
-        프로필 수정하기
-      </h1>
-
-      <div className="flex flex-col items-center gap-2 mb-6">
-        <img
-          src={user.profileImage}
-          alt="profile"
-          className="w-16 h-16 rounded-full border border-primary"
+      <SubTitle contents="프로필 수정하기" />
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+        <EditImage
+          imageUrl={data.imageUrl}
+          profileImage={profileImage}
+          deleteImage={deleteImage}
+          setProfileImage={setProfileImage}
+          setDeleteImage={setDeleteImage}
+          nickname={nickname}
         />
-        <div className="text-sm font-semibold">{nickname}</div>
-        <input
-          type="file"
-          onChange={(e) => setProfileImage(e.target.files?.[0] ?? null)}
-          className="text-sm"
+        <EditForm register={register} watch={watch} reset={reset} />
+        <EditButton
+          onReset={handleReset}
+          isDisabled={!isDirty && !profileImage && !deleteImage}
         />
-        <div className="text-xs text-gray-500">
-          {profileImage ? profileImage.name : "파일이 선택되지 않았습니다."}
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-4">
-        <Input
-          placeholder="닉네임"
-          value={nickname}
-          onChange={(e) => setNickname(e.target.value)}
-        />
-        <Input
-          placeholder="한마디"
-          value={bio}
-          onChange={(e) => setBio(e.target.value)}
-        />
-        <Input
-          placeholder="소속"
-          value={affiliation}
-          onChange={(e) => setAffiliation(e.target.value)}
-        />
-        <Checkbox
-          label="뱃지 내역 비공개하기"
-          checked={!showBadges}
-          onChange={(checked) => setShowBadges(!checked)}
-        />
-
-        <div className="flex gap-2 mt-4">
-          <Button>저장</Button>
-          <button className="text-sm px-3 py-2 border rounded text-gray-500">
-            초기화
-          </button>
-        </div>
-      </div> */}
+      </form>
     </div>
   );
 }
