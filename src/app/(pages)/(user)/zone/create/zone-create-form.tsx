@@ -110,54 +110,6 @@ export default function ZoneCreateForm({
         <Checkbox label="회원만 참여 가능" {...register("memberOnly")} />
       </FormField>
 
-      <FormField label="모각존 기간">
-        <div className="flex items-center gap-2">
-          <Input
-            type="date"
-            {...register("startDate", {
-              validate: (value) => {
-                const today = new Date();
-                today.setDate(today.getDate() + 1);
-                const start = new Date(value);
-                if (start < today) {
-                  return "시작일은 내일부터 가능해요.";
-                }
-                return true;
-              },
-            })}
-            className="w-40"
-          />
-          <span className="text-sm">~</span>
-          <Input
-            type="date"
-            {...register("endDate", {
-              validate: (endValue) => {
-                const startValue = watch("startDate");
-                if (!startValue) return "시작일을 먼저 입력해 주세요.";
-                const start = new Date(startValue);
-                const end = new Date(endValue);
-                if (end <= start) {
-                  return "종료일은 시작일 이후여야 합니다.";
-                }
-                const diffDays =
-                  (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
-                if (diffDays > 28) {
-                  return "시작일로부터 최대 28일까지 설정할 수 있어요.";
-                }
-                return true;
-              },
-            })}
-            className="w-40"
-          />
-        </div>
-
-        {(errors.startDate || errors.endDate) && (
-          <div className="text-error text-sm mt-1">
-            {errors.startDate?.message || errors.endDate?.message}
-          </div>
-        )}
-      </FormField>
-
       <Button type="submit">저장</Button>
     </form>
   );

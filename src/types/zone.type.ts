@@ -44,7 +44,6 @@ export interface ZoneCreateRequest {
   maxCapacity: number;
   password: string;
   chatEnabled: boolean;
-  period: string;
 }
 
 export interface ZoneCreateInput {

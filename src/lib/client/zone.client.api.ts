@@ -13,7 +13,6 @@ export async function ZoneCreatePost(input: ZoneCreateInput, imageFile?: File) {
     maxCapacity: input.capacity,
     password: input.usePassword ? input.password : "",
     chatEnabled: input.useChat,
-    period: `${input.startDate}~${input.endDate}`,
   };
 
   const formData = new FormData();
