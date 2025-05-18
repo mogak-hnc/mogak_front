@@ -81,7 +81,7 @@ export interface ZoneSearchProps {
 
 export interface ZoneDetailResponse {
   tagNames: string[];
-  hostMemberId: number;
+  hostMemberId: string;
   name: string;
   startDate: number[];
   endDate: number[];
@@ -92,9 +92,10 @@ export interface ZoneDetailResponse {
 }
 
 export interface ZoneHeaderProps {
+  zoneId: string;
   tag: string;
   name: string;
-  hostId: number;
+  hostId: string;
   joinedUserCount: number;
   imageUrl: string;
 }

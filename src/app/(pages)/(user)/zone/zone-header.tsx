@@ -1,8 +1,11 @@
 import Link from "next/link";
 import Button from "../../../components/ui/button";
 import { ZoneHeaderProps } from "@/types/zone.type";
+import ZoneIn from "./detail/[id]/zone-in";
+import ZoneOut from "./detail/[id]/zone-out";
 
 export default function ZoneHeader({
+  zoneId,
   tag,
   name,
   hostId,
@@ -16,10 +19,13 @@ export default function ZoneHeader({
       <span className="text-primary dark:text-primary font-bold text-2xl">
         {name}
       </span>
-
-      <Link href={`/zone/detail/${1}/member`}>
-        <Button>모각존 관리</Button>
-      </Link>
+      <div className="flex gap-2">
+        <Link href={`/zone/detail/${zoneId}/member`}>
+          <Button>모각존 관리</Button>
+        </Link>
+        <ZoneIn zoneId={zoneId} hostId={hostId} />
+        <ZoneOut zoneId={zoneId} hostId={hostId} />
+      </div>
     </div>
   );
 }

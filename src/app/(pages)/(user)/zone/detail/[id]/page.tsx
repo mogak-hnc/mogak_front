@@ -22,6 +22,7 @@ export default async function ZoneDetailPage({
     <div className="flex gap-4">
       <div className="w-[65%] flex flex-col gap-4">
         <ZoneHeader
+          zoneId={id}
           name={data.name}
           imageUrl={data.imageUrl}
           tag={data.tagNames[0]}
@@ -35,7 +36,7 @@ export default async function ZoneDetailPage({
               memberId={user.memberId}
               nickname={user.nickname}
               status={user.status as StatusType}
-              role={data.hostMemberId === user.memberId ? "방장" : ""}
+              role={Number(data.hostMemberId) === user.memberId ? "방장" : ""}
               image={user.imageUrl}
             />
           ))}
