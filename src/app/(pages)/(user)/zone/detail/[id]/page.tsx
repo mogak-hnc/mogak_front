@@ -23,8 +23,6 @@ export default async function ZoneDetailPage({
       <div className="w-[65%] flex flex-col gap-4">
         <ZoneHeader
           name={data.name}
-          startDate={convertDate(data.startDate)}
-          endDate={convertDate(data.endDate)}
           imageUrl={data.imageUrl}
           tag={data.tagNames[0]}
           joinedUserCount={data.joinedUserCount}

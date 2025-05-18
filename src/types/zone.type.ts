@@ -95,8 +95,6 @@ export interface ZoneHeaderProps {
   tag: string;
   name: string;
   hostId: number;
-  startDate: string;
-  endDate: string;
   joinedUserCount: number;
   imageUrl: string;
 }
