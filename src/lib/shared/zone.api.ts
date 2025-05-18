@@ -73,6 +73,8 @@ export async function ZoneSearch({
     participants: item.memberImageUrls ?? [],
   }));
 
+  console.log(data);
+
   return {
     data,
     page: raw.number,

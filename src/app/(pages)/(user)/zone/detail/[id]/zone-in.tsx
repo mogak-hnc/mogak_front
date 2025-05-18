@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@/app/components/ui/button";
 import Input from "@/app/components/ui/input";
 import { ZoneEntryPost } from "@/lib/client/zone.client.api";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
-import { decodeToken } from "@/utils/client/decode-token.client.util";
+import {
+  decodeToken,
+  JwtPayload,
+} from "@/utils/client/decode-token.client.util";
 
 export default function ZoneIn({
   zoneId,
@@ -14,26 +17,40 @@ export default function ZoneIn({
   zoneId: string;
   hostId: string;
 }) {
-  const jwt = getJwtFromCookie();
-  const user = jwt ? decodeToken(jwt) : null;
-
+  const [user, setUser] = useState<JwtPayload | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    const jwt = getJwtFromCookie();
+    if (!jwt) {
+      return;
+    }
+    const decoded = decodeToken(jwt);
+    setUser(decoded);
+  }, []);
+
   const handleJoin = async () => {
+    const jwt = getJwtFromCookie();
     if (!jwt) {
       return;
     }
 
-    await ZoneEntryPost(zoneId, password, jwt);
-    setShowModal(false);
+    try {
+      await ZoneEntryPost(zoneId, password, jwt);
+      setShowModal(false);
+    } catch (err) {
+      alert("입장 실패");
+    }
   };
+
+  if (!user || user.memberId !== hostId) {
+    return null;
+  }
 
   return (
     <>
-      {hostId === user?.memberId && (
-        <Button onClick={() => setShowModal(true)}>참가하기</Button>
-      )}
+      <Button onClick={() => setShowModal(true)}>참가하기</Button>
 
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
@@ -46,10 +63,10 @@ export default function ZoneIn({
               onChange={(e) => setPassword(e.target.value)}
             />
             <div className="flex justify-end gap-2">
+              <Button onClick={handleJoin}>입장</Button>
               <Button variant="secondary" onClick={() => setShowModal(false)}>
                 취소
               </Button>
-              <Button onClick={handleJoin}>입장</Button>
             </div>
           </div>
         </div>
