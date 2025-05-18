@@ -45,6 +45,34 @@ export async function ZoneCreatePost(input: ZoneCreateInput, imageFile?: File) {
   return await res.json();
 }
 
+export async function ZoneEntryPost(
+  zoneId: string,
+  password: string,
+  jwt: string
+) {
+  const token = getJwtFromCookie();
+  if (!token) {
+    throw new Error("JWT 토큰 없음 / 로그인 필요");
+  }
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/zone/${zoneId}/join`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: token,
+      },
+      body: JSON.stringify({ password }),
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("모각존 참여 실패");
+  }
+
+  return await res.json();
+}
+
 export async function ZoneDelete(mogakZoneId: number) {
   // const token = getJwtFromCookie();
   // if (!token) {
