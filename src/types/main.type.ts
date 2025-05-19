@@ -11,6 +11,7 @@ export interface MainZoneRequest {
 }
 
 export interface MainChallengeRequest {
+  challengeId: number;
   official: boolean;
   title: string;
   memberImageUrls: string[] | null[];

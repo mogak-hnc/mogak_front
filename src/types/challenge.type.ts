@@ -31,6 +31,7 @@ export interface ChallengeCreateFormProps {
 }
 
 export interface ChallengeMainProps {
+  challengeId: number;
   title: string;
   participants: (string | null)[];
   description: string;

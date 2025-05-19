@@ -54,9 +54,10 @@ export default async function Home() {
             description="현재 가장 많은 유저들이 참여 중인 챌린지를 살펴 보세요."
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {data.mogakChallengeResponses.map((challenge, idx) => (
+            {data.mogakChallengeResponses.map((challenge) => (
               <ChallengeMainCard
-                key={idx}
+                key={challenge.challengeId}
+                challengeId={challenge.challengeId}
                 title={challenge.title}
                 description={`${convertDate(
                   challenge.startDate
