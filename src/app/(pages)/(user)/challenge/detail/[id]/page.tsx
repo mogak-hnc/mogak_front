@@ -11,7 +11,8 @@ export default async function ChallengeDetailPage({
 }: {
   params: { id: string };
 }) {
-  const { id } = await params;
+  // const { id } = await params;
+  const { id } = params;
   const jwt = await getJwtFromServerCookie();
 
   const data = await ChallengeDetail(id, jwt);

@@ -14,7 +14,8 @@ export default async function ZoneDetailPage({
 }: {
   params: { id: string };
 }) {
-  const { id } = await params;
+  const { id } = params;
+  // const { id } = await params;
   const jwt = await getJwtFromServerCookie();
 
   const data = await ZoneDetail(id, jwt);

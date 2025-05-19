@@ -15,7 +15,8 @@ export default async function ProfilePage({
 }: {
   params: { id: string };
 }) {
-  const { id } = await params;
+  // const { id } = await params;
+  const { id } = params;
   const jwt = await getJwtFromServerCookie();
 
   const data = await ProfileInfo(id, jwt);
