@@ -1,9 +1,8 @@
 import Link from "next/link";
-import Button from "../../../../../components/ui/button";
-import { ZoneHeaderProps } from "@/types/zone.type";
+import Button from "@/app/components/ui/button";
+import { ZoneHeaderProps, ZoneInOutButtonProps } from "@/types/zone.type";
 import ZoneIn from "./zone-in";
 import ZoneOut from "./zone-out";
-import detailBg from "@/app/components/img/d_background.png";
 import { getDetailImage } from "@/utils/shared/detail-image.util";
 
 export default function ZoneHeader({
@@ -13,7 +12,14 @@ export default function ZoneHeader({
   hostId,
   joinedUserCount,
   imageUrl,
+  joined,
 }: ZoneHeaderProps) {
+  const props: ZoneInOutButtonProps = {
+    joined: joined,
+    zoneId: zoneId,
+    hostId: hostId,
+  };
+
   return (
     <div
       className="relative w-full min-h-[180px] rounded-xl bg-no-repeat bg-cover bg-center dark:bg-none overflow-hidden flex flex-col justify-center mb-6"
@@ -37,8 +43,8 @@ export default function ZoneHeader({
           <Link href={`/zone/detail/${zoneId}/member`}>
             <Button>모각존 관리</Button>
           </Link>
-          <ZoneIn zoneId={zoneId} hostId={hostId} />
-          <ZoneOut zoneId={zoneId} hostId={hostId} />
+          <ZoneIn {...props} />
+          <ZoneOut {...props} />
         </div>
       </div>
     </div>

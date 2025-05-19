@@ -9,14 +9,13 @@ import {
   decodeToken,
   JwtPayload,
 } from "@/utils/client/decode-token.client.util";
+import { ZoneInOutButtonProps } from "@/types/zone.type";
 
 export default function ZoneIn({
   zoneId,
   hostId,
-}: {
-  zoneId: string;
-  hostId: string;
-}) {
+  joined,
+}: ZoneInOutButtonProps) {
   const [user, setUser] = useState<JwtPayload | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [password, setPassword] = useState("");
@@ -44,7 +43,7 @@ export default function ZoneIn({
     }
   };
 
-  if (!user || user.memberId !== hostId) {
+  if (joined || !user || user.memberId === hostId) {
     return null;
   }
 

@@ -88,6 +88,7 @@ export interface ZoneDetailResponse {
   imageUrl: string;
   zoneMemberInfoList: ZoneMemberInfo[];
   chatHistoryResponses: ChatHistoryResponse[];
+  joined: boolean;
 }
 
 export interface ZoneHeaderProps {
@@ -97,6 +98,7 @@ export interface ZoneHeaderProps {
   hostId: string;
   joinedUserCount: number;
   imageUrl: string;
+  joined: boolean;
 }
 
 export interface ZoneMemberInfo {
@@ -113,4 +115,10 @@ export interface ChatHistoryResponse {
   imageUrl: string;
   message: string;
   now: string;
+}
+
+export interface ZoneInOutButtonProps {
+  zoneId: string;
+  hostId: string;
+  joined: boolean;
 }

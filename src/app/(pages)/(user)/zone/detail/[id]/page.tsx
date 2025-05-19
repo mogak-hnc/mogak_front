@@ -28,6 +28,7 @@ export default async function ZoneDetailPage({
           tag={data.tagNames[0]}
           joinedUserCount={data.joinedUserCount}
           hostId={data.hostMemberId}
+          joined={data.joined}
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {data.zoneMemberInfoList.map((user, index) => (
