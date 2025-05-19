@@ -2,26 +2,24 @@
 
 import ChallengeCreateForm from "@/app/components/challenge-create-form";
 import { useChallengeForm } from "@/app/components/use-challenge-form";
+import { ChallengeCreatePost } from "@/lib/client/challenge.client.api";
 import { ChallengeForm } from "@/types/challenge.type";
+import { useRouter } from "next/navigation";
 
 export default function ChallengeCreatePage() {
   const form = useChallengeForm();
+  const router = useRouter();
 
-  const handleSubmit = (data: ChallengeForm) => {
-    console.log("챌린지 생성:", {
-      ...data,
-      isOfficial: true,
-    });
+  const handleSubmit = async (data: ChallengeForm) => {
+    const res = await ChallengeCreatePost(data);
+    router.push(`/challenge/detail/${res.challengeId}`);
   };
 
   return (
     <ChallengeCreateForm
       form={form}
-      isAdmin={true}
-      onSubmit={(data) => {
-        console.log("관리자 챌린지 생성:", data);
-        alert("공식 챌린지 생성 완료!");
-      }}
+      isAdmin={false}
+      onSubmit={(data) => handleSubmit(data)}
     />
   );
 }

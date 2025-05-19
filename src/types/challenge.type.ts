@@ -121,3 +121,27 @@ export interface ChallengeDetileResponse {
   memberImageList: string[];
   challengeArticlesThumbnail: string[];
 }
+
+export interface ChallengeCreateInput {
+  name: string;
+  description: string;
+  ownerOnly: boolean;
+  startDate: string;
+  endDate: string;
+}
+
+export interface ChallengeCreateRequest {
+  title: string;
+  description: string;
+  period: string;
+}
+
+export interface ChallengeCreateResponse {
+  challengeId: number;
+  title: string;
+  description: string;
+  createMemberId: number;
+  startDate: string;
+  endDate: string;
+  official: boolean;
+}

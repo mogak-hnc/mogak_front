@@ -60,9 +60,14 @@ export default function ChallengeCreateForm({
             {...register("startDate", {
               validate: (value) => {
                 const today = new Date();
-                today.setDate(today.getDate() + 1);
+                const tomorrow = new Date(
+                  today.getFullYear(),
+                  today.getMonth(),
+                  today.getDate() + 1
+                );
                 const start = new Date(value);
-                if (start < today) {
+
+                if (start < tomorrow) {
                   return "시작일은 내일부터 가능해요.";
                 }
                 return true;
@@ -77,16 +82,22 @@ export default function ChallengeCreateForm({
               validate: (endValue) => {
                 const startValue = watch("startDate");
                 if (!startValue) return "시작일을 먼저 입력해 주세요.";
+
                 const start = new Date(startValue);
                 const end = new Date(endValue);
+
                 if (end <= start) {
                   return "종료일은 시작일 이후여야 합니다.";
                 }
-                const diffDays =
-                  (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+
+                const diffDays = Math.floor(
+                  (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)
+                );
+
                 if (diffDays > 28) {
                   return "시작일로부터 최대 28일까지 설정할 수 있어요.";
                 }
+
                 return true;
               },
             })}
@@ -95,7 +106,7 @@ export default function ChallengeCreateForm({
         </div>
 
         {(errors.startDate || errors.endDate) && (
-          <p className="text-error text-sm mt-1">
+          <p className="text-error dark:text-error-dark text-sm mt-1">
             {errors.startDate?.message || errors.endDate?.message}
           </p>
         )}

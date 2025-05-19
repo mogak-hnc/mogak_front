@@ -65,7 +65,7 @@ export default async function Home() {
                 participants={(challenge.memberImageUrls ?? []).filter(
                   (img): img is string => img !== null
                 )}
-                isOfficial={challenge.official}
+                official={challenge.official}
               />
             ))}
           </div>
