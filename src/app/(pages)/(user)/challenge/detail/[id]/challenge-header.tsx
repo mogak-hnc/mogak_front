@@ -7,6 +7,7 @@ export default function ChallengeHeader({
   creatorMemberId,
   startDate,
   endDate,
+  official,
 }: ChallengeHeaderProps) {
   const userId = 1;
   return (

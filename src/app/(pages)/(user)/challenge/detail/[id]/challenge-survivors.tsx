@@ -1,4 +1,5 @@
 import { ChallengeSurvivorsProps } from "@/types/challenge.type";
+import { getProfileImage } from "@/utils/shared/profile.util";
 
 export default function ChallengeSurvivors({
   avatars,
@@ -13,7 +14,7 @@ export default function ChallengeSurvivors({
         {avatars.map((src, i) => (
           <img
             key={i}
-            src={src}
+            src={getProfileImage(src)}
             alt={`avatar-${i}`}
             className="w-10 h-10 rounded-full border text-border-dark dark:text-borders object-cover"
           />

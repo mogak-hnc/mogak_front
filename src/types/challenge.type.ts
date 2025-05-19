@@ -6,6 +6,7 @@ export interface ChallengeHeaderProps {
   creatorMemberId: number;
   startDate: string;
   endDate: string;
+  official: boolean;
 }
 
 export interface ChallengeProofGridProps {
@@ -88,4 +89,15 @@ export interface ChallengePageProps {
   number: number;
   totalElements: number;
   totalPages: number;
+}
+
+export interface ChallengeDetileResponse {
+  official: boolean;
+  title: string;
+  startDate: number[];
+  endDate: number[];
+  totalParticipants: number;
+  survivorCount: number;
+  memberImageList: string[];
+  challengeArticlesThumbnail: string[];
 }
