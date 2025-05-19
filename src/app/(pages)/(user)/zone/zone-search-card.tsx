@@ -97,7 +97,7 @@ export default function ZoneSearchCard({
               />
             ))
           ) : (
-            <div className="col-span-full text-center text-gray-500 py-10">
+            <div className="col-span-full text-center text-border-dark dark:text-borders py-10">
               검색 결과가 없습니다.
             </div>
           )}

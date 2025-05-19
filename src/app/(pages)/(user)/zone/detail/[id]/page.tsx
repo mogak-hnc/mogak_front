@@ -5,6 +5,7 @@ import UserCard from "@/app/components/shared/user-card";
 import { StatusType } from "@/types/zone.type";
 import ZoneHeader from "../../zone-header";
 import { convertDate } from "@/utils/shared/date.util";
+import { getProfileImage } from "@/utils/shared/profile.util";
 
 export const dynamic = "force-dynamic";
 
@@ -37,7 +38,7 @@ export default async function ZoneDetailPage({
               nickname={user.nickname}
               status={user.status as StatusType}
               role={Number(data.hostMemberId) === user.memberId ? "방장" : ""}
-              image={user.imageUrl}
+              image={getProfileImage(user.imageUrl)}
             />
           ))}
         </div>
