@@ -1,4 +1,5 @@
 import { ZoneMainProps } from "@/types/zone.type";
+import { getProfileImage } from "@/utils/shared/profile.util";
 import Link from "next/link";
 
 export default function ZoneMainCard({
@@ -26,7 +27,7 @@ export default function ZoneMainCard({
             {participants?.slice(0, 3).map((src, i) => (
               <img
                 key={i}
-                src={src!}
+                src={getProfileImage(src!)}
                 className="w-6 h-6 rounded-full border-2 border-white object-cover"
                 alt={`participant-${i}`}
               />
