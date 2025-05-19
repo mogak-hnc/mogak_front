@@ -34,8 +34,10 @@ export default function UserCard({
         )}
         <div className="ml-4 flex flex-col justify-center">
           <p className="text-lg font-semibold ">{nickname}</p>
-          {role && (
+          {role ? (
             <p className="text-sm text-border-dark dark:text-borders">{role}</p>
+          ) : (
+            <div className="h-[20px]" />
           )}
           <div
             className={`flex items-center gap-1 mt-1 text-sm font-medium ${statusColor}`}
