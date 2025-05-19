@@ -1,9 +1,10 @@
 import { ZoneChatUiProps } from "@/types/zone.type";
 
-export default function ChatUI({ messages }: ZoneChatUiProps) {
+// export default function ChatUI({ messages }: ZoneChatUiProps) {
+export default function ChatUI() {
   return (
     <div className="w-full max-w-md h-[600px] mx-auto p-4 bg-white rounded-3xl shadow border border-gray-200 flex flex-col">
-      <div className="flex-1 overflow-y-auto space-y-4">
+      {/* <div className="flex-1 overflow-y-auto space-y-4">
         {messages.map((msg) =>
           msg.isMe ? (
             <div key={msg.id} className="flex justify-end pr-2">
@@ -62,7 +63,8 @@ export default function ChatUI({ messages }: ZoneChatUiProps) {
             />
           </svg>
         </button>
-      </div>
+      </div> */}
+      채팅
     </div>
   );
 }

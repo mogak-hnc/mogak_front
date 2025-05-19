@@ -45,6 +45,7 @@ export default async function ZoneDetailPage({
       </div>
 
       <div className="w-[35%]">
+        <ChatUI />
         {/* <ChatUI messages={data.chatHistoryResponses} /> */}
       </div>
     </div>
