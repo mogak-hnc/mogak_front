@@ -9,14 +9,16 @@ export default function ZoneMainCard({
 }: ZoneMainProps) {
   return (
     <Link href={`/zone/detail/${mogakZoneId}`}>
-      <div className="rounded-3xl p-4 shadow-md bg-white flex flex-col justify-between min-w-[280px] max-w-[320px] h-[180px]">
+      <div className="rounded-3xl p-4 shadow-md bg-white dark:bg-border-dark flex flex-col justify-between min-w-[280px] max-w-[320px] h-[180px]">
         <div className="space-y-1">
           {tag && (
             <span className="bg-secondary text-text font-bold px-2 py-0.5 rounded">
               {tag}
             </span>
           )}
-          <p className="text-lg font-bold text-text truncate">{title}</p>
+          <p className="text-lg font-bold text-text dark:text-text-dark truncate">
+            {title}
+          </p>
         </div>
 
         <div className="flex justify-between items-center pt-4">

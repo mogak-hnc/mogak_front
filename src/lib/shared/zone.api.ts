@@ -13,6 +13,7 @@ export async function ZoneMain() {
   const raw = await res.json();
 
   const data: ZoneMainProps[] = raw.map((item: any) => ({
+    mogakZoneId: item.mogakZoneId,
     type: "studySpace",
     tag: item.tagNames?.[0] ?? "",
     title: item.name,
@@ -68,6 +69,7 @@ export async function ZoneSearch({
   const raw = await res.json();
 
   const data: ZoneMainProps[] = raw.content.map((item: any) => ({
+    mogakZoneId: item.mogakZoneId,
     tag: item.tagNames?.[0] ?? "",
     title: item.name,
     participants: item.memberImageUrls ?? [],
