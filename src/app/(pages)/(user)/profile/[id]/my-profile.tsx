@@ -1,5 +1,6 @@
 import Button from "@/app/components/ui/button";
 import { ProfileProps } from "@/types/profile.type";
+import { getProfileImage } from "@/utils/shared/profile.util";
 
 import Link from "next/link";
 
@@ -8,7 +9,7 @@ export default function MyProfile(user: ProfileProps) {
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
         <img
-          src={user.imageUrl}
+          src={getProfileImage(user.imageUrl)}
           alt="profile"
           className="w-16 h-16 rounded-full border border-primary"
         />
