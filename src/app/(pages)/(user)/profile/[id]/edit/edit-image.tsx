@@ -1,3 +1,4 @@
+import { getProfileImage } from "@/utils/shared/profile.util";
 import { Dispatch, SetStateAction } from "react";
 
 type Props = {
@@ -25,7 +26,7 @@ export default function EditImage({
         </div>
       ) : (
         <img
-          src={imageUrl}
+          src={getProfileImage(imageUrl)}
           alt="profile"
           className="w-16 h-16 rounded-full border border-primary dark:border-primary-dark object-cover"
         />
@@ -47,7 +48,7 @@ export default function EditImage({
           ? "이미지 삭제 예정"
           : "파일이 선택되지 않았습니다."}
       </div>
-      {!deleteImage && (
+      {!deleteImage && imageUrl !== "Default" && (
         <button
           type="button"
           onClick={() => {
