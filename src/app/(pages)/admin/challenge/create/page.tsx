@@ -1,20 +1,25 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import ChallengeCreateForm from "@/app/components/challenge-create-form";
 import { ChallengeForm } from "@/types/challenge.type";
+import { useChallengeForm } from "@/app/components/use-challenge-form";
+import { useRouter } from "next/navigation";
+import { ChallengeCreatePost } from "@/lib/client/challenge.client.api";
 
 export default function AdminChallengeCreatePage() {
-  const form = useForm<ChallengeForm>();
+  const form = useChallengeForm();
+  const router = useRouter();
+
+  const handleSubmit = async (data: ChallengeForm) => {
+    const res = await ChallengeCreatePost(data);
+    router.push(`/challenge/detail/${res.challengeId}`);
+  };
 
   return (
     <ChallengeCreateForm
       form={form}
       isAdmin
-      onSubmit={(data) => {
-        console.log("관리자 챌린지 생성:", data);
-        alert("공식 챌린지 생성 완료!");
-      }}
+      onSubmit={(data) => handleSubmit(data)}
     />
   );
 }
