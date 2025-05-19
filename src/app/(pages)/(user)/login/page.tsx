@@ -44,7 +44,7 @@ export default function LoginPage() {
           onClick={handleNaverLogin}
         />
       </div>
-      <hr className="dark:border-border-dark border-borders" />
+      <hr className="w-80 mx-auto dark:border-border-dark border-borders" />
       <div className="flex text-sm text-borders dark:text-border-dark justify-center items-center mt-4 text-center">
         관리자 페이지는
         <Link
