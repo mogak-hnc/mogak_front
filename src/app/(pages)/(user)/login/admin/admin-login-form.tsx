@@ -34,7 +34,7 @@ export default function AdminLoginForm() {
         <Input
           type="text"
           placeholder="아이디를 입력하세요"
-          {...register("id", { required: "아이디를 입력해주세요" })}
+          {...register("id", { required: "아이디를 입력해 주세요" })}
         />
         {errors.id && (
           <p className="text-error dark:text-error-dark text-sm mt-1">
@@ -50,7 +50,7 @@ export default function AdminLoginForm() {
         <Input
           type="password"
           placeholder="비밀번호를 입력하세요"
-          {...register("pwd", { required: "비밀번호를 입력해주세요" })}
+          {...register("pwd", { required: "비밀번호를 입력해 주세요" })}
         />
         {errors.pwd && (
           <p className="text-error dark:text-error-dark text-sm mt-1">
