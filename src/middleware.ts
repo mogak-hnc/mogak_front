@@ -8,8 +8,8 @@ export function middleware(request: NextRequest) {
 
   // 로그인
   const protectedPaths = [
-    "/zone ",
-    "/challenge ",
+    "/zone",
+    "/challenge",
     "/advice",
     "/login/info",
     "/profile",
