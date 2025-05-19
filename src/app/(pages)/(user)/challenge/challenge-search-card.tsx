@@ -9,6 +9,7 @@ import {
 import { mapSort } from "@/utils/shared/sort.util";
 import ChallengeMainCard from "./challenge-main-card";
 import { ChallengeMain, ChallengeSearch } from "@/lib/shared/challenge.api";
+import { convertDate } from "@/utils/shared/date.util";
 
 export default function ChallengeSearchCard({
   title,
@@ -35,6 +36,7 @@ export default function ChallengeSearchCard({
     } finally {
       setLoading(false);
     }
+    console.log(data);
   };
 
   const fetchSearch = async () => {
@@ -90,7 +92,16 @@ export default function ChallengeSearchCard({
             불러오는 중...
           </div>
         ) : data.length > 0 ? (
-          data.map((item, i) => <ChallengeMainCard key={i} {...item} />)
+          data.map((item) => (
+            <ChallengeMainCard
+              key={item.challengeId}
+              challengeId={item.challengeId}
+              title={item.title}
+              description={item.description}
+              participants={item.participants}
+              official={item.official}
+            />
+          ))
         ) : (
           <div className="col-span-full text-center text-gray-500 py-10">
             검색 결과가 없습니다.

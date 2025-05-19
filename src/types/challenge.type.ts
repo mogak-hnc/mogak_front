@@ -37,7 +37,7 @@ export interface ChallengeMainProps {
   title: string;
   participants: (string | null)[];
   description: string;
-  isOfficial: boolean;
+  official: boolean;
 }
 
 export interface ChallengeSearchCardProps {
@@ -56,8 +56,27 @@ export interface ChallengeSearchRequest {
   size: number;
 }
 
+export interface ChallengeMainResponse {
+  challengeId: number;
+  title: string;
+  participants: (string | null)[];
+  official: boolean;
+  startDate: number[];
+  endDate: number[];
+}
+
+export interface ChallengeSearchContentResponse {
+  challengeId: number;
+  title: string;
+  memberImageUrl: (string | null)[];
+  description: string;
+  official: boolean;
+  startDate: number[];
+  endDate: number[];
+}
+
 export interface ChallengeSearchResponse {
-  content: ChallengeMainProps[];
+  content: ChallengeSearchContentResponse[];
   pageable: {
     pageNumber: number;
     pageSize: number;

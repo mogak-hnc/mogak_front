@@ -1,5 +1,6 @@
 import {
   ChallengeMainProps,
+  ChallengeMainResponse,
   ChallengeSearchRequest,
   ChallengeSearchResponse,
 } from "@/types/challenge.type";
@@ -23,7 +24,7 @@ export async function ChallengeMain() {
     description: `${convertDate(item.startDate)} ~ ${convertDate(
       item.endDate
     )}`,
-    isOfficial: item.official,
+    official: item.official,
   }));
 
   return data;
@@ -56,15 +57,25 @@ export async function ChallengeSearch({
     throw new Error("챌린지 검색 결과 fetch 실패");
   }
 
-  const data: ChallengeSearchResponse = await res.json();
+  const row: ChallengeSearchResponse = await res.json();
 
-  console.log(data);
+  console.log(row);
+
+  const data: ChallengeMainProps[] = row.content.map((item) => ({
+    challengeId: item.challengeId,
+    title: item.title,
+    participants: item.memberImageUrl ?? [],
+    description: `${convertDate(item.startDate)} ~ ${convertDate(
+      item.endDate
+    )}`,
+    official: item.official,
+  }));
 
   return {
-    data: data.content,
-    page: data.number,
-    totalPages: data.totalPages,
-    totalElements: data.totalElements,
-    isLast: data.last,
+    data: data,
+    page: row.number,
+    totalPages: row.totalPages,
+    totalElements: row.totalElements,
+    isLast: row.last,
   };
 }
