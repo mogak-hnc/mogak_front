@@ -73,18 +73,20 @@ export default function ChallengeSearchCard({
 
   return (
     <>
-      <SearchCardView
-        title={title}
-        description={description}
-        section={section}
-        official={official === "true"}
-        onOfficialToggle={toggleOfficial}
-        sort={finalSort}
-        onSortChange={setFinalSort}
-        search={search}
-        onSearchChange={setSearch}
-        onSearch={fetchSearch}
-      />
+      <div className="w-full flex justify-center">
+        <SearchCardView
+          title={title}
+          description={description}
+          section={section}
+          official={official === "true"}
+          onOfficialToggle={toggleOfficial}
+          sort={finalSort}
+          onSortChange={setFinalSort}
+          search={search}
+          onSearchChange={setSearch}
+          onSearch={fetchSearch}
+        />
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
         {loading ? (

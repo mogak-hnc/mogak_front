@@ -41,7 +41,7 @@ export default function SearchCardView({
   onOfficialToggle,
 }: Props) {
   return (
-    <div className="flex flex-col items-center gap-2 w-full">
+    <div className="flex flex-col w-fit items-center gap-2">
       <H1Title>{title}</H1Title>
       <span className="text-sm text-border-dark dark:text-borders">
         {description}

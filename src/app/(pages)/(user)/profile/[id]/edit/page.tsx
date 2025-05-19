@@ -86,6 +86,10 @@ export default function ProfileEditPage() {
     setDeleteImage(false);
   };
 
+  const handleDelete = () => {
+    console.log("삭제 로직 추가 예정");
+  };
+
   const nickname = watch("nickname");
 
   if (!data) {
@@ -104,11 +108,20 @@ export default function ProfileEditPage() {
           setDeleteImage={setDeleteImage}
           nickname={nickname}
         />
+
         <EditForm register={register} watch={watch} reset={reset} />
-        <EditButton
-          onReset={handleReset}
-          isDisabled={!isDirty && !profileImage && !deleteImage}
-        />
+        <div className="flex items-center gap-4">
+          <EditButton
+            onReset={handleReset}
+            isDisabled={!isDirty && !profileImage && !deleteImage}
+          />
+          <span
+            onClick={handleDelete}
+            className="text-sm text-border-dark dark:text-borders cursor-pointer"
+          >
+            탈퇴하기
+          </span>
+        </div>
       </form>
     </div>
   );

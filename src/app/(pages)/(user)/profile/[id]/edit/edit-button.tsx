@@ -7,7 +7,7 @@ type Props = {
 
 export default function EditButton({ onReset, isDisabled }: Props) {
   return (
-    <div className="flex gap-2 mt-4">
+    <div className="flex gap-2">
       <Button type="submit" disabled={isDisabled}>
         저장
       </Button>
