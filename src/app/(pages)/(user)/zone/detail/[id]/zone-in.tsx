@@ -62,10 +62,10 @@ export default function ZoneIn({
               onChange={(e) => setPassword(e.target.value)}
             />
             <div className="flex justify-end gap-2">
-              <Button onClick={handleJoin}>입장</Button>
-              <Button variant="secondary" onClick={() => setShowModal(false)}>
+              <Button variant="etc" onClick={() => setShowModal(false)}>
                 취소
               </Button>
+              <Button onClick={handleJoin}>입장</Button>
             </div>
           </div>
         </div>
