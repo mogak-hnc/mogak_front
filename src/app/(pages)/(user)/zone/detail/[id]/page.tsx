@@ -3,7 +3,7 @@ import { ZoneDetail } from "@/lib/server/zone.server.api";
 import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
 import UserCard from "@/app/components/shared/user-card";
 import { StatusType } from "@/types/zone.type";
-import ZoneHeader from "../../zone-header";
+import ZoneHeader from "./zone-header";
 import { convertDate } from "@/utils/shared/date.util";
 import { getProfileImage } from "@/utils/shared/profile.util";
 

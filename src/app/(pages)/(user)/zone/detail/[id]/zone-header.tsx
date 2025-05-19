@@ -1,9 +1,10 @@
 import Link from "next/link";
-import Button from "../../../components/ui/button";
+import Button from "../../../../../components/ui/button";
 import { ZoneHeaderProps } from "@/types/zone.type";
-import ZoneIn from "./detail/[id]/zone-in";
-import ZoneOut from "./detail/[id]/zone-out";
+import ZoneIn from "./zone-in";
+import ZoneOut from "./zone-out";
 import detailBg from "@/app/components/img/d_background.png";
+import { getDetailImage } from "@/utils/shared/detail-image.util";
 
 export default function ZoneHeader({
   zoneId,
@@ -11,12 +12,13 @@ export default function ZoneHeader({
   name,
   hostId,
   joinedUserCount,
+  imageUrl,
 }: ZoneHeaderProps) {
   return (
     <div
       className="relative w-full min-h-[180px] rounded-xl bg-no-repeat bg-cover bg-center dark:bg-none overflow-hidden flex flex-col justify-center mb-6"
       style={{
-        backgroundImage: `url(${detailBg.src})`,
+        backgroundImage: `url(${getDetailImage(imageUrl)})`,
       }}
     >
       <div className="hidden dark:block absolute inset-0 bg-background-dark/80 z-0" />
