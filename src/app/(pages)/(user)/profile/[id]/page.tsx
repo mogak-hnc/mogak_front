@@ -9,12 +9,9 @@ import MyProfile from "./my-profile";
 import { ProfileProps } from "@/types/profile.type";
 import { ProfileInfo } from "@/lib/server/profile.server.api";
 import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
+import { paramProps } from "@/types/shared.type";
 
-export default async function ProfilePage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function ProfilePage({ params }: paramProps) {
   // const { id } = await params;
   const { id } = params;
   const jwt = await getJwtFromServerCookie();

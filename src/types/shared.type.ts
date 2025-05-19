@@ -52,3 +52,9 @@ export interface ImageCardProps {
   bgImageLight: string;
   bgImageDark: string;
 }
+
+export type paramProps = {
+  params: {
+    id: string;
+  };
+};

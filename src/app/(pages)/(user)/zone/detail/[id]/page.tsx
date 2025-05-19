@@ -4,16 +4,12 @@ import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
 import UserCard from "@/app/components/shared/user-card";
 import { StatusType } from "@/types/zone.type";
 import ZoneHeader from "./zone-header";
-import { convertDate } from "@/utils/shared/date.util";
 import { getProfileImage } from "@/utils/shared/profile.util";
+import { paramProps } from "@/types/shared.type";
 
 export const dynamic = "force-dynamic";
 
-export default async function ZoneDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function ZoneDetailPage({ params }: paramProps) {
   const { id } = params;
   // const { id } = await params;
   const jwt = await getJwtFromServerCookie();
