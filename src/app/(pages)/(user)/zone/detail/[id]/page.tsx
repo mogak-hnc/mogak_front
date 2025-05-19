@@ -5,13 +5,15 @@ import UserCard from "@/app/components/shared/user-card";
 import { StatusType } from "@/types/zone.type";
 import ZoneHeader from "./zone-header";
 import { getProfileImage } from "@/utils/shared/profile.util";
-import { paramProps } from "@/types/shared.type";
 
 export const dynamic = "force-dynamic";
 
-export default async function ZoneDetailPage({ params }: paramProps) {
-  const { id } = params;
-  // const { id } = await params;
+export default async function ZoneDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
   const jwt = await getJwtFromServerCookie();
 
   const data = await ZoneDetail(id, jwt);

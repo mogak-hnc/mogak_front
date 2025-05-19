@@ -5,11 +5,14 @@ import Summary from "./summary";
 import { ChallengeDetail } from "@/lib/server/challenge.server.api";
 import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
 import { convertDate } from "@/utils/shared/date.util";
-import { paramProps } from "@/types/shared.type";
 
-export default async function ChallengeDetailPage({ params }: paramProps) {
-  // const { id } = await params;
-  const { id } = params;
+export default async function ChallengeDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+
   const jwt = await getJwtFromServerCookie();
 
   const data = await ChallengeDetail(id, jwt);
