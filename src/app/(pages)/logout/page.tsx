@@ -11,6 +11,7 @@ export default function LogoutPage() {
 
     localStorage.removeItem("memberId");
 
+    window.dispatchEvent(new Event("member:changed"));
     router.push("/");
   }, [router]);
 

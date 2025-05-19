@@ -4,8 +4,18 @@ import SubTitle from "@/app/components/shared/sub-title";
 import kakaoLogin from "./kakao_login.png";
 import naverLogin from "./naver_login.png";
 import Link from "next/link";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { getClientUser } from "@/utils/client/user.client.util";
 
 export default function LoginPage() {
+  const router = useRouter();
+  useEffect(() => {
+    if (getClientUser()) {
+      router.push("/");
+    }
+  }, []);
+
   const handleKakaoLogin = () => {
     window.location.href = "/api/auth/kakao/login";
   };

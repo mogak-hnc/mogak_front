@@ -7,14 +7,23 @@ import { useEffect, useState } from "react";
 export default function HeaderNavigation() {
   const [memberId, setMemberId] = useState<string | null>(null);
 
+  const syncLoginStatus = () => {
+    setMemberId(localStorage.getItem("memberId"));
+  };
+
   useEffect(() => {
-    const id = localStorage.getItem("memberId");
-    setMemberId(id);
+    syncLoginStatus();
+
+    window.addEventListener("member:changed", syncLoginStatus);
+
+    return () => {
+      window.removeEventListener("member:changed", syncLoginStatus);
+    };
   }, []);
 
   const pathname = usePathname();
 
-  const navItems: { href: string; label: string }[] = [
+  const navItems = [
     { href: "/zone", label: "모각존" },
     { href: "/challenge", label: "모각챌" },
     { href: "/advice", label: "커뮤니티" },
@@ -35,7 +44,7 @@ export default function HeaderNavigation() {
           className={`text-sm ${
             pathname.startsWith(href)
               ? "font-bold text-primary"
-              : "text-gray-600 dark:text-gray-300 hover:text-primary transition-colors"
+              : "text-border-dark dark:text-borders hover:text-primary transition-colors"
           }`}
         >
           {label}

@@ -14,6 +14,7 @@ export default function AuthCallbackPage() {
       localStorage.setItem("memberId", memberId);
     }
 
+    window.dispatchEvent(new Event("member:changed"));
     router.replace("/");
   }, [params, router]);
 
