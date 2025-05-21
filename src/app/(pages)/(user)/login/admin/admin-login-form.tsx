@@ -1,25 +1,30 @@
 "use client";
 
 import Input from "@/app/components/ui/input";
+import { AdminLoginValue } from "@/types/auth.type";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 export default function AdminLoginForm() {
-  type AdminLoginValue = {
-    id: string;
-    pwd: string;
-  };
-
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<AdminLoginValue>({});
 
-  const onSubmit = (data: AdminLoginValue) => {
-    console.log("관리자 로그인 시도:", data);
+  const router = useRouter();
 
-    reset();
+  const onSubmit = async (data: AdminLoginValue) => {
+    const res = await fetch("/api/admin-login", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      throw new Error("관리자 로그인 실패");
+    }
+
+    router.push("/admin/zone");
   };
 
   return (
@@ -50,11 +55,11 @@ export default function AdminLoginForm() {
         <Input
           type="password"
           placeholder="비밀번호를 입력하세요"
-          {...register("pwd", { required: "비밀번호를 입력해 주세요" })}
+          {...register("pw", { required: "비밀번호를 입력해 주세요" })}
         />
-        {errors.pwd && (
+        {errors.pw && (
           <p className="text-error dark:text-error-dark text-sm mt-1">
-            {errors.pwd.message}
+            {errors.pw.message}
           </p>
         )}
       </div>
