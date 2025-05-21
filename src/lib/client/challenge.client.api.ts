@@ -37,3 +37,28 @@ export async function ChallengeCreatePost(input: ChallengeCreateInput) {
 
   return data;
 }
+
+export async function ChallengeDelete(challengeId: number) {
+  const token = getJwtFromCookie();
+  if (!token) {
+    throw new Error("JWT 토큰 없음 / 로그인 필요");
+  }
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/challenge/${challengeId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: token,
+      },
+    }
+  );
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    console.error("서버 응답:", errorText);
+    throw new Error(`챌린지 삭제 실패: ${res.status}`);
+  }
+
+  return await res.json();
+}

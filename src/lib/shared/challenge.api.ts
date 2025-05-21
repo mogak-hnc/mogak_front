@@ -59,8 +59,6 @@ export async function ChallengeSearch({
 
   const row: ChallengeSearchResponse = await res.json();
 
-  console.log(row);
-
   const data: ChallengeMainProps[] = row.content.map((item) => ({
     challengeId: item.challengeId,
     title: item.title,
