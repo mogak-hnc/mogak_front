@@ -18,6 +18,7 @@ export interface ZoneMainProps {
   tag?: string;
   title: string;
   participants: (string | null)[];
+  hasPwd: boolean;
 }
 
 export interface ZoneSearchCardProps {
@@ -89,6 +90,7 @@ export interface ZoneDetailResponse {
   zoneMemberInfoList: ZoneMemberInfo[];
   chatHistoryResponses: ChatHistoryResponse[];
   joined: boolean;
+  passwordRequired: boolean;
 }
 
 export interface ZoneHeaderProps {

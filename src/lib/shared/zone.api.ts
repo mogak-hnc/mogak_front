@@ -18,6 +18,7 @@ export async function ZoneMain() {
     tag: item.tagNames?.[0] ?? "",
     title: item.name,
     participants: item.memberImageUrls ?? [],
+    hasPwd: item.passwordRequired,
   }));
 
   return data;
@@ -73,6 +74,7 @@ export async function ZoneSearch({
     tag: item.tagNames?.[0] ?? "",
     title: item.name,
     participants: item.memberImageUrls ?? [],
+    hasPwd: item.passwordRequired,
   }));
 
   console.log(data);
