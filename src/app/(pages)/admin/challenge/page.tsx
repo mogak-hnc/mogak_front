@@ -52,7 +52,7 @@ export default function AdminChallengePage() {
     {
       key: "title",
       label: "제목",
-      linkTo: (row: any) => `/challenge/detail/${row.id}`,
+      linkTo: (row: any) => `/challenge/${row.id}`,
     },
     { key: "participants", label: "참가자 수" },
     {

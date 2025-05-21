@@ -18,10 +18,10 @@ export default function ZoneDetailLayout({
     <div className="flex flex-grow w-full">
       <aside className="w-1/5 min-w-[200px] border-r px-4 py-8">
         <div className="flex flex-col gap-4">
-          <Link href={`/zone/detail/1/space`} className="hover:underline">
+          <Link href={`/zone/1/space`} className="hover:underline">
             모각존 관리
           </Link>
-          <Link href={`/zone/detail/1/member`} className="hover:underline">
+          <Link href={`/zone/1/member`} className="hover:underline">
             멤버 관리
           </Link>
         </div>

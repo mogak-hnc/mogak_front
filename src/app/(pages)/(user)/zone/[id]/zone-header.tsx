@@ -40,7 +40,7 @@ export default function ZoneHeader({
           {joinedUserCount}명이 참가 중이에요!
         </span>
         <div className="flex gap-2">
-          <Link href={`/zone/detail/${zoneId}/member`}>
+          <Link href={`/zone/${zoneId}/member`}>
             <Button>모각존 관리</Button>
           </Link>
           <ZoneIn {...props} />

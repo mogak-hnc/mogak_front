@@ -12,7 +12,7 @@ export default function ChallengeCreatePage() {
 
   const handleSubmit = async (data: ChallengeForm) => {
     const res = await ChallengeCreatePost(data);
-    router.push(`/challenge/detail/${res.challengeId}`);
+    router.push(`/challenge/${res.challengeId}`);
   };
 
   return (

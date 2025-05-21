@@ -15,7 +15,7 @@ export default function ZoneCreatePage() {
   const createZoneSubmit = async (data: ZoneCreateInput) => {
     try {
       const res = await ZoneCreatePost(data, photo ?? undefined);
-      router.push(`/zone/detail/${res.mogakZoneId}`);
+      router.push(`/zone/${res.mogakZoneId}`);
     } catch (err) {
       console.error("모각존 생성 실패", err);
     }

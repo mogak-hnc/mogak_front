@@ -9,7 +9,7 @@ export default function ZoneMainCard({
   participants,
 }: ZoneMainProps) {
   return (
-    <Link href={`/zone/detail/${mogakZoneId}`}>
+    <Link href={`/zone/${mogakZoneId}`}>
       <div className="rounded-3xl p-4 shadow-md bg-white dark:bg-border-dark flex flex-col justify-between min-w-[280px] max-w-[320px] h-[180px]">
         <div className="space-y-1">
           {tag && (

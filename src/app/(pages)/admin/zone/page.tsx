@@ -54,7 +54,7 @@ export default function AdminZonePage() {
     {
       key: "name",
       label: "이름",
-      linkTo: (row: any) => `/zone/detail/${row.id}`,
+      linkTo: (row: any) => `/zone/${row.id}`,
     },
     { key: "tag", label: "태그" },
     { key: "members", label: "참여 인원" },

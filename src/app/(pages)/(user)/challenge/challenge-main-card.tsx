@@ -10,7 +10,7 @@ export default function ChallengeMainCard({
   official,
 }: ChallengeMainProps) {
   return (
-    <Link href={`/challenge/detail/${challengeId}`}>
+    <Link href={`/challenge/${challengeId}`}>
       <div className="rounded-3xl p-4 shadow-md bg-white dark:bg-border-dark flex flex-col justify-between min-w-[280px] max-w-[320px] h-[180px]">
         <div className="space-y-1">
           {official && (
