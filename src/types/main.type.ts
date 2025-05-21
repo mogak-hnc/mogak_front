@@ -1,4 +1,4 @@
-export interface MainRequest {
+export interface MainResponse {
   mogakZoneMainResponses: MainZoneRequest[];
   mogakChallengeResponses: MainChallengeRequest[];
 }
@@ -8,6 +8,7 @@ export interface MainZoneRequest {
   tagNames: string[];
   name: string;
   memberImageUrls: string[] | null[];
+  passwordRequired: boolean;
 }
 
 export interface MainChallengeRequest {

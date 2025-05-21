@@ -44,6 +44,7 @@ export default async function Home() {
                 participants={(space.memberImageUrls ?? []).filter(
                   (img): img is string => img !== null
                 )}
+                hasPwd={space.passwordRequired}
               />
             ))}
           </div>
