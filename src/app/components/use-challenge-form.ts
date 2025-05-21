@@ -8,7 +8,6 @@ export function useChallengeForm() {
     defaultValues: {
       name: "",
       description: "",
-      ownerOnly: false,
       startDate: getDateString(1),
       endDate: getDateString(8),
     },

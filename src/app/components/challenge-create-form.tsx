@@ -1,7 +1,6 @@
 "use client";
 
 import Input from "@/app/components/ui/input";
-import Checkbox from "@/app/components/ui/checkbox";
 import Button from "@/app/components/ui/button";
 import FormField from "@/app/components/shared/form-field";
 import H1Title from "@/app/components/ui/h1-title";
@@ -47,10 +46,6 @@ export default function ChallengeCreateForm({
 
       <FormField label="챌린지 설명">
         <Input placeholder="매일매일 공부해요!" {...register("description")} />
-      </FormField>
-
-      <FormField label="챌린지 인증">
-        <Checkbox label="방장만 인증 가능" {...register("ownerOnly")} />
       </FormField>
 
       <FormField label="모각존 기간">

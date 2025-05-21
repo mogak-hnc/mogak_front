@@ -22,7 +22,6 @@ export interface ChallengeSurvivorsProps {
 export type ChallengeForm = {
   name: string;
   description: string;
-  ownerOnly: boolean;
   startDate: string;
   endDate: string;
 };
@@ -125,7 +124,6 @@ export interface ChallengeDetileResponse {
 export interface ChallengeCreateInput {
   name: string;
   description: string;
-  ownerOnly: boolean;
   startDate: string;
   endDate: string;
 }
