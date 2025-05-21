@@ -14,25 +14,25 @@ export default function AdminChallengePage() {
   const [targetId, setTargetId] = useState<number | null>(null);
   const [targetName, setTargetName] = useState<string | null>(null);
 
+  const fetchChallenges = async () => {
+    try {
+      const res = await ChallengeSearch({
+        search: "",
+        official: "",
+        sort: "recent",
+        page: 0,
+        size: 20,
+      });
+
+      setChallenges(res.data);
+    } catch (e) {
+      console.error("챌린지 목록 불러오기 실패", e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchChallenges = async () => {
-      try {
-        const res = await ChallengeSearch({
-          search: "",
-          official: "",
-          sort: "recent",
-          page: 0,
-          size: 20,
-        });
-
-        setChallenges(res.data);
-      } catch (e) {
-        console.error("챌린지 목록 불러오기 실패", e);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchChallenges();
   }, []);
 
@@ -47,6 +47,7 @@ export default function AdminChallengePage() {
       try {
         await ChallengeDelete(targetId);
         setChallenges((prev) => prev.filter((c) => c.id !== targetId));
+        fetchChallenges();
       } catch (err) {
         console.error("챌린지 삭제 실패:", err);
       }

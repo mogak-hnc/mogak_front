@@ -14,22 +14,22 @@ export default function AdminZonePage() {
   const [targetId, setTargetId] = useState<number | null>(null);
   const [targetName, setTargetName] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchZones = async () => {
-      try {
-        const res = await ZoneSearch({
-          sort: "recent",
-          page: 0,
-          size: 20,
-        });
-        setZones(res.data);
-      } catch (e) {
-        console.error("에러:", e);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchZones = async () => {
+    try {
+      const res = await ZoneSearch({
+        sort: "recent",
+        page: 0,
+        size: 20,
+      });
+      setZones(res.data);
+    } catch (e) {
+      console.error("에러:", e);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchZones();
   }, []);
 
@@ -43,6 +43,7 @@ export default function AdminZonePage() {
     if (targetId !== null) {
       ZoneDelete(targetId);
       setZones((prev) => prev.filter((z) => z.id !== targetId));
+      fetchZones();
     }
     setShowModal(false);
     setTargetId(null);
