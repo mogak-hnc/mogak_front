@@ -7,6 +7,7 @@ export default function ZoneMainCard({
   tag,
   title,
   participants,
+  hasPwd,
 }: ZoneMainProps) {
   return (
     <Link href={`/zone/${mogakZoneId}`}>
@@ -36,7 +37,9 @@ export default function ZoneMainCard({
               <span className="text-xs ml-2">+{participants.length - 3}</span>
             )}
           </div>
-          <span className="text-yellow-500 text-sm">➡️ 참가하기</span>
+          <span className="text-secondary dark:text-secondary-dark text-sm">
+            &#10132;&nbsp;참가하기
+          </span>
         </div>
       </div>
     </Link>
