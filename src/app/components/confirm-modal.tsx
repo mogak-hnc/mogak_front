@@ -18,7 +18,7 @@ export default function ConfirmModal({
           </button>
           <button
             onClick={onConfirm}
-            className="text-sm px-3 py-1 bg-red-500 text-white rounded"
+            className="text-sm px-3 py-1 bg-error dark:bg-error-dark text-white rounded"
           >
             삭제
           </button>

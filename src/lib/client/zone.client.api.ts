@@ -44,11 +44,7 @@ export async function ZoneCreatePost(input: ZoneCreateInput, imageFile?: File) {
   return await res.json();
 }
 
-export async function ZoneEntryPost(
-  zoneId: string,
-  password: string,
-  jwt: string
-) {
+export async function ZoneEntryPost(zoneId: string, password: string) {
   const token = getJwtFromCookie();
   if (!token) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
@@ -60,6 +56,7 @@ export async function ZoneEntryPost(
       method: "POST",
       headers: {
         Authorization: token,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ password }),
     }

@@ -101,6 +101,7 @@ export interface ZoneHeaderProps {
   joinedUserCount: number;
   imageUrl: string;
   joined: boolean;
+  hasPwd: boolean;
 }
 
 export interface ZoneMemberInfo {
@@ -123,4 +124,5 @@ export interface ZoneInOutButtonProps {
   zoneId: string;
   hostId: string;
   joined: boolean;
+  hasPwd?: boolean;
 }

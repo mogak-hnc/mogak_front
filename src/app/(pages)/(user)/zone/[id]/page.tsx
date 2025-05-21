@@ -29,6 +29,7 @@ export default async function ZoneDetailPage({
           joinedUserCount={data.joinedUserCount}
           hostId={data.hostMemberId}
           joined={data.joined}
+          hasPwd={data.passwordRequired}
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {data.zoneMemberInfoList.map((user, index) => (

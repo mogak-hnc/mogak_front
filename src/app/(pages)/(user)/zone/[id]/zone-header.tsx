@@ -13,6 +13,7 @@ export default function ZoneHeader({
   joinedUserCount,
   imageUrl,
   joined,
+  hasPwd,
 }: ZoneHeaderProps) {
   const props: ZoneInOutButtonProps = {
     joined: joined,
@@ -43,7 +44,7 @@ export default function ZoneHeader({
           <Link href={`/zone/${zoneId}/member`}>
             <Button>모각존 관리</Button>
           </Link>
-          <ZoneIn {...props} />
+          <ZoneIn {...props} hasPwd={hasPwd} />
           <ZoneOut {...props} />
         </div>
       </div>
