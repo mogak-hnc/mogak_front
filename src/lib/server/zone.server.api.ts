@@ -6,7 +6,7 @@ export async function ZoneDetail(id: string, jwt: string | null) {
   }
 
   const res = await fetch(
-    `${process.env.BACKEND_API_URL}/api/mogak/zone/${id}/detail`,
+    `${process.env.BACKEND_API_URL}/api/mogak/zone/${id}`,
     {
       method: "GET",
       cache: "no-store",
