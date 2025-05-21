@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import AdminTable from "@/app/components/admin/admin-table";
 import ConfirmModal from "@/app/components/confirm-modal";
 import { ZoneSearch } from "@/lib/shared/zone.api";
+import { ZoneDelete } from "@/lib/client/zone.client.api";
+import SubTitle from "@/app/components/shared/sub-title";
 
 export default function AdminZonePage() {
   const [zones, setZones] = useState<any[]>([]);
@@ -39,15 +41,12 @@ export default function AdminZonePage() {
 
   const confirmDelete = () => {
     if (targetId !== null) {
+      ZoneDelete(targetId);
       setZones((prev) => prev.filter((z) => z.id !== targetId));
     }
     setShowModal(false);
     setTargetId(null);
   };
-
-  // const zoneDelete = () => {
-
-  // }
 
   const columns = [
     { key: "id", label: "ID" },
@@ -65,7 +64,7 @@ export default function AdminZonePage() {
       render: (_: any, row: any) => (
         <button
           className="text-sm px-2 py-1 bg-error dark:bg-error-dark text-white rounded"
-          onClick={() => openModal(row.id, row.title)}
+          onClick={() => openModal(row.mogakZoneId, row.title)}
         >
           삭제
         </button>
@@ -75,15 +74,13 @@ export default function AdminZonePage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-lg font-bold text-primary dark:text-primary-dark">
-        모각존 관리
-      </h1>
+      <SubTitle contents="모각존 관리" />
       <AdminTable columns={columns} data={zones} />
 
       {showModal && (
         <ConfirmModal
           message={`정말 '${targetName}' 존을 삭제하시겠습니까?`}
-          onConfirm={confirmDelete}
+          onConfirm={() => confirmDelete()}
           onCancel={() => setShowModal(false)}
         />
       )}

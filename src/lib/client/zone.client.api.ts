@@ -1,5 +1,6 @@
 import { ZoneCreateInput, ZoneCreateRequest } from "@/types/zone.type";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
+import { METHODS } from "http";
 
 export async function ZoneCreatePost(input: ZoneCreateInput, imageFile?: File) {
   const token = getJwtFromCookie();
@@ -82,15 +83,27 @@ export async function ZoneExitDelete(mogakZoneId: number) {
   // return data;
 }
 
-// export async function ZoneDelete(mogakZoneId: number) {
-//   // const token = getJwtFromCookie();
-//   // if (!token) {
-//   //   throw new Error("JWT 토큰 없음 / 로그인 필요");
-//   // }
-//   // const res = await fetch(`${process.env.BACKEND_API_URL}/api/mogak/worry`);
-//   // if (!res.ok) {
-//   //   throw new Error("고민 상담 메인 fetch 실패");
-//   // }
-//   // const data: AdviceCardProps[] = await res.json();
-//   // return data;
-// }
+export async function ZoneDelete(mogakZoneId: number) {
+  const token = getJwtFromCookie();
+  if (!token) {
+    throw new Error("JWT 토큰 없음 / 로그인 필요");
+  }
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/zone/${mogakZoneId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: token,
+      },
+    }
+  );
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    console.error("서버 응답:", errorText);
+    throw new Error(`모각존 삭제 실패: ${res.status}`);
+  }
+
+  return await res.json();
+}

@@ -77,8 +77,6 @@ export async function ZoneSearch({
     hasPwd: item.passwordRequired,
   }));
 
-  console.log(data);
-
   return {
     data,
     page: raw.number,
