@@ -34,7 +34,7 @@ export function middleware(request: NextRequest) {
 
   if (isAdminOnly) {
     if (!token) {
-      return NextResponse.redirect(new URL("/login", request.url));
+      return NextResponse.redirect(new URL("/login/admin", request.url));
     }
 
     const decoded = decodeToken(token);
