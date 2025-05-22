@@ -1,13 +1,29 @@
 import { NextResponse } from "next/server";
-import { AdminLogin } from "@/lib/client/auth.client.api";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { token } = await AdminLogin(body);
 
-    const redirectUrl = `${process.env.FRONTEND_API_URL}/admin/zone`;
-    const response = NextResponse.redirect(redirectUrl);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/auth/admin-login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      }
+    );
+
+    const message = await res.text();
+
+    if (!res.ok) {
+      return new NextResponse(message || "로그인 실패", { status: res.status });
+    }
+
+    const { token } = JSON.parse(message);
+
+    const response = NextResponse.json({ token });
 
     response.cookies.set("jwt", token, {
       path: "/",
@@ -17,6 +33,6 @@ export async function POST(req: Request) {
     return response;
   } catch (err) {
     console.error("관리자 로그인 에러:", err);
-    return new NextResponse("로그인 실패", { status: 401 });
+    return new NextResponse("서버 오류", { status: 500 });
   }
 }

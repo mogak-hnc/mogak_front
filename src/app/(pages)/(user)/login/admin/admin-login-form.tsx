@@ -3,25 +3,32 @@
 import Input from "@/app/components/ui/input";
 import { AdminLoginValue } from "@/types/auth.type";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function AdminLoginForm() {
+  const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<AdminLoginValue>({});
 
-  const router = useRouter();
-
   const onSubmit = async (data: AdminLoginValue) => {
+    setErrorMessage("");
+
     const res = await fetch("/api/admin-login", {
       method: "POST",
       body: JSON.stringify(data),
     });
 
+    const message = await res.text();
+
     if (!res.ok) {
-      throw new Error("관리자 로그인 실패");
+      setErrorMessage(message);
+      return;
     }
 
     router.push("/login/admin/callback?q=admin");
@@ -38,8 +45,8 @@ export default function AdminLoginForm() {
         </label>
         <Input
           type="text"
-          placeholder="아이디를 입력하세요"
-          {...register("id", { required: "아이디를 입력해 주세요" })}
+          placeholder="아이디"
+          {...register("id", { required: "아이디를 입력해 주세요." })}
         />
         {errors.id && (
           <p className="text-error dark:text-error-dark text-sm mt-1">
@@ -54,8 +61,8 @@ export default function AdminLoginForm() {
         </label>
         <Input
           type="password"
-          placeholder="비밀번호를 입력하세요"
-          {...register("pw", { required: "비밀번호를 입력해 주세요" })}
+          placeholder="비밀번호"
+          {...register("pw", { required: "비밀번호를 입력해 주세요." })}
         />
         {errors.pw && (
           <p className="text-error dark:text-error-dark text-sm mt-1">
@@ -70,6 +77,11 @@ export default function AdminLoginForm() {
       >
         로그인
       </button>
+      {errorMessage && (
+        <p className="text-error dark:text-error-dark text-sm text-center mt-2">
+          {errorMessage}
+        </p>
+      )}
     </form>
   );
 }

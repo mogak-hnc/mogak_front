@@ -10,6 +10,7 @@ export default function LogoutPage() {
     document.cookie = "jwt=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 
     localStorage.removeItem("memberId");
+    localStorage.removeItem("isAdmin");
 
     window.dispatchEvent(new Event("member:changed"));
     router.push("/");
