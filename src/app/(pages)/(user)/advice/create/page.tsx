@@ -48,7 +48,9 @@ export default function AdviceWritePage() {
       <div className="flex flex-col items-center gap-3 mt-5">
         <Button onClick={handleSubmit}>등록하기</Button>
         <p className="text-xs text-center text-border-dark dark:text-borders leading-5">
-          모각의 고민상담은 24시간 뒤에 자동으로 사라져요.
+          고민 글은 작성 후 24시간이 지나면 자동으로 사라집니다.
+          <br />
+          작성한 이후에는 직접 삭제할 수 없으니 신중하게 작성해 주세요.
         </p>
       </div>
     </div>

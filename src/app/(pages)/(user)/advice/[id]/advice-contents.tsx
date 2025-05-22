@@ -4,7 +4,6 @@ import { useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { convertTime } from "@/utils/shared/date.util";
 import { AdviceDetailResponse } from "@/types/advice.type";
-import Button from "@/app/components/ui/button";
 import AdviceCommentsCard from "./advice-comments-card";
 
 export default function AdviceContents({
@@ -15,25 +14,6 @@ export default function AdviceContents({
   data: AdviceDetailResponse;
 }) {
   const [empathyCount, setEmpathyCount] = useState(data.empathyCount);
-
-  const handleDelete = async () => {
-    const ok = confirm("정말 삭제하시겠습니까?");
-    if (!ok) return;
-
-    try {
-      const res = await fetch(`/api/advice/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!res.ok) {
-        throw new Error();
-      }
-      alert("삭제되었습니다.");
-      window.location.href = "/advice";
-    } catch {
-      alert("삭제 실패");
-    }
-  };
 
   const handleEmpathy = async () => {
     try {
@@ -62,7 +42,6 @@ export default function AdviceContents({
               {convertTime(data.restTime)} 남음
             </p>
           </div>
-          <Button onClick={handleDelete}>삭제하기</Button>
         </div>
 
         <p className="text-sm text-text dark:text-text-dark whitespace-pre-line">
