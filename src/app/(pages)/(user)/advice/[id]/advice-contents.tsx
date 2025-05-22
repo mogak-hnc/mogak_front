@@ -5,6 +5,7 @@ import { AiFillHeart } from "react-icons/ai";
 import { convertTime } from "@/utils/shared/date.util";
 import { AdviceDetailResponse } from "@/types/advice.type";
 import AdviceCommentsCard from "./advice-comments-card";
+import { AdviceEmpathyPost } from "@/lib/client/advice.client.api";
 
 export default function AdviceContents({
   id,
@@ -14,19 +15,17 @@ export default function AdviceContents({
   data: AdviceDetailResponse;
 }) {
   const [empathyCount, setEmpathyCount] = useState(data.empathyCount);
+  // const [isEmpathy, setIsEmpathy] = useState(data.empathyCount);
 
   const handleEmpathy = async () => {
     try {
-      const res = await fetch(`/api/advice/${id}/empathy`, {
-        method: "POST",
-      });
-
-      if (!res.ok) {
-        throw new Error();
-      }
-      setEmpathyCount((prev) => prev + 1);
-    } catch {
+      const res = await AdviceEmpathyPost(id);
+      const { empathyCount, hasEmpathized } = res;
+      setEmpathyCount(empathyCount);
+      console.log(res);
+    } catch (err) {
       alert("공감 실패");
+      console.log(err);
     }
   };
 

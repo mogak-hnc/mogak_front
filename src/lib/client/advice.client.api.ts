@@ -2,6 +2,7 @@ import {
   AdviceCommentRequest,
   AdviceCommentResponse,
   AdviceCreateProps,
+  AdviceEmpathyResponse,
 } from "@/types/advice.type";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 
@@ -57,6 +58,32 @@ export async function AdviceCommentPost(payload: AdviceCommentRequest) {
   }
 
   const data: AdviceCommentResponse = await res.json();
+
+  return data;
+}
+
+export async function AdviceEmpathyPost(worryId: string) {
+  const token = getJwtFromCookie();
+  if (!token) {
+    throw new Error("JWT 토큰 없음 / 로그인 필요");
+  }
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/worry/${worryId}/empathy`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("공감 토글 실패");
+  }
+
+  const data: AdviceEmpathyResponse = await res.json();
 
   return data;
 }

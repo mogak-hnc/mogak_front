@@ -45,3 +45,9 @@ export interface AdviceCommentResponse {
   comment: string;
   createdAt: string;
 }
+
+export interface AdviceEmpathyResponse {
+  worryId: number;
+  empathyCount: number;
+  hasEmpathized: boolean;
+}
