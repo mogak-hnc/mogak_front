@@ -5,6 +5,10 @@
 @returns "YYYY년 M월 D일" 형식의 문자열
 */
 
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ko";
+
 export const convertDate = (dateArray: number[]) => {
   const [year, month, day] = dateArray;
   const date = new Date(year, month - 1, day);
@@ -42,3 +46,39 @@ export const secondToTime = (seconds: number): string => {
   const s = seconds % 60;
   return `${h}시간 ${m}분`;
 };
+
+/* 
+현재 시간과 비교하여 남은 시간 반환
+
+@param date - "2025-05-22T07:01:23.813Z"
+@returns 남은 시간 문자열 반환
+*/
+
+dayjs.extend(relativeTime);
+dayjs.locale("ko");
+
+export function formatRelativeTime(date: number[]) {
+  if (!date || !Array.isArray(date)) {
+    return "";
+  }
+
+  const [y, m, d, h = 0, min = 0, s = 0] = date;
+  const inputTime = dayjs(new Date(y, m - 1, d, h, min, s));
+
+  if (!inputTime.isValid()) return "";
+
+  const now = dayjs();
+  const diffInMinutes = now.diff(inputTime, "minute");
+  const diffInHours = now.diff(inputTime, "hour");
+
+  if (diffInMinutes < 1) {
+    return "방금 전";
+  }
+  if (diffInHours < 1) {
+    return `${diffInMinutes}분 전`;
+  }
+  if (diffInHours < 24) {
+    return `${diffInHours}시간 전`;
+  }
+  return inputTime.format("YYYY년 M월 D일");
+}

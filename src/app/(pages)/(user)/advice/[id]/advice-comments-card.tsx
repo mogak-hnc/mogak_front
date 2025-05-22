@@ -5,6 +5,7 @@ import { useState } from "react";
 import Button from "@/app/components/ui/button";
 import { AdviceDetailCommentProps } from "@/types/advice.type";
 import AdviceComment from "./advice-comment";
+import { AdviceCommentPost } from "@/lib/client/advice.client.api";
 
 export default function AdviceCommentsCard({
   comments,
@@ -17,18 +18,12 @@ export default function AdviceCommentsCard({
   const [input, setInput] = useState("");
 
   const handleSubmit = async () => {
-    if (!input.trim()) return;
+    if (!input.trim()) {
+      return;
+    }
 
     try {
-      const res = await fetch(`/api/advice/${worryId}/comment`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ body: input }),
-      });
-
-      if (!res.ok) throw new Error("댓글 등록 실패");
+      const res = await AdviceCommentPost({ worryId: worryId, comment: input });
 
       const newComment = await res.json();
       setCommentList((prev) => [...prev, newComment]);
@@ -39,25 +34,25 @@ export default function AdviceCommentsCard({
   };
 
   return (
-    <div className="w-[35%]">
-      <div className="text-lg font-bold text-primary dark:text-primary-dark">
-        댓글
+    <div className="w-full max-w-md p-4 bg-white dark:bg-zinc-900 rounded-xl shadow border border-zinc-200 dark:border-zinc-700">
+      <div className="text-lg font-semibold text-primary dark:text-primary-dark mb-4">
+        댓글 {commentList.length}개
       </div>
 
-      <div className="flex flex-col gap-2 mt-2">
+      <div className="flex flex-col gap-2">
         <textarea
-          className="w-full p-2 border rounded text-sm resize-none"
+          className="w-full p-3 border border-zinc-300 dark:border-zinc-600 resize-none rounded-md bg-white dark:bg-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-primary"
           rows={3}
           placeholder="댓글을 입력하세요"
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
         <div className="flex justify-end">
-          <Button onClick={handleSubmit}>댓글 작성</Button>
+          <Button onClick={handleSubmit}>등록</Button>
         </div>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-6 space-y-4">
         {commentList.map((comment, idx) => (
           <AdviceComment key={idx} {...comment} />
         ))}

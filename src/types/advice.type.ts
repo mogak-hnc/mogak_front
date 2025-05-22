@@ -33,5 +33,10 @@ export interface AdviceDetailResponse {
 
 export interface AdviceDetailCommentProps {
   comment: string;
-  createdAt: string;
+  createdAt: number[];
+}
+
+export interface AdviceCommentRequest {
+  worryId: string;
+  comment: string;
 }
