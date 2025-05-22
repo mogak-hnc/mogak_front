@@ -24,7 +24,7 @@ export default function AdminLoginForm() {
       throw new Error("관리자 로그인 실패");
     }
 
-    router.push("/admin/zone");
+    router.push("/login/admin/callback?q=admin");
   };
 
   return (

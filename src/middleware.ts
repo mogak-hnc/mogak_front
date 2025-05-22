@@ -6,10 +6,6 @@ export function middleware(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
 
-  console.log("✅ middleware pathname:", pathname);
-  console.log("✅ token:", token);
-
-  // 로그인
   const protectedPaths = [
     "/zone",
     "/challenge",
@@ -30,7 +26,6 @@ export function middleware(request: NextRequest) {
     const nowInSec = Math.floor(Date.now() / 1000);
 
     if (!decoded || decoded.exp < nowInSec) {
-      console.log("⛔️ 토큰 만료 → 리디렉션");
       return NextResponse.redirect(new URL("/login", request.url));
     }
   }

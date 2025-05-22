@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 
 export default function HeaderNavigation() {
   const [memberId, setMemberId] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState<string | null>(null);
 
   const syncLoginStatus = () => {
     setMemberId(localStorage.getItem("memberId"));
+    setIsAdmin(localStorage.getItem("isAdmin"));
   };
 
   useEffect(() => {
@@ -27,7 +29,12 @@ export default function HeaderNavigation() {
     { href: "/zone", label: "모각존" },
     { href: "/challenge", label: "모각챌" },
     { href: "/advice", label: "커뮤니티" },
-    ...(memberId
+    ...(isAdmin
+      ? [
+          { href: "/admin/zone", label: "관리자" },
+          { href: "/logout", label: "로그아웃" },
+        ]
+      : memberId
       ? [
           { href: `/profile/${memberId}`, label: "프로필" },
           { href: "/logout", label: "로그아웃" },
