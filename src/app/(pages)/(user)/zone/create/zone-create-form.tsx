@@ -5,8 +5,8 @@ import FormField from "@/app/components/shared/form-field";
 import Input from "@/app/components/ui/input";
 import Checkbox from "@/app/components/ui/checkbox";
 import Button from "@/app/components/ui/button";
-import H1Title from "@/app/components/ui/h1-title";
 import { ZoneCreateInput } from "@/types/zone.type";
+import SubTitle from "@/app/components/shared/sub-title";
 
 type Props = {
   form: UseFormReturn<ZoneCreateInput>;
@@ -33,7 +33,7 @@ export default function ZoneCreateForm({
       onSubmit={onSubmit}
       className="max-w-[500px] mx-auto px-4 flex flex-col gap-4"
     >
-      <H1Title>모각존 만들기</H1Title>
+      <SubTitle contents="모각존 만들기" />
 
       <FormField label="모각존 이름">
         <Input

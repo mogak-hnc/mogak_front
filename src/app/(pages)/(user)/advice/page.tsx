@@ -1,11 +1,11 @@
 import AdvicePreviewCard from "@/app/components/advice-preview-card";
 
-import H1Title from "@/app/components/ui/h1-title";
 import AdviceBgLight from "@/app/components/img/s_background_light.png";
 import AdviceBgDark from "@/app/components/img/s_background_dark.png";
 
 import ImageCard from "@/app/components/shared/image-card";
 import { AdviceMain } from "@/lib/shared/advice.api";
+import SubTitle from "@/app/components/shared/sub-title";
 
 export default async function AdvicePage() {
   const data = await AdviceMain();
@@ -22,7 +22,7 @@ export default async function AdvicePage() {
           bgImageLight={AdviceBgLight.src}
           bgImageDark={AdviceBgDark.src}
         ></ImageCard>
-        <H1Title>공감이 많은 고민들</H1Title>
+        <SubTitle contents="공감이 많은 고민들" />
         <div className="flex flex-wrap gap-4">
           {data.map((m, idx) => (
             <AdvicePreviewCard key={`advice-preiview-card-${idx}`} {...m} />

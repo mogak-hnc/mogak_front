@@ -4,8 +4,8 @@ import Link from "next/link";
 import Button from "../ui/button";
 import Input from "../ui/input";
 import { AiOutlineSearch } from "react-icons/ai";
-import H1Title from "../ui/h1-title";
 import { TagsProps } from "@/types/shared.type";
+import SubTitle from "./sub-title";
 
 type Props = {
   title: string;
@@ -42,7 +42,7 @@ export default function SearchCardView({
 }: Props) {
   return (
     <div className="flex flex-col w-fit items-center gap-2">
-      <H1Title>{title}</H1Title>
+      <SubTitle contents={title} />
       <span className="text-sm text-border-dark dark:text-borders">
         {description}
       </span>

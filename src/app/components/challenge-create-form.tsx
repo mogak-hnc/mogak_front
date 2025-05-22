@@ -3,9 +3,9 @@
 import Input from "@/app/components/ui/input";
 import Button from "@/app/components/ui/button";
 import FormField from "@/app/components/shared/form-field";
-import H1Title from "@/app/components/ui/h1-title";
 import { UseFormReturn } from "react-hook-form";
 import { ChallengeForm } from "@/types/challenge.type";
+import SubTitle from "./shared/sub-title";
 
 type Props = {
   form: UseFormReturn<ChallengeForm>;
@@ -29,7 +29,7 @@ export default function ChallengeCreateForm({
       onSubmit={form.handleSubmit(onSubmit)}
       className="max-w-[500px] mx-auto mt-10 px-4 flex flex-col gap-4"
     >
-      <H1Title>{isAdmin ? "공식 챌린지 생성" : "챌린지 만들기"}</H1Title>
+      <SubTitle contents={isAdmin ? "공식 챌린지 생성" : "챌린지 만들기"} />
 
       <FormField label="챌린지 이름">
         <Input
