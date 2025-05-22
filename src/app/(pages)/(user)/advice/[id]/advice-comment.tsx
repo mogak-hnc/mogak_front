@@ -1,6 +1,6 @@
 import { AdviceDetailCommentProps } from "@/types/advice.type";
 
-export default function Comment({
+export default function AdviceComment({
   comment,
   createdAt,
 }: AdviceDetailCommentProps) {

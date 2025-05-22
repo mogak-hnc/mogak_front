@@ -1,0 +1,86 @@
+"use client";
+
+import { useState } from "react";
+import { AiFillHeart } from "react-icons/ai";
+import { convertTime } from "@/utils/shared/date.util";
+import { AdviceDetailResponse } from "@/types/advice.type";
+import Button from "@/app/components/ui/button";
+import AdviceCommentsCard from "./advice-comments-card";
+
+export default function AdviceContents({
+  id,
+  data,
+}: {
+  id: string;
+  data: AdviceDetailResponse;
+}) {
+  const [empathyCount, setEmpathyCount] = useState(data.empathyCount);
+
+  const handleDelete = async () => {
+    const ok = confirm("정말 삭제하시겠습니까?");
+    if (!ok) return;
+
+    try {
+      const res = await fetch(`/api/advice/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error();
+      }
+      alert("삭제되었습니다.");
+      window.location.href = "/advice";
+    } catch {
+      alert("삭제 실패");
+    }
+  };
+
+  const handleEmpathy = async () => {
+    try {
+      const res = await fetch(`/api/advice/${id}/empathy`, {
+        method: "POST",
+      });
+
+      if (!res.ok) {
+        throw new Error();
+      }
+      setEmpathyCount((prev) => prev + 1);
+    } catch {
+      alert("공감 실패");
+    }
+  };
+
+  return (
+    <div className="flex gap-4 max-w-screen-xl mx-auto px-8 py-10">
+      <div className="w-[65%] flex flex-col gap-6">
+        <div className="flex items-center justify-between border-borders dark:border-border-dark border-b pb-2">
+          <div>
+            <h2 className="text-lg font-bold text-primary dark:text-primary-dark">
+              {data.title}
+            </h2>
+            <p className="text-sm text-border-dark dark:text-borders">
+              {convertTime(data.restTime)} 남음
+            </p>
+          </div>
+          <Button onClick={handleDelete}>삭제하기</Button>
+        </div>
+
+        <p className="text-sm text-text dark:text-text-dark whitespace-pre-line">
+          {data.body}
+        </p>
+
+        <button
+          className="flex items-center gap-1 text-error dark:text-error-dark text-sm"
+          onClick={handleEmpathy}
+        >
+          <AiFillHeart size={18} />
+          공감 {empathyCount}개
+        </button>
+      </div>
+
+      <div className="w-[35%]">
+        <AdviceCommentsCard comments={data.commentResponses} worryId={id} />
+      </div>
+    </div>
+  );
+}
