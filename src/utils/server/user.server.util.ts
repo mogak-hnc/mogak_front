@@ -5,14 +5,15 @@
 @returns 유저 정보 객체 (jwt payload) 혹은 null
 */
 
-import { cookies as nextCookies } from "next/headers";
+import { cookies } from "next/headers";
 import {
   decodeToken,
   JwtPayload,
 } from "@/utils/client/decode-token.client.util";
 
-export function getServerUser(): JwtPayload | null {
-  const token = (nextCookies() as any).get("jwt")?.value;
+export async function getServerUser(): Promise<JwtPayload | null> {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("jwt")?.value;
 
   if (!token) {
     return null;

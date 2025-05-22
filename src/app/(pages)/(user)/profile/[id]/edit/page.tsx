@@ -6,11 +6,17 @@ import { useForm } from "react-hook-form";
 
 import SubTitle from "@/app/components/shared/sub-title";
 import { ProfileFormProps, ProfileInfoResponse } from "@/types/profile.type";
-import { profileInfo, profilePatch } from "@/lib/client/profile.client.api";
+import {
+  profileDelete,
+  profileInfo,
+  profilePatch,
+} from "@/lib/client/profile.client.api";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 import EditImage from "./edit-image";
 import EditForm from "./edit-form";
 import EditButton from "./edit-button";
+import ConfirmModal from "@/app/components/confirm-modal";
+import { decodeToken } from "@/utils/client/decode-token.client.util";
 
 export default function ProfileEditPage() {
   const params = useParams();
@@ -20,6 +26,7 @@ export default function ProfileEditPage() {
   const [data, setData] = useState<ProfileInfoResponse | null>(null);
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [deleteImage, setDeleteImage] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const {
     register,
@@ -84,8 +91,9 @@ export default function ProfileEditPage() {
     setDeleteImage(false);
   };
 
-  const handleDelete = () => {
-    console.log("삭제 로직 추가 예정");
+  const handleDelete = async () => {
+    await fetch(`/api/auth/kakao/withdraw`, { method: "POST" });
+    await profileDelete();
   };
 
   const nickname = watch("nickname");
@@ -113,19 +121,30 @@ export default function ProfileEditPage() {
           setValue={setValue}
           errors={errors}
         />
-        <div className="flex items-center gap-4">
+        <div className="flex justify-center items-center gap-4">
           <EditButton
             onReset={handleReset}
             isDisabled={!isDirty && !profileImage && !deleteImage}
           />
-          <span
-            onClick={handleDelete}
-            className="text-sm text-border-dark dark:text-borders cursor-pointer"
-          >
-            탈퇴하기
-          </span>
         </div>
       </form>
+
+      <div className="mt-4 flex justify-center">
+        <button
+          onClick={() => setShowModal(true)}
+          className="text-sm text-error hover:text-error-dark transition"
+        >
+          모각 탈퇴하기
+        </button>
+      </div>
+
+      {showModal && (
+        <ConfirmModal
+          message="정말 탈퇴하시겠습니까?"
+          onConfirm={handleDelete}
+          onCancel={() => setShowModal(false)}
+        />
+      )}
     </div>
   );
 }

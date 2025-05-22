@@ -1,17 +1,25 @@
+import { getProviderFromServerCookie } from "@/utils/server/provider.server.util";
+import { getServerUser } from "@/utils/server/user.server.util";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const accessToken = req.headers.get("Authorization")?.replace("Bearer ", "");
+  const token = await getServerUser();
 
-  if (!accessToken) {
+  if (!token) {
     return NextResponse.json({ error: "No access token" }, { status: 401 });
+  }
+
+  const provider = await getProviderFromServerCookie();
+
+  if (provider !== "kakao") {
+    return NextResponse.json({ message: "not kakao user" }, { status: 200 });
   }
 
   try {
     const kakaoRes = await fetch("https://kapi.kakao.com/v1/user/unlink", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -19,8 +27,6 @@ export async function POST(req: NextRequest) {
       const error = await kakaoRes.json();
       return NextResponse.json({ error }, { status: kakaoRes.status });
     }
-
-    /* DB delete 처리 */
 
     const response = NextResponse.redirect(`${process.env.FRONTEND_API_URL}`);
     response.cookies.set("jwt", "", { path: "/", expires: new Date(0) });

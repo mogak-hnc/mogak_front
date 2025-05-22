@@ -66,6 +66,7 @@ export async function GET(req: NextRequest) {
 
     const response = NextResponse.redirect(`${process.env.FRONTEND_API_URL}`);
     response.cookies.set("jwt", token, { path: "/" });
+    response.cookies.set("provider", "naver");
 
     response.headers.set(
       "Location",

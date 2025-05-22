@@ -34,14 +34,15 @@ export default function EditForm({
       {errors.nickname && (
         <p className="text-sm text-error mt-1">{errors.nickname.message}</p>
       )}
-
-      <Checkbox
-        label="뱃지 내역 비공개하기"
-        checked={!showBadge}
-        onChange={(val) => {
-          setValue("showBadge", !val, { shouldDirty: true });
-        }}
-      />
+      <div className="flex justify-center">
+        <Checkbox
+          label="뱃지 내역 비공개하기"
+          checked={!showBadge}
+          onChange={(val) => {
+            setValue("showBadge", !val, { shouldDirty: true });
+          }}
+        />
+      </div>
     </div>
   );
 }
