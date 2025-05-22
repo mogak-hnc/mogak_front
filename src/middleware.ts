@@ -6,6 +6,9 @@ export function middleware(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
 
+  console.log("✅ middleware pathname:", pathname);
+  console.log("✅ token:", token);
+
   // 로그인
   const protectedPaths = [
     "/zone",
@@ -14,37 +17,48 @@ export function middleware(request: NextRequest) {
     "/login/info",
     "/profile",
   ];
+
   const isProtected = protectedPaths.some((path) => pathname.startsWith(path));
 
   if (isProtected && !token) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // 로그인 + 관리자;
-  // const isAdminOnly = pathname.startsWith("/admin");
+  if (isProtected && token) {
+    const decoded = decodeToken(token);
 
-  // if (isAdminOnly) {
-  //   if (!token) {
-  //     return NextResponse.redirect(new URL("/login", request.url));
-  //   }
+    const nowInSec = Math.floor(Date.now() / 1000);
 
-  //   const decoded = decodeToken(token);
+    if (!decoded || decoded.exp < nowInSec) {
+      console.log("⛔️ 토큰 만료 → 리디렉션");
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+  }
 
-  //   if (!decoded || decoded.role !== "ROLE_ADMIN") {
-  //     return NextResponse.redirect(new URL("/", request.url));
-  //   }
-  // }
+  const isAdminOnly = pathname.startsWith("/admin");
 
-  // return NextResponse.next();
+  if (isAdminOnly) {
+    if (!token) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+
+    const decoded = decodeToken(token);
+
+    if (!decoded || decoded.role !== "ROLE_ADMIN") {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    "/zone/create",
-    "/challenge/create",
-    "/advice",
+    "/zone/:path*",
+    "/challenge/:path*",
+    "/advice/:path*",
     "/login/info",
-    "/profile",
-    // "/admin/:path*",
+    "/profile/:path*",
+    "/admin/:path*",
   ],
 };
