@@ -5,7 +5,9 @@ import {
 } from "@/types/advice.type";
 
 export async function AdviceMain() {
-  const res = await fetch(`${process.env.BACKEND_API_URL}/api/mogak/worry`);
+  const res = await fetch(`${process.env.BACKEND_API_URL}/api/mogak/worry`, {
+    next: { revalidate: 1 },
+  });
 
   if (!res.ok) {
     throw new Error("고민 상담 메인 fetch 실패");

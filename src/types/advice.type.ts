@@ -24,3 +24,8 @@ export interface AdviceSearchResponse {
   worryId: number;
   restTime: number[];
 }
+
+export interface AdviceCreateProps {
+  title: string;
+  contents: string;
+}

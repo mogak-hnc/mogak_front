@@ -1,6 +1,5 @@
 import { ZoneCreateInput, ZoneCreateRequest } from "@/types/zone.type";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
-import { METHODS } from "http";
 
 export async function ZoneCreatePost(input: ZoneCreateInput, imageFile?: File) {
   const token = getJwtFromCookie();

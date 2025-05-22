@@ -1,8 +1,6 @@
 import AdvicePreviewCard from "@/app/components/advice-preview-card";
-
 import AdviceBgLight from "@/app/components/img/s_background_light.png";
 import AdviceBgDark from "@/app/components/img/s_background_dark.png";
-
 import ImageCard from "@/app/components/shared/image-card";
 import { AdviceMain } from "@/lib/shared/advice.api";
 import SubTitle from "@/app/components/shared/sub-title";
@@ -24,8 +22,11 @@ export default async function AdvicePage() {
         ></ImageCard>
         <SubTitle contents="공감이 많은 고민들" />
         <div className="flex flex-wrap gap-4">
-          {data.map((m, idx) => (
-            <AdvicePreviewCard key={`advice-preiview-card-${idx}`} {...m} />
+          {data.map((m) => (
+            <AdvicePreviewCard
+              key={`advice-preiview-card-${m.worryId}`}
+              {...m}
+            />
           ))}
         </div>
       </div>

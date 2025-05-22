@@ -28,3 +28,17 @@ export const convertTime = (timeArray: number[]) => {
 
   return `${hour}시간 ${pad(minute)}분 ${pad(second)}초`;
 };
+
+/* 
+초 값을 [hour, minute, second] 형태의 숫자 배열로 변환
+
+@param seconds - 초 
+@returns [hour, minute, second] 형태의 숫자 배열
+*/
+
+export const secondToTime = (seconds: number): string => {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+  return `${h}시간 ${m}분`;
+};

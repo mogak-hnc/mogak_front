@@ -4,15 +4,14 @@ import { useState } from "react";
 import Input from "@/app/components/ui/input";
 import Button from "@/app/components/ui/button";
 import SubTitle from "@/app/components/shared/sub-title";
+import { AdviceCreatePost } from "@/lib/client/advice.client.api";
 
 export default function AdviceWritePage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [deleteAfter, setDeleteAfter] = useState(24);
 
   const handleSubmit = () => {
-    const expireAt = new Date(Date.now() + deleteAfter * 60 * 60 * 1000);
-    console.log("제출됨", { title, content, deleteAfter, expireAt });
+    AdviceCreatePost({ title: title, contents: content });
   };
 
   return (
