@@ -51,8 +51,8 @@ export default function AdviceContents({
   };
 
   return (
-    <div className="flex gap-4 max-w-screen-xl mx-auto px-8 py-10">
-      <div className="w-[65%] flex flex-col gap-6">
+    <div className="flex flex-col lg:flex-row gap-4 max-w-screen-xl mx-auto px-4 sm:px-6 py-10">
+      <div className="lg:w-[65%] w-full flex flex-col gap-6">
         <div className="flex items-center justify-between border-borders dark:border-border-dark border-b pb-2">
           <div>
             <h2 className="text-lg font-bold text-primary dark:text-primary-dark">
@@ -78,7 +78,7 @@ export default function AdviceContents({
         </button>
       </div>
 
-      <div className="w-[35%]">
+      <div className="w-full lg:w-[35%]">
         <AdviceCommentsCard comments={data.commentResponses} worryId={id} />
       </div>
     </div>

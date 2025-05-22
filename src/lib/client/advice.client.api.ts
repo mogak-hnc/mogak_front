@@ -1,4 +1,8 @@
-import { AdviceCommentRequest, AdviceCreateProps } from "@/types/advice.type";
+import {
+  AdviceCommentRequest,
+  AdviceCommentResponse,
+  AdviceCreateProps,
+} from "@/types/advice.type";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 
 export async function AdviceCreatePost(payload: AdviceCreateProps) {
@@ -44,7 +48,7 @@ export async function AdviceCommentPost(payload: AdviceCommentRequest) {
         Authorization: token,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(comment),
+      body: JSON.stringify({ comment }),
     }
   );
 
@@ -52,5 +56,7 @@ export async function AdviceCommentPost(payload: AdviceCommentRequest) {
     throw new Error("댓글 작성 실패");
   }
 
-  return await res.json();
+  const data: AdviceCommentResponse = await res.json();
+
+  return data;
 }

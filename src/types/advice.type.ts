@@ -40,3 +40,8 @@ export interface AdviceCommentRequest {
   worryId: string;
   comment: string;
 }
+
+export interface AdviceCommentResponse {
+  comment: string;
+  createdAt: string;
+}

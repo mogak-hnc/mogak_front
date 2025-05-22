@@ -23,18 +23,16 @@ export default function AdviceCommentsCard({
     }
 
     try {
-      const res = await AdviceCommentPost({ worryId: worryId, comment: input });
-
-      const newComment = await res.json();
-      setCommentList((prev) => [...prev, newComment]);
+      await AdviceCommentPost({ worryId: worryId, comment: input });
       setInput("");
-    } catch {
-      alert("댓글 등록에 실패했습니다.");
+      // TODO : 댓글 리페칭 로직 추가
+    } catch (err) {
+      console.log("댓글 작성 실패 : " + err);
     }
   };
 
   return (
-    <div className="w-full max-w-md p-4 bg-white dark:bg-zinc-900 rounded-xl shadow border border-zinc-200 dark:border-zinc-700">
+    <div className="w-full bg-white dark:bg-zinc-900 rounded-xl shadow border border-zinc-200 dark:border-zinc-700 p-4">
       <div className="text-lg font-semibold text-primary dark:text-primary-dark mb-4">
         댓글 {commentList.length}개
       </div>
