@@ -23,7 +23,9 @@ export async function AdviceCreatePost(payload: AdviceCreateProps) {
     throw new Error("고민글 작성 실패");
   }
 
-  return await res.json();
+  const data: { worryId: string } = await res.json();
+
+  return data;
 }
 
 export async function AdviceCommentPost(payload: AdviceCommentRequest) {

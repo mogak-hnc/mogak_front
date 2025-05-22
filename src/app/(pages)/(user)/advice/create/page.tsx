@@ -5,13 +5,24 @@ import Input from "@/app/components/ui/input";
 import Button from "@/app/components/ui/button";
 import SubTitle from "@/app/components/shared/sub-title";
 import { AdviceCreatePost } from "@/lib/client/advice.client.api";
+import { useRouter } from "next/navigation";
 
 export default function AdviceWritePage() {
+  const router = useRouter();
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  const handleSubmit = () => {
-    AdviceCreatePost({ title: title, contents: content });
+  const handleSubmit = async () => {
+    try {
+      const newAdviceId = await AdviceCreatePost({
+        title: title,
+        contents: content,
+      });
+      router.push(`/advice/${newAdviceId.worryId}`);
+    } catch (err) {
+      console.log("게시글 작성 실패");
+    }
   };
 
   return (
