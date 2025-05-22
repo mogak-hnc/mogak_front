@@ -27,9 +27,8 @@ export default function AdminChallengePage() {
       setChallenges(res.data);
     } catch (e) {
       console.error("챌린지 목록 불러오기 실패", e);
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -46,8 +45,7 @@ export default function AdminChallengePage() {
     if (targetId !== null) {
       try {
         await ChallengeDelete(targetId);
-        setChallenges((prev) => prev.filter((c) => c.id !== targetId));
-        fetchChallenges();
+        await fetchChallenges();
       } catch (err) {
         console.error("챌린지 삭제 실패:", err);
       }

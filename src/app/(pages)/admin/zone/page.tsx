@@ -24,9 +24,8 @@ export default function AdminZonePage() {
       setZones(res.data);
     } catch (e) {
       console.error("에러:", e);
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -39,11 +38,10 @@ export default function AdminZonePage() {
     setShowModal(true);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (targetId !== null) {
-      ZoneDelete(targetId);
-      setZones((prev) => prev.filter((z) => z.id !== targetId));
-      fetchZones();
+      await ZoneDelete(targetId);
+      await fetchZones();
     }
     setShowModal(false);
     setTargetId(null);
