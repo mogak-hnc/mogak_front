@@ -36,10 +36,10 @@ export default function EditForm({
       )}
       <div className="flex justify-center">
         <Checkbox
-          label="뱃지 내역 비공개하기"
-          checked={!showBadge}
-          onChange={(val) => {
-            setValue("showBadge", !val, { shouldDirty: true });
+          label="뱃지 공개 여부"
+          checked={showBadge}
+          onChange={(e) => {
+            setValue("showBadge", e.target.checked, { shouldDirty: true });
           }}
         />
       </div>

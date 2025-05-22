@@ -114,7 +114,6 @@ export default function ProfileEditPage() {
           setDeleteImage={setDeleteImage}
           nickname={nickname}
         />
-
         <EditForm
           register={register}
           watch={watch}
