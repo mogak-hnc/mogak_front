@@ -20,8 +20,6 @@ export default async function ProfilePage({
 
   const data = await ProfileInfo(id, jwt);
 
-  // console.log(data);
-
   if (!data)
     return (
       <div className="max-w-4xl mx-auto py-24 px-6 flex flex-col items-center gap-6 text-center">

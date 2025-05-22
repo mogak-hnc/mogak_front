@@ -1,30 +1,45 @@
-import { UseFormRegister, UseFormWatch, UseFormReset } from "react-hook-form";
 import Input from "@/app/components/ui/input";
 import Checkbox from "@/app/components/ui/checkbox";
+import { ProfileEditProps } from "@/types/profile.type";
 
-type FormValues = {
-  nickname: string;
-  showBadge: boolean;
-};
-
-type Props = {
-  register: UseFormRegister<FormValues>;
-  watch: UseFormWatch<FormValues>;
-  reset: UseFormReset<FormValues>;
-};
-
-export default function EditForm({ register, watch, reset }: Props) {
-  const nickname = watch("nickname");
+export default function EditForm({
+  register,
+  watch,
+  setValue,
+  errors,
+}: ProfileEditProps) {
   const showBadge = watch("showBadge");
 
   return (
     <div className="flex flex-col gap-4">
-      <Input placeholder="닉네임" {...register("nickname")} />
+      <Input
+        placeholder="닉네임"
+        {...register("nickname", {
+          required: "닉네임은 필수입니다.",
+          maxLength: {
+            value: 15,
+            message: "닉네임은 15자 이하로 입력해 주세요.",
+          },
+          onChange: (e) => {
+            const value = e.target.value;
+            if (value.length <= 15) {
+              return e;
+            } else {
+              e.target.value = value.slice(0, 15);
+              return e;
+            }
+          },
+        })}
+      />
+      {errors.nickname && (
+        <p className="text-sm text-error mt-1">{errors.nickname.message}</p>
+      )}
+
       <Checkbox
         label="뱃지 내역 비공개하기"
         checked={!showBadge}
         onChange={(val) => {
-          reset({ nickname, showBadge: !val }, { keepDirty: true });
+          setValue("showBadge", !val, { shouldDirty: true });
         }}
       />
     </div>

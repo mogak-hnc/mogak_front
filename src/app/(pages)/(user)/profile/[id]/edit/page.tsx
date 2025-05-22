@@ -5,17 +5,12 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import SubTitle from "@/app/components/shared/sub-title";
-import { ProfileInfoResponse } from "@/types/profile.type";
+import { ProfileFormProps, ProfileInfoResponse } from "@/types/profile.type";
 import { profileInfo, profilePatch } from "@/lib/client/profile.client.api";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 import EditImage from "./edit-image";
 import EditForm from "./edit-form";
 import EditButton from "./edit-button";
-
-type FormValues = {
-  nickname: string;
-  showBadge: boolean;
-};
 
 export default function ProfileEditPage() {
   const params = useParams();
@@ -31,8 +26,9 @@ export default function ProfileEditPage() {
     handleSubmit,
     reset,
     watch,
-    formState: { isDirty },
-  } = useForm<FormValues>({
+    setValue,
+    formState: { errors, isDirty },
+  } = useForm<ProfileFormProps>({
     defaultValues: { nickname: "", showBadge: true },
   });
 
@@ -60,7 +56,7 @@ export default function ProfileEditPage() {
     fetchInitial();
   }, [userId, reset]);
 
-  const onSubmit = async (formData: FormValues) => {
+  const onSubmit = async (formData: ProfileFormProps) => {
     const jwt = getJwtFromCookie();
     if (!jwt || !data) {
       return;
@@ -80,7 +76,9 @@ export default function ProfileEditPage() {
   };
 
   const handleReset = () => {
-    if (!data) return;
+    if (!data) {
+      return;
+    }
     reset({ nickname: data.nickname, showBadge: data.showBadge });
     setProfileImage(null);
     setDeleteImage(false);
@@ -109,7 +107,12 @@ export default function ProfileEditPage() {
           nickname={nickname}
         />
 
-        <EditForm register={register} watch={watch} reset={reset} />
+        <EditForm
+          register={register}
+          watch={watch}
+          setValue={setValue}
+          errors={errors}
+        />
         <div className="flex items-center gap-4">
           <EditButton
             onReset={handleReset}
