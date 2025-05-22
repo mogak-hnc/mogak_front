@@ -40,7 +40,7 @@ export function middleware(request: NextRequest) {
     const decoded = decodeToken(token);
 
     if (!decoded || decoded.role !== "ROLE_ADMIN") {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/not-found", request.url));
     }
   }
 
