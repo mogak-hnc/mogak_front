@@ -1,59 +1,39 @@
-"use client";
-
 import Button from "@/app/components/ui/button";
 import { AiFillHeart } from "react-icons/ai";
 import Comment from "./comment";
 
-const mockAdvicePost = {
-  id: 1,
-  title: "고민이있어요",
-  content: "제가 고민이 있는데 저녁을 뭘 먹어야 할까요??",
-  deleteIn: "7시간 24분 뒤 삭제",
-  sympathyCount: 3,
-};
+import { convertTime } from "@/utils/shared/date.util";
+import { AdviceDetail } from "@/lib/server/advice.server.api";
 
-const mockComments = [
-  {
-    id: 1,
-    time: "10:11",
-    message: "떡볶이",
-    isMe: false,
-  },
-  {
-    id: 2,
-    time: "10:14",
-    message: "시리얼",
-    isMe: false,
-  },
-  {
-    id: 3,
-    time: "10:20",
-    message: "감사합니ㄷ다",
-    isMe: true,
-  },
-];
-
-export default function AdviceDetailPage() {
+export default async function AdviceDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const { id } = await params;
+  const data = await AdviceDetail(id);
   return (
     <div className="flex gap-4 max-w-screen-xl mx-auto px-8 py-10">
       <div className="w-[65%] flex flex-col gap-6">
-        <div className="flex items-center justify-between border-b pb-2">
+        <div className="flex items-center justify-between border-borders dark:border-border-dark border-b pb-2">
           <div>
             <h2 className="text-lg font-bold text-primary dark:text-primary-dark">
-              {mockAdvicePost.title}
+              {data.title}
             </h2>
-            <p className="text-sm text-gray-400">{mockAdvicePost.deleteIn}</p>
+            <p className="text-sm text-border-dark dark:text-borders">
+              {convertTime(data.restTime)} 남음
+            </p>
           </div>
           <Button>삭제하기</Button>
         </div>
 
         <p className="text-sm text-text dark:text-text-dark whitespace-pre-line">
-          {mockAdvicePost.content}
+          {data.body}
         </p>
 
         <div className="flex items-center gap-1 text-error dark:text-error-dark text-sm">
           <AiFillHeart size={18} />
-          공감 {mockAdvicePost.sympathyCount}개
+          공감 {data.empathyCount}개
         </div>
       </div>
 
@@ -62,8 +42,8 @@ export default function AdviceDetailPage() {
           댓글
         </div>
         <div>
-          {mockComments.map((comment) => (
-            <Comment {...comment}></Comment>
+          {data.commentResponses.map((comment, idx) => (
+            <Comment key={idx} {...comment}></Comment>
           ))}
         </div>
       </div>

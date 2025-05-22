@@ -39,7 +39,7 @@ export default function AdvicePreviewCard({
             댓글 {commentCount}개
           </span>
           <span className="text-border-dark dark:text-borders text-xs">
-            {secondToTime(timeLeft)}
+            {secondToTime(timeLeft)} 남음
           </span>
         </div>
 

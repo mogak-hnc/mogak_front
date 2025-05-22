@@ -5,13 +5,6 @@ export interface AdviceCardProps {
   worryId: number;
 }
 
-export interface AdviceCommentProps {
-  id: number;
-  message: string;
-  time: string;
-  isMe: boolean;
-}
-
 export interface AdviceSearchRequest {
   sort: string;
   page: number;
@@ -28,4 +21,17 @@ export interface AdviceSearchResponse {
 export interface AdviceCreateProps {
   title: string;
   contents: string;
+}
+
+export interface AdviceDetailResponse {
+  title: string;
+  body: string;
+  empathyCount: number;
+  restTime: number[];
+  commentResponses: AdviceDetailCommentProps[];
+}
+
+export interface AdviceDetailCommentProps {
+  comment: string;
+  createdAt: string;
 }
