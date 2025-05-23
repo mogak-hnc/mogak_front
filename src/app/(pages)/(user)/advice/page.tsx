@@ -5,8 +5,10 @@ import ImageCard from "@/app/components/shared/image-card";
 import { AdviceMain } from "@/lib/shared/advice.api";
 import SubTitle from "@/app/components/shared/sub-title";
 
+// TODO 댓글 엔드포인트 구현 이후 댓글 관련 처리
 export default async function AdvicePage() {
   const data = await AdviceMain();
+
   return (
     <div className="w-full flex flex-col items-center px-4 gap-8">
       <div className="justify-center px-4 flex flex-col gap-8 w-full max-w-screen-xl">
@@ -22,12 +24,16 @@ export default async function AdvicePage() {
         ></ImageCard>
         <SubTitle contents="공감이 많은 고민들" />
         <div className="flex flex-wrap gap-4">
-          {data.map((m) => (
-            <AdvicePreviewCard
-              key={`advice-preiview-card-${m.worryId}`}
-              {...m}
-            />
-          ))}
+          {data ? (
+            data.content.map((m) => (
+              <AdvicePreviewCard
+                key={`advice-preiview-card-${m.worryId}`}
+                {...m}
+              />
+            ))
+          ) : (
+            <div>아직 작성된 고민이 없습니다.</div>
+          )}
         </div>
       </div>
     </div>

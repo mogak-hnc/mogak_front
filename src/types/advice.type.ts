@@ -1,9 +1,20 @@
 export interface AdviceCardProps {
   title: string;
-  commentCount: number;
+  // commentCount: number;
   restTime: number[];
   worryId: number;
 }
+
+export interface AdviceMainResponse {
+  content: AdviceContentProps[];
+  pageNumber: number;
+  pageSize: number;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+}
+
+export type AdviceSearchResponse = AdviceMainResponse;
 
 export interface AdviceSearchRequest {
   sort: string;
@@ -11,7 +22,7 @@ export interface AdviceSearchRequest {
   size: number;
 }
 
-export interface AdviceSearchResponse {
+export interface AdviceContentProps {
   title: string;
   commnetCount: number;
   worryId: number;

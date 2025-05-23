@@ -1,5 +1,5 @@
 import {
-  AdviceCardProps,
+  AdviceMainResponse,
   AdviceSearchRequest,
   AdviceSearchResponse,
 } from "@/types/advice.type";
@@ -13,7 +13,7 @@ export async function AdviceMain() {
     throw new Error("고민 상담 메인 fetch 실패");
   }
 
-  const data: AdviceCardProps[] = await res.json();
+  const data: AdviceMainResponse = await res.json();
 
   return data;
 }
@@ -35,7 +35,7 @@ export async function AdviceSearch({ sort, page, size }: AdviceSearchRequest) {
     throw new Error("모각존 검색 결과 fetch 실패");
   }
 
-  const data: AdviceSearchResponse[] = await res.json();
+  const data: AdviceSearchResponse = await res.json();
 
   return data;
 }
