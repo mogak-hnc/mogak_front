@@ -42,7 +42,6 @@ export async function ChallengeSearch({
   if (search) {
     query.set("search", search);
   }
-  query.set("official", official);
   query.set("sort", sort);
   query.set("page", String(page));
   query.set("size", String(size));
