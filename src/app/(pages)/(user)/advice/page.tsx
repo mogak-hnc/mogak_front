@@ -5,6 +5,12 @@ import ImageCard from "@/app/components/shared/image-card";
 import { AdviceMain } from "@/lib/shared/advice.api";
 import SubTitle from "@/app/components/shared/sub-title";
 
+export const metadata = {
+  title: "모각 | 고민상담",
+  description:
+    "24시간 뒤 자동으로 삭제되는 비밀 고민 상담 공간, 모각에서 익명으로 고민을 나눠 보세요.",
+};
+
 // TODO 댓글 엔드포인트 구현 이후 댓글 관련 처리
 export default async function AdvicePage() {
   const data = await AdviceMain();

@@ -8,6 +8,17 @@ import { getProfileImage } from "@/utils/shared/profile.util";
 
 export const dynamic = "force-dynamic";
 
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const { id } = await params;
+  const jwt = await getJwtFromServerCookie();
+  const data = await ZoneDetail(id, jwt);
+
+  return {
+    title: `모각 | ${data.name}`,
+    description: `${data.name} 모각존에서 함께 공부해요.`,
+  };
+}
+
 export default async function ZoneDetailPage({
   params,
 }: {

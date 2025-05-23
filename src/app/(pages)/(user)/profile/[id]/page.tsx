@@ -1,4 +1,3 @@
-import { useParams } from "next/navigation";
 import Link from "next/link";
 import Button from "@/app/components/ui/button";
 
@@ -9,6 +8,17 @@ import MyProfile from "./my-profile";
 import { ProfileProps } from "@/types/profile.type";
 import { ProfileInfo } from "@/lib/server/profile.server.api";
 import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
+
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const { id } = await params;
+  const jwt = await getJwtFromServerCookie();
+  const data = await ProfileInfo(id, jwt);
+
+  return {
+    title: `모각 | ${data.nickname} 님`,
+    description: `${data.nickname} 님의 프로필`,
+  };
+}
 
 export default async function ProfilePage({
   params,
