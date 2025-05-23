@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AiFillHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { convertTime } from "@/utils/shared/date.util";
 import { AdviceDetailResponse } from "@/types/advice.type";
 import AdviceCommentsCard from "./advice-comments-card";
@@ -15,17 +15,17 @@ export default function AdviceContents({
   data: AdviceDetailResponse;
 }) {
   const [empathyCount, setEmpathyCount] = useState(data.empathyCount);
-  // const [isEmpathy, setIsEmpathy] = useState(data.empathyCount);
+  const [hasEmpathized, setHasEmpathized] = useState(data.hasEmpathized);
 
   const handleEmpathy = async () => {
     try {
       const res = await AdviceEmpathyPost(id);
       const { empathyCount, hasEmpathized } = res;
       setEmpathyCount(empathyCount);
+      setHasEmpathized(hasEmpathized);
       console.log(res);
     } catch (err) {
-      alert("공감 실패");
-      console.log(err);
+      console.log("공감 실패 : " + err);
     }
   };
 
@@ -51,7 +51,11 @@ export default function AdviceContents({
           className="flex items-center gap-1 text-error dark:text-error-dark text-sm"
           onClick={handleEmpathy}
         >
-          <AiFillHeart size={18} />
+          {hasEmpathized ? (
+            <AiFillHeart size={18} />
+          ) : (
+            <AiOutlineHeart size={18} />
+          )}
           공감 {empathyCount}개
         </button>
       </div>

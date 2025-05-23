@@ -43,6 +43,7 @@ export interface AdviceDetailResponse {
   empathyCount: number;
   restTime: number[];
   commentResponses: AdviceDetailCommentProps[];
+  hasEmpathized: boolean;
 }
 
 export interface AdviceDetailCommentProps {
