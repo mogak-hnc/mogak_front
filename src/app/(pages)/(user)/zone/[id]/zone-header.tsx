@@ -4,6 +4,7 @@ import { ZoneHeaderProps, ZoneInOutButtonProps } from "@/types/zone.type";
 import ZoneIn from "./zone-in";
 import ZoneOut from "./zone-out";
 import { getDetailImage } from "@/utils/shared/detail-image.util";
+import ZoneSetting from "./zone-setting";
 
 export default function ZoneHeader({
   zoneId,
@@ -41,9 +42,7 @@ export default function ZoneHeader({
           {joinedUserCount}명이 참가 중이에요!
         </span>
         <div className="flex gap-2">
-          <Link href={`/zone/${zoneId}/member`}>
-            <Button>모각존 관리</Button>
-          </Link>
+          <ZoneSetting {...props} />
           <ZoneIn {...props} hasPwd={hasPwd} />
           <ZoneOut {...props} />
         </div>
