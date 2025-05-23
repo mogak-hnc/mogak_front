@@ -6,18 +6,23 @@ import Button from "@/app/components/ui/button";
 import SubTitle from "@/app/components/shared/sub-title";
 import { AdviceCreatePost } from "@/lib/client/advice.client.api";
 import { useRouter } from "next/navigation";
+import { DURATION_MAP } from "@/utils/shared/advice-duration";
 
 export default function AdviceWritePage() {
   const router = useRouter();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [deleteAfter, setDeleteAfter] = useState(24);
+
+  const DELETE_TIMES = [1, 3, 6, 12, 24];
 
   const handleSubmit = async () => {
     try {
       const newAdviceId = await AdviceCreatePost({
         title: title,
         contents: content,
+        duration: DURATION_MAP[deleteAfter],
       });
       router.push(`/advice/${newAdviceId.worryId}`);
     } catch (err) {
@@ -45,12 +50,26 @@ export default function AdviceWritePage() {
         onChange={(e) => setContent(e.target.value)}
       />
 
+      <div className="flex gap-2 flex-wrap">
+        {DELETE_TIMES.map((hour) => (
+          <button
+            key={hour}
+            onClick={() => setDeleteAfter(hour)}
+            className={`px-3 py-1 rounded-full text-sm border hover:text-secondary dark:hover:text-secondary-dark ${
+              deleteAfter === hour
+                ? "bg-primary dark:bg-primary-dark text-white"
+                : "text-border-dark  dark:text-borders"
+            }`}
+          >
+            {hour}시간
+          </button>
+        ))}
+      </div>
       <div className="flex flex-col items-center gap-3 mt-5">
         <Button onClick={handleSubmit}>등록하기</Button>
         <p className="text-xs text-center text-border-dark dark:text-borders leading-5">
-          고민 글은 작성 후 24시간이 지나면 자동으로 사라집니다.
-          <br />
-          작성한 이후에는 직접 삭제할 수 없으니 신중하게 작성해 주세요.
+          시간을 지정하지 않으면 기본으로 24시간 뒤에 사라져요. <br />
+          24시간 전에 글을 삭제하고 싶다면, 시간을 꼭 설정해 주세요!
         </p>
       </div>
     </div>

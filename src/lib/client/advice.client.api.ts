@@ -20,7 +20,11 @@ export async function AdviceCreatePost(payload: AdviceCreateProps) {
         Authorization: token,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title: payload.title, body: payload.contents }),
+      body: JSON.stringify({
+        title: payload.title,
+        body: payload.contents,
+        duration: payload.duration,
+      }),
     }
   );
 

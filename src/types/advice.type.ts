@@ -1,3 +1,5 @@
+import { AdviceDuration } from "@/utils/shared/advice-duration";
+
 export interface AdviceCardProps {
   title: string;
   // commentCount: number;
@@ -32,6 +34,7 @@ export interface AdviceContentProps {
 export interface AdviceCreateProps {
   title: string;
   contents: string;
+  duration: AdviceDuration;
 }
 
 export interface AdviceDetailResponse {
