@@ -1,10 +1,11 @@
 import ChallengeHeader from "./challenge-header";
 import ChallengeSurvivors from "./challenge-survivors";
 import ChallengeProofGrid from "./challenge-proof-grid";
-import Summary from "./summary";
+
 import { ChallengeDetail } from "@/lib/server/challenge.server.api";
 import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
 import { convertDate } from "@/utils/shared/date.util";
+import ChallengeSummary from "./challenge-summary";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const { id } = await params;
@@ -52,7 +53,14 @@ export default async function ChallengeDetailPage({
         </div>
 
         <div className="w-full lg:w-[280px] shrink-0">
-          <Summary challengeId={id} />
+          <ChallengeSummary
+            startDate={data.startDate}
+            endDate={data.endDate}
+            totalParticipants={data.totalParticipants}
+            survivorCount={data.survivorCount}
+            official={data.official}
+            challengeId={id}
+          />
         </div>
       </div>
     </div>

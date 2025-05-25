@@ -110,6 +110,15 @@ export interface ChallengePageProps {
   totalPages: number;
 }
 
+export interface ChallengeSummaryProps {
+  challengeId: string;
+  official: boolean;
+  startDate: number[];
+  endDate: number[];
+  totalParticipants: number;
+  survivorCount: number;
+}
+
 export interface ChallengeDetileResponse {
   official: boolean;
   title: string;
