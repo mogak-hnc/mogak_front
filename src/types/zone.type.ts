@@ -13,6 +13,14 @@ export interface ZoneChatUiProps {
   messages: ZoneChatProps[];
 }
 
+export interface ZoneMainResponse {
+  mogakZoneId: number;
+  tagNames: string[];
+  name: string;
+  memberImageUrls: string[];
+  passwordRequired: boolean;
+}
+
 export interface ZoneMainProps {
   mogakZoneId: number;
   tag?: string;
@@ -125,4 +133,41 @@ export interface ZoneInOutButtonProps {
   hostId: string;
   joined: boolean;
   hasPwd?: boolean;
+}
+
+export interface ZoneSearchResponse {
+  content: MogakZone[];
+  pageable: Pageable;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+  size: number;
+  number: number;
+  sort: Sort;
+  numberOfElements: number;
+  first: boolean;
+  empty: boolean;
+}
+
+export interface MogakZone {
+  mogakZoneId: number;
+  name: string;
+  tagNames: string[];
+  memberImageUrls: string[];
+  passwordRequired: boolean;
+}
+
+export interface Pageable {
+  pageNumber: number;
+  pageSize: number;
+  sort: Sort;
+  offset: number;
+  paged: boolean;
+  unpaged: boolean;
+}
+
+export interface Sort {
+  empty: boolean;
+  unsorted: boolean;
+  sorted: boolean;
 }

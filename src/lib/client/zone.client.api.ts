@@ -69,18 +69,18 @@ export async function ZoneEntryPost(zoneId: string, password: string) {
   return await res.json();
 }
 
-export async function ZoneExitDelete(mogakZoneId: number) {
-  // const token = getJwtFromCookie();
-  // if (!token) {
-  //   throw new Error("JWT 토큰 없음 / 로그인 필요");
-  // }
-  // const res = await fetch(`${process.env.BACKEND_API_URL}/api/mogak/worry`);
-  // if (!res.ok) {
-  //   throw new Error("고민 상담 메인 fetch 실패");
-  // }
-  // const data: AdviceCardProps[] = await res.json();
-  // return data;
-}
+// export async function ZoneExitDelete(mogakZoneId: number) {
+// const token = getJwtFromCookie();
+// if (!token) {
+//   throw new Error("JWT 토큰 없음 / 로그인 필요");
+// }
+// const res = await fetch(`${process.env.BACKEND_API_URL}/api/mogak/worry`);
+// if (!res.ok) {
+//   throw new Error("고민 상담 메인 fetch 실패");
+// }
+// const data: AdviceCardProps[] = await res.json();
+// return data;
+// }
 
 export async function ZoneDelete(mogakZoneId: number) {
   const token = getJwtFromCookie();

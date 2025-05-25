@@ -1,5 +1,10 @@
 import { TagsProps } from "@/types/shared.type";
-import { ZoneMainProps, ZoneSearchProps } from "@/types/zone.type";
+import {
+  ZoneMainProps,
+  ZoneMainResponse,
+  ZoneSearchProps,
+  ZoneSearchResponse,
+} from "@/types/zone.type";
 
 export async function ZoneMain() {
   const res = await fetch(
@@ -10,7 +15,7 @@ export async function ZoneMain() {
     throw new Error("모각존 메인 fetch 실패");
   }
 
-  const raw = await res.json();
+  const raw: ZoneMainResponse[] = await res.json();
 
   const data: ZoneMainProps[] = raw.map((item: any) => ({
     mogakZoneId: item.mogakZoneId,
@@ -67,7 +72,7 @@ export async function ZoneSearch({
     throw new Error("모각존 검색 결과 fetch 실패");
   }
 
-  const raw = await res.json();
+  const raw: ZoneSearchResponse = await res.json();
 
   const data: ZoneMainProps[] = raw.content.map((item: any) => ({
     mogakZoneId: item.mogakZoneId,

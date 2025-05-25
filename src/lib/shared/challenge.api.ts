@@ -15,7 +15,7 @@ export async function ChallengeMain() {
     throw new Error("챌린지 메인 fetch 실패");
   }
 
-  const raw = await res.json();
+  const raw: ChallengeMainResponse[] = await res.json();
 
   const data: ChallengeMainProps[] = raw.map((item: any) => ({
     challengeId: item.challengeId,
