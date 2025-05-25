@@ -4,7 +4,7 @@ import AdviceContents from "./advice-contents";
 export default async function AdviceDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
   const data = await AdviceDetail(id);
