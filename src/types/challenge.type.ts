@@ -49,7 +49,7 @@ export interface ChallengeSearchCardProps {
 
 export interface ChallengeSearchRequest {
   search: string;
-  official: string;
+  official: boolean;
   sort: string;
   page: number;
   size: number;

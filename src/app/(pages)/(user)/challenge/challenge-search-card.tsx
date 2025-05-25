@@ -19,7 +19,7 @@ export default function ChallengeSearchCard({
   section,
 }: ChallengeSearchCardProps) {
   const [search, setSearch] = useState("");
-  const [official, setOfficial] = useState<"" | "true">("");
+  const [official, setOfficial] = useState<boolean>(false);
   const [finalSort, setFinalSort] = useState(sort);
   const [data, setData] = useState<ChallengeMainProps[]>([]);
   const [loading, setLoading] = useState(true);
@@ -68,7 +68,7 @@ export default function ChallengeSearchCard({
   }, [official, finalSort]);
 
   const toggleOfficial = () => {
-    setOfficial((prev) => (prev === "true" ? "" : "true"));
+    setOfficial((prev) => !prev);
   };
 
   return (
@@ -78,7 +78,7 @@ export default function ChallengeSearchCard({
           title={title}
           description={description}
           section={section}
-          official={official === "true"}
+          official={official}
           onOfficialToggle={toggleOfficial}
           sort={finalSort}
           onSortChange={setFinalSort}

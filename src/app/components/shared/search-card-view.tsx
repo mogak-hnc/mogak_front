@@ -86,7 +86,7 @@ export default function SearchCardView({
                   : "border-borders dark:border-border-dark"
               }`}
             >
-              #공식 챌린지만 보기
+              #공식 챌린지
             </div>
           )}
         </div>

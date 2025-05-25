@@ -37,11 +37,13 @@ export async function ChallengeSearch({
   page,
   size,
 }: ChallengeSearchRequest) {
+  console.log(search, official, sort, page, size);
   const query = new URLSearchParams();
 
   if (search) {
     query.set("search", search);
   }
+  query.set("official", String(official));
   query.set("sort", sort);
   query.set("page", String(page));
   query.set("size", String(size));
