@@ -23,7 +23,6 @@ export default function AdviceContents({
       const { empathyCount, hasEmpathized } = res;
       setEmpathyCount(empathyCount);
       setHasEmpathized(hasEmpathized);
-      console.log(res);
     } catch (err) {
       console.log("공감 실패 : " + err);
     }
