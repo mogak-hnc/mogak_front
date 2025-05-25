@@ -31,7 +31,7 @@ export default async function Home() {
           bgImageDark={MainBgDark.src}
         />
         <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-10">
+          <div className="flex justify-between items-center">
             <MainSubTitle
               title="핫한 모각존"
               description="현재 가장 많은 유저들이 공부 중인 모각존을 살펴 보세요."
@@ -58,13 +58,13 @@ export default async function Home() {
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-10">
+          <div className="flex justify-between items-center">
             <MainSubTitle
               title="지금은 챌린지 할 시간"
               description="현재 가장 많은 유저들이 참여 중인 챌린지를 살펴 보세요."
             />
             <Link href="/challenge">
-              <span className="text-sm text-secondary dark:text-secondary-dark">
+              <span className="text-sm text-secondary dark:text-secondary-dark  ">
                 더보기
               </span>
             </Link>
