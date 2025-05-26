@@ -36,7 +36,6 @@ export default function ChallengeSearchCard({
     } finally {
       setLoading(false);
     }
-    console.log(data);
   };
 
   const fetchSearch = async () => {
