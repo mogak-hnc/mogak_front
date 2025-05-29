@@ -8,6 +8,7 @@ export interface ChallengeHeaderProps {
   endDate: string;
   official: boolean;
   totalParticipants: number;
+  status: ChallengeStatusType;
 }
 
 export interface ChallengeProofGridProps {

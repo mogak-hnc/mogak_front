@@ -14,7 +14,6 @@ import { ChallengeMain, ChallengeSearch } from "@/lib/shared/challenge.api";
 export default function ChallengeSearchCard({
   title,
   description,
-  tags,
   sort,
   section,
 }: ChallengeSearchCardProps) {

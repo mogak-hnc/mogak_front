@@ -1,5 +1,6 @@
 import Button from "@/app/components/ui/button";
 import { ChallengeHeaderProps } from "@/types/challenge.type";
+import { challengeMap } from "@/utils/shared/status.util";
 
 export default function ChallengeHeader({
   title,
@@ -9,6 +10,7 @@ export default function ChallengeHeader({
   endDate,
   official,
   totalParticipants,
+  status,
 }: ChallengeHeaderProps) {
   const userId = 1;
   return (
@@ -19,6 +21,7 @@ export default function ChallengeHeader({
             공식 챌린지
           </span>
         )}
+        <p>{challengeMap[status]}</p>
         <h2 className="text-2xl font-bold text-primary mt-1">{title}</h2>
         <p className="text-sm text-border-dark dark:text-borders mt-1">
           {startDate}&nbsp;~&nbsp;{endDate}&nbsp;·&nbsp;{totalParticipants}명

@@ -32,6 +32,7 @@ export default async function ChallengeDetailPage({
       <div className="flex flex-col lg:flex-row gap-10">
         <div className="flex-1 flex flex-col gap-6">
           <ChallengeHeader
+            status={data.status}
             title={data.title}
             description="챌린지에 참여하고 인증샷을 올려보세요!"
             creatorMemberId={0}
