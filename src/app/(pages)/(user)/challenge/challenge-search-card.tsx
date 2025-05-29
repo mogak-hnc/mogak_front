@@ -5,6 +5,7 @@ import SearchCardView from "@/app/components/shared/search-card-view";
 import {
   ChallengeMainProps,
   ChallengeSearchCardProps,
+  ChallengeStatusType,
 } from "@/types/challenge.type";
 import { mapSort } from "@/utils/shared/sort.util";
 import ChallengeMainCard from "./challenge-main-card";
@@ -23,6 +24,7 @@ export default function ChallengeSearchCard({
   const [data, setData] = useState<ChallengeMainProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [initialLoaded, setInitialLoaded] = useState(false);
+  const [status, setStatus] = useState<string | null>(null);
 
   const fetchInitial = async () => {
     setLoading(true);
@@ -32,9 +34,8 @@ export default function ChallengeSearchCard({
       setInitialLoaded(true);
     } catch (err) {
       console.error("초기 챌린지 불러오기 실패", err);
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   const fetchSearch = async () => {
@@ -44,15 +45,15 @@ export default function ChallengeSearchCard({
         search,
         official,
         sort: mapSort(finalSort),
+        status: status as ChallengeStatusType,
         page: 0,
         size: 12,
       });
       setData(data);
     } catch (err) {
       console.error("검색 실패", err);
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -83,6 +84,8 @@ export default function ChallengeSearchCard({
           search={search}
           onSearchChange={setSearch}
           onSearch={fetchSearch}
+          status={status}
+          onStatusChange={setStatus}
         />
       </div>
 

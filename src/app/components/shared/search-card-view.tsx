@@ -23,6 +23,9 @@ type Props = {
 
   official?: boolean;
   onOfficialToggle?: () => void;
+
+  status?: string | null;
+  onStatusChange?: (val: string | null) => void;
 };
 
 export default function SearchCardView({
@@ -39,6 +42,8 @@ export default function SearchCardView({
   onTagClick,
   official,
   onOfficialToggle,
+  status,
+  onStatusChange,
 }: Props) {
   return (
     <div className="flex flex-col w-fit items-center gap-2">
@@ -52,6 +57,20 @@ export default function SearchCardView({
           value={search}
           onInput={(e) => onSearchChange(e.currentTarget.value)}
         />
+        {onStatusChange && (
+          <select
+            value={status ?? ""}
+            onChange={(e) =>
+              onStatusChange(e.target.value === "" ? null : e.target.value)
+            }
+            className="bg-white dark:bg-border-dark dark:text-text-dark rounded-md px-5 py-2"
+          >
+            <option value="">전체</option>
+            <option value="BEFORE">진행 전</option>
+            <option value="ONGOING">진행 중</option>
+            <option value="COMPLETED">종료</option>
+          </select>
+        )}
         <div className="flex items-center h-10">
           <AiOutlineSearch
             onClick={onSearch}

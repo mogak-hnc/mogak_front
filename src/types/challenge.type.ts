@@ -54,6 +54,7 @@ export interface ChallengeSearchRequest {
   sort: string;
   page: number;
   size: number;
+  status: ChallengeStatusType;
 }
 
 export interface ChallengeMainResponse {
