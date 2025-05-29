@@ -110,14 +110,7 @@ export interface ChallengePageProps {
   totalPages: number;
 }
 
-export interface ChallengeSummaryProps {
-  challengeId: string;
-  official: boolean;
-  startDate: number[];
-  endDate: number[];
-  totalParticipants: number;
-  survivorCount: number;
-}
+export type StatusType = "BEFORE" | "ONGOING" | "COMPLETED";
 
 export interface ChallengeDetileResponse {
   official: boolean;
@@ -128,6 +121,9 @@ export interface ChallengeDetileResponse {
   survivorCount: number;
   memberImageList: string[];
   challengeArticlesThumbnail: string[];
+  challengeOwnerId: number;
+  status: StatusType;
+  joined: boolean;
 }
 
 export interface ChallengeCreateInput {

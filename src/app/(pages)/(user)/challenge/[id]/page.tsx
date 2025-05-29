@@ -53,14 +53,7 @@ export default async function ChallengeDetailPage({
         </div>
 
         <div className="w-full lg:w-[280px] shrink-0">
-          <ChallengeSummary
-            startDate={data.startDate}
-            endDate={data.endDate}
-            totalParticipants={data.totalParticipants}
-            survivorCount={data.survivorCount}
-            official={data.official}
-            challengeId={id}
-          />
+          <ChallengeSummary {...data} />
         </div>
       </div>
     </div>
