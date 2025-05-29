@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { convertTime } from "@/utils/shared/date.util";
 import {
@@ -8,10 +8,7 @@ import {
   AdviceDetailResponse,
 } from "@/types/advice.type";
 import AdviceCommentsCard from "./advice-comments-card";
-import {
-  AdviceCommentPagination,
-  AdviceEmpathyPost,
-} from "@/lib/client/advice.client.api";
+import { AdviceEmpathyPost } from "@/lib/client/advice.client.api";
 
 export default function AdviceContents({
   id,
@@ -25,19 +22,6 @@ export default function AdviceContents({
   const [commentList, setCommentList] = useState<AdviceCommentContentProps[]>(
     []
   );
-
-  const loadComment = async () => {
-    const commentData = await AdviceCommentPagination({
-      worryId: id,
-      page: 0,
-      size: 10,
-    });
-    setCommentList(commentData.content);
-  };
-
-  useEffect(() => {
-    loadComment();
-  }, []);
 
   const handleEmpathy = async () => {
     try {
@@ -82,7 +66,7 @@ export default function AdviceContents({
       </div>
 
       <div className="w-full lg:w-[35%]">
-        <AdviceCommentsCard comments={commentList} worryId={id} />
+        <AdviceCommentsCard worryId={id} />
       </div>
     </div>
   );

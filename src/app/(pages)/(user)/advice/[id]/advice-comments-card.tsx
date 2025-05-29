@@ -1,28 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Button from "@/app/components/ui/button";
-import {
-  AdviceCommentContentProps,
-  AdviceCommentResponse,
-} from "@/types/advice.type";
+import { AdviceCommentContentProps } from "@/types/advice.type";
 import AdviceComment from "./advice-comment";
 import {
   AdviceCommentPagination,
   AdviceCommentPost,
 } from "@/lib/client/advice.client.api";
 
-export default function AdviceCommentsCard({
-  comments,
-  worryId,
-}: {
-  comments: AdviceCommentContentProps[];
-  worryId: string;
-}) {
-  const [commentList, setCommentList] =
-    useState<AdviceCommentContentProps[]>(comments);
+export default function AdviceCommentsCard({ worryId }: { worryId: string }) {
+  const [commentList, setCommentList] = useState<AdviceCommentContentProps[]>(
+    []
+  );
   const [input, setInput] = useState("");
+
+  useEffect(() => {
+    loadComments();
+  }, []);
+
+  const loadComments = async () => {
+    const commentData = await AdviceCommentPagination({
+      worryId: worryId,
+      page: 0,
+      size: 10,
+    });
+
+    setCommentList(commentData.content);
+  };
 
   const handleSubmit = async () => {
     if (!input.trim()) {
@@ -32,13 +38,7 @@ export default function AdviceCommentsCard({
     try {
       await AdviceCommentPost({ worryId: worryId, comment: input });
       setInput("");
-      const commentData = await AdviceCommentPagination({
-        worryId: worryId,
-        page: 0,
-        size: 10,
-      });
-
-      setCommentList(commentData.content);
+      loadComments();
     } catch (err) {
       console.log("댓글 작성 실패 : " + err);
     }
