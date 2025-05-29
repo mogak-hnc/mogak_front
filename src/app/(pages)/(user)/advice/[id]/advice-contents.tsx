@@ -1,11 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { convertTime } from "@/utils/shared/date.util";
-import { AdviceDetailResponse } from "@/types/advice.type";
+import {
+  AdviceCommentContentProps,
+  AdviceDetailResponse,
+} from "@/types/advice.type";
 import AdviceCommentsCard from "./advice-comments-card";
-import { AdviceEmpathyPost } from "@/lib/client/advice.client.api";
+import {
+  AdviceCommentPagination,
+  AdviceEmpathyPost,
+} from "@/lib/client/advice.client.api";
 
 export default function AdviceContents({
   id,
@@ -16,6 +22,22 @@ export default function AdviceContents({
 }) {
   const [empathyCount, setEmpathyCount] = useState(data.empathyCount);
   const [hasEmpathized, setHasEmpathized] = useState(data.hasEmpathized);
+  const [commentList, setCommentList] = useState<AdviceCommentContentProps[]>(
+    []
+  );
+
+  const loadComment = async () => {
+    const commentData = await AdviceCommentPagination({
+      worryId: id,
+      page: 0,
+      size: 10,
+    });
+    setCommentList(commentData.content);
+  };
+
+  useEffect(() => {
+    loadComment();
+  }, []);
 
   const handleEmpathy = async () => {
     try {
@@ -60,7 +82,7 @@ export default function AdviceContents({
       </div>
 
       <div className="w-full lg:w-[35%]">
-        <AdviceCommentsCard comments={data.commentResponses} worryId={id} />
+        <AdviceCommentsCard comments={commentList} worryId={id} />
       </div>
     </div>
   );

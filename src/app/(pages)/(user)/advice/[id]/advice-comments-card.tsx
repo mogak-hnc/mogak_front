@@ -3,18 +3,25 @@
 import { useState } from "react";
 
 import Button from "@/app/components/ui/button";
-import { AdviceDetailCommentProps } from "@/types/advice.type";
+import {
+  AdviceCommentContentProps,
+  AdviceCommentResponse,
+} from "@/types/advice.type";
 import AdviceComment from "./advice-comment";
-import { AdviceCommentPost } from "@/lib/client/advice.client.api";
+import {
+  AdviceCommentPagination,
+  AdviceCommentPost,
+} from "@/lib/client/advice.client.api";
 
 export default function AdviceCommentsCard({
   comments,
   worryId,
 }: {
-  comments: AdviceDetailCommentProps[];
+  comments: AdviceCommentContentProps[];
   worryId: string;
 }) {
-  const [commentList, setCommentList] = useState(comments);
+  const [commentList, setCommentList] =
+    useState<AdviceCommentContentProps[]>(comments);
   const [input, setInput] = useState("");
 
   const handleSubmit = async () => {
@@ -25,7 +32,13 @@ export default function AdviceCommentsCard({
     try {
       await AdviceCommentPost({ worryId: worryId, comment: input });
       setInput("");
-      // TODO : 댓글 리페칭 로직 추가
+      const commentData = await AdviceCommentPagination({
+        worryId: worryId,
+        page: 0,
+        size: 10,
+      });
+
+      setCommentList(commentData.content);
     } catch (err) {
       console.log("댓글 작성 실패 : " + err);
     }
@@ -34,7 +47,7 @@ export default function AdviceCommentsCard({
   return (
     <div className="w-full bg-white dark:bg-zinc-900 rounded-xl shadow border border-zinc-200 dark:border-zinc-700 p-4">
       <div className="text-lg font-semibold text-primary dark:text-primary-dark mb-4">
-        댓글 {commentList.length}개
+        댓글 {commentList ? commentList.length : 0}개
       </div>
 
       <div className="flex flex-col gap-2">
@@ -51,9 +64,10 @@ export default function AdviceCommentsCard({
       </div>
 
       <div className="mt-6 space-y-4">
-        {commentList.map((comment, idx) => (
-          <AdviceComment key={idx} {...comment} />
-        ))}
+        {commentList &&
+          commentList.map((comment) => (
+            <AdviceComment key={comment.commentId} {...comment} />
+          ))}
       </div>
     </div>
   );

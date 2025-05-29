@@ -1,4 +1,6 @@
 import {
+  AdviceCommentPaginationRequest,
+  AdviceCommentPaginationResponse,
   AdviceCommentRequest,
   AdviceCommentResponse,
   AdviceCreateProps,
@@ -37,11 +39,42 @@ export async function AdviceCreatePost(payload: AdviceCreateProps) {
   return data;
 }
 
+export async function AdviceCommentPagination(
+  payload: AdviceCommentPaginationRequest
+) {
+  const token = getJwtFromCookie();
+  if (!token) {
+    throw new Error("JWT 토큰 없음 / 로그인 필요");
+  }
+
+  const { worryId, page, size } = payload;
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/worry/${worryId}/comments?page=${page}&size=${size}`,
+    {
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error(`${worryId}번 게시글 댓글 로드 실패`);
+  }
+
+  const data: AdviceCommentPaginationResponse = await res.json();
+
+  return data;
+}
+
 export async function AdviceCommentPost(payload: AdviceCommentRequest) {
   const token = getJwtFromCookie();
   if (!token) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
   }
+
+  console.log(payload);
 
   const { worryId, comment } = payload;
 

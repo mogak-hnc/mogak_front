@@ -42,13 +42,29 @@ export interface AdviceDetailResponse {
   body: string;
   empathyCount: number;
   restTime: number[];
-  commentResponses: AdviceDetailCommentProps[];
   hasEmpathized: boolean;
 }
 
-export interface AdviceDetailCommentProps {
+export interface AdviceCommentPaginationRequest {
+  worryId: string;
+  page: number;
+  size: number;
+}
+
+export interface AdviceCommentContentProps {
+  memberId: number;
+  commentId: number;
   comment: string;
-  createdAt: number[];
+  createdAt: string;
+}
+
+export interface AdviceCommentPaginationResponse {
+  content: AdviceCommentContentProps[];
+  pageNumber: number;
+  pageSize: number;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
 }
 
 export interface AdviceCommentRequest {
@@ -57,8 +73,10 @@ export interface AdviceCommentRequest {
 }
 
 export interface AdviceCommentResponse {
+  memberId: string;
   comment: string;
-  createdAt: string;
+  commentId: string;
+  createdAt: number[];
 }
 
 export interface AdviceEmpathyResponse {
