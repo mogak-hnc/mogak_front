@@ -19,9 +19,6 @@ export default function AdviceContents({
 }) {
   const [empathyCount, setEmpathyCount] = useState(data.empathyCount);
   const [hasEmpathized, setHasEmpathized] = useState(data.hasEmpathized);
-  const [commentList, setCommentList] = useState<AdviceCommentContentProps[]>(
-    []
-  );
 
   const handleEmpathy = async () => {
     try {

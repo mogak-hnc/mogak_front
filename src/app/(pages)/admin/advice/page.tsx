@@ -4,56 +4,54 @@ import { useEffect, useState } from "react";
 import AdminTable from "@/app/components/admin/admin-table";
 import ConfirmModal from "@/app/components/confirm-modal";
 import { AdviceSearch } from "@/lib/shared/advice.api";
-import { AdviceSearchResponse } from "@/types/advice.type";
-
-// 숫자 배열 [4, 22] → "4시간 22분" 같은 포맷으로 변환
-function formatRestTime(restTime: number[]) {
-  const [hours, minutes] = restTime;
-  return `${hours}시간 ${minutes}분`;
-}
+import { AdviceContentProps, AdviceSearchResponse } from "@/types/advice.type";
+import { convertTime } from "@/utils/shared/date.util";
+import { AdviceDelete } from "@/lib/client/advice.client.api";
 
 export default function AdminAdvicePage() {
-  const [adviceList, setAdviceList] = useState<AdviceSearchResponse[]>([]);
+  const [adviceList, setAdviceList] = useState<AdviceContentProps[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [targetId, setTargetId] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchAdvice = async () => {
-      try {
-        const res = await AdviceSearch({
-          sort: "recent",
-          page: 0,
-          size: 20,
-        });
-
-        const formatted = res.map((item) => ({
-          ...item,
-          deleteIn: formatRestTime(item.restTime),
-        }));
-
-        setAdviceList(formatted);
-      } catch (e) {
-        console.error("고민 상담 목록 불러오기 실패", e);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchAdvice();
   }, []);
+
+  const fetchAdvice = async () => {
+    try {
+      const res = await AdviceSearch({
+        sort: "recent",
+        page: 0,
+        size: 20,
+      });
+
+      const formatted = res.content.map((item) => ({
+        ...item,
+        deleteIn: convertTime(item.restTime),
+      }));
+
+      setAdviceList(formatted);
+    } catch (e) {
+      console.error("고민 상담 목록 불러오기 실패", e);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const openModal = (id: number) => {
     setTargetId(id);
     setShowModal(true);
   };
 
-  const confirmDelete = () => {
-    if (targetId !== null) {
-      setAdviceList((prev) => prev.filter((item) => item.worryId !== targetId));
+  const confirmDelete = async () => {
+    if (!targetId) {
+      return;
     }
+    await AdviceDelete(targetId);
     setShowModal(false);
     setTargetId(null);
+    fetchAdvice();
   };
 
   const columns = [

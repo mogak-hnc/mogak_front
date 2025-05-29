@@ -2,7 +2,6 @@ import { AdviceDuration } from "@/utils/shared/advice-duration";
 
 export interface AdviceCardProps {
   title: string;
-  // commentCount: number;
   restTime: number[];
   worryId: number;
 }

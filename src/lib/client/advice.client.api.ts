@@ -99,6 +99,32 @@ export async function AdviceCommentPost(payload: AdviceCommentRequest) {
   return data;
 }
 
+export async function AdviceDelete(worryId: number) {
+  const token = getJwtFromCookie();
+  if (!token) {
+    throw new Error("JWT 토큰 없음 / 로그인 필요");
+  }
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/worry/${worryId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("고민글 삭제 실패");
+  }
+
+  const data: { worry: string } = await res.json();
+
+  return data;
+}
+
 export async function AdviceEmpathyPost(worryId: string) {
   const token = getJwtFromCookie();
   if (!token) {
