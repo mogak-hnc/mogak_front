@@ -16,7 +16,6 @@ import EditImage from "./edit-image";
 import EditForm from "./edit-form";
 import EditButton from "./edit-button";
 import ConfirmModal from "@/app/components/confirm-modal";
-import { decodeToken } from "@/utils/client/decode-token.client.util";
 
 export default function ProfileEditPage() {
   const params = useParams();
