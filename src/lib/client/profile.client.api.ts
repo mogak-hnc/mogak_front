@@ -9,7 +9,7 @@ export async function profileInfo(
   jwt: string
 ): Promise<ProfileInfoResponse> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/auth`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/profile/${userId}`,
     {
       method: "GET",
       headers: {
