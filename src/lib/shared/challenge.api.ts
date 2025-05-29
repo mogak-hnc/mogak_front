@@ -25,6 +25,7 @@ export async function ChallengeMain() {
       item.endDate
     )}`,
     official: item.official,
+    status: item.status,
   }));
 
   return data;
@@ -68,6 +69,7 @@ export async function ChallengeSearch({
       item.endDate
     )}`,
     official: item.official,
+    status: item.status,
   }));
 
   return {

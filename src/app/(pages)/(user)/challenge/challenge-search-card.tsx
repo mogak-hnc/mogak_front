@@ -9,7 +9,6 @@ import {
 import { mapSort } from "@/utils/shared/sort.util";
 import ChallengeMainCard from "./challenge-main-card";
 import { ChallengeMain, ChallengeSearch } from "@/lib/shared/challenge.api";
-import { convertDate } from "@/utils/shared/date.util";
 
 export default function ChallengeSearchCard({
   title,
@@ -101,6 +100,7 @@ export default function ChallengeSearchCard({
               description={item.description}
               participants={item.participants}
               official={item.official}
+              status={item.status}
             />
           ))
         ) : (

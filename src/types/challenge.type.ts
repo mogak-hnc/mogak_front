@@ -37,6 +37,7 @@ export interface ChallengeMainProps {
   participants: (string | null)[];
   description: string;
   official: boolean;
+  status: ChallengeStatusType;
 }
 
 export interface ChallengeSearchCardProps {
@@ -72,6 +73,7 @@ export interface ChallengeSearchContentResponse {
   official: boolean;
   startDate: number[];
   endDate: number[];
+  status: ChallengeStatusType;
 }
 
 export interface ChallengeSearchResponse {
@@ -110,7 +112,7 @@ export interface ChallengePageProps {
   totalPages: number;
 }
 
-export type StatusType = "BEFORE" | "ONGOING" | "COMPLETED";
+export type ChallengeStatusType = "BEFORE" | "ONGOING" | "COMPLETED";
 
 export interface ChallengeDetileResponse {
   official: boolean;
@@ -122,7 +124,7 @@ export interface ChallengeDetileResponse {
   memberImageList: string[];
   challengeArticlesThumbnail: string[];
   challengeOwnerId: number;
-  status: StatusType;
+  status: ChallengeStatusType;
   joined: boolean;
 }
 

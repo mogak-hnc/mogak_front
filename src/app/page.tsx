@@ -82,6 +82,7 @@ export default async function Home() {
                   (img): img is string => img !== null
                 )}
                 official={challenge.official}
+                status={challenge.status}
               />
             ))}
           </div>

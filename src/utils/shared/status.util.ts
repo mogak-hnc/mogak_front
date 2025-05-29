@@ -5,3 +5,9 @@ export const statusMap: Record<string, StatusType> = {
   RESTING: "자리비움",
   DONE: "오프라인",
 };
+
+export const challengeMap: Record<string, string> = {
+  BEFORE: "진행 전",
+  ONGOING: "진행 중",
+  COMPLETED: "종료",
+};

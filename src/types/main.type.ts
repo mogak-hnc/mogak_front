@@ -1,3 +1,5 @@
+import { ChallengeStatusType } from "./challenge.type";
+
 export interface MainResponse {
   mogakZoneMainResponses: MainZoneRequest[];
   mogakChallengeResponses: MainChallengeRequest[];
@@ -18,4 +20,5 @@ export interface MainChallengeRequest {
   memberImageUrls: string[] | null[];
   startDate: number[];
   endDate: number[];
+  status: ChallengeStatusType;
 }

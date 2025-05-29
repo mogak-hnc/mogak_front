@@ -1,5 +1,6 @@
 import { ChallengeMainProps } from "@/types/challenge.type";
 import { getProfileImage } from "@/utils/shared/profile.util";
+import { challengeMap } from "@/utils/shared/status.util";
 import Link from "next/link";
 
 export default function ChallengeMainCard({
@@ -8,6 +9,7 @@ export default function ChallengeMainCard({
   description,
   participants,
   official,
+  status,
 }: ChallengeMainProps) {
   return (
     <Link href={`/challenge/${challengeId}`}>
@@ -18,6 +20,7 @@ export default function ChallengeMainCard({
               공식 챌린지
             </span>
           )}
+          <p>{challengeMap[status]}</p>
           <p className="text-lg font-bold text-text dark:text-text-dark truncate">
             {title}
           </p>
