@@ -82,7 +82,9 @@ export default function AdminAdvicePage() {
       <h1 className="text-lg font-bold text-primary">고민 상담 글 관리</h1>
 
       {loading ? (
-        <p className="text-sm text-center text-gray-400">불러오는 중...</p>
+        <p className="text-sm text-center text-borders dark:text-border-dark">
+          불러오는 중...
+        </p>
       ) : (
         <AdminTable columns={columns} data={adviceList} />
       )}
