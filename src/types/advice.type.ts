@@ -4,6 +4,7 @@ export interface AdviceCardProps {
   title: string;
   restTime: number[];
   worryId: number;
+  commentCount: number;
 }
 
 export interface AdviceMainResponse {
@@ -25,7 +26,7 @@ export interface AdviceSearchRequest {
 
 export interface AdviceContentProps {
   title: string;
-  commnetCount: number;
+  commentCount: number;
   worryId: number;
   restTime: number[];
 }

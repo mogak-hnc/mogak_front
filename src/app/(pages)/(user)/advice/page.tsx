@@ -11,7 +11,6 @@ export const metadata = {
     "24시간 뒤 자동으로 삭제되는 비밀 고민 상담 공간, 모각에서 익명으로 고민을 나눠 보세요.",
 };
 
-// TODO 댓글 엔드포인트 구현 이후 댓글 관련 처리
 export default async function AdvicePage() {
   const data = await AdviceMain();
 
