@@ -3,7 +3,7 @@
 import Button from "@/app/components/ui/button";
 import { ChallengeDetileResponse } from "@/types/challenge.type";
 import { ChallengeSummaryChart } from "./challenge-summary-chart";
-import { getDatePercent } from "@/utils/shared/date-percent";
+import { getDatePercent } from "@/utils/shared/date-percent.util";
 
 export function SummarySubtitle({ children }: { children: React.ReactNode }) {
   return <h4 className="font-bold text-primary mb-2">{children}</h4>;

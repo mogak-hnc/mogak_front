@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { convertTime } from "@/utils/shared/date.util";
 import {
-  AdviceCommentContentProps,
-  AdviceDetailResponse,
-} from "@/types/advice.type";
+  timeArrayToSeconds,
+  secondsToTimeArray,
+  formatTimeArray,
+} from "@/utils/shared/time.util";
+import { AdviceDetailResponse } from "@/types/advice.type";
 import AdviceCommentsCard from "./advice-comments-card";
 import { AdviceEmpathyPost } from "@/lib/client/advice.client.api";
 
@@ -19,6 +20,17 @@ export default function AdviceContents({
 }) {
   const [empathyCount, setEmpathyCount] = useState(data.empathyCount);
   const [hasEmpathized, setHasEmpathized] = useState(data.hasEmpathized);
+
+  const [restSeconds, setRestSeconds] = useState(
+    timeArrayToSeconds(data.restTime)
+  );
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setRestSeconds((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const handleEmpathy = async () => {
     try {
@@ -40,7 +52,7 @@ export default function AdviceContents({
               {data.title}
             </h2>
             <p className="text-sm text-border-dark dark:text-borders">
-              {convertTime(data.restTime)} 남음
+              {formatTimeArray(secondsToTimeArray(restSeconds))} 남음
             </p>
           </div>
         </div>

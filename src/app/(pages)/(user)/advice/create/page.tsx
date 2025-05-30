@@ -6,7 +6,7 @@ import Button from "@/app/components/ui/button";
 import SubTitle from "@/app/components/shared/sub-title";
 import { AdviceCreatePost } from "@/lib/client/advice.client.api";
 import { useRouter } from "next/navigation";
-import { DURATION_MAP } from "@/utils/shared/advice-duration";
+import { DURATION_MAP } from "@/utils/shared/advice-duration.util";
 
 export default function AdviceWritePage() {
   const router = useRouter();

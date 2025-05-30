@@ -1,4 +1,4 @@
-import { AdviceDuration } from "@/utils/shared/advice-duration";
+import { AdviceDuration } from "@/utils/shared/advice-duration.util";
 
 export interface AdviceCardProps {
   title: string;
