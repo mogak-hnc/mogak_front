@@ -5,6 +5,7 @@ import UserCard from "@/app/components/shared/user-card";
 import { StatusType } from "@/types/zone.type";
 import ZoneHeader from "./zone-header";
 import { getProfileImage } from "@/utils/shared/profile.util";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -44,14 +45,16 @@ export default async function ZoneDetailPage({
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {data.zoneMemberInfoList.map((user, index) => (
-            <UserCard
-              key={index}
-              memberId={user.memberId}
-              nickname={user.nickname}
-              status={user.status as StatusType}
-              role={Number(data.hostMemberId) === user.memberId ? "방장" : ""}
-              image={getProfileImage(user.imageUrl)}
-            />
+            <Link href={`/profile/${user.memberId}`}>
+              <UserCard
+                key={index}
+                memberId={user.memberId}
+                nickname={user.nickname}
+                status={user.status as StatusType}
+                role={Number(data.hostMemberId) === user.memberId ? "방장" : ""}
+                image={getProfileImage(user.imageUrl)}
+              />
+            </Link>
           ))}
         </div>
       </div>
