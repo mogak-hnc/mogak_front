@@ -54,7 +54,7 @@ export interface AdviceCommentContentProps {
   memberId: number;
   commentId: number;
   comment: string;
-  createdAt: string;
+  createdAt: number[];
 }
 
 export interface AdviceCommentPaginationResponse {
