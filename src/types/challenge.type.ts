@@ -116,6 +116,20 @@ export interface ChallengePageProps {
 
 export type ChallengeStatusType = "BEFORE" | "ONGOING" | "COMPLETED";
 
+export interface ChallengeDetailSummaryProps {
+  challengeId: string;
+  official: boolean;
+  title: string;
+  startDate: number[];
+  endDate: number[];
+  totalParticipants: number;
+  survivorCount: number;
+  memberImageList: string[];
+  challengeOwnerId: number;
+  status: ChallengeStatusType;
+  joined: boolean;
+}
+
 export interface ChallengeDetileResponse {
   official: boolean;
   title: string;

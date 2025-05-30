@@ -38,6 +38,32 @@ export async function ChallengeCreatePost(input: ChallengeCreateInput) {
   return data;
 }
 
+export async function ChallengeEntryPost(challengeId: string) {
+  const token = getJwtFromCookie();
+  if (!token) {
+    throw new Error("JWT 토큰 없음 / 로그인 필요");
+  }
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/challenge/${challengeId}/join`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("챌린지 참여 실패");
+  }
+
+  const data: { challengeId: number } = await res.json();
+
+  return data;
+}
+
 export async function ChallengeDelete(challengeId: number) {
   const token = getJwtFromCookie();
   if (!token) {

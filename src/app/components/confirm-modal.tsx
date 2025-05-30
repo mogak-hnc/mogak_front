@@ -11,16 +11,16 @@ export default function ConfirmModal({
         <p className="text-sm text-gray-800 mb-4">{message}</p>
         <div className="flex justify-end gap-2">
           <button
+            onClick={onConfirm}
+            className="text-sm px-3 py-1 bg-secondary dark:bg-secondary-dark text-white rounded"
+          >
+            확인
+          </button>
+          <button
             onClick={onCancel}
             className="text-sm px-3 py-1 border rounded text-gray-500"
           >
             취소
-          </button>
-          <button
-            onClick={onConfirm}
-            className="text-sm px-3 py-1 bg-error dark:bg-error-dark text-white rounded"
-          >
-            삭제
           </button>
         </div>
       </div>

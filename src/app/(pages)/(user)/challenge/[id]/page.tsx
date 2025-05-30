@@ -54,7 +54,7 @@ export default async function ChallengeDetailPage({
         </div>
 
         <div className="w-full lg:w-[280px] shrink-0">
-          <ChallengeSummary {...data} />
+          <ChallengeSummary challengeId={id} {...data} />
         </div>
       </div>
     </div>

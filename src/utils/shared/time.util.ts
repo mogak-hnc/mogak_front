@@ -21,3 +21,20 @@ export const formatTimeArray = ([h, m, s]: number[]): string => {
 
   return parts.join(" ");
 };
+
+export const getTimeDiffText = (target: number[]) => {
+  const [y, m, d, h = 0, min = 0, s = 0] = target;
+  const now = new Date();
+  const start = new Date(y, m - 1, d, h, min, s);
+
+  const diff = start.getTime() - now.getTime();
+
+  if (diff <= 0) return "곧 시작됩니다";
+
+  const diffSeconds = Math.floor(diff / 1000);
+  const days = Math.floor(diffSeconds / 86400);
+  const hours = Math.floor((diffSeconds % 86400) / 3600);
+  const minutes = Math.floor((diffSeconds % 3600) / 60);
+
+  return `${days > 0 ? `${days}일 ` : ""}${hours}시간 ${minutes}분`;
+};
