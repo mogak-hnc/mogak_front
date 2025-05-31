@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import AdminTable from "@/app/components/admin/admin-table";
 import ConfirmModal from "@/app/components/confirm-modal";
 import { AdviceSearch } from "@/lib/shared/advice.api";
-import { AdviceContentProps, AdviceSearchResponse } from "@/types/advice.type";
+import { AdviceContentProps } from "@/types/advice.type";
 import { convertTime } from "@/utils/shared/date.util";
 import { AdviceDelete } from "@/lib/client/advice.client.api";
 

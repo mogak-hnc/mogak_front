@@ -7,7 +7,6 @@ export const metadata = {
 };
 
 export default async function ChallengePage() {
-  const data = await ChallengeMain();
   return (
     <div>
       <ChallengeSearchCard

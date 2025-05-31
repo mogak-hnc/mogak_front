@@ -44,10 +44,9 @@ export default async function ZoneDetailPage({
           hasPwd={data.passwordRequired}
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {data.zoneMemberInfoList.map((user, index) => (
-            <Link href={`/profile/${user.memberId}`}>
+          {data.zoneMemberInfoList.map((user) => (
+            <Link key={user.memberId} href={`/profile/${user.memberId}`}>
               <UserCard
-                key={index}
                 memberId={user.memberId}
                 nickname={user.nickname}
                 status={user.status as StatusType}

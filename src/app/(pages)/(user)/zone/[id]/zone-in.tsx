@@ -50,6 +50,7 @@ export default function ZoneIn({
       setShowModal(false);
       alert("모각존 입장");
     } catch (err) {
+      console.log("모각존 입장 실패 : " + err);
       setPassword("");
       setErrorMsg("비밀번호가 틀렸습니다. 다시 입력해 보세요.");
     }

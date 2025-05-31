@@ -2,8 +2,8 @@ import { AdviceCommentContentProps } from "@/types/advice.type";
 import { formatRelativeTime } from "@/utils/shared/date.util";
 
 export default function AdviceComment({
-  memberId,
-  commentId,
+  // memberId,
+  // commentId,
   comment,
   createdAt,
 }: AdviceCommentContentProps) {

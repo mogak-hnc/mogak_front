@@ -4,7 +4,7 @@ import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 import { decodeToken } from "@/utils/client/decode-token.client.util";
 
 export default function ZoneOut({
-  zoneId,
+  // zoneId,
   hostId,
   joined,
 }: ZoneInOutButtonProps) {

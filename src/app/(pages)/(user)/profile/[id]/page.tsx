@@ -1,11 +1,10 @@
 import Link from "next/link";
 import Button from "@/app/components/ui/button";
 
-import MyBadge from "./my-badge";
-import MyChallenge from "./my-challenge";
-import MyZone from "./my-zone";
+// import MyBadge from "./my-badge";
+// import MyChallenge from "./my-challenge";
+// import MyZone from "./my-zone";
 import MyProfile from "./my-profile";
-import { ProfileProps } from "@/types/profile.type";
 import { ProfileInfo } from "@/lib/server/profile.server.api";
 import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
 

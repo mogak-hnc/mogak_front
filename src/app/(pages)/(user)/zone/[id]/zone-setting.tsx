@@ -14,8 +14,8 @@ import { useEffect, useState } from "react";
 export default function ZoneSetting({
   zoneId,
   hostId,
-  joined,
-}: ZoneInOutButtonProps) {
+}: // joined,
+ZoneInOutButtonProps) {
   const [user, setUser] = useState<JwtPayload | null>(null);
   useEffect(() => {
     const jwt = getJwtFromCookie();

@@ -1,5 +1,3 @@
-import Link from "next/link";
-import Button from "@/app/components/ui/button";
 import { ZoneHeaderProps, ZoneInOutButtonProps } from "@/types/zone.type";
 import ZoneIn from "./zone-in";
 import ZoneOut from "./zone-out";

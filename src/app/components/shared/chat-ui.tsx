@@ -1,4 +1,4 @@
-import { ZoneChatUiProps } from "@/types/zone.type";
+// import { ZoneChatUiProps } from "@/types/zone.type";
 
 // export default function ChatUI({ messages }: ZoneChatUiProps) {
 export default function ChatUI() {

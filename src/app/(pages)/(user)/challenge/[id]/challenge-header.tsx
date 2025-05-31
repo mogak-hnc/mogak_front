@@ -4,7 +4,7 @@ import { challengeMap } from "@/utils/shared/status.util";
 
 export default function ChallengeHeader({
   title,
-  description,
+  // description,
   creatorMemberId,
   startDate,
   endDate,
