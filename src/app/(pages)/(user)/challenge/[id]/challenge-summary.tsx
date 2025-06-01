@@ -6,7 +6,10 @@ import { ChallengeSummaryChart } from "./challenge-summary-chart";
 import { getDatePercent } from "@/utils/shared/date-percent.util";
 import { useState } from "react";
 import ConfirmModal from "@/app/components/confirm-modal";
-import { ChallengeEntryPost } from "@/lib/client/challenge.client.api";
+import {
+  ChallengeEntryPost,
+  ChallengeProofPost,
+} from "@/lib/client/challenge.client.api";
 import { getTimeDiffText } from "@/utils/shared/time.util";
 
 export function SummarySubtitle({ children }: { children: React.ReactNode }) {
@@ -15,12 +18,29 @@ export function SummarySubtitle({ children }: { children: React.ReactNode }) {
 
 export default function ChallengeSummary(props: ChallengeDetailSummaryProps) {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [file, setFile] = useState<File | null>(null);
 
   const challengeIn = async () => {
     try {
       await ChallengeEntryPost(props.challengeId);
     } catch (err) {
       console.log(`챌린지 참여 실패 : ${err}`);
+    }
+  };
+
+  const challengeProof = async () => {
+    if (!file) {
+      return;
+    }
+
+    try {
+      await ChallengeProofPost({
+        challengeId: props.challengeId,
+        title: props.title,
+        images: file,
+      });
+    } catch (err) {
+      console.error("인증 업로드 실패 " + err);
     }
   };
 
@@ -60,8 +80,18 @@ export default function ChallengeSummary(props: ChallengeDetailSummaryProps) {
           {props.joined && props.status === "ONGOING" && (
             <div className="border-t border-borders dark:border-border-dark pt-4">
               <SummarySubtitle>인증하기</SummarySubtitle>
-              <input type="file" className="text-sm" />
-              <Button>등록하기</Button>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const selected = e.target.files?.[0];
+                  if (selected) {
+                    setFile(selected);
+                  }
+                }}
+                className="text-sm"
+              />
+              <Button onClick={challengeProof}>등록하기</Button>
             </div>
           )}
         </>

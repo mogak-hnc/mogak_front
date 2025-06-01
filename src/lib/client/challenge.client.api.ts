@@ -2,6 +2,7 @@ import {
   ChallengeCreateInput,
   ChallengeCreateRequest,
   ChallengeCreateResponse,
+  ChallengeProofPostRequest,
 } from "@/types/challenge.type";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 
@@ -60,6 +61,42 @@ export async function ChallengeEntryPost(challengeId: string) {
   }
 
   const data: { challengeId: number } = await res.json();
+
+  return data;
+}
+
+export async function ChallengeProofPost(payload: ChallengeProofPostRequest) {
+  const token = getJwtFromCookie();
+  if (!token) {
+    throw new Error("JWT 토큰 없음 / 로그인 필요");
+  }
+
+  const formData = new FormData();
+
+  formData.append(
+    "request",
+    JSON.stringify({
+      description: `${payload.title} 챌린지의 오늘 인증을 완료했습니다!`,
+      images: payload.images,
+    })
+  );
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/challenge/${payload.challengeId}/verification`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: token,
+      },
+      body: formData,
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("챌린지 인증 실패");
+  }
+
+  const data: { articleId: number } = await res.json();
 
   return data;
 }

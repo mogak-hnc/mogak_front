@@ -166,3 +166,9 @@ export interface ChallengeCreateResponse {
   endDate: string;
   official: boolean;
 }
+
+export interface ChallengeProofPostRequest {
+  challengeId: string;
+  title: string;
+  images: File;
+}
