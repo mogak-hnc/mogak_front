@@ -29,12 +29,14 @@ export const getTimeDiffText = (target: number[]) => {
 
   const diff = start.getTime() - now.getTime();
 
-  if (diff <= 0) return "곧 시작됩니다";
+  if (diff <= 0) {
+    return "곧";
+  }
 
   const diffSeconds = Math.floor(diff / 1000);
   const days = Math.floor(diffSeconds / 86400);
   const hours = Math.floor((diffSeconds % 86400) / 3600);
   const minutes = Math.floor((diffSeconds % 3600) / 60);
 
-  return `${days > 0 ? `${days}일 ` : ""}${hours}시간 ${minutes}분`;
+  return `${days > 0 ? `${days}일 ` : ""}${hours}시간 ${minutes}분 뒤에`;
 };

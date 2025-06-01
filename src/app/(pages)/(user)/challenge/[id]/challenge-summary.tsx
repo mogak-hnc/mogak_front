@@ -34,7 +34,7 @@ export default function ChallengeSummary(props: ChallengeDetailSummaryProps) {
         <p className="font-bold text-secondary dark:text-secondary-dark">
           {getTimeDiffText(props.startDate)}
         </p>
-        후에 시작됩니다.
+        시작됩니다.
       </div>
       {props.official && (
         <p className="text-sm text-border-dark dark:text-borders">
