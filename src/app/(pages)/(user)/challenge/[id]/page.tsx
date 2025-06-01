@@ -49,8 +49,9 @@ export default async function ChallengeDetailPage({
               0
             )}
           />
-
-          <ChallengeProofGrid proofImages={data.challengeArticlesThumbnail} />
+          {data.joined && data.status !== "BEFORE" && (
+            <ChallengeProofGrid proofImages={data.challengeArticlesThumbnail} />
+          )}
         </div>
 
         <div className="w-full lg:w-[280px] shrink-0">

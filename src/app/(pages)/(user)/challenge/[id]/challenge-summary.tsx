@@ -46,7 +46,7 @@ export default function ChallengeSummary(props: ChallengeDetailSummaryProps) {
           <div className="border-t border-borders dark:border-border-dark pt-4 space-y-5">
             <SummarySubtitle>통계</SummarySubtitle>
             <ChallengeSummaryChart
-              label="전체 진행률"
+              label="진행률"
               value={getDatePercent(props.startDate, props.endDate)}
             />
             <ChallengeSummaryChart
