@@ -12,7 +12,9 @@ export async function ChallengeMain() {
   );
 
   if (!res.ok) {
-    throw new Error("챌린지 메인 fetch 실패");
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`챌린지 메인 불러오기 실패: ${res.status}`);
   }
 
   const raw: ChallengeMainResponse[] = await res.json();
@@ -60,7 +62,9 @@ export async function ChallengeSearch({
   const res = await fetch(url);
 
   if (!res.ok) {
-    throw new Error("챌린지 검색 결과 fetch 실패");
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`챌린지 검색 결과 불러오기 실패: ${res.status}`);
   }
 
   const row: ChallengeSearchResponse = await res.json();

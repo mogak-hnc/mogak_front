@@ -18,7 +18,9 @@ export async function AdviceDetail(worryId: string) {
   );
 
   if (!res.ok) {
-    throw new Error("고민글 detail 불러오기 실패");
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`고민글 상세 불러오기 실패: ${res.status}`);
   }
 
   const data: AdviceDetailResponse = await res.json();

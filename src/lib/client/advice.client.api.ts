@@ -31,7 +31,9 @@ export async function AdviceCreatePost(payload: AdviceCreateProps) {
   );
 
   if (!res.ok) {
-    throw new Error("고민글 작성 실패");
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`고민글 작성 실패: ${res.status}`);
   }
 
   const data: { worryId: string } = await res.json();
@@ -58,9 +60,10 @@ export async function AdviceCommentPagination(
       },
     }
   );
-
   if (!res.ok) {
-    throw new Error(`${worryId}번 게시글 댓글 로드 실패`);
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`${worryId}번 게시글 댓글 로드 실패: ${res.status}`);
   }
 
   const data: AdviceCommentPaginationResponse = await res.json();
@@ -91,7 +94,9 @@ export async function AdviceCommentPost(payload: AdviceCommentRequest) {
   );
 
   if (!res.ok) {
-    throw new Error("댓글 작성 실패");
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`댓글 작성 실패: ${res.status}`);
   }
 
   const data: AdviceCommentResponse = await res.json();
@@ -117,7 +122,9 @@ export async function AdviceDelete(worryId: number) {
   );
 
   if (!res.ok) {
-    throw new Error("고민글 삭제 실패");
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`고민글 삭제 실패: ${res.status}`);
   }
 
   const data: { worry: string } = await res.json();
@@ -143,7 +150,9 @@ export async function AdviceEmpathyPost(worryId: string) {
   );
 
   if (!res.ok) {
-    throw new Error("공감 토글 실패");
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`공감 토글 실패: ${res.status}`);
   }
 
   const data: AdviceEmpathyResponse = await res.json();

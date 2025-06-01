@@ -18,7 +18,9 @@ export async function ProfileInfo(id: string, jwt: string | null) {
   );
 
   if (!res.ok) {
-    throw new Error(`#${id}번 유저 정보 fetch 실패`);
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`${id}번 유저 정보 불러오기 실패: ${res.status}`);
   }
 
   const data: ProfileProps = await res.json();

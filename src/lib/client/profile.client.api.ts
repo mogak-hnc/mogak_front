@@ -21,6 +21,7 @@ export async function profileInfo(
 
   if (!res.ok) {
     const err = await res.text();
+    console.error("서버 응답:", err);
     throw new Error(`#${userId}번 유저 정보 fetch 실패: ${err}`);
   }
 

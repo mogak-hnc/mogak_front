@@ -18,7 +18,9 @@ export async function ChallengeDetail(id: string, jwt: string | null) {
   );
 
   if (!res.ok) {
-    throw new Error(`#${id}번 챌린지 디테일 fetch 실패`);
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`${id}번 챌린지 디테일 실패: ${res.status}`);
   }
 
   const data: ChallengeDetileResponse = await res.json();

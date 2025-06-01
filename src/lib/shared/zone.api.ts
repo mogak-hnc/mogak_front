@@ -12,7 +12,9 @@ export async function ZoneMain() {
   );
 
   if (!res.ok) {
-    throw new Error("모각존 메인 fetch 실패");
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`모각존 메인 불러오기 실패: ${res.status}`);
   }
 
   const raw: ZoneMainResponse[] = await res.json();
@@ -35,7 +37,9 @@ export async function ZoneTags() {
   );
 
   if (!res.ok) {
-    throw new Error("모각존 태그 fetch 실패");
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`모각존 태그 불러오기 실패: ${res.status}`);
   }
 
   const data: TagsProps[] = await res.json();
@@ -69,9 +73,10 @@ export async function ZoneSearch({
   const res = await fetch(url);
 
   if (!res.ok) {
-    throw new Error("모각존 검색 결과 fetch 실패");
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`모각존 검색 결과 불러오기 실패: ${res.status}`);
   }
-
   const raw: ZoneSearchResponse = await res.json();
 
   const data: ZoneMainProps[] = raw.content.map((item: any) => ({

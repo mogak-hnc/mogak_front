@@ -31,7 +31,9 @@ export async function ChallengeCreatePost(input: ChallengeCreateInput) {
   );
 
   if (!res.ok) {
-    throw new Error("챌린지 생성 실패");
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`챌린지 생성 실패: ${res.status}`);
   }
 
   const data: ChallengeCreateResponse = await res.json();
@@ -57,7 +59,9 @@ export async function ChallengeEntryPost(challengeId: string) {
   );
 
   if (!res.ok) {
-    throw new Error("챌린지 참여 실패");
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`챌린지 참여 실패: ${res.status}`);
   }
 
   const data: { challengeId: number } = await res.json();
@@ -93,7 +97,9 @@ export async function ChallengeProofPost(payload: ChallengeProofPostRequest) {
   );
 
   if (!res.ok) {
-    throw new Error("챌린지 인증 실패");
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`챌린지 인증 실패: ${res.status}`);
   }
 
   const data: { articleId: number } = await res.json();
@@ -118,8 +124,8 @@ export async function ChallengeDelete(challengeId: number) {
   );
 
   if (!res.ok) {
-    const errorText = await res.text();
-    console.error("서버 응답:", errorText);
+    const err = await res.text();
+    console.error("서버 응답:", err);
     throw new Error(`챌린지 삭제 실패: ${res.status}`);
   }
 

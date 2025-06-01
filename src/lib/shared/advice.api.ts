@@ -10,7 +10,9 @@ export async function AdviceMain() {
   });
 
   if (!res.ok) {
-    throw new Error("고민 상담 메인 fetch 실패");
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`고민상담 메인 불러오기 실패: ${res.status}`);
   }
 
   const data: AdviceMainResponse = await res.json();
@@ -32,7 +34,9 @@ export async function AdviceSearch({ sort, page, size }: AdviceSearchRequest) {
   const res = await fetch(url);
 
   if (!res.ok) {
-    throw new Error("모각존 검색 결과 fetch 실패");
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`모각존 검색 결과 불러오기 실패: ${res.status}`);
   }
 
   const data: AdviceSearchResponse = await res.json();

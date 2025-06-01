@@ -13,9 +13,9 @@ export async function AdminLogin(payload: AdminLoginValue) {
   );
 
   if (!res.ok) {
-    const errorText = await res.text();
-    console.error("서버 응답:", errorText);
-    throw new Error(`챌린지 삭제 실패: ${res.status}`);
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`관리자 로그인 실패: ${res.status}`);
   }
 
   return await res.json();

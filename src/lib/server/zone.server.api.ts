@@ -18,7 +18,9 @@ export async function ZoneDetail(id: string, jwt: string | null) {
   );
 
   if (!res.ok) {
-    throw new Error(`#${id}번 모각존 디테일 fetch 실패`);
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`${id}번 모각존 상세 불러오기 실패: ${res.status}`);
   }
 
   const data: ZoneDetailResponse = await res.json();

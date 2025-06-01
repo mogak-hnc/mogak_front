@@ -6,7 +6,9 @@ export async function MainZoneChallenge() {
   });
 
   if (!res.ok) {
-    throw new Error("메인 fetch 실패");
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`메인 불러오기 실패: ${res.status}`);
   }
 
   const data: MainResponse = await res.json();
