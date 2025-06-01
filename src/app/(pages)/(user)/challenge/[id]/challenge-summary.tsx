@@ -29,13 +29,16 @@ export default function ChallengeSummary(props: ChallengeDetailSummaryProps) {
       {!props.joined && props.status === "BEFORE" && (
         <Button onClick={() => setShowModal(true)}>참가하기</Button>
       )}
-      <div className="flex gap-2 text-sm text-border-dark dark:text-borders">
-        챌린지가
-        <p className="font-bold text-secondary dark:text-secondary-dark">
-          {getTimeDiffText(props.startDate)}
-        </p>
-        시작됩니다.
-      </div>
+      {props.status === "BEFORE" && (
+        <div className="flex gap-2 text-sm text-border-dark dark:text-borders">
+          챌린지가
+          <p className="font-bold text-secondary dark:text-secondary-dark">
+            {getTimeDiffText(props.startDate)}
+          </p>
+          시작됩니다.
+        </div>
+      )}
+
       {props.official && (
         <p className="text-sm text-border-dark dark:text-borders">
           이 챌린지를 완수하면 ●●● 뱃지를 획득해요!
@@ -43,7 +46,7 @@ export default function ChallengeSummary(props: ChallengeDetailSummaryProps) {
       )}
       {props.status !== "BEFORE" && (
         <>
-          <div className="border-t border-borders dark:border-border-dark pt-4 space-y-5">
+          <div className="space-y-5">
             <SummarySubtitle>통계</SummarySubtitle>
             <ChallengeSummaryChart
               label="진행률"
