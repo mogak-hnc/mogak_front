@@ -45,15 +45,14 @@ export default async function ZoneDetailPage({
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {data.zoneMemberInfoList.map((user) => (
-            <Link key={user.memberId} href={`/profile/${user.memberId}`}>
-              <UserCard
-                memberId={user.memberId}
-                nickname={user.nickname}
-                status={user.status as StatusType}
-                role={Number(data.hostMemberId) === user.memberId ? "방장" : ""}
-                image={getProfileImage(user.imageUrl)}
-              />
-            </Link>
+            <UserCard
+              key={user.memberId}
+              memberId={user.memberId}
+              nickname={user.nickname}
+              status={user.status as StatusType}
+              role={Number(data.hostMemberId) === user.memberId ? "방장" : ""}
+              image={getProfileImage(user.imageUrl)}
+            />
           ))}
         </div>
       </div>
