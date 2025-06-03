@@ -5,7 +5,6 @@ import UserCard from "@/app/components/shared/user-card";
 import { StatusType } from "@/types/zone.type";
 import ZoneHeader from "./zone-header";
 import { getProfileImage } from "@/utils/shared/profile.util";
-import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -20,6 +19,10 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   };
 }
 
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export default async function ZoneDetailPage({
   params,
 }: {
@@ -27,6 +30,8 @@ export default async function ZoneDetailPage({
 }) {
   const { id } = await params;
   const jwt = await getJwtFromServerCookie();
+
+  await sleep(5000);
 
   const data = await ZoneDetail(id, jwt);
 
