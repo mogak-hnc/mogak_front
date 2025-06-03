@@ -7,7 +7,7 @@ import { ZoneMainProps, ZoneSearchCardProps } from "@/types/zone.type";
 import { mapSort } from "@/utils/shared/sort.util";
 import ZoneMainCard from "./zone-main-card";
 import { ZoneMain, ZoneSearch } from "@/lib/shared/zone.api";
-import { ZoneMainCardSkeleton } from "./zone-main-card-skeleton";
+import { ZoneMainCardSkeleton } from "../../../components/skeleton/zone-main-card-skeleton";
 
 export default function ZoneSearchCard({
   title,

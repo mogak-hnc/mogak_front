@@ -10,7 +10,7 @@ import {
 import { mapSort } from "@/utils/shared/sort.util";
 import ChallengeMainCard from "./challenge-main-card";
 import { ChallengeMain, ChallengeSearch } from "@/lib/shared/challenge.api";
-import ChallengeMainCardSkeleton from "./challenge-main-card-skeleton";
+import ChallengeMainCardSkeleton from "../../../components/skeleton/challenge-main-card-skeleton";
 
 export default function ChallengeSearchCard({
   title,
