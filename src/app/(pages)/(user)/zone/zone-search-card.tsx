@@ -7,6 +7,7 @@ import { ZoneMainProps, ZoneSearchCardProps } from "@/types/zone.type";
 import { mapSort } from "@/utils/shared/sort.util";
 import ZoneMainCard from "./zone-main-card";
 import { ZoneMain, ZoneSearch } from "@/lib/shared/zone.api";
+import { ZoneMainCardSkeleton } from "./zone-main-card-skeleton";
 
 export default function ZoneSearchCard({
   title,
@@ -88,13 +89,13 @@ export default function ZoneSearchCard({
       <div className="w-full max-w-screen-xl mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-4 mt-8">
           {loading ? (
-            <div className="col-span-full text-center text-gray-500 py-10">
-              불러오는 중...
-            </div>
+            Array.from({ length: 6 }).map((_, i) => (
+              <ZoneMainCardSkeleton key={`zone-skeleton-${i}`} />
+            ))
           ) : data.length > 0 ? (
-            data.map((d, index) => (
+            data.map((d, i) => (
               <ZoneMainCard
-                key={`zone-main-card-${d.mogakZoneId}-${index}`}
+                key={`zone-main-card-${d.mogakZoneId}-${i}`}
                 {...d}
               />
             ))
