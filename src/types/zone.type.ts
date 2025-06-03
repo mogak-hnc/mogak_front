@@ -55,6 +55,14 @@ export interface ZoneCreateRequest {
   chatEnabled: boolean;
 }
 
+export interface ZoneSettingProps {
+  spaceName: string;
+  tag: string;
+  usePassword: boolean;
+  password: string;
+  useChat: boolean;
+}
+
 export interface ZoneCreateInput {
   spaceName: string;
   tag: string;
