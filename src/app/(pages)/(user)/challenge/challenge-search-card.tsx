@@ -10,6 +10,7 @@ import {
 import { mapSort } from "@/utils/shared/sort.util";
 import ChallengeMainCard from "./challenge-main-card";
 import { ChallengeMain, ChallengeSearch } from "@/lib/shared/challenge.api";
+import ChallengeMainCardSkeleton from "./challenge-main-card-skeleton";
 
 export default function ChallengeSearchCard({
   title,
@@ -90,9 +91,9 @@ export default function ChallengeSearchCard({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
         {loading ? (
-          <div className="col-span-full text-center text-gray-500 py-10">
-            불러오는 중...
-          </div>
+          Array.from({ length: 6 }).map((_, i) => (
+            <ChallengeMainCardSkeleton key={`challenge-skeleton-${i}`} />
+          ))
         ) : data.length > 0 ? (
           data.map((item) => (
             <ChallengeMainCard
