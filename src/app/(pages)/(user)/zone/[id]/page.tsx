@@ -19,10 +19,6 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   };
 }
 
-function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 export default async function ZoneDetailPage({
   params,
 }: {
@@ -30,8 +26,6 @@ export default async function ZoneDetailPage({
 }) {
   const { id } = await params;
   const jwt = await getJwtFromServerCookie();
-
-  await sleep(5000);
 
   const data = await ZoneDetail(id, jwt);
 
