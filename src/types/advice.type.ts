@@ -56,6 +56,7 @@ export interface AdviceCommentContentProps {
   commentId: number;
   comment: string;
   createdAt: number[];
+  profileImageUrl: string;
 }
 
 export interface AdviceCommentPaginationResponse {
