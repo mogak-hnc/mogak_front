@@ -29,7 +29,7 @@ export default async function AdvicePage() {
         ></ImageCard>
         <SubTitle contents="공감이 많은 고민들" />
         <div className="flex flex-wrap gap-4">
-          {data ? (
+          {data.content.length > 0 ? (
             data.content.map((m) => (
               <AdvicePreviewCard
                 key={`advice-preiview-card-${m.worryId}`}
@@ -37,7 +37,11 @@ export default async function AdvicePage() {
               />
             ))
           ) : (
-            <div>아직 작성된 고민이 없습니다.</div>
+            <div className="w-full text-center text-border-dark dark:text-borders">
+              작성된 고민들이 모두 삭제되었어요.
+              <br />
+              비밀스러운 고민이 있다면 새로 작성해 보세요!
+            </div>
           )}
         </div>
       </div>
