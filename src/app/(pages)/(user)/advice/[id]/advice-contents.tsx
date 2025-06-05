@@ -11,6 +11,10 @@ import { AdviceDetailResponse } from "@/types/advice.type";
 import AdviceCommentsCard from "./advice-comments-card";
 import { AdviceEmpathyPost } from "@/lib/client/advice.client.api";
 
+import AlertModal from "@/app/components/custom-modal";
+import { useRouter } from "next/navigation";
+import { getJwtFromCookie } from "@/utils/client/auth.client.util";
+
 export default function AdviceContents({
   id,
   data,
@@ -18,6 +22,7 @@ export default function AdviceContents({
   id: string;
   data: AdviceDetailResponse;
 }) {
+  const [showModal, setShowModal] = useState(false);
   const [empathyCount, setEmpathyCount] = useState(data.empathyCount);
   const [hasEmpathized, setHasEmpathized] = useState(data.hasEmpathized);
 
@@ -33,6 +38,12 @@ export default function AdviceContents({
   }, []);
 
   const handleEmpathy = async () => {
+    const jwt = getJwtFromCookie();
+    if (!jwt) {
+      setShowModal(true);
+      return;
+    }
+
     try {
       const res = await AdviceEmpathyPost(id);
       const { empathyCount, hasEmpathized } = res;
@@ -41,6 +52,12 @@ export default function AdviceContents({
     } catch (err) {
       console.log("공감 실패 : " + err);
     }
+  };
+
+  const router = useRouter();
+
+  const toLogin = () => {
+    router.push(`/login`);
   };
 
   return (
@@ -77,6 +94,15 @@ export default function AdviceContents({
       <div className="w-full lg:w-[35%]">
         <AdviceCommentsCard worryId={id} />
       </div>
+      {showModal && (
+        <AlertModal
+          message="로그인 후 이용해 주세요."
+          moveMsg="로그인하기"
+          onMove={toLogin}
+          confirmMsg="닫기"
+          onConfirm={() => setShowModal(false)}
+        />
+      )}
     </div>
   );
 }

@@ -44,18 +44,12 @@ export async function AdviceCreatePost(payload: AdviceCreateProps) {
 export async function AdviceCommentPagination(
   payload: AdviceCommentPaginationRequest
 ) {
-  const token = getJwtFromCookie();
-  if (!token) {
-    throw new Error("JWT 토큰 없음 / 로그인 필요");
-  }
-
   const { worryId, page, size } = payload;
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/worry/${worryId}/comments?page=${page}&size=${size}`,
     {
       headers: {
-        Authorization: token,
         "Content-Type": "application/json",
       },
     }

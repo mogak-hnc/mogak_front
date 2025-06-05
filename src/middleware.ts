@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
   const protectedPaths = [
     "/zone",
     "/challenge",
-    "/advice",
+    "/advice/create",
     "/login/info",
     "/profile",
   ];
@@ -51,7 +51,7 @@ export const config = {
   matcher: [
     "/zone/:path*",
     "/challenge/:path*",
-    "/advice/:path*",
+    "/advice/create",
     "/login/info",
     "/profile/:path*",
     "/admin/:path*",

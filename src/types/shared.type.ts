@@ -4,6 +4,14 @@ export interface ConfirmModalProps {
   onCancel: () => void;
 }
 
+export interface CustomModalProps {
+  message: string;
+  onConfirm: () => void;
+  onMove: () => void;
+  confirmMsg: string;
+  moveMsg: string;
+}
+
 export interface FormFieldProps {
   label: string;
   children: React.ReactNode;
