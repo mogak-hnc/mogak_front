@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import Loading from "@/app/loading";
 
 export default function AuthCallbackPage() {
   const params = useSearchParams();
@@ -18,5 +19,5 @@ export default function AuthCallbackPage() {
     router.replace("/");
   }, [params, router]);
 
-  return <p>로그인 처리 중입니다...</p>;
+  return <Loading />;
 }
