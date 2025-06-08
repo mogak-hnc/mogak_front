@@ -3,8 +3,8 @@ import { ZoneDetail } from "@/lib/server/zone.server.api";
 import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
 import UserCard from "@/app/components/shared/user-card";
 import { StatusType } from "@/types/zone.type";
-import ZoneHeader from "./zone-header";
 import { getProfileImage } from "@/utils/shared/profile.util";
+import ZoneHeaderWrapper from "./zone-header-wrapper";
 
 export const dynamic = "force-dynamic";
 
@@ -32,7 +32,7 @@ export default async function ZoneDetailPage({
   return (
     <div className="flex gap-4">
       <div className="w-[65%] flex flex-col gap-4">
-        <ZoneHeader
+        <ZoneHeaderWrapper
           zoneId={id}
           name={data.name}
           imageUrl={data.imageUrl}
