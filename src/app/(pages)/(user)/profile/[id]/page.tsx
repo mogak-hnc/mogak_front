@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Button from "@/app/components/ui/button";
 
-// import MyBadge from "./my-badge";
+import MyBadge from "./my-badge";
 // import MyChallenge from "./my-challenge";
 // import MyZone from "./my-zone";
 import MyProfile from "./my-profile";
@@ -46,8 +46,8 @@ export default async function ProfilePage({
       <MyProfile {...data} memberId={data.memberId} />
       {data.showBadge && (
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
-          {/* <MyBadge badges={data.badges ?? []} />
-          <MyChallenge challenges={data.challenges ?? []} />
+          <MyBadge />
+          {/*  <MyChallenge challenges={data.challenges ?? []} />
           <MyZone zones={data.zones ?? []} /> */}
         </div>
       )}

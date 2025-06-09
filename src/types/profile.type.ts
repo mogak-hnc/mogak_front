@@ -12,6 +12,16 @@ export interface ProfileProps {
   showBadge: boolean;
 }
 
+type ProfileBadgeType = "DURATION" | "COUNT" | "OFFICIAL";
+
+export interface ProfileBadgeProps {
+  badgeId: number;
+  name: string;
+  description: string;
+  iconUrl: string;
+  badgeType: ProfileBadgeType;
+}
+
 export interface ProfileInfoResponse {
   memberId: number;
   imageUrl: string;
