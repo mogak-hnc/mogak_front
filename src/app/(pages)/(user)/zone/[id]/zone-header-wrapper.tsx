@@ -37,6 +37,8 @@ export default function ZoneHeaderWrapper({
     return () => disconnectSocket();
   }, []);
 
+  console.log(newJoinedUserCount);
+
   return (
     <ZoneHeader
       zoneId={zoneId}

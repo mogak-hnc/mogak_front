@@ -1,4 +1,3 @@
-import { ChallengeMain } from "@/lib/shared/challenge.api";
 import ChallengeSearchCard from "./challenge-search-card";
 
 export const metadata = {

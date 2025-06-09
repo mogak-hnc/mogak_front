@@ -79,7 +79,9 @@ export default function AdminAdvicePage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-lg font-bold text-primary">고민 상담 글 관리</h1>
+      <h1 className="text-lg font-bold text-primary dark:text-primary-dark">
+        고민 상담 글 관리
+      </h1>
 
       {loading ? (
         <p className="text-sm text-center text-borders dark:text-border-dark">
