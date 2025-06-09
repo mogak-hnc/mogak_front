@@ -1,5 +1,6 @@
 import SockJS from "sockjs-client";
 import { Client, IMessage } from "@stomp/stompjs";
+import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 
 let stompClient: Client | null = null;
 
@@ -9,18 +10,20 @@ type ConnectSocketParams = {
   onMessage: (msg: any) => void;
 };
 
-export function connectSocket({
-  mogakZoneId,
-  token,
-  onMessage,
-}: ConnectSocketParams) {
+export function connectSocket({ mogakZoneId, onMessage }: ConnectSocketParams) {
   if (stompClient && stompClient.connected) {
+    return;
+  }
+
+  const token = getJwtFromCookie();
+
+  if (!token) {
     return;
   }
 
   stompClient = new Client({
     webSocketFactory: () =>
-      new SockJS(`${process.env.NEXT_PUBLIC_BACKEND_URL}/ws`),
+      new SockJS(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/ws`),
     connectHeaders: {
       Authorization: token,
       mogakZoneId,
@@ -32,7 +35,7 @@ export function connectSocket({
     },
     reconnectDelay: 5000,
     onConnect: () => {
-      console.log("✅ WebSocket 연결 성공");
+      console.log("WebSocket 연결 성공");
 
       stompClient?.subscribe(
         `/topic/api/mogak/zone/${mogakZoneId}`,
