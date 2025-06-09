@@ -12,7 +12,7 @@ export interface ProfileProps {
   showBadge: boolean;
 }
 
-type ProfileBadgeType = "DURATION" | "COUNT" | "OFFICIAL";
+export type ProfileBadgeType = "DURATION" | "COUNT" | "OFFICIAL";
 
 export interface ProfileBadgeProps {
   badgeId: number;

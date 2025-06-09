@@ -1,76 +1,65 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminTable from "@/app/components/admin/admin-table";
 import Input from "@/app/components/ui/input";
 import Button from "@/app/components/ui/button";
-
-const mockBadgeList = [
-  {
-    id: 1,
-    name: "꾸준러",
-    image: "/badge1.png",
-    condition: "챌린지 3개 성공",
-  },
-  {
-    id: 2,
-    name: "열정러",
-    image: "/badge2.png",
-    condition: "하루 10시간 이상 7일 연속",
-  },
-];
+import { adminBadgeList } from "@/lib/client/badge.client.api";
+import { AdminBadgeProps, Column } from "@/types/admin.type";
 
 export default function AdminBadgePage() {
-  const [badges, setBadges] = useState(mockBadgeList);
+  const [badges, setBadges] = useState<AdminBadgeProps[]>([]);
   const [newName, setNewName] = useState("");
   const [newImage, setNewImage] = useState<File | null>(null);
 
-  const handleAddBadge = () => {
-    if (!newName || !newImage) return;
-    const nextId = badges.length + 1;
-    const newBadge = {
-      id: nextId,
-      name: newName,
-      image: URL.createObjectURL(newImage),
-      condition: "조건 없음",
+  useEffect(() => {
+    const loadData = async () => {
+      const data = await adminBadgeList();
+      if (data) {
+        setBadges(data);
+      }
     };
-    setBadges((prev) => [...prev, newBadge]);
-    setNewName("");
-    setNewImage(null);
+    loadData();
+  }, []);
+
+  const handleAddBadge = () => {
+    if (!newName || !newImage) {
+      return;
+    }
   };
 
   const handleDelete = (id: number) => {
-    setBadges((prev) => prev.filter((b) => b.id !== id));
+    // 추후 구현 예정
   };
 
-  const columns = [
+  const columns: Column<AdminBadgeProps>[] = [
     {
-      key: "image",
+      key: "iconUrl",
       label: "이미지",
-      render: (src: string) => (
+      render: (src) => (
         <img
-          src={src}
+          src={String(src)}
           alt="badge"
           className="w-10 h-10 object-contain mx-auto"
         />
       ),
     },
     { key: "name", label: "이름" },
-    { key: "condition", label: "조건" },
+    { key: "description", label: "설명" },
     {
-      key: "actions",
+      key: "badgeId" as any,
       label: "관리",
-      render: (_: any, row: any) => (
+      render: (_value, row) => (
         <div className="flex gap-2 justify-center">
           <button
-            className="text-sm px-2 py-1 bg-gray-300 text-gray-800 rounded"
-            onClick={() => alert(`조건 추가: ${row.id}`)}
+            className="text-sm px-2 py-1 bg-borders text-text rounded"
+            onClick={() => alert(`조건 추가: ${row.badgeId}`)}
           >
             조건 추가
           </button>
           <button
-            className="text-sm px-2 py-1 bg-red-500 text-white rounded"
-            onClick={() => handleDelete(row.id)}
+            className="text-sm px-2 py-1 bg-error dark:bg-error-dark text-white rounded"
+            onClick={() => handleDelete(row.badgeId)}
           >
             삭제
           </button>
