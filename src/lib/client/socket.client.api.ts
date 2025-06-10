@@ -44,7 +44,7 @@ export function connectAndSubscribeSocket<T>({
 
 export function subscribeDetail<T>(id: string, onMessage: (msg: T) => void) {
   if (!stompClient || !stompClient.connected) {
-    console.warn("소켓 연결이 아직 안 됨");
+    console.warn("소켓 연결 안 됨");
     return;
   }
 
