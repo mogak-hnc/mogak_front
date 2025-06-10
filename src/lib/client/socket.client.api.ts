@@ -30,12 +30,12 @@ export function connectSocket({ mogakZoneId, onMessage }: ConnectSocketParams) {
     },
     debug: (str) => {
       if (process.env.NODE_ENV === "development") {
-        console.log("[STOMP]", str);
+        console.log("STOMP", str);
       }
     },
     reconnectDelay: 5000,
     onConnect: () => {
-      console.log("WebSocket 연결 성공");
+      console.log("웹소켓 연결 성공");
 
       stompClient?.subscribe(
         `/topic/api/mogak/zone/${mogakZoneId}`,
@@ -60,6 +60,6 @@ export function connectSocket({ mogakZoneId, onMessage }: ConnectSocketParams) {
 export function disconnectSocket() {
   if (stompClient && stompClient.connected) {
     stompClient.deactivate();
-    console.log("WebSocket 연결 종료");
+    console.log("웹소켓 연결 종료");
   }
 }

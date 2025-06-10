@@ -48,7 +48,6 @@ export default function ZoneIn({
     try {
       await ZoneEntryPost(zoneId, hasPwd ? password : "");
       setShowModal(false);
-      alert("모각존 입장");
     } catch (err) {
       console.log("모각존 입장 실패 : " + err);
       setPassword("");

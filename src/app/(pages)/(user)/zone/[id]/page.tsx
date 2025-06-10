@@ -1,10 +1,6 @@
-import ChatUI from "@/app/components/shared/chat-ui";
 import { ZoneDetail } from "@/lib/server/zone.server.api";
 import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
-import UserCard from "@/app/components/shared/user-card";
-import { StatusType } from "@/types/zone.type";
-import { getProfileImage } from "@/utils/shared/profile.util";
-import ZoneHeaderWrapper from "./zone-header-wrapper";
+import ZoneWrapper from "./zone-wrapper";
 
 export const dynamic = "force-dynamic";
 
@@ -27,39 +23,11 @@ export default async function ZoneDetailPage({
   const { id } = await params;
   const jwt = await getJwtFromServerCookie();
 
+  if (!jwt) {
+    throw new Error("로그인 후 이용해 주세요.");
+  }
+
   const data = await ZoneDetail(id, jwt);
 
-  return (
-    <div className="flex gap-4">
-      <div className="w-[65%] flex flex-col gap-4">
-        <ZoneHeaderWrapper
-          zoneId={id}
-          name={data.name}
-          imageUrl={data.imageUrl}
-          tag={data.tagNames[0]}
-          joinedUserCount={data.joinedUserCount}
-          hostId={data.hostMemberId}
-          joined={data.joined}
-          hasPwd={data.passwordRequired}
-        />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {data.zoneMemberInfoList.map((user) => (
-            <UserCard
-              key={user.memberId}
-              memberId={user.memberId}
-              nickname={user.nickname}
-              status={user.status as StatusType}
-              role={Number(data.hostMemberId) === user.memberId ? "방장" : ""}
-              image={getProfileImage(user.imageUrl)}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div className="w-[35%]">
-        <ChatUI />
-        {/* <ChatUI messages={data.chatHistoryResponses} /> */}
-      </div>
-    </div>
-  );
+  return <ZoneWrapper id={id} jwt={jwt} data={data} />;
 }
