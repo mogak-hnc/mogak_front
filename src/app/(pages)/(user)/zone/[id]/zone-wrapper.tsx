@@ -23,18 +23,18 @@ export default function ZoneWrapper({
 
   useEffect(() => {
     if (!joined) {
-      console.log("not-joined");
       return;
     }
 
     connectAndSubscribeSocket<ZoneDetailResponse>({
       mogakZoneId: id,
-      topic: `/topic/api/mogak/zone/${id}`,
       onMessage: (parsedRes) => {
         console.log("받은 메시지:", parsedRes);
 
         setLoadData((prev) => {
-          if (!prev) return prev;
+          if (!prev) {
+            return prev;
+          }
           return {
             ...prev,
             zoneMemberInfoList: parsedRes.zoneMemberInfoList,

@@ -6,16 +6,14 @@ let stompClient: Client | null = null;
 
 export function connectAndSubscribeSocket<T>({
   mogakZoneId,
-  topic,
   onMessage,
 }: {
   mogakZoneId: string;
-  topic: string;
   onMessage: (msg: T) => void;
 }) {
   if (stompClient && stompClient.connected) {
     console.log("이미 연결됨. 구독 바로 진행");
-    subscribeSocket(topic, onMessage);
+    subscribeDetail(mogakZoneId, onMessage);
     return;
   }
 
@@ -34,7 +32,7 @@ export function connectAndSubscribeSocket<T>({
     reconnectDelay: 5000,
     onConnect: () => {
       console.log("웹소켓 연결 성공");
-      subscribeSocket(topic, onMessage);
+      subscribeDetail(mogakZoneId, onMessage);
     },
     onStompError: (frame) => {
       console.error("STOMP 에러", frame);
@@ -44,7 +42,51 @@ export function connectAndSubscribeSocket<T>({
   stompClient.activate();
 }
 
-export function subscribeSocket<T>(topic: string, onMessage: (msg: T) => void) {
+export function subscribeDetail<T>(id: string, onMessage: (msg: T) => void) {
+  if (!stompClient || !stompClient.connected) {
+    console.warn("소켓 연결이 아직 안 됨");
+    return;
+  }
+
+  const jwt = getJwtFromCookie();
+  if (!jwt) {
+    return;
+  }
+  const topic = `/topic/api/mogak/zone/${id}`;
+  console.log("토픽 구독 시작:", topic);
+
+  stompClient.subscribe(
+    topic,
+    (message: IMessage) => {
+      try {
+        const payload = JSON.parse(message.body);
+        console.log("수신된 메시지:", payload);
+        onMessage(payload);
+      } catch (err) {
+        console.error("메시지 파싱 오류:", err);
+      }
+    },
+    { Authorization: jwt, mogakZoneId: id }
+  );
+}
+
+export function subscribeChat<T>(topic: string, onMessage: (msg: T) => void) {
+  if (!stompClient || !stompClient.connected) {
+    console.warn("소켓 연결이 아직 안 됨");
+    return;
+  }
+
+  stompClient.subscribe(topic, (message: IMessage) => {
+    try {
+      const payload = JSON.parse(message.body);
+      onMessage(payload);
+    } catch (err) {
+      console.error("메시지 파싱 오류:", err);
+    }
+  });
+}
+
+export function subscribeStatus<T>(topic: string, onMessage: (msg: T) => void) {
   if (!stompClient || !stompClient.connected) {
     console.warn("소켓 연결이 아직 안 됨");
     return;
