@@ -45,6 +45,7 @@ export function connectAndSubscribeSocket<T>({
 export function subscribeDetail<T>(id: string, onMessage: (msg: T) => void) {
   if (!stompClient || !stompClient.connected) {
     console.warn("소켓 연결 안 됨");
+    connectAndSubscribeSocket({ mogakZoneId: id, onMessage });
     return;
   }
 
@@ -70,38 +71,24 @@ export function subscribeDetail<T>(id: string, onMessage: (msg: T) => void) {
   );
 }
 
-export function subscribeChat<T>(topic: string, onMessage: (msg: T) => void) {
+export function sendStatus(zoneId: string, memberId: string, message: string) {
   if (!stompClient || !stompClient.connected) {
-    console.warn("소켓 연결이 아직 안 됨");
+    console.warn("소켓 연결 안 됨");
     return;
   }
 
-  stompClient.subscribe(topic, (message: IMessage) => {
-    try {
-      const payload = JSON.parse(message.body);
-      onMessage(payload);
-    } catch (err) {
-      console.error("메시지 파싱 오류:", err);
-    }
-  });
-}
-
-export function subscribeStatus<T>(topic: string, onMessage: (msg: T) => void) {
-  if (!stompClient || !stompClient.connected) {
-    console.warn("소켓 연결이 아직 안 됨");
+  const jwt = getJwtFromCookie();
+  if (!jwt) {
     return;
   }
 
-  console.log("토픽 구독 시작:", topic);
-
-  stompClient.subscribe(topic, (message: IMessage) => {
-    try {
-      const payload = JSON.parse(message.body);
-      console.log("수신된 메시지:", payload);
-      onMessage(payload);
-    } catch (err) {
-      console.error("메시지 파싱 오류:", err);
-    }
+  stompClient.publish({
+    destination: `/app/api/mogak/zone/${zoneId}/status`,
+    headers: {
+      Authorization: jwt,
+      mogakZoneId: String(zoneId),
+    },
+    body: JSON.stringify({ memberId, message }),
   });
 }
 

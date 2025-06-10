@@ -37,9 +37,18 @@ export interface ZoneSearchCardProps {
   section: string;
 }
 
-export type StatusType = "공부 중" | "자리비움" | "오프라인";
+export interface ZoneUserCardStatusProps {
+  zoneId: string;
+  memberId: string;
+  status: string;
+  statusColor: string;
+  translatedStatus: string;
+}
+
+export type StatusType = "공부 중" | "자리비움";
 
 export interface ZoneMemberCardProps {
+  zoneId: string;
   memberId: number;
   image?: string;
   nickname: string;

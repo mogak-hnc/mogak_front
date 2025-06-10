@@ -67,6 +67,7 @@ export default function ZoneWrapper({
           {(loadData ?? data).zoneMemberInfoList.map((user) => (
             <UserCard
               key={user.memberId}
+              zoneId={id}
               memberId={user.memberId}
               nickname={user.nickname}
               status={user.status as StatusType}
