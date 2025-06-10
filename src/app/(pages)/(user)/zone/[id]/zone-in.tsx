@@ -11,13 +11,20 @@ import {
 } from "@/utils/client/decode-token.client.util";
 import { ZoneInOutButtonProps } from "@/types/zone.type";
 import SubTitle from "@/app/components/shared/sub-title";
+import { connectSocket, subscribeSocket } from "@/lib/client/socket.client.api";
+
+type ZoneInProps = ZoneInOutButtonProps & {
+  hasPwd: boolean;
+  onJoinSuccess: () => void;
+};
 
 export default function ZoneIn({
   zoneId,
   hostId,
   joined,
   hasPwd,
-}: ZoneInOutButtonProps) {
+  onJoinSuccess,
+}: ZoneInProps) {
   const [user, setUser] = useState<JwtPayload | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [password, setPassword] = useState("");
@@ -48,6 +55,16 @@ export default function ZoneIn({
     try {
       await ZoneEntryPost(zoneId, hasPwd ? password : "");
       setShowModal(false);
+      onJoinSuccess();
+
+      connectSocket({
+        mogakZoneId: zoneId,
+        onConnect: () => {
+          subscribeSocket(`/topic/api/mogak/zone/${zoneId}`, (res) => {
+            console.log("받은 메시지:", res);
+          });
+        },
+      });
     } catch (err) {
       console.log("모각존 입장 실패 : " + err);
       setPassword("");

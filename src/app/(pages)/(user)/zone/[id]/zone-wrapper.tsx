@@ -9,31 +9,47 @@ import { useEffect, useState } from "react";
 import {
   connectSocket,
   disconnectSocket,
+  subscribeSocket,
 } from "@/lib/client/socket.client.api";
 
 export default function ZoneWrapper({
   id,
-  jwt,
   data,
 }: {
   id: string;
-  jwt: string;
   data: ZoneDetailResponse;
 }) {
+  const [joined, setJoined] = useState<boolean>(data.joined);
   const [loadData, setLoadData] = useState<ZoneDetailResponse>();
+
   useEffect(() => {
     connectSocket({
       mogakZoneId: id,
-      token: jwt,
-      onMessage: (msg) => {
-        if (msg.status) {
-          // 유저 상태 변경 메시지에서 인원 수 다시 계산
-        }
+      onConnect: () => {
+        subscribeSocket(
+          `/topic/api/mogak/zone/${id}`,
+          (res: ZoneDetailResponse) => {
+            console.log("받은 메시지:", res);
+
+            setLoadData((prev) => {
+              if (!prev) {
+                return prev;
+              }
+              return {
+                ...prev,
+                zoneMemberInfoList: res.zoneMemberInfoList,
+                joinedUserCount: res.joinedUserCount,
+              };
+            });
+          }
+        );
       },
     });
+    return () => {
+      disconnectSocket();
+    };
+  }, [id]);
 
-    return () => disconnectSocket();
-  }, []);
   return (
     <div className="flex gap-4">
       <div className="w-[65%] flex flex-col gap-4">
@@ -44,11 +60,12 @@ export default function ZoneWrapper({
           tag={data.tagNames[0]}
           joinedUserCount={data.joinedUserCount}
           hostId={data.hostMemberId}
-          joined={data.joined}
+          joined={joined}
+          onJoinSuccess={() => setJoined(true)}
           hasPwd={data.passwordRequired}
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {data.zoneMemberInfoList.map((user) => (
+          {(loadData ?? data).zoneMemberInfoList.map((user) => (
             <UserCard
               key={user.memberId}
               memberId={user.memberId}

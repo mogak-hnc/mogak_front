@@ -29,5 +29,5 @@ export default async function ZoneDetailPage({
 
   const data = await ZoneDetail(id, jwt);
 
-  return <ZoneWrapper id={id} jwt={jwt} data={data} />;
+  return <ZoneWrapper id={id} data={data} />;
 }

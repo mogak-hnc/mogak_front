@@ -118,6 +118,7 @@ export interface ZoneHeaderProps {
   imageUrl: string;
   joined: boolean;
   hasPwd: boolean;
+  onJoinSuccess: () => void;
 }
 
 export interface ZoneMemberInfo {

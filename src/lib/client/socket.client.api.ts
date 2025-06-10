@@ -6,17 +6,18 @@ let stompClient: Client | null = null;
 
 type ConnectSocketParams = {
   mogakZoneId: string;
-  token: string;
-  onMessage: (msg: any) => void;
+  onConnect?: () => void;
+  onError?: (err: any) => void;
 };
 
-export function connectSocket({ mogakZoneId, onMessage }: ConnectSocketParams) {
-  if (stompClient && stompClient.connected) {
-    return;
-  }
+export function connectSocket({
+  mogakZoneId,
+  onConnect,
+  onError,
+}: ConnectSocketParams) {
+  if (stompClient && stompClient.connected) return;
 
   const token = getJwtFromCookie();
-
   if (!token) {
     return;
   }
@@ -30,31 +31,37 @@ export function connectSocket({ mogakZoneId, onMessage }: ConnectSocketParams) {
     },
     debug: (str) => {
       if (process.env.NODE_ENV === "development") {
-        console.log("STOMP", str);
+        console.log("[STOMP]", str);
       }
     },
     reconnectDelay: 5000,
     onConnect: () => {
       console.log("웹소켓 연결 성공");
-
-      stompClient?.subscribe(
-        `/topic/api/mogak/zone/${mogakZoneId}`,
-        (message: IMessage) => {
-          try {
-            const payload = JSON.parse(message.body);
-            onMessage(payload);
-          } catch (err) {
-            console.error("메시지 파싱 오류:", err);
-          }
-        }
-      );
+      onConnect?.();
     },
     onStompError: (frame) => {
       console.error("STOMP 연결 에러", frame);
+      onError?.(frame);
     },
   });
 
   stompClient.activate();
+}
+
+export function subscribeSocket<T>(topic: string, onMessage: (msg: T) => void) {
+  if (!stompClient || !stompClient.connected) {
+    console.warn("소켓 연결이 아직 안 됨");
+    return;
+  }
+
+  stompClient.subscribe(topic, (message: IMessage) => {
+    try {
+      const payload = JSON.parse(message.body);
+      onMessage(payload);
+    } catch (err) {
+      console.error("메시지 파싱 오류:", err);
+    }
+  });
 }
 
 export function disconnectSocket() {

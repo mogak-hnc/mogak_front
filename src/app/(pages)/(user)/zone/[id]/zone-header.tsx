@@ -13,6 +13,7 @@ export default function ZoneHeader({
   imageUrl,
   joined,
   hasPwd,
+  onJoinSuccess,
 }: ZoneHeaderProps) {
   const props: ZoneInOutButtonProps = {
     joined: joined,
@@ -41,7 +42,7 @@ export default function ZoneHeader({
         </span>
         <div className="flex gap-2">
           <ZoneSetting {...props} />
-          <ZoneIn {...props} hasPwd={hasPwd} />
+          <ZoneIn {...props} hasPwd={hasPwd} onJoinSuccess={onJoinSuccess} />
           <ZoneOut {...props} />
         </div>
       </div>
