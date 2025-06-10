@@ -23,13 +23,18 @@ export default function ZoneWrapper({
   const [loadData, setLoadData] = useState<ZoneDetailResponse>();
 
   useEffect(() => {
+    if (!joined) {
+      console.log("not-joined");
+      return;
+    }
     connectSocket({
       mogakZoneId: id,
       onConnect: () => {
         subscribeSocket(
           `/topic/api/mogak/zone/${id}`,
-          (res: ZoneDetailResponse) => {
-            console.log("받은 메시지:", res);
+          (res: { body: string }) => {
+            const parsedRes = JSON.parse(res.body);
+            console.log("받은 메시지:", parsedRes);
 
             setLoadData((prev) => {
               if (!prev) {
@@ -37,8 +42,8 @@ export default function ZoneWrapper({
               }
               return {
                 ...prev,
-                zoneMemberInfoList: res.zoneMemberInfoList,
-                joinedUserCount: res.joinedUserCount,
+                zoneMemberInfoList: parsedRes.zoneMemberInfoList,
+                joinedUserCount: parsedRes.joinedUserCount,
               };
             });
           }
@@ -48,7 +53,7 @@ export default function ZoneWrapper({
     return () => {
       disconnectSocket();
     };
-  }, [id]);
+  }, [joined, id]);
 
   return (
     <div className="flex gap-4">
@@ -61,7 +66,7 @@ export default function ZoneWrapper({
           joinedUserCount={data.joinedUserCount}
           hostId={data.hostMemberId}
           joined={joined}
-          onJoinSuccess={() => setJoined(true)}
+          onJoinSuccess={(b) => setJoined(b)}
           hasPwd={data.passwordRequired}
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

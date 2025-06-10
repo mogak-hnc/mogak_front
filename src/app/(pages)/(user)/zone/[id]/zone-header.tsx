@@ -1,8 +1,7 @@
 import { ZoneHeaderProps, ZoneInOutButtonProps } from "@/types/zone.type";
-import ZoneIn from "./zone-in";
-import ZoneOut from "./zone-out";
 import { getDetailImage } from "@/utils/shared/detail-image.util";
 import ZoneSetting from "./zone-setting";
+import ZoneInOut from "./zone-in-out";
 
 export default function ZoneHeader({
   zoneId,
@@ -42,8 +41,12 @@ export default function ZoneHeader({
         </span>
         <div className="flex gap-2">
           <ZoneSetting {...props} />
-          <ZoneIn {...props} hasPwd={hasPwd} onJoinSuccess={onJoinSuccess} />
-          <ZoneOut {...props} />
+          <ZoneInOut
+            {...props}
+            hasPwd={hasPwd}
+            onJoinSuccess={(b) => onJoinSuccess(b)}
+          />
+          {/* <ZoneOut {...props} /> */}
         </div>
       </div>
     </div>

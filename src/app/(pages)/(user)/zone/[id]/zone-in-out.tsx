@@ -11,14 +11,14 @@ import {
 } from "@/utils/client/decode-token.client.util";
 import { ZoneInOutButtonProps } from "@/types/zone.type";
 import SubTitle from "@/app/components/shared/sub-title";
-import { connectSocket, subscribeSocket } from "@/lib/client/socket.client.api";
+import { disconnectSocket } from "@/lib/client/socket.client.api";
 
 type ZoneInProps = ZoneInOutButtonProps & {
   hasPwd: boolean;
-  onJoinSuccess: () => void;
+  onJoinSuccess: (b: boolean) => void;
 };
 
-export default function ZoneIn({
+export default function ZoneInOut({
   zoneId,
   hostId,
   joined,
@@ -55,16 +55,7 @@ export default function ZoneIn({
     try {
       await ZoneEntryPost(zoneId, hasPwd ? password : "");
       setShowModal(false);
-      onJoinSuccess();
-
-      connectSocket({
-        mogakZoneId: zoneId,
-        onConnect: () => {
-          subscribeSocket(`/topic/api/mogak/zone/${zoneId}`, (res) => {
-            console.log("받은 메시지:", res);
-          });
-        },
-      });
+      onJoinSuccess(true);
     } catch (err) {
       console.log("모각존 입장 실패 : " + err);
       setPassword("");
@@ -72,45 +63,56 @@ export default function ZoneIn({
     }
   };
 
-  if (joined || !user || user.memberId === hostId) {
+  if (!user) {
     return null;
+  }
+
+  if (joined && String(user.memberId) !== String(hostId)) {
+    return (
+      <Button
+        onClick={() => {
+          disconnectSocket();
+          onJoinSuccess(false);
+        }}
+      >
+        탈퇴하기
+      </Button>
+    );
   }
 
   return (
     <>
-      <Button
-        onClick={() => {
-          if (hasPwd) {
-            setPassword("");
-            setErrorMsg("");
-            setShowModal(true);
-          } else {
-            handleJoin();
-          }
-        }}
-      >
-        참가하기
-      </Button>
+      {!joined && (
+        <Button
+          onClick={() => {
+            if (hasPwd) {
+              setPassword("");
+              setErrorMsg("");
+              setShowModal(true);
+            } else {
+              handleJoin();
+            }
+          }}
+        >
+          참가하기
+        </Button>
+      )}
 
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
           <div className="bg-white dark:bg-background-dark p-6 rounded shadow-lg flex flex-col gap-4 w-80">
-            {hasPwd && (
-              <div>
-                <SubTitle contents="비밀번호 입력" />
-                <Input
-                  ref={focusPwd}
-                  type="password"
-                  placeholder="비밀번호"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                {errorMsg && (
-                  <p className="text-error dark:text-error-dark text-sm mt-2 flex justify-center">
-                    {errorMsg}
-                  </p>
-                )}
-              </div>
+            <SubTitle contents="비밀번호 입력" />
+            <Input
+              ref={focusPwd}
+              type="password"
+              placeholder="비밀번호"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {errorMsg && (
+              <p className="text-error dark:text-error-dark text-sm mt-2 flex justify-center">
+                {errorMsg}
+              </p>
             )}
             <div className="flex justify-end gap-2">
               <Button variant="etc" onClick={() => setShowModal(false)}>
