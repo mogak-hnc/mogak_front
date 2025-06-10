@@ -71,6 +71,7 @@ export function subscribeDetail<T>(id: string, onMessage: (msg: T) => void) {
   );
 }
 
+// TODO : 상태 바로 반영 (topic 구독 이후)
 export function sendStatus(zoneId: string, memberId: string, message: string) {
   if (!stompClient || !stompClient.connected) {
     console.warn("소켓 연결 안 됨");
