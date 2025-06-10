@@ -4,18 +4,20 @@ import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 
 let stompClient: Client | null = null;
 
-type ConnectSocketParams = {
-  mogakZoneId: string;
-  onConnect?: () => void;
-  onError?: (err: any) => void;
-};
-
-export function connectSocket({
+export function connectAndSubscribeSocket<T>({
   mogakZoneId,
-  onConnect,
-  onError,
-}: ConnectSocketParams) {
-  if (stompClient && stompClient.connected) return;
+  topic,
+  onMessage,
+}: {
+  mogakZoneId: string;
+  topic: string;
+  onMessage: (msg: T) => void;
+}) {
+  if (stompClient && stompClient.connected) {
+    console.log("이미 연결됨. 구독 바로 진행");
+    subscribeSocket(topic, onMessage);
+    return;
+  }
 
   const token = getJwtFromCookie();
   if (!token) {
@@ -29,19 +31,13 @@ export function connectSocket({
       Authorization: token,
       mogakZoneId,
     },
-    debug: (str) => {
-      if (process.env.NODE_ENV === "development") {
-        console.log("[STOMP]", str);
-      }
-    },
     reconnectDelay: 5000,
     onConnect: () => {
       console.log("웹소켓 연결 성공");
-      onConnect?.();
+      subscribeSocket(topic, onMessage);
     },
     onStompError: (frame) => {
-      console.error("STOMP 연결 에러", frame);
-      onError?.(frame);
+      console.error("STOMP 에러", frame);
     },
   });
 
@@ -54,9 +50,12 @@ export function subscribeSocket<T>(topic: string, onMessage: (msg: T) => void) {
     return;
   }
 
+  console.log("토픽 구독 시작:", topic);
+
   stompClient.subscribe(topic, (message: IMessage) => {
     try {
       const payload = JSON.parse(message.body);
+      console.log("수신된 메시지:", payload);
       onMessage(payload);
     } catch (err) {
       console.error("메시지 파싱 오류:", err);

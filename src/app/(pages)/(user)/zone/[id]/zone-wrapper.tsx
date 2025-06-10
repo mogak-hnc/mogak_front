@@ -7,9 +7,8 @@ import { getProfileImage } from "@/utils/shared/profile.util";
 import ChatUI from "@/app/components/shared/chat-ui";
 import { useEffect, useState } from "react";
 import {
-  connectSocket,
+  connectAndSubscribeSocket,
   disconnectSocket,
-  subscribeSocket,
 } from "@/lib/client/socket.client.api";
 
 export default function ZoneWrapper({
@@ -27,29 +26,24 @@ export default function ZoneWrapper({
       console.log("not-joined");
       return;
     }
-    connectSocket({
-      mogakZoneId: id,
-      onConnect: () => {
-        subscribeSocket(
-          `/topic/api/mogak/zone/${id}`,
-          (res: { body: string }) => {
-            const parsedRes = JSON.parse(res.body);
-            console.log("받은 메시지:", parsedRes);
 
-            setLoadData((prev) => {
-              if (!prev) {
-                return prev;
-              }
-              return {
-                ...prev,
-                zoneMemberInfoList: parsedRes.zoneMemberInfoList,
-                joinedUserCount: parsedRes.joinedUserCount,
-              };
-            });
-          }
-        );
+    connectAndSubscribeSocket<ZoneDetailResponse>({
+      mogakZoneId: id,
+      topic: `/topic/api/mogak/zone/${id}`,
+      onMessage: (parsedRes) => {
+        console.log("받은 메시지:", parsedRes);
+
+        setLoadData((prev) => {
+          if (!prev) return prev;
+          return {
+            ...prev,
+            zoneMemberInfoList: parsedRes.zoneMemberInfoList,
+            joinedUserCount: parsedRes.joinedUserCount,
+          };
+        });
       },
     });
+
     return () => {
       disconnectSocket();
     };
