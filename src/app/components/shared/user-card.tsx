@@ -1,3 +1,5 @@
+"use client";
+
 import { StatusType, ZoneMemberCardProps } from "@/types/zone.type";
 import { statusMap } from "@/utils/shared/status.util";
 import Link from "next/link";

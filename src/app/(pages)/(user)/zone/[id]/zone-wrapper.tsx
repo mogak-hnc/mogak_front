@@ -34,7 +34,7 @@ export default function ZoneWrapper({
         setLoadData((prev) => {
           const base = prev ?? data;
           return {
-            ...base,
+            ...base!,
             zoneMemberInfoList: parsedRes.zoneMemberInfoList,
             joinedUserCount: parsedRes.joinedUserCount,
           };

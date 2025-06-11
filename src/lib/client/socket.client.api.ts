@@ -43,6 +43,16 @@ export function connectAndSubscribeSocket<T>({
     onConnect: () => {
       console.log("웹소켓 연결 성공");
       subscribe(`/app/api/mogak/zone/${mogakZoneId}`, mogakZoneId, onMessage);
+      subscribe(
+        `/app/api/mogak/zone/${mogakZoneId}/message`,
+        mogakZoneId,
+        onMessage
+      );
+      subscribe(
+        `/app/api/mogak/zone/${mogakZoneId}/status`,
+        mogakZoneId,
+        onMessage
+      );
     },
     onStompError: (frame) => {
       console.error("STOMP 에러", frame);
