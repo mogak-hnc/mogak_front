@@ -11,7 +11,7 @@ import {
 } from "@/utils/client/decode-token.client.util";
 import { ZoneInOutButtonProps } from "@/types/zone.type";
 import SubTitle from "@/app/components/shared/sub-title";
-import { disconnectSocket } from "@/lib/client/socket.client.api";
+import { disconnectSocket, sendDetail } from "@/lib/client/socket.client.api";
 
 type ZoneInProps = ZoneInOutButtonProps & {
   hasPwd: boolean;
@@ -48,7 +48,7 @@ export default function ZoneInOut({
     }
 
     const jwt = getJwtFromCookie();
-    if (!jwt) {
+    if (!jwt || !user) {
       return;
     }
 
@@ -56,6 +56,7 @@ export default function ZoneInOut({
       await ZoneEntryPost(zoneId, hasPwd ? password : "");
       setShowModal(false);
       onJoinSuccess(true);
+      sendDetail(zoneId);
     } catch (err) {
       console.log("모각존 입장 실패 : " + err);
       setPassword("");

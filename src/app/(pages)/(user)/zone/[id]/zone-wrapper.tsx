@@ -32,11 +32,8 @@ export default function ZoneWrapper({
         console.log("받은 메시지:", parsedRes);
 
         setLoadData((prev) => {
-          if (!prev) {
-            return prev;
-          }
           return {
-            ...prev,
+            ...prev!,
             zoneMemberInfoList: parsedRes.zoneMemberInfoList,
             joinedUserCount: parsedRes.joinedUserCount,
           };

@@ -71,25 +71,32 @@ export function subscribeDetail<T>(id: string, onMessage: (msg: T) => void) {
   );
 }
 
-export function sendDetail(zoneId: string, memberId: string, message: string) {
-  if (!stompClient || !stompClient.connected) {
-    console.warn("소켓 연결 안 됨");
-    return;
-  }
+export async function sendDetail(zoneId: string) {
+  console.log("sendDetail");
 
   const jwt = getJwtFromCookie();
   if (!jwt) {
+    console.warn("jwt 없음");
     return;
   }
 
-  stompClient.publish({
-    destination: `/app/api/mogak/zone/${zoneId}`,
-    headers: {
-      Authorization: jwt,
-      mogakZoneId: String(zoneId),
-    },
-    body: JSON.stringify({ memberId, message }),
-  });
+  console.log("send Detail publish");
+
+  try {
+    await waitUntilConnected();
+
+    stompClient!.publish({
+      destination: `/app/api/mogak/zone/${zoneId}`,
+      headers: {
+        Authorization: jwt,
+        mogakZoneId: String(zoneId),
+      },
+    });
+
+    console.log("detail 전송 성공");
+  } catch (err) {
+    console.error("detail 전송 실패", err);
+  }
 }
 
 export function sendChat(zoneId: string, memberId: string, message: string) {
@@ -139,4 +146,22 @@ export function disconnectSocket() {
     stompClient.deactivate();
     console.log("웹소켓 연결 종료");
   }
+}
+
+function waitUntilConnected(timeout = 3000): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const start = Date.now();
+
+    const check = () => {
+      if (stompClient && stompClient.connected) {
+        resolve();
+      } else if (Date.now() - start > timeout) {
+        reject(new Error("소켓 연결 타임아웃"));
+      } else {
+        setTimeout(check, 100);
+      }
+    };
+
+    check();
+  });
 }
