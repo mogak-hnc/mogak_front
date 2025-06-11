@@ -76,7 +76,6 @@ export async function sendDetail(zoneId: string) {
 
   const jwt = getJwtFromCookie();
   if (!jwt) {
-    console.warn("jwt 없음");
     return;
   }
 
@@ -99,46 +98,64 @@ export async function sendDetail(zoneId: string) {
   }
 }
 
-export function sendChat(zoneId: string, memberId: string, message: string) {
-  if (!stompClient || !stompClient.connected) {
-    console.warn("소켓 연결 안 됨");
-    return;
-  }
+export async function sendChat(
+  zoneId: string,
+  memberId: string,
+  message: string
+) {
+  console.log("sendChat");
 
   const jwt = getJwtFromCookie();
   if (!jwt) {
     return;
   }
 
-  stompClient.publish({
-    destination: `/app/api/mogak/zone/${zoneId}`,
-    headers: {
-      Authorization: jwt,
-      mogakZoneId: String(zoneId),
-    },
-    body: JSON.stringify({ memberId, message }),
-  });
+  try {
+    await waitUntilConnected();
+
+    stompClient!.publish({
+      destination: `/app/api/mogak/zone/${zoneId}`,
+      headers: {
+        Authorization: jwt,
+        mogakZoneId: String(zoneId),
+      },
+      body: JSON.stringify({ memberId, message }),
+    });
+
+    console.log("chat 전송 성공");
+  } catch (err) {
+    console.error("chat 전송 실패", err);
+  }
 }
 
-export function sendStatus(zoneId: string, status: string, memberId: string) {
-  if (!stompClient || !stompClient.connected) {
-    console.warn("소켓 연결 안 됨");
-    return;
-  }
+export async function sendStatus(
+  zoneId: string,
+  status: string,
+  memberId: string
+) {
+  console.log("sendStatus");
 
   const jwt = getJwtFromCookie();
   if (!jwt) {
     return;
   }
 
-  stompClient.publish({
-    destination: `/app/api/mogak/zone/${zoneId}/status`,
-    headers: {
-      Authorization: jwt,
-      mogakZoneId: String(zoneId),
-    },
-    body: JSON.stringify({ status, memberId }),
-  });
+  console.log("sendStatus try");
+
+  try {
+    await waitUntilConnected();
+
+    stompClient!.publish({
+      destination: `/app/api/mogak/zone/${zoneId}/status`,
+      headers: {
+        Authorization: jwt,
+        mogakZoneId: String(zoneId),
+      },
+      body: JSON.stringify({ status, memberId }),
+    });
+  } catch (err) {
+    console.error("status 전송 실패", err);
+  }
 }
 
 export function disconnectSocket() {
