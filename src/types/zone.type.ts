@@ -104,6 +104,12 @@ export interface ZoneSearchProps {
   size: number;
 }
 
+export interface ZoneStatusResponse {
+  status: StatusType;
+  memberId: string;
+  mogakZoneId: string;
+}
+
 export interface ZoneDetailResponse {
   tagNames: string[];
   hostMemberId: string;

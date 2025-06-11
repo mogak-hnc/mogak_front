@@ -1,10 +1,17 @@
 "use client";
 
-import { sendStatus } from "@/lib/client/socket.client.api";
-import { ZoneUserCardStatusProps } from "@/types/zone.type";
+import {
+  connectAndSubscribeSocket,
+  sendStatus,
+} from "@/lib/client/socket.client.api";
+import {
+  ZoneDetailResponse,
+  ZoneStatusResponse,
+  ZoneUserCardStatusProps,
+} from "@/types/zone.type";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 import { decodeToken } from "@/utils/client/decode-token.client.util";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function UserCardStatus({
   zoneId,
@@ -15,16 +22,29 @@ export default function UserCardStatus({
 }: ZoneUserCardStatusProps) {
   const [study, setStudy] = useState<boolean>(status === "공부 중");
   const jwt = getJwtFromCookie();
-  if (!jwt) {
-    return;
-  }
+  const user = jwt ? decodeToken(jwt) : null;
 
-  const user = decodeToken(jwt);
+  useEffect(() => {
+    connectAndSubscribeSocket<ZoneStatusResponse>({
+      mogakZoneId: zoneId,
+      onMessage: (parsedRes) => {
+        if (String(parsedRes.memberId) !== String(memberId)) {
+          return;
+        }
+
+        console.log("수신된 상태 메시지:", parsedRes);
+
+        setStudy(String(parsedRes.status) === "STUDYING");
+      },
+    });
+  }, [zoneId]);
 
   const statusHandler = async () => {
-    await sendStatus(zoneId, memberId, study ? "RESTING" : "STUDYING");
+    console.log("statusHandler");
+    await sendStatus(zoneId, study ? "RESTING" : "STUDYING", memberId);
     setStudy(!study);
   };
+
   return (
     <>
       <div

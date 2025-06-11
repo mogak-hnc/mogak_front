@@ -32,8 +32,9 @@ export default function ZoneWrapper({
         console.log("받은 메시지:", parsedRes);
 
         setLoadData((prev) => {
+          const base = prev ?? data;
           return {
-            ...prev!,
+            ...base,
             zoneMemberInfoList: parsedRes.zoneMemberInfoList,
             joinedUserCount: parsedRes.joinedUserCount,
           };
@@ -61,7 +62,7 @@ export default function ZoneWrapper({
           hasPwd={data.passwordRequired}
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {(loadData ?? data).zoneMemberInfoList.map((user) => (
+          {(loadData ?? data)?.zoneMemberInfoList?.map((user) => (
             <UserCard
               key={user.memberId}
               zoneId={id}

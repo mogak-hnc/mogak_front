@@ -145,13 +145,18 @@ export async function sendStatus(
   try {
     await waitUntilConnected();
 
+    console.log("destination : ", `/app/api/mogak/zone/${zoneId}/status`);
+    console.log("status : ", status);
+    console.log("memberId : ", memberId);
+    console.log(JSON.stringify({ memberId, status }));
+
     stompClient!.publish({
       destination: `/app/api/mogak/zone/${zoneId}/status`,
       headers: {
         Authorization: jwt,
         mogakZoneId: String(zoneId),
       },
-      body: JSON.stringify({ status, memberId }),
+      body: JSON.stringify({ memberId, status }),
     });
   } catch (err) {
     console.error("status 전송 실패", err);
