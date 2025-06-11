@@ -71,8 +71,49 @@ export function subscribeDetail<T>(id: string, onMessage: (msg: T) => void) {
   );
 }
 
-// TODO : 상태 바로 반영 (topic 구독 이후)
-export function sendStatus(zoneId: string, memberId: string, message: string) {
+export function sendDetail(zoneId: string, memberId: string, message: string) {
+  if (!stompClient || !stompClient.connected) {
+    console.warn("소켓 연결 안 됨");
+    return;
+  }
+
+  const jwt = getJwtFromCookie();
+  if (!jwt) {
+    return;
+  }
+
+  stompClient.publish({
+    destination: `/app/api/mogak/zone/${zoneId}`,
+    headers: {
+      Authorization: jwt,
+      mogakZoneId: String(zoneId),
+    },
+    body: JSON.stringify({ memberId, message }),
+  });
+}
+
+export function sendChat(zoneId: string, memberId: string, message: string) {
+  if (!stompClient || !stompClient.connected) {
+    console.warn("소켓 연결 안 됨");
+    return;
+  }
+
+  const jwt = getJwtFromCookie();
+  if (!jwt) {
+    return;
+  }
+
+  stompClient.publish({
+    destination: `/app/api/mogak/zone/${zoneId}`,
+    headers: {
+      Authorization: jwt,
+      mogakZoneId: String(zoneId),
+    },
+    body: JSON.stringify({ memberId, message }),
+  });
+}
+
+export function sendStatus(zoneId: string, status: string, memberId: string) {
   if (!stompClient || !stompClient.connected) {
     console.warn("소켓 연결 안 됨");
     return;
@@ -89,7 +130,7 @@ export function sendStatus(zoneId: string, memberId: string, message: string) {
       Authorization: jwt,
       mogakZoneId: String(zoneId),
     },
-    body: JSON.stringify({ memberId, message }),
+    body: JSON.stringify({ status, memberId }),
   });
 }
 
