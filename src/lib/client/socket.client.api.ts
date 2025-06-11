@@ -13,7 +13,17 @@ export function connectAndSubscribeSocket<T>({
 }) {
   if (stompClient && stompClient.connected) {
     console.log("이미 연결됨. 구독 바로 진행");
-    subscribeDetail(mogakZoneId, onMessage);
+    subscribe(`/app/api/mogak/zone/${mogakZoneId}`, mogakZoneId, onMessage);
+    subscribe(
+      `/app/api/mogak/zone/${mogakZoneId}/message`,
+      mogakZoneId,
+      onMessage
+    );
+    subscribe(
+      `/app/api/mogak/zone/${mogakZoneId}/status`,
+      mogakZoneId,
+      onMessage
+    );
     return;
   }
 
@@ -32,7 +42,7 @@ export function connectAndSubscribeSocket<T>({
     reconnectDelay: 5000,
     onConnect: () => {
       console.log("웹소켓 연결 성공");
-      subscribeDetail(mogakZoneId, onMessage);
+      subscribe(`/app/api/mogak/zone/${mogakZoneId}`, mogakZoneId, onMessage);
     },
     onStompError: (frame) => {
       console.error("STOMP 에러", frame);
@@ -42,7 +52,11 @@ export function connectAndSubscribeSocket<T>({
   stompClient.activate();
 }
 
-export function subscribeDetail<T>(id: string, onMessage: (msg: T) => void) {
+export function subscribe<T>(
+  topic: string,
+  id: string,
+  onMessage: (msg: T) => void
+) {
   if (!stompClient || !stompClient.connected) {
     console.warn("소켓 연결 안 됨");
     connectAndSubscribeSocket({ mogakZoneId: id, onMessage });
@@ -53,7 +67,7 @@ export function subscribeDetail<T>(id: string, onMessage: (msg: T) => void) {
   if (!jwt) {
     return;
   }
-  const topic = `/topic/api/mogak/zone/${id}`;
+
   console.log("토픽 구독 시작:", topic);
 
   stompClient.subscribe(
@@ -144,11 +158,6 @@ export async function sendStatus(
 
   try {
     await waitUntilConnected();
-
-    console.log("destination : ", `/app/api/mogak/zone/${zoneId}/status`);
-    console.log("status : ", status);
-    console.log("memberId : ", memberId);
-    console.log(JSON.stringify({ memberId, status }));
 
     stompClient!.publish({
       destination: `/app/api/mogak/zone/${zoneId}/status`,
