@@ -41,6 +41,7 @@ export interface ZoneUserCardStatusProps {
   zoneId: string;
   memberId: string;
   status: string;
+  study: boolean;
   statusColor: string;
   translatedStatus: string;
 }
@@ -102,6 +103,15 @@ export interface ZoneSearchProps {
   sort: string;
   page: number;
   size: number;
+}
+
+export interface ZoneChatResponse {
+  memberId: string;
+  mogakZoneId: string;
+  nickname: string;
+  imageUrl: string;
+  message: string;
+  now: string;
 }
 
 export interface ZoneStatusResponse {

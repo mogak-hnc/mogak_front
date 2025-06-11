@@ -9,9 +9,13 @@ import {
   decodeToken,
   JwtPayload,
 } from "@/utils/client/decode-token.client.util";
-import { ZoneInOutButtonProps } from "@/types/zone.type";
+import { ZoneInOutButtonProps, ZoneStatusResponse } from "@/types/zone.type";
 import SubTitle from "@/app/components/shared/sub-title";
-import { disconnectSocket, sendDetail } from "@/lib/client/socket.client.api";
+import {
+  connectAndSubscribeSocket,
+  disconnectSocket,
+  sendDetail,
+} from "@/lib/client/socket.client.api";
 
 type ZoneInProps = ZoneInOutButtonProps & {
   hasPwd: boolean;

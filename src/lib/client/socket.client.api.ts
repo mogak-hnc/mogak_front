@@ -5,25 +5,17 @@ import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 let stompClient: Client | null = null;
 
 export function connectAndSubscribeSocket<T>({
+  topic,
   mogakZoneId,
   onMessage,
 }: {
+  topic: string;
   mogakZoneId: string;
   onMessage: (msg: T) => void;
 }) {
   if (stompClient && stompClient.connected) {
     console.log("이미 연결됨. 구독 바로 진행");
-    subscribe(`/app/api/mogak/zone/${mogakZoneId}`, mogakZoneId, onMessage);
-    subscribe(
-      `/app/api/mogak/zone/${mogakZoneId}/message`,
-      mogakZoneId,
-      onMessage
-    );
-    subscribe(
-      `/app/api/mogak/zone/${mogakZoneId}/status`,
-      mogakZoneId,
-      onMessage
-    );
+    subscribe(topic, mogakZoneId, onMessage);
     return;
   }
 
@@ -42,17 +34,7 @@ export function connectAndSubscribeSocket<T>({
     reconnectDelay: 5000,
     onConnect: () => {
       console.log("웹소켓 연결 성공");
-      subscribe(`/app/api/mogak/zone/${mogakZoneId}`, mogakZoneId, onMessage);
-      subscribe(
-        `/app/api/mogak/zone/${mogakZoneId}/message`,
-        mogakZoneId,
-        onMessage
-      );
-      subscribe(
-        `/app/api/mogak/zone/${mogakZoneId}/status`,
-        mogakZoneId,
-        onMessage
-      );
+      subscribe(topic, mogakZoneId, onMessage);
     },
     onStompError: (frame) => {
       console.error("STOMP 에러", frame);
@@ -69,7 +51,7 @@ export function subscribe<T>(
 ) {
   if (!stompClient || !stompClient.connected) {
     console.warn("소켓 연결 안 됨");
-    connectAndSubscribeSocket({ mogakZoneId: id, onMessage });
+    connectAndSubscribeSocket({ topic, mogakZoneId: id, onMessage });
     return;
   }
 
