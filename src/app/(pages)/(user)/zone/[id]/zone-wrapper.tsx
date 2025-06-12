@@ -98,9 +98,8 @@ export default function ZoneWrapper({
         </div>
       </div>
 
-      <div className="w-[35%]">
-        <ChatUI />
-        {/* <ChatUI messages={data.chatHistoryResponses} /> */}
+      <div className="w-[35%] min-w-[300px]">
+        <ChatUI messages={data.chatHistoryResponses} />
       </div>
     </div>
   );

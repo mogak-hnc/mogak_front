@@ -1,16 +1,7 @@
 import { TagsProps } from "./shared.type";
 
-export interface ZoneChatProps {
-  id: number;
-  user: string;
-  time: string;
-  message: string;
-  isMe: boolean;
-  avatar: string;
-}
-
 export interface ZoneChatUiProps {
-  messages: ZoneChatProps[];
+  messages: ChatHistoryResponse[];
 }
 
 export interface ZoneMainResponse {
