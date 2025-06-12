@@ -13,9 +13,10 @@ import ChatUiButton from "./chat-ui-button";
 type ChatUiProps = {
   messages: ChatHistoryResponse[];
   zoneId: string;
+  joined: boolean;
 };
 
-export default function ChatUI({ messages, zoneId }: ChatUiProps) {
+export default function ChatUI({ messages, zoneId, joined }: ChatUiProps) {
   const user = getClientUser();
 
   const [mounted, setMounted] = useState<boolean>(false);
@@ -84,7 +85,7 @@ export default function ChatUI({ messages, zoneId }: ChatUiProps) {
           )
         )}
       </div>
-      <ChatUiButton zoneId={zoneId} />
+      <ChatUiButton zoneId={zoneId} joined={joined} />
     </div>
   );
 }

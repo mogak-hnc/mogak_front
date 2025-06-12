@@ -4,7 +4,13 @@ import { sendChat } from "@/lib/client/socket.client.api";
 import { getClientUser } from "@/utils/client/user.client.util";
 import { FormEvent, useState } from "react";
 
-export default function ChatUiButton({ zoneId }: { zoneId: string }) {
+export default function ChatUiButton({
+  zoneId,
+  joined,
+}: {
+  zoneId: string;
+  joined: boolean;
+}) {
   const user = getClientUser();
 
   const [msg, setMsg] = useState<string>("");
@@ -22,6 +28,10 @@ export default function ChatUiButton({ zoneId }: { zoneId: string }) {
       console.log("채팅 전송 실패 : ", err);
     }
   };
+
+  if (!joined) {
+    return null;
+  }
 
   return (
     <div className="flex items-center gap-2 mt-4">

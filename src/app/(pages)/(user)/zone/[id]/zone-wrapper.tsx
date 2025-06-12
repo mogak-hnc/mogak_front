@@ -82,7 +82,11 @@ export default function ZoneWrapper({
       </div>
 
       <div className="w-[35%] min-w-[300px]">
-        <ChatUI zoneId={id} messages={data.chatHistoryResponses} />
+        <ChatUI
+          zoneId={id}
+          joined={joined}
+          messages={data.chatHistoryResponses}
+        />
       </div>
     </div>
   );
