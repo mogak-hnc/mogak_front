@@ -53,8 +53,8 @@ export default function ZoneWrapper({
   }, [joined, id]);
 
   return (
-    <div className="flex gap-4">
-      <div className="w-[65%] flex flex-col gap-4">
+    <div className="flex flex-col lg:flex-row gap-4">
+      <div className="w-full lg:w-[65%] flex flex-col gap-4">
         <ZoneHeader
           zoneId={id}
           name={data.name}
@@ -81,7 +81,7 @@ export default function ZoneWrapper({
         </div>
       </div>
 
-      <div className="w-[35%] min-w-[300px]">
+      <div className="w-full lg:w-[35%] min-w-[300px]">
         <ChatUI
           zoneId={id}
           joined={joined}
