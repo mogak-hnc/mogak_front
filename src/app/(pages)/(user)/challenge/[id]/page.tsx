@@ -6,8 +6,9 @@ import { ChallengeDetail } from "@/lib/server/challenge.server.api";
 import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
 import { convertDate } from "@/utils/shared/date.util";
 import ChallengeSummary from "./challenge-summary";
+import { ParamsPageProps } from "@/types/shared.type";
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({ params }: ParamsPageProps) {
   const { id } = await params;
   const jwt = await getJwtFromServerCookie();
   const data = await ChallengeDetail(id, jwt);
