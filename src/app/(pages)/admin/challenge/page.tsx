@@ -18,8 +18,9 @@ export default function AdminChallengePage() {
     try {
       const res = await ChallengeSearch({
         search: "",
-        official: "",
+        official: null,
         sort: "recent",
+        status: "",
         page: 0,
         size: 20,
       });

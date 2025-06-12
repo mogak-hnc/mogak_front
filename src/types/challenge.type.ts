@@ -51,7 +51,7 @@ export interface ChallengeSearchCardProps {
 
 export interface ChallengeSearchRequest {
   search: string;
-  official: boolean;
+  official: boolean | null;
   sort: string;
   page: number;
   size: number;
@@ -114,7 +114,7 @@ export interface ChallengePageProps {
   totalPages: number;
 }
 
-export type ChallengeStatusType = "BEFORE" | "ONGOING" | "COMPLETED";
+export type ChallengeStatusType = "BEFORE" | "ONGOING" | "COMPLETED" | "";
 
 export interface ChallengeDetailSummaryProps {
   challengeId: string;
