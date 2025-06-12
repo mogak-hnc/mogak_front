@@ -7,7 +7,7 @@ import {
 import { ChatHistoryResponse, ZoneChatResponse } from "@/types/zone.type";
 import { getClientUser } from "@/utils/client/user.client.util";
 import { getProfileImage } from "@/utils/shared/profile.util";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ChatUiButton from "./chat-ui-button";
 
 type ChatUiProps = {
@@ -19,8 +19,16 @@ type ChatUiProps = {
 export default function ChatUI({ messages, zoneId, joined }: ChatUiProps) {
   const user = getClientUser();
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
   const [mounted, setMounted] = useState<boolean>(false);
   const [loadMsg, setLoadMsg] = useState<ChatHistoryResponse[]>();
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  }, [loadMsg]);
 
   useEffect(() => {
     setMounted(true);
@@ -53,7 +61,7 @@ export default function ChatUI({ messages, zoneId, joined }: ChatUiProps) {
 
   return (
     <div className="w-full max-w-md h-[600px] mx-auto p-4 bg-white rounded-3xl shadow border border-borders flex flex-col">
-      <div className="flex-1 overflow-y-auto space-y-4">
+      <div ref={containerRef} className="flex-1 overflow-y-auto space-y-4">
         {chatMessages.map((msg, idx) =>
           String(msg.memberId) === String(user?.memberId) ? (
             <div key={idx} className="flex justify-end pr-2">
