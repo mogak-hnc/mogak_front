@@ -8,7 +8,11 @@ import MyProfile from "./my-profile";
 import { ProfileInfo } from "@/lib/server/profile.server.api";
 import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
   const jwt = await getJwtFromServerCookie();
   const data = await ProfileInfo(id, jwt);
