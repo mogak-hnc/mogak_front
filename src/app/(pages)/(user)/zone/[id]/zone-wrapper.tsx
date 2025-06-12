@@ -22,19 +22,19 @@ export default function ZoneWrapper({
   const [loadData, setLoadData] = useState<ZoneDetailResponse>();
 
   useEffect(() => {
-    console.log("zone-wrapper useEffect");
+    // console.log("zone-wrapper useEffect");
     if (!joined) {
-      console.log("not joied");
+      // console.log("not joied");
       return;
     }
 
-    console.log("start connectAndSubscribeSocket");
+    // console.log("start connectAndSubscribeSocket");
 
     connectAndSubscribeSocket<ZoneDetailResponse>({
       topic: `/topic/api/mogak/zone/${id}`,
       mogakZoneId: id,
       onMessage: (parsedRes) => {
-        console.log("받은 메시지:", parsedRes);
+        // console.log("받은 메시지:", parsedRes);
 
         setLoadData((prev) => {
           const base = prev ?? data;

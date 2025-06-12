@@ -37,7 +37,7 @@ export default function ChatUI({ messages, zoneId, joined }: ChatUiProps) {
       topic: `/topic/api/mogak/zone/${zoneId}/message`,
       mogakZoneId: String(zoneId),
       onMessage: (parsedRes) => {
-        console.log("받은 메시지:", parsedRes);
+        // console.log("받은 메시지:", parsedRes);
 
         setLoadMsg((prev) => [...(prev ?? messages), parsedRes]);
       },

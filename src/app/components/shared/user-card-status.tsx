@@ -16,7 +16,7 @@ export default function UserCardStatus({
   const user = jwt ? decodeToken(jwt) : null;
 
   const statusHandler = async () => {
-    console.log("statusHandler");
+    // console.log("statusHandler");
     await sendStatus(zoneId, study ? "RESTING" : "STUDYING", memberId);
   };
 

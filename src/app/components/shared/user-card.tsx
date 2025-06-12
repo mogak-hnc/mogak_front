@@ -43,7 +43,7 @@ export default function UserCard({
           return;
         }
 
-        console.log("수신된 상태 메시지:", parsedRes);
+        // console.log("수신된 상태 메시지:", parsedRes);
 
         setStudy(String(parsedRes.status) === "STUDYING");
         setStatusColor(statusColorMap[statusMap[parsedRes.status]]);

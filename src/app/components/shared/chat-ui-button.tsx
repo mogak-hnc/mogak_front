@@ -35,7 +35,6 @@ export default function ChatUiButton({
 
   return (
     <div className="flex items-center gap-2 mt-4">
-      <button className="text-xl text-primary dark:text-primary">＋</button>
       <input
         onInput={msgHandler}
         value={msg}
