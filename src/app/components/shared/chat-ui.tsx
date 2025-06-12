@@ -4,11 +4,7 @@ import {
   connectAndSubscribeSocket,
   disconnectSocket,
 } from "@/lib/client/socket.client.api";
-import {
-  ChatHistoryResponse,
-  ZoneChatResponse,
-  ZoneChatUiProps,
-} from "@/types/zone.type";
+import { ChatHistoryResponse, ZoneChatResponse } from "@/types/zone.type";
 import { getClientUser } from "@/utils/client/user.client.util";
 import { getProfileImage } from "@/utils/shared/profile.util";
 import { useEffect, useState } from "react";
@@ -84,7 +80,7 @@ export default function ChatUI({ messages, zoneId }: ChatUiProps) {
           )
         )}
       </div>
-      <ChatUiButton />
+      <ChatUiButton zoneId={zoneId} />
     </div>
   );
 }

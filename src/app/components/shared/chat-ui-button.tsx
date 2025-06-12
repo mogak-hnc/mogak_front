@@ -1,24 +1,35 @@
 "use client";
 
+import { sendChat } from "@/lib/client/socket.client.api";
+import { getClientUser } from "@/utils/client/user.client.util";
 import { FormEvent, useState } from "react";
 
-export default function ChatUiButton() {
+export default function ChatUiButton({ zoneId }: { zoneId: string }) {
+  const user = getClientUser();
+
   const [msg, setMsg] = useState<string>("");
 
-  const msgHadler = (e: FormEvent<HTMLInputElement>) => {
+  const msgHandler = (e: FormEvent<HTMLInputElement>) => {
     setMsg(e.currentTarget.value);
+  };
+
+  const sendChatHandler = async () => {
+    await sendChat(zoneId, user?.memberId || "", msg);
   };
 
   return (
     <div className="flex items-center gap-2 mt-4">
       <button className="text-xl text-primary dark:text-primary">＋</button>
       <input
-        onInput={msgHadler}
+        onInput={msgHandler}
         type="text"
         placeholder="메시지를 입력하세요."
         className="flex-1 px-4 py-2 rounded-lg bg-gray-100 text-sm focus:outline-none"
       />
-      <button className="text-white bg-primary dark:bg-primary-dark p-2 rounded-full">
+      <button
+        onClick={sendChatHandler}
+        className="text-white bg-primary dark:bg-primary-dark p-2 rounded-full"
+      >
         <svg
           className="w-4 h-4"
           fill="none"
