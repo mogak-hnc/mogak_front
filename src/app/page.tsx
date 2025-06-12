@@ -15,7 +15,7 @@ export default async function Home() {
   const data = await MainZoneChallenge();
 
   return (
-    <div className="w-full flex flex-col items-center px-4 gap-8">
+    <div className="w-full flex flex-col items-center px-4 lg:px-8 gap-8">
       <div className="w-full max-w-screen-xl flex flex-col gap-12">
         <ImageCard
           type="home"
@@ -31,7 +31,7 @@ export default async function Home() {
           bgImageDark={MainBgDark.src}
         />
         <div className="flex flex-col gap-4">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center whitespace-nowrap overflow-hidden">
             <MainSubTitle
               title="핫한 모각존"
               description="현재 가장 많은 유저들이 공부 중인 모각존을 살펴 보세요."
@@ -42,7 +42,8 @@ export default async function Home() {
               </span>
             </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {data.mogakZoneMainResponses.map((space) => (
               <ZoneMainCard
                 key={space.mogakZoneId}
@@ -58,7 +59,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center flex-wrap gap-2">
             <MainSubTitle
               title="지금은 챌린지 할 시간"
               description="현재 가장 많은 유저들이 참여 중인 챌린지를 살펴보세요."
@@ -69,7 +70,7 @@ export default async function Home() {
               </span>
             </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {data.mogakChallengeResponses.map((challenge) => (
               <ChallengeMainCard
                 key={challenge.challengeId}
