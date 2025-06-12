@@ -1,17 +1,62 @@
-import { ZoneChatUiProps } from "@/types/zone.type";
+"use client";
+
+import {
+  connectAndSubscribeSocket,
+  disconnectSocket,
+} from "@/lib/client/socket.client.api";
+import {
+  ChatHistoryResponse,
+  ZoneChatResponse,
+  ZoneChatUiProps,
+} from "@/types/zone.type";
 import { getClientUser } from "@/utils/client/user.client.util";
 import { getProfileImage } from "@/utils/shared/profile.util";
+import { useEffect, useState } from "react";
+import ChatUiButton from "./chat-ui-button";
 
-export default function ChatUI({ messages }: ZoneChatUiProps) {
+type ChatUiProps = {
+  messages: ChatHistoryResponse[];
+  zoneId: string;
+};
+
+export default function ChatUI({ messages, zoneId }: ChatUiProps) {
   const user = getClientUser();
 
+  const [loadMsg, setLoadMsg] = useState<ChatHistoryResponse[]>();
+
+  useEffect(() => {
+    console.log("zone-wrapper useEffect");
+
+    console.log("start connectAndSubscribeSocket");
+
+    connectAndSubscribeSocket<ZoneChatResponse>({
+      topic: `/topic/api/mogak/zone/${zoneId}/message`,
+      mogakZoneId: String(zoneId),
+      onMessage: (parsedRes) => {
+        console.log("받은 메시지:", parsedRes);
+
+        setLoadMsg((prev) => {
+          const base = prev ?? messages;
+          return {
+            ...base!,
+            ...parsedRes,
+          };
+        });
+      },
+    });
+
+    return () => {
+      disconnectSocket();
+    };
+  }, [zoneId]);
+
   return (
-    <div className="w-full max-w-md h-[600px] mx-auto p-4 bg-white rounded-3xl shadow border border-gray-200 flex flex-col">
+    <div className="w-full max-w-md h-[600px] mx-auto p-4 bg-white rounded-3xl shadow border border-borders flex flex-col">
       <div className="flex-1 overflow-y-auto space-y-4">
-        {messages.map((msg, idx) =>
+        {(loadMsg ?? messages).map((msg, idx) =>
           String(msg.memberId) === String(user?.memberId) ? (
             <div key={idx} className="flex justify-end pr-2">
-              <div className="bg-yellow-300 text-gray-800 px-4 py-2 rounded-2xl rounded-br-none max-w-xs text-sm">
+              <div className="bg-secondary dark:bg-secondary-dark text-text px-4 py-2 rounded-2xl rounded-br-none max-w-xs text-sm">
                 <p>{msg.message}</p>
                 <p className="text-[10px] text-right mt-1 text-yellow-900/80">
                   {msg.now}
@@ -39,29 +84,7 @@ export default function ChatUI({ messages }: ZoneChatUiProps) {
           )
         )}
       </div>
-      <div className="flex items-center gap-2 mt-4">
-        <button className="text-xl text-indigo-500">＋</button>
-        <input
-          type="text"
-          placeholder="Type a message ..."
-          className="flex-1 px-4 py-2 rounded-lg bg-gray-100 text-sm focus:outline-none"
-        />
-        <button className="text-white bg-indigo-500 p-2 rounded-full">
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M5 13l4 4L19 7"
-            />
-          </svg>
-        </button>
-      </div>
+      <ChatUiButton />
     </div>
   );
 }

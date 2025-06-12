@@ -47,23 +47,6 @@ export default function ZoneWrapper({
       },
     });
 
-    connectAndSubscribeSocket<ZoneDetailResponse>({
-      topic: `/topic/api/mogak/zone/${id}`,
-      mogakZoneId: id,
-      onMessage: (parsedRes) => {
-        console.log("받은 메시지:", parsedRes);
-
-        setLoadData((prev) => {
-          const base = prev ?? data;
-          return {
-            ...base!,
-            zoneMemberInfoList: parsedRes.zoneMemberInfoList,
-            joinedUserCount: parsedRes.joinedUserCount,
-          };
-        });
-      },
-    });
-
     return () => {
       disconnectSocket();
     };
@@ -99,7 +82,7 @@ export default function ZoneWrapper({
       </div>
 
       <div className="w-[35%] min-w-[300px]">
-        <ChatUI messages={data.chatHistoryResponses} />
+        <ChatUI zoneId={id} messages={data.chatHistoryResponses} />
       </div>
     </div>
   );
