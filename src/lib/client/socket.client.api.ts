@@ -120,7 +120,7 @@ export async function sendChat(
     await waitUntilConnected();
 
     stompClient!.publish({
-      destination: `/app/api/mogak/zone/${zoneId}`,
+      destination: `/app/api/mogak/zone/${zoneId}/message`,
       headers: {
         Authorization: jwt,
         mogakZoneId: String(zoneId),

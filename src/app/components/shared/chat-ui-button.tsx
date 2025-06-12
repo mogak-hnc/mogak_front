@@ -14,7 +14,13 @@ export default function ChatUiButton({ zoneId }: { zoneId: string }) {
   };
 
   const sendChatHandler = async () => {
-    await sendChat(zoneId, user?.memberId || "", msg);
+    console.log("sendChatHandler");
+    try {
+      await sendChat(zoneId, user?.memberId || "", msg);
+      setMsg("");
+    } catch (err) {
+      console.log("채팅 전송 실패 : ", err);
+    }
   };
 
   return (
@@ -22,6 +28,7 @@ export default function ChatUiButton({ zoneId }: { zoneId: string }) {
       <button className="text-xl text-primary dark:text-primary">＋</button>
       <input
         onInput={msgHandler}
+        value={msg}
         type="text"
         placeholder="메시지를 입력하세요."
         className="flex-1 px-4 py-2 rounded-lg bg-gray-100 text-sm focus:outline-none"
