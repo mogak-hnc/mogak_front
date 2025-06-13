@@ -17,26 +17,28 @@ export default function ZoneDetailLayout({
 }>) {
   const pathname = usePathname();
   return (
-    <div className="flex flex-grow w-full">
-      <aside className="w-1/5 min-w-[200px] border-r px-6 py-8 bg-gray-50 dark:bg-background-dark">
-        <nav className="flex flex-col gap-6">
-          {navItems.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className={`text-sm ${
-                pathname.startsWith(href)
-                  ? "font-bold text-primary"
-                  : "text-gray-600 dark:text-gray-400 hover:text-primary"
-              } transition-colors`}
-            >
-              {label}
-            </Link>
-          ))}
-        </nav>
-      </aside>
+    <div className="h-screen flex flex-col">
+      <div className="flex flex-1 overflow-hidden">
+        <aside className="w-1/5 min-w-[200px] border-r px-6 py-8 bg-gray-50 dark:bg-background-dark">
+          <nav className="flex flex-col gap-6">
+            {navItems.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className={`text-sm ${
+                  pathname.startsWith(href)
+                    ? "font-bold text-primary"
+                    : "text-gray-600 dark:text-gray-400 hover:text-primary"
+                } transition-colors`}
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
+        </aside>
 
-      <main className="flex-grow p-6">{children}</main>
+        <main className="flex-1 overflow-auto p-6">{children}</main>
+      </div>
     </div>
   );
 }
