@@ -6,9 +6,12 @@ import AdminTable from "@/app/components/admin/admin-table";
 import ConfirmModal from "@/app/components/confirm-modal";
 import { ChallengeSearch } from "@/lib/shared/challenge.api";
 import { ChallengeDelete } from "@/lib/client/challenge.client.api";
+import { ChallengeMainProps } from "@/types/challenge.type";
+import { challengeMap } from "@/utils/shared/status.util";
+import Loading from "@/app/loading";
 
 export default function AdminChallengePage() {
-  const [challenges, setChallenges] = useState<any[]>([]);
+  const [challenges, setChallenges] = useState<ChallengeMainProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [targetId, setTargetId] = useState<number | null>(null);
@@ -28,8 +31,9 @@ export default function AdminChallengePage() {
       setChallenges(res.data);
     } catch (e) {
       console.error("챌린지 목록 불러오기 실패", e);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -60,32 +64,35 @@ export default function AdminChallengePage() {
     {
       key: "id",
       label: "ID",
-      render: (_: any, row: any) => `${row.challengeId}`,
+      render: (_: any, row: ChallengeMainProps) => `${row.challengeId}`,
     },
     {
       key: "title",
       label: "제목",
-      linkTo: (row: any) => `/challenge/${row.id}`,
+      linkTo: (row: ChallengeMainProps) => `/challenge/${row.challengeId}`,
     },
     {
       key: "participants",
       label: "참가자 수",
-      render: (row: any) => {
-        if (Array.isArray(row.participants)) {
-          return `${row.participants.length}`;
-        }
-        return "0";
+      render: (row: ChallengeMainProps) => {
+        return `${String(row.participants?.length) || "0"}`;
       },
     },
     {
       key: "period",
       label: "기간",
-      render: (_: any, row: any) => `${row.description}`,
+      render: (_: any, row: ChallengeMainProps) => `${row.description}`,
+    },
+    {
+      key: "status",
+      label: "상태",
+      render: (_: any, row: ChallengeMainProps) =>
+        `${challengeMap[row.status]}`,
     },
     {
       key: "actions",
       label: "관리",
-      render: (_: any, row: any) => (
+      render: (_: any, row: ChallengeMainProps) => (
         <button
           className="text-sm px-2 py-1 bg-error dark:bg-error-dark text-white rounded"
           onClick={() => openModal(row.challengeId, row.title)}
@@ -95,6 +102,10 @@ export default function AdminChallengePage() {
       ),
     },
   ];
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -109,12 +120,6 @@ export default function AdminChallengePage() {
           생성하기
         </Link>
       </div>
-
-      {loading ? (
-        <p className="text-sm text-center text-gray-400">불러오는 중...</p>
-      ) : (
-        <AdminTable columns={columns} data={challenges} />
-      )}
 
       {showModal && (
         <ConfirmModal

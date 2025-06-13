@@ -23,7 +23,7 @@ export default function AdminZonePage() {
         page: 0,
         size: 20,
       });
-      console.log(res);
+
       setZones(res.data);
     } catch (e) {
       console.error("에러:", e);

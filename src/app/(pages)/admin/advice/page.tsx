@@ -26,6 +26,8 @@ export default function AdminAdvicePage() {
         size: 20,
       });
 
+      console.log(res);
+
       const formatted = res.content.map((item) => ({
         ...item,
         deleteIn: convertTime(item.restTime),
@@ -61,14 +63,14 @@ export default function AdminAdvicePage() {
       label: "제목",
       linkTo: (row: any) => `/advice/detail/${row.worryId}`,
     },
-    { key: "commnetCount", label: "댓글 수" },
+    { key: "commentCount", label: "댓글 수" },
     { key: "deleteIn", label: "삭제 예정" },
     {
       key: "actions",
       label: "관리",
       render: (_: any, row: any) => (
         <button
-          className="text-sm px-2 py-1 bg-red-500 text-white rounded"
+          className="text-sm px-2 py-1 bg-error dark:bg-error-dark text-white rounded"
           onClick={() => openModal(row.worryId)}
         >
           삭제

@@ -41,7 +41,6 @@ export async function ChallengeSearch({
   size,
   status,
 }: ChallengeSearchRequest) {
-  console.log(search, official, sort, page, size);
   const query = new URLSearchParams();
 
   if (search) {
@@ -50,7 +49,9 @@ export async function ChallengeSearch({
   if (status) {
     query.set("status", status);
   }
-  query.set("official", String(official));
+  if (official) {
+    query.set("official", String(official));
+  }
   query.set("sort", sort);
   query.set("page", String(page));
   query.set("size", String(size));
