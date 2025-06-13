@@ -83,7 +83,9 @@ export default function AdminZonePage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <SubTitle contents="모각존 관리" />
+      <h1 className="text-lg font-bold text-primary dark:text-primary-dark">
+        모각존 관리
+      </h1>
       <AdminTable columns={columns} data={zones} />
 
       {showModal && (
