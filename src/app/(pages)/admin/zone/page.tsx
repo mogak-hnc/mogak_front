@@ -6,9 +6,11 @@ import ConfirmModal from "@/app/components/confirm-modal";
 import { ZoneSearch } from "@/lib/shared/zone.api";
 import { ZoneDelete } from "@/lib/client/zone.client.api";
 import SubTitle from "@/app/components/shared/sub-title";
+import Loading from "@/app/loading";
+import { ZoneMainProps } from "@/types/zone.type";
 
 export default function AdminZonePage() {
-  const [zones, setZones] = useState<any[]>([]);
+  const [zones, setZones] = useState<ZoneMainProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [targetId, setTargetId] = useState<number | null>(null);
@@ -21,6 +23,7 @@ export default function AdminZonePage() {
         page: 0,
         size: 20,
       });
+      console.log(res);
       setZones(res.data);
     } catch (e) {
       console.error("에러:", e);
@@ -48,19 +51,22 @@ export default function AdminZonePage() {
   };
 
   const columns = [
-    { key: "id", label: "ID" },
+    { key: "mogakZoneId", label: "ID" },
     {
-      key: "name",
+      key: "title",
       label: "이름",
-      linkTo: (row: any) => `/zone/${row.id}`,
+      linkTo: (row: ZoneMainProps) => `/zone/${row.mogakZoneId}`,
     },
     { key: "tag", label: "태그" },
-    { key: "members", label: "참여 인원" },
-    { key: "createdAt", label: "생성일" },
+    {
+      key: "hasPwd",
+      label: "공개 여부",
+      render: (value: boolean) => (value ? "🔒" : ""),
+    },
     {
       key: "actions",
       label: "관리",
-      render: (_: any, row: any) => (
+      render: (_: any, row: ZoneMainProps) => (
         <button
           className="text-sm px-2 py-1 bg-error dark:bg-error-dark text-white rounded"
           onClick={() => openModal(row.mogakZoneId, row.title)}
@@ -70,6 +76,10 @@ export default function AdminZonePage() {
       ),
     },
   ];
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="flex flex-col gap-4">
