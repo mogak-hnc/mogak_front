@@ -3,7 +3,6 @@ import Button from "@/app/components/ui/button";
 
 import MyBadge from "./my-badge";
 // import MyChallenge from "./my-challenge";
-// import MyZone from "./my-zone";
 import MyProfile from "./my-profile";
 import { ProfileInfo } from "@/lib/server/profile.server.api";
 import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
@@ -51,8 +50,7 @@ export default async function ProfilePage({
       {data.showBadge && (
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
           <MyBadge />
-          {/*  <MyChallenge challenges={data.challenges ?? []} />
-          <MyZone zones={data.zones ?? []} /> */}
+          {/*  <MyChallenge challenges={data.challenges ?? []} /> */}
         </div>
       )}
     </div>
