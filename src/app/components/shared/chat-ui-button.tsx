@@ -20,7 +20,7 @@ export default function ChatUiButton({
   };
 
   const sendChatHandler = async () => {
-    console.log("sendChatHandler");
+    // console.log("sendChatHandler");
     try {
       await sendChat(zoneId, user?.memberId || "", msg);
       setMsg("");
