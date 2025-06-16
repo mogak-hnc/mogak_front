@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  connectAndSubscribeSocket,
-  disconnectSocket,
-} from "@/lib/client/socket.client.api";
+import { connectAndSubscribeSocket } from "@/lib/client/socket.client.api";
 import { ChatHistoryResponse, ZoneChatResponse } from "@/types/zone.type";
 import { getClientUser } from "@/utils/client/user.client.util";
 import { getProfileImage } from "@/utils/shared/profile.util";
@@ -43,10 +40,8 @@ export default function ChatUI({ messages, zoneId, joined }: ChatUiProps) {
       },
     });
 
-    return () => {
-      disconnectSocket();
-    };
-  }, [zoneId]);
+    return () => {};
+  }, [zoneId, joined]);
 
   if (!mounted) {
     return null;

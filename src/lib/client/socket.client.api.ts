@@ -80,19 +80,13 @@ export function subscribe<T>(
 export async function sendDetail(zoneId: string) {
   console.log("sendDetail");
 
-  if (!stompClient || !stompClient.connected) {
-    console.warn("소켓 미연결 상태에서 메시지 전송 시도");
-    return;
-  }
-
   const jwt = getJwtFromCookie();
   if (!jwt) {
     return;
   }
 
-  console.log("send Detail publish");
-
   try {
+    await ensureConnected(zoneId);
     await waitUntilConnected();
 
     stompClient!.publish({
@@ -116,17 +110,13 @@ export async function sendChat(
 ) {
   console.log("sendChat");
 
-  if (!stompClient || !stompClient.connected) {
-    console.warn("소켓 미연결 상태에서 메시지 전송 시도");
-    return;
-  }
-
   const jwt = getJwtFromCookie();
   if (!jwt) {
     return;
   }
 
   try {
+    await ensureConnected(zoneId);
     await waitUntilConnected();
 
     stompClient!.publish({
@@ -149,10 +139,6 @@ export async function sendStatus(
   status: string,
   memberId: string
 ) {
-  if (!stompClient || !stompClient.connected) {
-    console.warn("소켓 미연결 상태에서 메시지 전송 시도");
-    return;
-  }
   console.log("sendStatus");
 
   const jwt = getJwtFromCookie();
@@ -160,9 +146,8 @@ export async function sendStatus(
     return;
   }
 
-  console.log("sendStatus try");
-
   try {
+    await ensureConnected(zoneId);
     await waitUntilConnected();
 
     stompClient!.publish({
@@ -201,5 +186,34 @@ function waitUntilConnected(timeout = 3000): Promise<void> {
     };
 
     check();
+  });
+}
+
+async function ensureConnected(mogakZoneId: string): Promise<void> {
+  const token = getJwtFromCookie();
+  if (!token) throw new Error("JWT 없음");
+
+  if (stompClient && stompClient.connected) return;
+
+  return new Promise((resolve, reject) => {
+    stompClient = new Client({
+      webSocketFactory: () =>
+        new SockJS(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/ws`),
+      connectHeaders: {
+        Authorization: token,
+        mogakZoneId,
+      },
+      reconnectDelay: 5000,
+      onConnect: () => {
+        console.log("ensureConnected: 연결 성공");
+        resolve();
+      },
+      onStompError: (frame) => {
+        console.error("ensureConnected: STOMP 에러", frame);
+        reject(new Error("웹소켓 연결 실패"));
+      },
+    });
+
+    stompClient.activate();
   });
 }

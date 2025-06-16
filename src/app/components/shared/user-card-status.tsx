@@ -4,6 +4,7 @@ import { sendStatus } from "@/lib/client/socket.client.api";
 import { ZoneUserCardStatusProps } from "@/types/zone.type";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 import { decodeToken } from "@/utils/client/decode-token.client.util";
+import { useEffect, useState } from "react";
 
 export default function UserCardStatus({
   zoneId,
@@ -14,6 +15,12 @@ export default function UserCardStatus({
 }: ZoneUserCardStatusProps) {
   const jwt = getJwtFromCookie();
   const user = jwt ? decodeToken(jwt) : null;
+
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const statusHandler = async () => {
     // console.log("statusHandler");
@@ -28,7 +35,7 @@ export default function UserCardStatus({
         <span>✪</span>
         <span>{translatedStatus}</span>
       </div>
-      {String(user?.memberId) === String(memberId) && (
+      {isClient && String(user?.memberId) === String(memberId) && (
         <button
           onClick={statusHandler}
           className="text-white text-xs py-1 my-3 rounded-lg bg-primary dark:bg-primary-dark"
