@@ -10,6 +10,7 @@ import {
   connectAndSubscribeSocket,
   disconnectSocket,
 } from "@/lib/client/socket.client.api";
+import ConfirmModal from "@/app/components/confirm-modal";
 
 export default function ZoneWrapper({
   id,
@@ -20,6 +21,8 @@ export default function ZoneWrapper({
 }) {
   const [joined, setJoined] = useState<boolean>(data.joined);
   const [loadData, setLoadData] = useState<ZoneDetailResponse>();
+  // const [connected, setConnected] = useState<boolean>(false); // 추가
+  // const [showReconnectModal, setShowReconnectModal] = useState<boolean>(false);
 
   useEffect(() => {
     // console.log("zone-wrapper useEffect");
@@ -30,11 +33,21 @@ export default function ZoneWrapper({
 
     // console.log("start connectAndSubscribeSocket");
 
-    console.log("id : " + id);
+    // let timeout = setTimeout(() => {
+    //   if (!connected) {
+    //     console.warn("웹소켓 연결 실패, 참가 해제");
+    //     setJoined(false);
+    //     setShowReconnectModal(true);
+    //   }
+    // }, 5000);
+
     connectAndSubscribeSocket<ZoneDetailResponse>({
       topic: `/topic/api/mogak/zone/${id}`,
       mogakZoneId: id,
       onMessage: (parsedRes) => {
+        // setConnected(true);
+        // clearTimeout(timeout);
+
         console.log("받은 메시지:", parsedRes);
 
         setLoadData((prev) => {
@@ -49,7 +62,9 @@ export default function ZoneWrapper({
     });
 
     return () => {
+      // clearTimeout(timeout);
       disconnectSocket();
+      // setConnected(false);
     };
   }, [joined, id]);
 
@@ -89,6 +104,16 @@ export default function ZoneWrapper({
           messages={data.chatHistoryResponses}
         />
       </div>
+      {/* {showReconnectModal && (
+        <ConfirmModal
+          message="연결이 끊어졌어요. 다시 참가해 주세요!"
+          onConfirm={() => {
+            setShowReconnectModal(false);
+            window.location.reload();
+          }}
+          onCancel={() => setShowReconnectModal(false)}
+        />
+      )} */}
     </div>
   );
 }

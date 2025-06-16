@@ -50,8 +50,8 @@ export function subscribe<T>(
   onMessage: (msg: T) => void
 ) {
   if (!stompClient || !stompClient.connected) {
-    console.warn("소켓 연결 안 됨");
-    connectAndSubscribeSocket({ topic, mogakZoneId: id, onMessage });
+    // console.warn("소켓 연결 안 됨");
+    // connectAndSubscribeSocket({ topic, mogakZoneId: id, onMessage });
     return;
   }
 
@@ -79,6 +79,11 @@ export function subscribe<T>(
 
 export async function sendDetail(zoneId: string) {
   console.log("sendDetail");
+
+  if (!stompClient || !stompClient.connected) {
+    console.warn("소켓 미연결 상태에서 메시지 전송 시도");
+    return;
+  }
 
   const jwt = getJwtFromCookie();
   if (!jwt) {
@@ -111,6 +116,11 @@ export async function sendChat(
 ) {
   console.log("sendChat");
 
+  if (!stompClient || !stompClient.connected) {
+    console.warn("소켓 미연결 상태에서 메시지 전송 시도");
+    return;
+  }
+
   const jwt = getJwtFromCookie();
   if (!jwt) {
     return;
@@ -139,6 +149,10 @@ export async function sendStatus(
   status: string,
   memberId: string
 ) {
+  if (!stompClient || !stompClient.connected) {
+    console.warn("소켓 미연결 상태에서 메시지 전송 시도");
+    return;
+  }
   console.log("sendStatus");
 
   const jwt = getJwtFromCookie();
@@ -179,7 +193,8 @@ function waitUntilConnected(timeout = 3000): Promise<void> {
       if (stompClient && stompClient.connected) {
         resolve();
       } else if (Date.now() - start > timeout) {
-        reject(new Error("소켓 연결 타임아웃"));
+        console.warn("소켓 연결 타임아웃");
+        reject();
       } else {
         setTimeout(check, 100);
       }

@@ -56,6 +56,7 @@ export default function ZoneInOut({
       await ZoneEntryPost(zoneId, hasPwd ? password : "");
       setShowModal(false);
       onJoinSuccess(true);
+
       sendDetail(zoneId);
     } catch (err) {
       console.log("모각존 입장 실패 : " + err);
