@@ -28,19 +28,22 @@ export async function ProfileInfo(id: string, jwt: string | null) {
   return data;
 }
 
-export async function ProfileBadge(jwt: string | null) {
+export async function ProfileBadge(id: string, jwt: string | null) {
   if (!jwt) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
   }
 
-  const res = await fetch(`${process.env.BACKEND_API_URL}/api/mogak/badge`, {
-    method: "GET",
-    cache: "no-store",
-    headers: {
-      Authorization: `${jwt}`,
-      "Content-Type": "application/json",
-    },
-  });
+  const res = await fetch(
+    `${process.env.BACKEND_API_URL}/api/mogak/profile/${id}/badge`,
+    {
+      method: "GET",
+      cache: "no-store",
+      headers: {
+        Authorization: `${jwt}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   if (!res.ok) {
     const err = await res.text();

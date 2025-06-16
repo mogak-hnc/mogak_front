@@ -1,9 +1,9 @@
 import { ProfileBadge } from "@/lib/server/profile.server.api";
 import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
 
-export default async function MyBadge() {
+export default async function MyBadge({ id }: { id: string }) {
   const jwt = await getJwtFromServerCookie();
-  const data = await ProfileBadge(jwt);
+  const data = await ProfileBadge(id, jwt);
 
   return (
     <div className="bg-white dark:bg-border-dark p-4 rounded-xl shadow-md">

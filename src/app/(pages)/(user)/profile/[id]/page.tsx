@@ -49,7 +49,7 @@ export default async function ProfilePage({
       <MyProfile {...data} memberId={data.memberId} />
       {data.showBadge && (
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
-          <MyBadge />
+          <MyBadge id={id} />
           {/*  <MyChallenge challenges={data.challenges ?? []} /> */}
         </div>
       )}
