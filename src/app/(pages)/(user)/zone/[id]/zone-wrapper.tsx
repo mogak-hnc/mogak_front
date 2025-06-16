@@ -19,9 +19,7 @@ export default function ZoneWrapper({
   const [loadData, setLoadData] = useState<ZoneDetailResponse>();
 
   useEffect(() => {
-    // console.log("zone-wrapper useEffect");
     if (!joined) {
-      // console.log("not joied");
       return;
     }
 
@@ -53,7 +51,7 @@ export default function ZoneWrapper({
           name={data.name}
           imageUrl={data.imageUrl}
           tag={data.tagNames[0]}
-          joinedUserCount={data.joinedUserCount}
+          joinedUserCount={(loadData ?? data)?.joinedUserCount}
           hostId={data.hostMemberId}
           joined={joined}
           onJoinSuccess={(b) => setJoined(b)}

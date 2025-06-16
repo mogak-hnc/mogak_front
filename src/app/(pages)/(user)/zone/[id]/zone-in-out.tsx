@@ -12,6 +12,7 @@ import {
 import { ZoneInOutButtonProps } from "@/types/zone.type";
 import SubTitle from "@/app/components/shared/sub-title";
 import { disconnectSocket, sendDetail } from "@/lib/client/socket.client.api";
+import Loading from "./loading";
 
 type ZoneInProps = ZoneInOutButtonProps & {
   hasPwd: boolean;
@@ -29,6 +30,7 @@ export default function ZoneInOut({
   const [showModal, setShowModal] = useState(false);
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+
   const focusPwd = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -42,23 +44,22 @@ export default function ZoneInOut({
   }, []);
 
   const handleJoin = async () => {
-    console.log("handleJoin");
     if (hasPwd && !password) {
       focusPwd.current?.focus();
       return;
     }
 
     const jwt = getJwtFromCookie();
-    console.log("jwt : " + jwt);
     if (!jwt || !user) {
       return;
     }
 
     try {
+      onJoinSuccess(true);
       await ZoneEntryPost(zoneId, hasPwd ? password : "");
       await sendDetail(zoneId);
+
       setShowModal(false);
-      onJoinSuccess(true);
     } catch (err) {
       console.log("모각존 입장 실패 : " + err);
       setPassword("");
@@ -74,9 +75,10 @@ export default function ZoneInOut({
     return (
       <Button
         onClick={async () => {
+          onJoinSuccess(false);
           await sendDetail(zoneId);
           disconnectSocket();
-          onJoinSuccess(false);
+          window.location.reload();
         }}
       >
         탈퇴하기
