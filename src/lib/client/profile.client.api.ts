@@ -54,7 +54,7 @@ export async function profilePatch(
   const res = await fetch(
     `${
       process.env.NEXT_PUBLIC_BACKEND_API_URL
-    }/api/mogak/auth?${query.toString()}`,
+    }/api/mogak/profile?${query.toString()}`,
     {
       method: "PUT",
       headers: {
