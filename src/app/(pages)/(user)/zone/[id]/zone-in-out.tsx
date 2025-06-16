@@ -42,19 +42,21 @@ export default function ZoneInOut({
   }, []);
 
   const handleJoin = async () => {
+    console.log("handleJoin");
     if (hasPwd && !password) {
       focusPwd.current?.focus();
       return;
     }
 
     const jwt = getJwtFromCookie();
+    console.log("jwt : " + jwt);
     if (!jwt || !user) {
       return;
     }
 
     try {
-      sendDetail(zoneId);
       await ZoneEntryPost(zoneId, hasPwd ? password : "");
+      await sendDetail(zoneId);
       setShowModal(false);
       onJoinSuccess(true);
     } catch (err) {
@@ -71,7 +73,8 @@ export default function ZoneInOut({
   if (joined && String(user.memberId) !== String(hostId)) {
     return (
       <Button
-        onClick={() => {
+        onClick={async () => {
+          await sendDetail(zoneId);
           disconnectSocket();
           onJoinSuccess(false);
         }}

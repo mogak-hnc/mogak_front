@@ -41,7 +41,7 @@ export default function ChatUI({ messages, zoneId, joined }: ChatUiProps) {
     });
 
     return () => {};
-  }, [zoneId, joined]);
+  }, [zoneId]);
 
   if (!mounted) {
     return null;
