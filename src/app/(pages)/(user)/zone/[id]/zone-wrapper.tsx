@@ -30,11 +30,12 @@ export default function ZoneWrapper({
 
     // console.log("start connectAndSubscribeSocket");
 
+    console.log("id : " + id);
     connectAndSubscribeSocket<ZoneDetailResponse>({
       topic: `/topic/api/mogak/zone/${id}`,
       mogakZoneId: id,
       onMessage: (parsedRes) => {
-        // console.log("받은 메시지:", parsedRes);
+        console.log("받은 메시지:", parsedRes);
 
         setLoadData((prev) => {
           const base = prev ?? data;

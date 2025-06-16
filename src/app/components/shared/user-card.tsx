@@ -10,6 +10,7 @@ import Link from "next/link";
 import UserCardStatus from "./user-card-status";
 import { useEffect, useState } from "react";
 import { connectAndSubscribeSocket } from "@/lib/client/socket.client.api";
+import { getProfileImage } from "@/utils/shared/profile.util";
 
 export const statusColorMap: Record<StatusType, string> = {
   "공부 중":
@@ -43,7 +44,7 @@ export default function UserCard({
           return;
         }
 
-        // console.log("수신된 상태 메시지:", parsedRes);
+        console.log("수신된 상태 메시지:", parsedRes);
 
         setStudy(String(parsedRes.status) === "STUDYING");
         setStatusColor(statusColorMap[statusMap[parsedRes.status]]);
@@ -58,7 +59,7 @@ export default function UserCard({
     <div className="flex items-center p-4 w-fit">
       {image && (
         <img
-          src={image}
+          src={getProfileImage(image)}
           alt="profile"
           className={`w-20 aspect-square rounded-full border-2 object-cover ${statusColor}`}
         />

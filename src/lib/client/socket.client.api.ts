@@ -14,7 +14,7 @@ export function connectAndSubscribeSocket<T>({
   onMessage: (msg: T) => void;
 }) {
   if (stompClient && stompClient.connected) {
-    // console.log("이미 연결됨. 구독 바로 진행");
+    console.log("이미 연결됨. 구독 바로 진행");
     subscribe(topic, mogakZoneId, onMessage);
     return;
   }
@@ -33,7 +33,7 @@ export function connectAndSubscribeSocket<T>({
     },
     reconnectDelay: 5000,
     onConnect: () => {
-      // console.log("웹소켓 연결 성공");
+      console.log("웹소켓 연결 성공");
       subscribe(topic, mogakZoneId, onMessage);
     },
     onStompError: (frame) => {
@@ -50,7 +50,7 @@ export function subscribe<T>(
   onMessage: (msg: T) => void
 ) {
   if (!stompClient || !stompClient.connected) {
-    // console.warn("소켓 연결 안 됨");
+    console.warn("소켓 연결 안 됨");
     connectAndSubscribeSocket({ topic, mogakZoneId: id, onMessage });
     return;
   }
@@ -60,17 +60,17 @@ export function subscribe<T>(
     return;
   }
 
-  // console.log("토픽 구독 시작:", topic);
+  console.log("토픽 구독 시작:", topic);
 
   stompClient.subscribe(
     topic,
     (message: IMessage) => {
       try {
         const payload = JSON.parse(message.body);
-        // console.log("수신된 메시지:", payload);
+        console.log("수신된 메시지:", payload);
         onMessage(payload);
       } catch (err) {
-        // console.error("메시지 파싱 오류:", err);
+        console.error("메시지 파싱 오류:", err);
       }
     },
     { Authorization: jwt, mogakZoneId: id }
@@ -78,14 +78,14 @@ export function subscribe<T>(
 }
 
 export async function sendDetail(zoneId: string) {
-  // console.log("sendDetail");
+  console.log("sendDetail");
 
   const jwt = getJwtFromCookie();
   if (!jwt) {
     return;
   }
 
-  // console.log("send Detail publish");
+  console.log("send Detail publish");
 
   try {
     await waitUntilConnected();
@@ -98,7 +98,7 @@ export async function sendDetail(zoneId: string) {
       },
     });
 
-    // console.log("detail 전송 성공");
+    console.log("detail 전송 성공");
   } catch (err) {
     console.error("detail 전송 실패", err);
   }
@@ -109,7 +109,7 @@ export async function sendChat(
   memberId: string,
   message: string
 ) {
-  // console.log("sendChat");
+  console.log("sendChat");
 
   const jwt = getJwtFromCookie();
   if (!jwt) {
@@ -128,7 +128,7 @@ export async function sendChat(
       body: JSON.stringify({ memberId, message }),
     });
 
-    // console.log("chat 전송 성공");
+    console.log("chat 전송 성공");
   } catch (err) {
     console.error("chat 전송 실패", err);
   }
@@ -139,14 +139,14 @@ export async function sendStatus(
   status: string,
   memberId: string
 ) {
-  // console.log("sendStatus");
+  console.log("sendStatus");
 
   const jwt = getJwtFromCookie();
   if (!jwt) {
     return;
   }
 
-  // console.log("sendStatus try");
+  console.log("sendStatus try");
 
   try {
     await waitUntilConnected();
@@ -167,7 +167,7 @@ export async function sendStatus(
 export function disconnectSocket() {
   if (stompClient && stompClient.connected) {
     stompClient.deactivate();
-    // console.log("웹소켓 연결 종료");
+    console.log("웹소켓 연결 종료");
   }
 }
 
