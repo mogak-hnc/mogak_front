@@ -46,7 +46,6 @@ export default function ZoneHeader({
             hasPwd={hasPwd}
             onJoinSuccess={(b) => onJoinSuccess(b)}
           />
-          {/* <ZoneOut {...props} /> */}
         </div>
       </div>
     </div>

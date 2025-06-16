@@ -12,7 +12,8 @@ import {
 import { ZoneInOutButtonProps } from "@/types/zone.type";
 import SubTitle from "@/app/components/shared/sub-title";
 import { disconnectSocket, sendDetail } from "@/lib/client/socket.client.api";
-import Loading from "./loading";
+import { useRouter } from "next/navigation";
+import ConfirmModal from "@/app/components/confirm-modal";
 
 type ZoneInProps = ZoneInOutButtonProps & {
   hasPwd: boolean;
@@ -28,10 +29,20 @@ export default function ZoneInOut({
 }: ZoneInProps) {
   const [user, setUser] = useState<JwtPayload | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [showExitModal, setShowExitModal] = useState(false);
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
   const focusPwd = useRef<HTMLInputElement>(null);
+
+  const router = useRouter();
+
+  const exitHandler = async () => {
+    onJoinSuccess(false);
+    await sendDetail(zoneId);
+    disconnectSocket();
+    router.push("/zone");
+  };
 
   useEffect(() => {
     const jwt = getJwtFromCookie();
@@ -71,24 +82,11 @@ export default function ZoneInOut({
     return null;
   }
 
-  if (joined && String(user.memberId) !== String(hostId)) {
-    return (
-      <Button
-        onClick={async () => {
-          onJoinSuccess(false);
-          await sendDetail(zoneId);
-          disconnectSocket();
-          window.location.reload();
-        }}
-      >
-        탈퇴하기
-      </Button>
-    );
-  }
-
   return (
     <>
-      {!joined && (
+      {joined && String(user.memberId) !== String(hostId) ? (
+        <Button onClick={() => setShowExitModal(true)}>탈퇴하기</Button>
+      ) : (
         <Button
           onClick={() => {
             if (hasPwd) {
@@ -128,6 +126,14 @@ export default function ZoneInOut({
             </div>
           </div>
         </div>
+      )}
+
+      {showExitModal && (
+        <ConfirmModal
+          message="탈퇴하시겠어요? 언제든 다시 참가할 수 있어요."
+          onConfirm={exitHandler}
+          onCancel={() => setShowExitModal(false)}
+        />
       )}
     </>
   );
