@@ -7,6 +7,7 @@ import { getProfileImage } from "@/utils/shared/profile.util";
 import ChatUI from "@/app/components/shared/chat-ui";
 import { useEffect, useState } from "react";
 import { connectAndSubscribeSocket } from "@/lib/client/socket.client.api";
+import ConfirmModal from "@/app/components/confirm-modal";
 
 export default function ZoneWrapper({
   id,
@@ -18,15 +19,29 @@ export default function ZoneWrapper({
   const [joined, setJoined] = useState<boolean>(data.joined);
   const [loadData, setLoadData] = useState<ZoneDetailResponse>();
 
+  const [connected, setConnected] = useState(false);
+  const [showReconnectModal, setShowReconnectModal] = useState(false);
+
   useEffect(() => {
     if (!joined) {
       return;
     }
 
+    let timeout = setTimeout(() => {
+      if (!connected) {
+        console.warn("소켓 연결 실패: 재참가 필요");
+        setJoined(false);
+        setShowReconnectModal(true);
+      }
+    }, 3000);
+
     connectAndSubscribeSocket<ZoneDetailResponse>({
       topic: `/topic/api/mogak/zone/${id}`,
       mogakZoneId: id,
       onMessage: (parsedRes) => {
+        setConnected(true);
+        clearTimeout(timeout);
+
         console.log("받은 메시지:", parsedRes);
 
         setLoadData((prev) => {
@@ -40,7 +55,10 @@ export default function ZoneWrapper({
       },
     });
 
-    return () => {};
+    return () => {
+      clearTimeout(timeout);
+      setConnected(false);
+    };
   }, [joined, id]);
 
   return (
@@ -79,6 +97,18 @@ export default function ZoneWrapper({
           messages={data.chatHistoryResponses}
         />
       </div>
+      {showReconnectModal && (
+        <ConfirmModal
+          message="연결이 끊어졌어요. 다시 참가해 주세요!"
+          onConfirm={() => {
+            setShowReconnectModal(false);
+            window.location.reload();
+          }}
+          onCancel={() => {
+            setShowReconnectModal(false);
+          }}
+        />
+      )}
     </div>
   );
 }
