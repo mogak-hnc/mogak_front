@@ -8,9 +8,13 @@ import Checkbox from "@/app/components/ui/checkbox";
 import Button from "@/app/components/ui/button";
 import ConfirmModal from "@/app/components/confirm-modal";
 import SubTitle from "@/app/components/shared/sub-title";
-import { ZoneSettingProps } from "@/types/zone.type";
+import { ZoneDetailResponse, ZoneSettingProps } from "@/types/zone.type";
 
-export default function ZoneSpaceSetting() {
+export default function ZoneSpaceSetting({
+  data,
+}: {
+  data: ZoneDetailResponse;
+}) {
   const [photo, setPhoto] = useState<File | null>(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -21,11 +25,9 @@ export default function ZoneSpaceSetting() {
     formState: { errors },
   } = useForm<ZoneSettingProps>({
     defaultValues: {
-      spaceName: "카공해요",
-      tag: "카페",
-      usePassword: true,
-      password: "1234",
-      useChat: true,
+      spaceName: data.name,
+      tag: data.tagNames[0],
+      usePassword: data.passwordRequired,
     },
   });
 
@@ -70,25 +72,32 @@ export default function ZoneSpaceSetting() {
         <div className="flex items-center gap-4">
           <Checkbox label="비밀번호 사용하기" {...register("usePassword")} />
           <Input
+            placeholder="4글자 비밀번호"
             type="password"
             {...register("password", {
-              validate: (val) =>
-                usePassword && val.length !== 4
-                  ? "비밀번호는 4글자여야 해요."
-                  : true,
+              validate: (value) => {
+                if (usePassword && value.length !== 4) {
+                  return "비밀번호는 네 글자로 입력해 주세요.";
+                }
+                return true;
+              },
             })}
             disabled={!usePassword}
-            className="w-40"
+            className={`w-40 ${
+              usePassword && `bg-white dark:bg-border-dark px-5 py-1 rounded-md`
+            }`}
           />
         </div>
         {errors.password && (
-          <p className="text-error text-sm">{errors.password.message}</p>
+          <p className="text-error dark:text-error-dark text-sm">
+            {errors.password.message}
+          </p>
         )}
       </FormField>
 
-      <FormField label="채팅 가능 여부">
+      {/* <FormField label="채팅 가능 여부">
         <Checkbox label="채팅 사용하기" {...register("useChat")} />
-      </FormField>
+      </FormField> */}
 
       <div className="flex gap-2 mt-4">
         <Button type="submit">저장</Button>

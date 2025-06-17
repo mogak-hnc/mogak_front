@@ -44,7 +44,9 @@ export default function ZoneCreateForm({
           })}
         />
         {errors.spaceName && (
-          <p className="text-error text-sm">{errors.spaceName.message}</p>
+          <p className="text-error dark:text-error-dark text-sm">
+            {errors.spaceName.message}
+          </p>
         )}
       </FormField>
 
@@ -98,17 +100,19 @@ export default function ZoneCreateForm({
           />
         </div>
         {errors.password && (
-          <p className="text-error text-sm">{errors.password.message}</p>
+          <p className="text-error dark:text-error-dark text-sm">
+            {errors.password.message}
+          </p>
         )}
       </FormField>
 
-      <FormField label="채팅 가능 여부">
+      {/* <FormField label="채팅 가능 여부">
         <Checkbox label="채팅 사용하기" {...register("useChat")} />
       </FormField>
 
       <FormField label="참여 조건">
         <Checkbox label="회원만 참여 가능" {...register("memberOnly")} />
-      </FormField>
+      </FormField> */}
 
       <Button type="submit">저장</Button>
     </form>
