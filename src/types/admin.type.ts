@@ -19,3 +19,12 @@ export interface AdminBadgeProps {
   iconUrl: string;
   badgeType: ProfileBadgeType;
 }
+
+export type BadgeType = "DURATION" | "COUNT" | "OFFICIAL";
+
+export interface AdminBadgePostRequest {
+  name: string;
+  description: string;
+  badgeType: BadgeType;
+  conditionValue: number;
+}

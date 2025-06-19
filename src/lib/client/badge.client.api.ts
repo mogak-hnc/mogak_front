@@ -1,4 +1,4 @@
-import { AdminBadgeProps } from "@/types/admin.type";
+import { AdminBadgePostRequest, AdminBadgeProps } from "@/types/admin.type";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 
 export async function adminBadgeList() {
@@ -25,6 +25,47 @@ export async function adminBadgeList() {
   }
 
   const data: AdminBadgeProps[] = await res.json();
+  return data;
+}
+
+export async function adminBadgePost(
+  payload: AdminBadgePostRequest,
+  imageFile?: File
+) {
+  const token = getJwtFromCookie();
+  if (!token) {
+    return;
+  }
+
+  const formData = new FormData();
+
+  const jsonBlob = new Blob([JSON.stringify(payload)], {
+    type: "application/json",
+  });
+  formData.append("request", jsonBlob);
+
+  if (imageFile) {
+    formData.append("image", imageFile);
+  }
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/badge`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: token,
+      },
+      body: formData,
+    }
+  );
+
+  if (!res.ok) {
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`뱃지 생성 실패: ${err}`);
+  }
+
+  const data: { badgeId: string } = await res.json();
   return data;
 }
 

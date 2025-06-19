@@ -1,39 +1,87 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import AdminTable from "@/app/components/admin/admin-table";
 import Input from "@/app/components/ui/input";
 import Button from "@/app/components/ui/button";
 import {
   adminBadgeDelete,
   adminBadgeList,
+  adminBadgePost,
 } from "@/lib/client/badge.client.api";
-import { AdminBadgeProps, Column } from "@/types/admin.type";
+import {
+  AdminBadgePostRequest,
+  AdminBadgeProps,
+  Column,
+} from "@/types/admin.type";
+
+import Loading from "@/app/loading";
+
+type FormValues = AdminBadgePostRequest & {
+  image: FileList;
+};
 
 export default function AdminBadgePage() {
   const [badges, setBadges] = useState<AdminBadgeProps[]>([]);
-  const [newName, setNewName] = useState("");
-  const [newImage, setNewImage] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm<FormValues>({
+    defaultValues: {
+      name: "",
+      description: "",
+      badgeType: "DURATION",
+      conditionValue: 0,
+    },
+  });
+
+  // const image = watch("image");
+
+  const loadBadges = async () => {
+    const data = await adminBadgeList();
+    if (data) {
+      setBadges(data);
+    }
+  };
 
   useEffect(() => {
-    const loadData = async () => {
-      const data = await adminBadgeList();
-      if (data) {
-        setBadges(data);
-      }
-    };
-    loadData();
+    loadBadges();
   }, []);
 
-  const handleAddBadge = () => {
-    if (!newName || !newImage) {
-      return;
+  const onSubmit = async (formData: FormValues) => {
+    const imageFile = formData.image?.[0];
+    if (!imageFile) return;
+
+    try {
+      setLoading(true);
+      await adminBadgePost(
+        {
+          name: formData.name,
+          description: formData.description,
+          badgeType: formData.badgeType,
+          conditionValue: formData.conditionValue,
+        },
+        imageFile
+      );
+      await loadBadges();
+      reset();
+    } catch (err) {
+      console.log(`뱃지 생성 실패 : ${err}`);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleDelete = async (id: string) => {
-    const deleteId = await adminBadgeDelete(id);
-    console.log("뱃지 삭제 성공 : ", deleteId);
+    await adminBadgeDelete(id);
+    console.log("뱃지 삭제 성공 : ", id);
+    await loadBadges();
   };
 
   const columns: Column<AdminBadgeProps>[] = [
@@ -72,24 +120,47 @@ export default function AdminBadgePage() {
     },
   ];
 
+  if (loading) return <Loading />;
+
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-lg font-bold text-primary">뱃지 관리</h1>
 
-      <div className="flex items-center gap-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-wrap gap-4 items-center"
+      >
         <Input
-          placeholder="뱃지 이름"
-          value={newName}
-          onChange={(e) => setNewName(e.target.value)}
+          placeholder="이름"
+          {...register("name", { required: true })}
           className="w-40"
+        />
+        <Input
+          placeholder="설명"
+          {...register("description")}
+          className="w-40"
+        />
+        <select
+          {...register("badgeType")}
+          className="w-40 text-sm border px-3 py-2 rounded"
+        >
+          <option value="DURATION">DURATION</option>
+          <option value="COUNT">COUNT</option>
+          <option value="OFFICIAL">OFFICIAL</option>
+        </select>
+        <Input
+          type="number"
+          placeholder="조건값"
+          {...register("conditionValue", { valueAsNumber: true })}
+          className="w-28"
         />
         <input
           type="file"
-          onChange={(e) => setNewImage(e.target.files?.[0] ?? null)}
+          {...register("image", { required: true })}
           className="text-sm"
         />
-        <Button onClick={handleAddBadge}>등록</Button>
-      </div>
+        <Button type="submit">등록</Button>
+      </form>
 
       <AdminTable columns={columns} data={badges} />
     </div>
