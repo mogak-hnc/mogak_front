@@ -7,6 +7,7 @@ import { AdviceSearch } from "@/lib/shared/advice.api";
 import { AdviceContentProps } from "@/types/advice.type";
 import { convertTime } from "@/utils/shared/date.util";
 import { AdviceDelete } from "@/lib/client/advice.client.api";
+import { Column } from "@/types/admin.type";
 
 export default function AdminAdvicePage() {
   const [adviceList, setAdviceList] = useState<AdviceContentProps[]>([]);
@@ -56,7 +57,7 @@ export default function AdminAdvicePage() {
     fetchAdvice();
   };
 
-  const columns = [
+  const columns: Column<AdviceContentProps>[] = [
     { key: "worryId", label: "ID" },
     {
       key: "title",
@@ -68,7 +69,7 @@ export default function AdminAdvicePage() {
     {
       key: "actions",
       label: "관리",
-      render: (_: string, row: AdviceContentProps) => (
+      render: (_, row: AdviceContentProps) => (
         <button
           className="text-sm px-2 py-1 bg-error dark:bg-error-dark text-white rounded"
           onClick={() => openModal(row.worryId)}

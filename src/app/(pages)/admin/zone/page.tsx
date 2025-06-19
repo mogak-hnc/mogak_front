@@ -7,6 +7,7 @@ import { ZoneSearch } from "@/lib/shared/zone.api";
 import { ZoneDelete } from "@/lib/client/zone.client.api";
 import Loading from "@/app/loading";
 import { ZoneMainProps } from "@/types/zone.type";
+import { Column } from "@/types/admin.type";
 
 export default function AdminZonePage() {
   const [zones, setZones] = useState<ZoneMainProps[]>([]);
@@ -49,7 +50,7 @@ export default function AdminZonePage() {
     setTargetId(null);
   };
 
-  const columns = [
+  const columns: Column<ZoneMainProps>[] = [
     { key: "mogakZoneId", label: "ID" },
     {
       key: "title",
@@ -60,12 +61,12 @@ export default function AdminZonePage() {
     {
       key: "hasPwd",
       label: "공개 여부",
-      render: (value: boolean) => (value ? "🔒" : ""),
+      render: (value) => (value ? "🔒" : ""),
     },
     {
       key: "actions",
       label: "관리",
-      render: (_: string, row: ZoneMainProps) => (
+      render: (_, row: ZoneMainProps) => (
         <button
           className="text-sm px-2 py-1 bg-error dark:bg-error-dark text-white rounded"
           onClick={() => openModal(row.mogakZoneId, row.title)}

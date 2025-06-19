@@ -3,7 +3,10 @@
 import { AdminTableProps } from "@/types/admin.type";
 import Link from "next/link";
 
-export default function AdminTable<T>({ columns, data }: AdminTableProps<T>) {
+export default function AdminTable<T extends object>({
+  columns,
+  data,
+}: AdminTableProps<T>) {
   return (
     <table className="w-full border text-sm">
       <thead>
@@ -19,14 +22,15 @@ export default function AdminTable<T>({ columns, data }: AdminTableProps<T>) {
         {data.map((row, i) => (
           <tr key={i} className="border-t">
             {columns.map((col) => {
-              const isCustomKey = col.key === "actions";
+              const isCustomKey =
+                typeof col.key === "string" && !(col.key in row);
               const cellValue = isCustomKey
                 ? undefined
                 : row[col.key as keyof T];
 
               return (
                 <td key={String(col.key)} className="px-4 py-2 text-center">
-                  {col.render && cellValue !== undefined ? (
+                  {col.render ? (
                     col.render(cellValue, row)
                   ) : col.linkTo && !isCustomKey ? (
                     <Link

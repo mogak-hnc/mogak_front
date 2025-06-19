@@ -9,6 +9,7 @@ import { ChallengeMainProps } from "@/types/challenge.type";
 import { challengeMap } from "@/utils/shared/status.util";
 import Loading from "@/app/loading";
 import AdminTable from "@/app/components/admin/admin-table";
+import { Column } from "@/types/admin.type";
 
 export default function AdminChallengePage() {
   const [challenges, setChallenges] = useState<ChallengeMainProps[]>([]);
@@ -60,11 +61,11 @@ export default function AdminChallengePage() {
     setTargetId(null);
   };
 
-  const columns = [
+  const columns: Column<ChallengeMainProps>[] = [
     {
       key: "id",
       label: "ID",
-      render: (_: string, row: ChallengeMainProps) => `${row.challengeId}`,
+      render: (_, row: ChallengeMainProps) => `${row.challengeId}`,
     },
     {
       key: "title",
@@ -74,25 +75,24 @@ export default function AdminChallengePage() {
     {
       key: "participants",
       label: "참가자 수",
-      render: (row: ChallengeMainProps) => {
+      render: (_, row: ChallengeMainProps) => {
         return `${String(row.participants?.length) || "0"}`;
       },
     },
     {
       key: "period",
       label: "기간",
-      render: (_: string, row: ChallengeMainProps) => `${row.description}`,
+      render: (_, row: ChallengeMainProps) => `${row.description}`,
     },
     {
       key: "status",
       label: "상태",
-      render: (_: string, row: ChallengeMainProps) =>
-        `${challengeMap[row.status]}`,
+      render: (_, row: ChallengeMainProps) => `${challengeMap[row.status]}`,
     },
     {
       key: "actions",
       label: "관리",
-      render: (_: string, row: ChallengeMainProps) => (
+      render: (_, row: ChallengeMainProps) => (
         <button
           className="text-sm px-2 py-1 bg-error dark:bg-error-dark text-white rounded"
           onClick={() => openModal(row.challengeId, row.title)}
