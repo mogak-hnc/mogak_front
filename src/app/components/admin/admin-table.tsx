@@ -1,7 +1,7 @@
 import { AdminTableProps } from "@/types/admin.type";
 import Link from "next/link";
 
-export default function AdminTable<T extends Record<string, any>>({
+export default function AdminTable<T extends Record<string, unknown>>({
   columns,
   data,
 }: AdminTableProps<T>) {
@@ -24,7 +24,7 @@ export default function AdminTable<T extends Record<string, any>>({
               return (
                 <td key={String(col.key)} className="px-4 py-2 text-center">
                   {col.render ? (
-                    col.render(cellValue, row)
+                    col.render(cellValue as string, row)
                   ) : col.linkTo ? (
                     <Link
                       href={col.linkTo(row)}
