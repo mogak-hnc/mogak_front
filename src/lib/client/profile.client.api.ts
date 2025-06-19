@@ -29,11 +29,7 @@ export async function profileInfo(
   return data;
 }
 
-export async function profilePatch(
-  userId: string,
-  jwt: string,
-  payload: ProfileUpdateRequest
-) {
+export async function profilePatch(jwt: string, payload: ProfileUpdateRequest) {
   if (!jwt) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
   }

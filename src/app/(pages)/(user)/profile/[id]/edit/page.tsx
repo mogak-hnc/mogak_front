@@ -25,7 +25,9 @@ export default function ProfileEditPage() {
   const [data, setData] = useState<ProfileInfoResponse | null>(null);
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [deleteImage, setDeleteImage] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState<string | Error | null | unknown>(null);
 
   const {
     register,
@@ -55,6 +57,7 @@ export default function ProfileEditPage() {
         setProfileImage(null);
         setDeleteImage(false);
       } catch (e) {
+        setError(e);
         console.error("유저 정보 불러오기 실패", e);
       }
     };
@@ -69,7 +72,7 @@ export default function ProfileEditPage() {
     }
 
     try {
-      await profilePatch(userId, jwt, {
+      await profilePatch(jwt, {
         nickname: formData.nickname,
         showBadge: formData.showBadge,
         deleteImage,
@@ -91,8 +94,15 @@ export default function ProfileEditPage() {
   };
 
   const handleDelete = async () => {
-    await fetch(`/api/auth/kakao/withdraw`, { method: "POST" });
-    await profileDelete();
+    try {
+      await fetch(`/api/auth/kakao/withdraw`, { method: "POST" });
+      await profileDelete();
+
+      router.push(`/`);
+    } catch (err) {
+      setDeleteModal(true);
+      console.log(`탈퇴 실패 : ${err}`);
+    }
   };
 
   const nickname = watch("nickname");
@@ -119,6 +129,10 @@ export default function ProfileEditPage() {
           setValue={setValue}
           errors={errors}
         />
+        {error instanceof Error && (
+          <p className="text-error dark:text-error-dark">{error.message}</p>
+        )}
+
         <div className="flex justify-center items-center gap-4">
           <EditButton
             onReset={handleReset}
@@ -139,6 +153,13 @@ export default function ProfileEditPage() {
       {showModal && (
         <ConfirmModal
           message="정말 탈퇴하시겠습니까?"
+          onConfirm={handleDelete}
+          onCancel={() => setShowModal(false)}
+        />
+      )}
+      {deleteModal && (
+        <ConfirmModal
+          message="탈퇴에 실패했습니다. 다시 시도하시겠어요?"
           onConfirm={handleDelete}
           onCancel={() => setShowModal(false)}
         />
