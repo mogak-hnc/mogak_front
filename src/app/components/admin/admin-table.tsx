@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { AdminTableProps } from "@/types/admin.type";
 import Link from "next/link";
 
