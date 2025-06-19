@@ -1,5 +1,7 @@
+"use client";
+
 import { getProfileImage } from "@/utils/shared/profile.util";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 type Props = {
   imageUrl: string;
@@ -18,6 +20,21 @@ export default function EditImage({
   setDeleteImage,
   nickname,
 }: Props) {
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (profileImage) {
+      const url = URL.createObjectURL(profileImage);
+      setPreviewUrl(url);
+
+      return () => {
+        URL.revokeObjectURL(url);
+      };
+    } else {
+      setPreviewUrl(null);
+    }
+  }, [profileImage]);
+
   return (
     <div className="flex flex-col items-center gap-2">
       {deleteImage ? (
@@ -26,12 +43,14 @@ export default function EditImage({
         </div>
       ) : (
         <img
-          src={getProfileImage(imageUrl)}
+          src={previewUrl || getProfileImage(imageUrl)}
           alt="profile"
           className="w-16 h-16 rounded-full border border-primary dark:border-primary-dark object-cover"
         />
       )}
+
       <div className="text-sm font-semibold">{nickname}</div>
+
       <input
         type="file"
         onChange={(e) => {
@@ -41,6 +60,7 @@ export default function EditImage({
         className="text-sm"
         disabled={deleteImage}
       />
+
       <div className="text-xs text-border-dark dark:text-borders">
         {profileImage
           ? profileImage.name
@@ -48,6 +68,7 @@ export default function EditImage({
           ? "이미지 삭제 예정"
           : "파일이 선택되지 않았습니다."}
       </div>
+
       {!deleteImage && imageUrl !== "Default" && (
         <button
           type="button"
