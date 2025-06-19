@@ -17,11 +17,11 @@ export default function AdminTable<T>({ columns, data }: AdminTableProps<T>) {
         {data.map((row, i) => (
           <tr key={i} className="border-t">
             {columns.map((col) => {
-              const cellValue = row[col.key as keyof T];
+              const cellValue = row[col.key];
               return (
                 <td key={String(col.key)} className="px-4 py-2 text-center">
                   {col.render ? (
-                    col.render(cellValue as string, row)
+                    col.render(cellValue, row)
                   ) : col.linkTo ? (
                     <Link
                       href={col.linkTo(row)}
