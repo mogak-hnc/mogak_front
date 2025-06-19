@@ -19,7 +19,7 @@ export async function ChallengeMain() {
 
   const raw: ChallengeMainResponse[] = await res.json();
 
-  const data: ChallengeMainProps[] = raw.map((item: any) => ({
+  const data: ChallengeMainProps[] = raw.map((item: ChallengeMainResponse) => ({
     challengeId: item.challengeId,
     title: item.title,
     participants: item.memberImageUrls ?? [],

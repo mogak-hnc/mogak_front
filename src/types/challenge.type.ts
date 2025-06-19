@@ -1,4 +1,5 @@
 import { TagsProps } from "./shared.type";
+import { StatusType } from "./zone.type";
 
 export interface ChallengeHeaderProps {
   title: string;
@@ -61,8 +62,9 @@ export interface ChallengeSearchRequest {
 export interface ChallengeMainResponse {
   challengeId: number;
   title: string;
-  participants: (string | null)[];
+  memberImageUrls: string[];
   official: boolean;
+  status: ChallengeStatusType;
   startDate: number[];
   endDate: number[];
 }

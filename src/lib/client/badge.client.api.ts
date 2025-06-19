@@ -94,6 +94,6 @@ export async function adminBadgeDelete(id: string) {
     throw new Error(`뱃지 삭제 실패: ${err}`);
   }
 
-  const data: String = await res.json();
+  const data: string = await res.json();
   return data;
 }

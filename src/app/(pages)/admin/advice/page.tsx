@@ -61,14 +61,14 @@ export default function AdminAdvicePage() {
     {
       key: "title",
       label: "제목",
-      linkTo: (row: any) => `/advice/detail/${row.worryId}`,
+      linkTo: (row: AdviceContentProps) => `/advice/detail/${row.worryId}`,
     },
     { key: "commentCount", label: "댓글 수" },
     { key: "deleteIn", label: "삭제 예정" },
     {
       key: "actions",
       label: "관리",
-      render: (_: any, row: any) => (
+      render: (_: string, row: AdviceContentProps) => (
         <button
           className="text-sm px-2 py-1 bg-error dark:bg-error-dark text-white rounded"
           onClick={() => openModal(row.worryId)}

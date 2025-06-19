@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import AdminTable from "@/app/components/admin/admin-table";
 import ConfirmModal from "@/app/components/confirm-modal";
 import { ChallengeSearch } from "@/lib/shared/challenge.api";
 import { ChallengeDelete } from "@/lib/client/challenge.client.api";
 import { ChallengeMainProps } from "@/types/challenge.type";
 import { challengeMap } from "@/utils/shared/status.util";
 import Loading from "@/app/loading";
+import AdminTable from "@/app/components/admin/admin-table";
 
 export default function AdminChallengePage() {
   const [challenges, setChallenges] = useState<ChallengeMainProps[]>([]);
@@ -64,7 +64,7 @@ export default function AdminChallengePage() {
     {
       key: "id",
       label: "ID",
-      render: (_: any, row: ChallengeMainProps) => `${row.challengeId}`,
+      render: (_: string, row: ChallengeMainProps) => `${row.challengeId}`,
     },
     {
       key: "title",
@@ -81,18 +81,18 @@ export default function AdminChallengePage() {
     {
       key: "period",
       label: "기간",
-      render: (_: any, row: ChallengeMainProps) => `${row.description}`,
+      render: (_: string, row: ChallengeMainProps) => `${row.description}`,
     },
     {
       key: "status",
       label: "상태",
-      render: (_: any, row: ChallengeMainProps) =>
+      render: (_: string, row: ChallengeMainProps) =>
         `${challengeMap[row.status]}`,
     },
     {
       key: "actions",
       label: "관리",
-      render: (_: any, row: ChallengeMainProps) => (
+      render: (_: string, row: ChallengeMainProps) => (
         <button
           className="text-sm px-2 py-1 bg-error dark:bg-error-dark text-white rounded"
           onClick={() => openModal(row.challengeId, row.title)}
@@ -120,10 +120,11 @@ export default function AdminChallengePage() {
           생성하기
         </Link>
       </div>
+      <AdminTable columns={columns} data={challenges} />
 
       {showModal && (
         <ConfirmModal
-          message={`정말 '${targetName}' 챌린지을 삭제하시겠습니까?`}
+          message={`정말 '${targetName}' 챌린지를 삭제하시겠습니까?`}
           onConfirm={confirmDelete}
           onCancel={() => setShowModal(false)}
         />

@@ -1,5 +1,6 @@
 import { TagsProps } from "@/types/shared.type";
 import {
+  MogakZone,
   ZoneMainProps,
   ZoneMainResponse,
   ZoneSearchProps,
@@ -19,7 +20,7 @@ export async function ZoneMain() {
 
   const raw: ZoneMainResponse[] = await res.json();
 
-  const data: ZoneMainProps[] = raw.map((item: any) => ({
+  const data: ZoneMainProps[] = raw.map((item: ZoneMainResponse) => ({
     mogakZoneId: item.mogakZoneId,
     type: "studySpace",
     tag: item.tagNames?.[0] ?? "",
@@ -79,7 +80,7 @@ export async function ZoneSearch({
   }
   const raw: ZoneSearchResponse = await res.json();
 
-  const data: ZoneMainProps[] = raw.content.map((item: any) => ({
+  const data: ZoneMainProps[] = raw.content.map((item: MogakZone) => ({
     mogakZoneId: item.mogakZoneId,
     tag: item.tagNames?.[0] ?? "",
     title: item.name,

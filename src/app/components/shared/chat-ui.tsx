@@ -1,7 +1,7 @@
 "use client";
 
 import { connectAndSubscribeSocket } from "@/lib/client/socket.client.api";
-import { ChatHistoryResponse, ZoneChatResponse } from "@/types/zone.type";
+import { ChatHistoryResponse } from "@/types/zone.type";
 import { getClientUser } from "@/utils/client/user.client.util";
 import { getProfileImage } from "@/utils/shared/profile.util";
 import { useEffect, useRef, useState } from "react";

@@ -5,7 +5,6 @@ import AdminTable from "@/app/components/admin/admin-table";
 import ConfirmModal from "@/app/components/confirm-modal";
 import { ZoneSearch } from "@/lib/shared/zone.api";
 import { ZoneDelete } from "@/lib/client/zone.client.api";
-import SubTitle from "@/app/components/shared/sub-title";
 import Loading from "@/app/loading";
 import { ZoneMainProps } from "@/types/zone.type";
 
@@ -66,7 +65,7 @@ export default function AdminZonePage() {
     {
       key: "actions",
       label: "관리",
-      render: (_: any, row: ZoneMainProps) => (
+      render: (_: string, row: ZoneMainProps) => (
         <button
           className="text-sm px-2 py-1 bg-error dark:bg-error-dark text-white rounded"
           onClick={() => openModal(row.mogakZoneId, row.title)}

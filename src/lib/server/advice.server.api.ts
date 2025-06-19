@@ -1,5 +1,4 @@
 import { AdviceDetailResponse } from "@/types/advice.type";
-import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
 
 export async function AdviceDetail(worryId: string) {
   const res = await fetch(
