@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
 import Button from "@/app/components/ui/button";
 import { AdviceCommentContentProps } from "@/types/advice.type";
 import AdviceComment from "./advice-comment";
@@ -16,12 +15,18 @@ export default function AdviceCommentsCard({ worryId }: { worryId: string }) {
     []
   );
   const [input, setInput] = useState("");
-
-  const jwt = getJwtFromCookie();
+  const [jwt, setJwt] = useState<string | null>(null);
 
   useEffect(() => {
-    loadComments();
+    const token = getJwtFromCookie();
+    setJwt(token);
   }, []);
+
+  useEffect(() => {
+    if (worryId) {
+      loadComments();
+    }
+  }, [worryId]);
 
   const loadComments = async () => {
     const commentData = await AdviceCommentPagination({
@@ -29,14 +34,11 @@ export default function AdviceCommentsCard({ worryId }: { worryId: string }) {
       page: 0,
       size: 10,
     });
-
     setCommentList(commentData.content);
   };
 
   const handleSubmit = async () => {
-    if (!input.trim()) {
-      return;
-    }
+    if (!input.trim()) return;
 
     try {
       await AdviceCommentPost({ worryId: worryId, comment: input });
@@ -50,8 +52,9 @@ export default function AdviceCommentsCard({ worryId }: { worryId: string }) {
   return (
     <div className="w-full bg-white dark:bg-border-dark rounded-xl shadow p-4">
       <div className="text-lg font-semibold text-primary dark:text-primary-dark mb-4">
-        댓글 {commentList ? commentList.length : 0}개
+        댓글 {commentList.length}개
       </div>
+
       {jwt ? (
         <div className="flex flex-col gap-2">
           <textarea
@@ -69,6 +72,7 @@ export default function AdviceCommentsCard({ worryId }: { worryId: string }) {
         <div className="flex flex-col gap-2">
           <textarea
             className="w-full p-3 resize-none rounded-md text-sm"
+            rows={3}
             placeholder="로그인 후 댓글을 작성해 보세요."
             readOnly
           />
@@ -76,10 +80,9 @@ export default function AdviceCommentsCard({ worryId }: { worryId: string }) {
       )}
 
       <div className="mt-6 space-y-4">
-        {commentList &&
-          commentList.map((comment) => (
-            <AdviceComment key={comment.commentId} {...comment} />
-          ))}
+        {commentList.map((comment) => (
+          <AdviceComment key={comment.commentId} {...comment} />
+        ))}
       </div>
     </div>
   );

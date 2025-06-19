@@ -1,9 +1,9 @@
 import { AdviceCommentContentProps } from "@/types/advice.type";
 import { formatRelativeTime } from "@/utils/shared/date.util";
+import Image from "next/image";
 
 export default function AdviceComment({
   memberId,
-  // commentId,
   comment,
   createdAt,
   profileImageUrl,
@@ -14,10 +14,12 @@ export default function AdviceComment({
     <div className="w-full p-4">
       {isBot ? (
         <div className="flex items-center gap-2 p-2 rounded-md bg-gray-50 dark:bg-border-dark shadow-sm">
-          <img
-            className="w-8 h-8 rounded-full object-cover border border-gray-300 dark:border-gray-600"
+          <Image
             src={profileImageUrl}
             alt="모각봇 프로필"
+            width={32}
+            height={32}
+            className="rounded-full object-cover border border-gray-300 dark:border-gray-600"
           />
           <div className="flex flex-col">
             <p className="text-sm text-text dark:text-text-dark mt-1 break-words">
