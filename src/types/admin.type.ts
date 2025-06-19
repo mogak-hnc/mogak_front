@@ -3,7 +3,7 @@ import { ProfileBadgeType } from "./profile.type";
 export interface Column<T> {
   key: keyof T | string;
   label: string;
-  render?: (value: any, row: T) => React.ReactNode;
+  render?: (value: string, row: T) => React.ReactNode;
   linkTo?: (row: T) => string;
 }
 

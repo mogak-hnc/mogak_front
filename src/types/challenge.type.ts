@@ -1,5 +1,4 @@
 import { TagsProps } from "./shared.type";
-import { StatusType } from "./zone.type";
 
 export interface ChallengeHeaderProps {
   title: string;
