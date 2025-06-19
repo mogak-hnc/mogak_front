@@ -17,12 +17,16 @@ export default function AdminTable<T>({ columns, data }: AdminTableProps<T>) {
         {data.map((row, i) => (
           <tr key={i} className="border-t">
             {columns.map((col) => {
-              const cellValue = row[col.key];
+              const isCustomKey = col.key === "actions";
+              const cellValue = isCustomKey
+                ? undefined
+                : row[col.key as keyof T];
+
               return (
                 <td key={String(col.key)} className="px-4 py-2 text-center">
-                  {col.render ? (
+                  {col.render && cellValue !== undefined ? (
                     col.render(cellValue, row)
-                  ) : col.linkTo ? (
+                  ) : col.linkTo && !isCustomKey ? (
                     <Link
                       href={col.linkTo(row)}
                       className="text-primary dark:text-primary-dark hover:underline"
@@ -30,7 +34,7 @@ export default function AdminTable<T>({ columns, data }: AdminTableProps<T>) {
                       {String(cellValue)}
                     </Link>
                   ) : (
-                    String(cellValue)
+                    String(cellValue ?? "")
                   )}
                 </td>
               );
