@@ -1,10 +1,7 @@
 import { AdminTableProps } from "@/types/admin.type";
 import Link from "next/link";
 
-export default function AdminTable<T extends Record<string, unknown>>({
-  columns,
-  data,
-}: AdminTableProps<T>) {
+export default function AdminTable<T>({ columns, data }: AdminTableProps<T>) {
   return (
     <table className="w-full border text-sm">
       <thead>
