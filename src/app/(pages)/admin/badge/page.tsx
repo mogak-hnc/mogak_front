@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 import AdminTable from "@/app/components/admin/admin-table";
 import Input from "@/app/components/ui/input";
 import Button from "@/app/components/ui/button";
-import { adminBadgeList } from "@/lib/client/badge.client.api";
+import {
+  adminBadgeDelete,
+  adminBadgeList,
+} from "@/lib/client/badge.client.api";
 import { AdminBadgeProps, Column } from "@/types/admin.type";
 
 export default function AdminBadgePage() {
@@ -28,8 +31,9 @@ export default function AdminBadgePage() {
     }
   };
 
-  const handleDelete = (id: number) => {
-    // 추후 구현 예정
+  const handleDelete = async (id: string) => {
+    const deleteId = await adminBadgeDelete(id);
+    console.log("뱃지 삭제 성공 : ", deleteId);
   };
 
   const columns: Column<AdminBadgeProps>[] = [
@@ -59,7 +63,7 @@ export default function AdminBadgePage() {
           </button>
           <button
             className="text-sm px-2 py-1 bg-error dark:bg-error-dark text-white rounded"
-            onClick={() => handleDelete(row.badgeId)}
+            onClick={() => handleDelete(String(row.badgeId))}
           >
             삭제
           </button>
