@@ -98,7 +98,7 @@ export default function AdminBadgePage() {
     { key: "badgeType", label: "타입" },
     { key: "description", label: "설명" },
     {
-      key: "badgeIdSetting",
+      key: "actions" as keyof AdminBadgeProps,
       label: "관리",
       render: (_value, row) => (
         <div className="flex gap-2 justify-center">
