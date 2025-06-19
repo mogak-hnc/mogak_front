@@ -113,11 +113,15 @@ export default function AdminBadgePage() {
     },
   ];
 
-  if (loading) return <Loading />;
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-lg font-bold text-primary">뱃지 관리</h1>
+      <h1 className="text-lg font-bold text-primary dark:text-primary-dark">
+        뱃지 관리
+      </h1>
 
       <form
         onSubmit={handleSubmit(onSubmit)}

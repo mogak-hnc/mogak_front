@@ -39,6 +39,8 @@ export async function adminBadgePost(
 
   const formData = new FormData();
 
+  console.log([JSON.stringify(payload)]);
+
   const jsonBlob = new Blob([JSON.stringify(payload)], {
     type: "application/json",
   });
@@ -47,8 +49,6 @@ export async function adminBadgePost(
   if (imageFile) {
     formData.append("imageFile", imageFile);
   }
-
-  console.log(formData);
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/badge`,
