@@ -26,13 +26,7 @@ export default function AdminBadgePage() {
   const [badges, setBadges] = useState<AdminBadgeProps[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    watch,
-    formState: { errors },
-  } = useForm<FormValues>({
+  const { register, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: {
       name: "",
       description: "",
@@ -40,8 +34,6 @@ export default function AdminBadgePage() {
       conditionValue: 0,
     },
   });
-
-  // const image = watch("image");
 
   const loadBadges = async () => {
     const data = await adminBadgeList();

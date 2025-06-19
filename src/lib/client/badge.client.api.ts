@@ -45,7 +45,7 @@ export async function adminBadgePost(
   formData.append("request", jsonBlob);
 
   if (imageFile) {
-    formData.append("image", imageFile);
+    formData.append("imageFile", imageFile);
   }
 
   const res = await fetch(
