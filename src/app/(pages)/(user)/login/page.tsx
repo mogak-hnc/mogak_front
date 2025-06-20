@@ -17,11 +17,11 @@ export default function LoginPage() {
   }, []);
 
   const handleKakaoLogin = () => {
-    window.location.href = "/api/auth/kakao/login";
+    window.location.href = "/api/internal/auth/kakao/login";
   };
 
   const handleNaverLogin = () => {
-    window.location.href = "/api/auth/naver/login";
+    window.location.href = "/api/internal/auth/naver/login";
   };
 
   return (

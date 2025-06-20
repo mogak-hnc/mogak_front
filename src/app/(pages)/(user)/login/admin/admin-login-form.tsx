@@ -19,7 +19,7 @@ export default function AdminLoginForm() {
   const onSubmit = async (data: AdminLoginValue) => {
     setErrorMessage("");
 
-    const res = await fetch("/api/admin-login", {
+    const res = await fetch("/api/internal/admin-login", {
       method: "POST",
       body: JSON.stringify(data),
     });
