@@ -26,7 +26,7 @@ export function connectAndSubscribeSocket<T>({
 
   stompClient = new Client({
     webSocketFactory: () =>
-      new SockJS(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/ws`),
+      new SockJS(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/ws`),
     connectHeaders: {
       Authorization: token,
       mogakZoneId,
@@ -90,7 +90,7 @@ export async function sendDetail(zoneId: string) {
     await waitUntilConnected();
 
     stompClient!.publish({
-      destination: `/app/zone/${zoneId}`,
+      destination: `/app/api/mogak/zone/${zoneId}`,
       headers: {
         Authorization: jwt,
         mogakZoneId: String(zoneId),
@@ -120,7 +120,7 @@ export async function sendChat(
     await waitUntilConnected();
 
     stompClient!.publish({
-      destination: `/app/zone/${zoneId}/message`,
+      destination: `/app/api/mogak/zone/${zoneId}/message`,
       headers: {
         Authorization: jwt,
         mogakZoneId: String(zoneId),
@@ -151,7 +151,7 @@ export async function sendStatus(
     await waitUntilConnected();
 
     stompClient!.publish({
-      destination: `/app/zone/${zoneId}/status`,
+      destination: `/app/api/mogak/zone/${zoneId}/status`,
       headers: {
         Authorization: jwt,
         mogakZoneId: String(zoneId),
@@ -198,7 +198,7 @@ async function ensureConnected(mogakZoneId: string): Promise<void> {
   return new Promise((resolve, reject) => {
     stompClient = new Client({
       webSocketFactory: () =>
-        new SockJS(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/ws`),
+        new SockJS(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/ws`),
       connectHeaders: {
         Authorization: token,
         mogakZoneId,

@@ -37,7 +37,7 @@ export default function UserCard({
 
   useEffect(() => {
     connectAndSubscribeSocket<ZoneStatusResponse>({
-      topic: `/topic/zone/${zoneId}/status`,
+      topic: `/topic/api/mogak/zone/${zoneId}/status`,
       mogakZoneId: zoneId,
       onMessage: (parsedRes) => {
         if (String(parsedRes.memberId) !== String(memberId)) {
