@@ -14,21 +14,18 @@ export async function AdviceCreatePost(payload: AdviceCreateProps) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
   }
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/worry`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: token,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: payload.title,
-        body: payload.contents,
-        duration: payload.duration,
-      }),
-    }
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/worry`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      title: payload.title,
+      body: payload.contents,
+      duration: payload.duration,
+    }),
+  });
 
   if (!res.ok) {
     const err = await res.text();
@@ -47,7 +44,7 @@ export async function AdviceCommentPagination(
   const { worryId, page, size } = payload;
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/worry/${worryId}/comments?page=${page}&size=${size}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/worry/${worryId}/comments?page=${page}&size=${size}`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -76,7 +73,7 @@ export async function AdviceCommentPost(payload: AdviceCommentRequest) {
   const { worryId, comment } = payload;
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/worry/${worryId}/comment`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/worry/${worryId}/comment`,
     {
       method: "POST",
       headers: {
@@ -105,7 +102,7 @@ export async function AdviceDelete(worryId: number) {
   }
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/worry/${worryId}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/worry/${worryId}`,
     {
       method: "DELETE",
       headers: {
@@ -133,7 +130,7 @@ export async function AdviceEmpathyPost(worryId: string) {
   }
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/worry/${worryId}/empathy`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/worry/${worryId}/empathy`,
     {
       method: "POST",
       headers: {

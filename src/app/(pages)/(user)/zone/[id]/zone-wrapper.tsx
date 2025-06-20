@@ -36,7 +36,7 @@ export default function ZoneWrapper({
     }, 3000);
 
     connectAndSubscribeSocket<ZoneDetailResponse>({
-      topic: `/topic/api/mogak/zone/${id}`,
+      topic: `/topic/zone/${id}`,
       mogakZoneId: id,
       onMessage: (parsedRes) => {
         setConnected(true);

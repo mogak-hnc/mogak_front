@@ -5,17 +5,14 @@ export async function ProfileInfo(id: string, jwt: string | null) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
   }
 
-  const res = await fetch(
-    `${process.env.BACKEND_API_URL}/api/mogak/profile/${id}`,
-    {
-      method: "GET",
-      cache: "no-store",
-      headers: {
-        Authorization: `${jwt}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const res = await fetch(`${process.env.BACKEND_API_URL}/profile/${id}`, {
+    method: "GET",
+    cache: "no-store",
+    headers: {
+      Authorization: `${jwt}`,
+      "Content-Type": "application/json",
+    },
+  });
 
   if (!res.ok) {
     const err = await res.text();
@@ -33,16 +30,13 @@ export async function ProfileBadgeAll(jwt: string | null) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
   }
 
-  const res = await fetch(
-    `${process.env.BACKEND_API_URL}/api/mogak/badge/all`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `${jwt}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const res = await fetch(`${process.env.BACKEND_API_URL}/badge/all`, {
+    method: "GET",
+    headers: {
+      Authorization: `${jwt}`,
+      "Content-Type": "application/json",
+    },
+  });
 
   if (!res.ok) {
     const err = await res.text();
@@ -61,7 +55,7 @@ export async function ProfileBadge(id: string, jwt: string | null) {
   }
 
   const res = await fetch(
-    `${process.env.BACKEND_API_URL}/api/mogak/profile/${id}/badge`,
+    `${process.env.BACKEND_API_URL}/profile/${id}/badge`,
     {
       method: "GET",
       cache: "no-store",

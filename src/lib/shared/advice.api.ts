@@ -5,7 +5,7 @@ import {
 } from "@/types/advice.type";
 
 export async function AdviceMain() {
-  const res = await fetch(`${process.env.BACKEND_API_URL}/api/mogak/worry`, {
+  const res = await fetch(`${process.env.BACKEND_API_URL}/worry`, {
     next: { revalidate: 1 },
   });
 
@@ -29,7 +29,7 @@ export async function AdviceSearch({ sort, page, size }: AdviceSearchRequest) {
 
   const url = `${
     process.env.NEXT_PUBLIC_BACKEND_API_URL
-  }/api/mogak/worry/list?${query.toString()}`;
+  }/worry/list?${query.toString()}`;
 
   const res = await fetch(url);
 

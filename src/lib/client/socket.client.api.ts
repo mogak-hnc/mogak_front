@@ -90,7 +90,7 @@ export async function sendDetail(zoneId: string) {
     await waitUntilConnected();
 
     stompClient!.publish({
-      destination: `/app/api/mogak/zone/${zoneId}`,
+      destination: `/app/zone/${zoneId}`,
       headers: {
         Authorization: jwt,
         mogakZoneId: String(zoneId),
@@ -120,7 +120,7 @@ export async function sendChat(
     await waitUntilConnected();
 
     stompClient!.publish({
-      destination: `/app/api/mogak/zone/${zoneId}/message`,
+      destination: `/app/zone/${zoneId}/message`,
       headers: {
         Authorization: jwt,
         mogakZoneId: String(zoneId),
@@ -151,7 +151,7 @@ export async function sendStatus(
     await waitUntilConnected();
 
     stompClient!.publish({
-      destination: `/app/api/mogak/zone/${zoneId}/status`,
+      destination: `/app/zone/${zoneId}/status`,
       headers: {
         Authorization: jwt,
         mogakZoneId: String(zoneId),

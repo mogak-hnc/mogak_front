@@ -1,14 +1,11 @@
 import { AdviceDetailResponse } from "@/types/advice.type";
 
 export async function AdviceDetail(worryId: string) {
-  const res = await fetch(
-    `${process.env.BACKEND_API_URL}/api/mogak/worry/${worryId}`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const res = await fetch(`${process.env.BACKEND_API_URL}/worry/${worryId}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   if (!res.ok) {
     const err = await res.text();

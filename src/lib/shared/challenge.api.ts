@@ -8,7 +8,7 @@ import { convertDate } from "@/utils/shared/date.util";
 
 export async function ChallengeMain() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/challenge`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/challenge`
   );
 
   if (!res.ok) {
@@ -58,7 +58,7 @@ export async function ChallengeSearch({
 
   const url = `${
     process.env.NEXT_PUBLIC_BACKEND_API_URL
-  }/api/mogak/challenge/list?${query.toString()}`;
+  }/challenge/list?${query.toString()}`;
 
   const res = await fetch(url);
 

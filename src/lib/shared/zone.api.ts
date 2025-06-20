@@ -8,9 +8,7 @@ import {
 } from "@/types/zone.type";
 
 export async function ZoneMain() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/zone`
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/zone`);
 
   if (!res.ok) {
     const err = await res.text();
@@ -34,7 +32,7 @@ export async function ZoneMain() {
 
 export async function ZoneTags() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/zone/tags`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/zone/tags`
   );
 
   if (!res.ok) {
@@ -69,7 +67,7 @@ export async function ZoneSearch({
 
   const url = `${
     process.env.NEXT_PUBLIC_BACKEND_API_URL
-  }/api/mogak/zone/list?${query.toString()}`;
+  }/zone/list?${query.toString()}`;
 
   const res = await fetch(url);
 

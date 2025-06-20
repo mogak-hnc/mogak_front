@@ -8,7 +8,7 @@ export async function adminBadgeList() {
   }
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/badge/all`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/badge/all`,
     {
       method: "GET",
       headers: {
@@ -50,16 +50,13 @@ export async function adminBadgePost(
     formData.append("imageFile", imageFile);
   }
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/badge`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: token,
-      },
-      body: formData,
-    }
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/badge`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+    body: formData,
+  });
 
   if (!res.ok) {
     const err = await res.text();
@@ -78,7 +75,7 @@ export async function adminBadgeDelete(id: string) {
   }
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/badge/${id}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/badge/${id}`,
     {
       method: "DELETE",
       headers: {

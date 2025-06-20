@@ -26,16 +26,13 @@ export async function ZoneCreatePost(input: ZoneCreateInput, imageFile?: File) {
     formData.append("image", imageFile);
   }
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/zone`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: token,
-      },
-      body: formData,
-    }
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/zone`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+    body: formData,
+  });
 
   if (!res.ok) {
     const err = await res.text();
@@ -53,7 +50,7 @@ export async function ZoneEntryPost(zoneId: string, password: string) {
   }
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/zone/${zoneId}/join`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/zone/${zoneId}/join`,
     {
       method: "POST",
       headers: {
@@ -80,7 +77,7 @@ export async function ZoneDelete(mogakZoneId: number) {
   }
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/zone/${mogakZoneId}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/zone/${mogakZoneId}`,
     {
       method: "DELETE",
       headers: {

@@ -31,7 +31,7 @@ export default function ChatUI({ messages, zoneId, joined }: ChatUiProps) {
     setMounted(true);
 
     connectAndSubscribeSocket<ChatHistoryResponse>({
-      topic: `/topic/api/mogak/zone/${zoneId}/message`,
+      topic: `/topic/zone/${zoneId}/message`,
       mogakZoneId: String(zoneId),
       onMessage: (parsedRes) => {
         console.log("받은 메시지:", parsedRes);

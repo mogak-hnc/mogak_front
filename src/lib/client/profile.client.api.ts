@@ -9,7 +9,7 @@ export async function profileInfo(
   jwt: string
 ): Promise<ProfileInfoResponse> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/profile/${userId}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/profile/${userId}`,
     {
       method: "GET",
       headers: {
@@ -48,9 +48,7 @@ export async function profilePatch(jwt: string, payload: ProfileUpdateRequest) {
   query.set("deleteImage", String(payload.deleteImage));
 
   const res = await fetch(
-    `${
-      process.env.NEXT_PUBLIC_BACKEND_API_URL
-    }/api/mogak/profile?${query.toString()}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/profile?${query.toString()}`,
     {
       method: "PUT",
       headers: {
@@ -73,15 +71,12 @@ export async function profileDelete() {
   if (!token) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
   }
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/auth`,
-    {
-      method: "DELETE",
-      headers: {
-        Authorization: token,
-      },
-    }
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth`, {
+    method: "DELETE",
+    headers: {
+      Authorization: token,
+    },
+  });
 
   if (!res.ok) {
     throw new Error("회원 탈퇴 실패");

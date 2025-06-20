@@ -19,7 +19,7 @@ export async function ChallengeCreatePost(input: ChallengeCreateInput) {
   };
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/challenge`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/challenge`,
     {
       method: "POST",
       headers: {
@@ -48,7 +48,7 @@ export async function ChallengeEntryPost(challengeId: string) {
   }
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/challenge/${challengeId}/join`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/challenge/${challengeId}/join`,
     {
       method: "POST",
       headers: {
@@ -86,7 +86,7 @@ export async function ChallengeProofPost(payload: ChallengeProofPostRequest) {
   );
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/challenge/${payload.challengeId}/verification`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/challenge/${payload.challengeId}/verification`,
     {
       method: "POST",
       headers: {
@@ -114,7 +114,7 @@ export async function ChallengeDelete(challengeId: number) {
   }
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/challenge/${challengeId}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/challenge/${challengeId}`,
     {
       method: "DELETE",
       headers: {

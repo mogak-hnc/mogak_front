@@ -2,7 +2,7 @@ import { AdminLoginValue } from "@/types/auth.type";
 
 export async function AdminLogin(payload: AdminLoginValue) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/auth/admin-login`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth/admin-login`,
     {
       method: "POST",
       headers: {

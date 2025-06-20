@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
     };
 
     const res = await fetch(
-      `${process.env.BACKEND_API_URL}/api/mogak/auth/social-login`,
+      `${process.env.BACKEND_API_URL}/auth/social-login`,
       {
         method: "POST",
         headers: {
