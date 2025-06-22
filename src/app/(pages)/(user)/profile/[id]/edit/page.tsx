@@ -95,7 +95,7 @@ export default function ProfileEditPage() {
 
   const handleDelete = async () => {
     try {
-      await fetch(`/api/auth/kakao/withdraw`, { method: "POST" });
+      await fetch(`/api/internal/auth/kakao/withdraw`, { method: "POST" });
       await profileDelete();
 
       router.push(`/`);
