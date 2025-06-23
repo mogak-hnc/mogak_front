@@ -17,6 +17,7 @@ import ConfirmModal from "@/app/components/confirm-modal";
 
 type ZoneInProps = ZoneInOutButtonProps & {
   hasPwd: boolean;
+  joinedUserCount: number;
   onJoinSuccess: (b: boolean) => void;
 };
 
@@ -25,6 +26,7 @@ export default function ZoneInOut({
   hostId,
   joined,
   hasPwd,
+  joinedUserCount,
   onJoinSuccess,
 }: ZoneInProps) {
   const [user, setUser] = useState<JwtPayload | null>(null);

@@ -44,6 +44,7 @@ export default function ZoneHeader({
           <ZoneInOut
             {...props}
             hasPwd={hasPwd}
+            joinedUserCount={joinedUserCount}
             onJoinSuccess={(b) => onJoinSuccess(b)}
           />
         </div>
