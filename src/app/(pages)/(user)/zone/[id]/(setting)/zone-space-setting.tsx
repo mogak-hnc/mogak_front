@@ -95,10 +95,6 @@ export default function ZoneSpaceSetting({
         )}
       </FormField>
 
-      {/* <FormField label="채팅 가능 여부">
-        <Checkbox label="채팅 사용하기" {...register("useChat")} />
-      </FormField> */}
-
       <div className="flex gap-2 mt-4">
         <Button type="submit">저장</Button>
         <Button type="reset">초기화</Button>

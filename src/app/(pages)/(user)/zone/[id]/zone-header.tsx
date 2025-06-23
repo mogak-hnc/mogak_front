@@ -13,7 +13,8 @@ export default function ZoneHeader({
   joined,
   hasPwd,
   onJoinSuccess,
-}: ZoneHeaderProps) {
+  onOpenSetting,
+}: ZoneHeaderProps & { onOpenSetting: () => void }) {
   const props: ZoneInOutButtonProps = {
     joined: joined,
     zoneId: zoneId,
@@ -40,7 +41,7 @@ export default function ZoneHeader({
           {joinedUserCount}명이 참가 중이에요!
         </span>
         <div className="flex gap-2">
-          <ZoneSetting {...props} />
+          <ZoneSetting {...props} onOpenSetting={() => onOpenSetting()} />
           <ZoneInOut
             {...props}
             hasPwd={hasPwd}

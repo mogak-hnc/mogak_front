@@ -8,6 +8,7 @@ import ChatUI from "@/app/components/shared/chat-ui";
 import { useEffect, useState } from "react";
 import { connectAndSubscribeSocket } from "@/lib/client/socket.client.api";
 import ConfirmModal from "@/app/components/confirm-modal";
+import SettingModal from "./setting-modal";
 
 export default function ZoneWrapper({
   id,
@@ -17,8 +18,8 @@ export default function ZoneWrapper({
   data: ZoneDetailResponse;
 }) {
   const [joined, setJoined] = useState<boolean>(data.joined);
+  const [showModal, setShowModal] = useState(false);
   const [loadData, setLoadData] = useState<ZoneDetailResponse>();
-
   const [connected, setConnected] = useState(false);
   const [showReconnectModal, setShowReconnectModal] = useState(false);
 
@@ -73,6 +74,7 @@ export default function ZoneWrapper({
           hostId={data.hostMemberId}
           joined={joined}
           onJoinSuccess={(b) => setJoined(b)}
+          onOpenSetting={() => setShowModal(true)}
           hasPwd={data.passwordRequired}
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -97,6 +99,7 @@ export default function ZoneWrapper({
           messages={data.chatHistoryResponses}
         />
       </div>
+
       {showReconnectModal && (
         <ConfirmModal
           message="연결이 끊어졌어요. 다시 참가해 주세요!"
@@ -108,6 +111,9 @@ export default function ZoneWrapper({
             setShowReconnectModal(false);
           }}
         />
+      )}
+      {showModal && (
+        <SettingModal zoneId={id} onClose={() => setShowModal(false)} />
       )}
     </div>
   );

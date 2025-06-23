@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "모여서 각자",
 };
 
-export default async function ZoneDetailSpacePage({
+export default async function ZoneDetailSpace({
   params,
 }: {
   params: Promise<{ id: string }>;

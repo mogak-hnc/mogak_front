@@ -7,22 +7,18 @@ import {
   decodeToken,
   JwtPayload,
 } from "@/utils/client/decode-token.client.util";
-
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function ZoneSetting({
-  zoneId,
+  // zoneId,
   hostId,
-}: // joined,
-ZoneInOutButtonProps) {
+  onOpenSetting,
+}: ZoneInOutButtonProps & { onOpenSetting: () => void }) {
   const [user, setUser] = useState<JwtPayload | null>(null);
+
   useEffect(() => {
     const jwt = getJwtFromCookie();
-    if (!jwt) {
-      return;
-    }
-
+    if (!jwt) return;
     const decoded = decodeToken(jwt);
     setUser(decoded);
   }, []);
@@ -30,9 +26,7 @@ ZoneInOutButtonProps) {
   return (
     <>
       {String(user?.memberId) === String(hostId) && (
-        <Link href={`/zone/${zoneId}/member`}>
-          <Button>모각존 관리</Button>
-        </Link>
+        <Button onClick={onOpenSetting}>모각존 관리</Button>
       )}
     </>
   );
