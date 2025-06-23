@@ -18,7 +18,9 @@ export default function ZoneSetting({
 
   useEffect(() => {
     const jwt = getJwtFromCookie();
-    if (!jwt) return;
+    if (!jwt) {
+      return;
+    }
     const decoded = decodeToken(jwt);
     setUser(decoded);
   }, []);

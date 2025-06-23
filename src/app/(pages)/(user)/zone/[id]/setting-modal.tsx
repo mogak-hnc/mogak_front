@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { ZoneDetailResponse } from "@/types/zone.type";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
-import { ZoneDetail } from "@/lib/server/zone.server.api";
+import { ZoneDetail } from "@/lib/client/zone.client.api";
 
 const SpaceSetting = dynamic(() => import("./(setting)/zone-space-setting"));
 const MemberSetting = dynamic(() => import("./(setting)/zone-member-setting"));
@@ -26,6 +26,14 @@ export default function SettingModal({
       setData(res);
     })();
   }, [zoneId]);
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
