@@ -106,14 +106,6 @@ export default function ZoneCreateForm({
         )}
       </FormField>
 
-      {/* <FormField label="채팅 가능 여부">
-        <Checkbox label="채팅 사용하기" {...register("useChat")} />
-      </FormField>
-
-      <FormField label="참여 조건">
-        <Checkbox label="회원만 참여 가능" {...register("memberOnly")} />
-      </FormField> */}
-
       <Button type="submit">저장</Button>
     </form>
   );

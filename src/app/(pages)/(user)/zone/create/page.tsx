@@ -5,7 +5,7 @@ import { useState } from "react";
 import ZoneCreateForm from "./zone-create-form";
 import { useZoneCreateForm } from "./use-zone-create-form";
 import { ZoneCreateInput } from "@/types/zone.type";
-import { ZoneCreatePost } from "@/lib/client/zone.client.api";
+import { ZoneCreatePost, ZoneEntryPost } from "@/lib/client/zone.client.api";
 import Loading from "@/app/loading";
 
 export default function ZoneCreatePage() {
@@ -20,7 +20,7 @@ export default function ZoneCreatePage() {
     try {
       setIsLoading(true);
       const res = await ZoneCreatePost(data, photo ?? undefined);
-
+      await ZoneEntryPost(res.mogakZoneId, data.password);
       router.push(`/zone/${res.mogakZoneId}`);
     } catch (err) {
       console.error("모각존 생성 실패", err);
