@@ -189,9 +189,11 @@ function waitUntilConnected(timeout = 3000): Promise<void> {
   });
 }
 
-async function ensureConnected(mogakZoneId: string): Promise<void> {
+export async function ensureConnected(mogakZoneId: string): Promise<void> {
   const token = getJwtFromCookie();
-  if (!token) throw new Error("JWT 없음");
+  if (!token) {
+    throw new Error("JWT 없음");
+  }
 
   if (stompClient && stompClient.connected) return;
 

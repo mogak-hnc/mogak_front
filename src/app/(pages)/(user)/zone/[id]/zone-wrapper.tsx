@@ -28,7 +28,7 @@ export default function ZoneWrapper({
     }
 
     const timeout = setTimeout(() => {
-      if (!connected) {
+      if (!connected && id === data.hostMemberId) {
         console.warn("소켓 연결 실패: 재참가 필요");
         setJoined(false);
         setShowReconnectModal(true);
