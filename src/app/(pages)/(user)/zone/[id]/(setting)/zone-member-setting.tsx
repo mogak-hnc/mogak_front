@@ -7,11 +7,11 @@ import { ZoneMemberInfo } from "@/types/zone.type";
 import { getProfileImage } from "@/utils/shared/profile.util";
 
 export default function ZoneMemberSetting({
-  data,
+  memberData,
 }: {
-  data: ZoneMemberInfo[];
+  memberData: ZoneMemberInfo[];
 }) {
-  const [members, setMembers] = useState(data);
+  const [members, setMembers] = useState(memberData);
   const [showModal, setShowModal] = useState(false);
   const [targetId, setTargetId] = useState<number | null>(null);
 

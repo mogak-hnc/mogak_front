@@ -1,6 +1,6 @@
-import { ZoneDetail } from "@/lib/server/zone.server.api";
-import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
+import { ZoneDetail } from "@/lib/client/zone.client.api";
 import ZoneMemberSetting from "./zone-member-setting";
+import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 
 export default async function ZoneDetailMember({
   params,
@@ -8,7 +8,7 @@ export default async function ZoneDetailMember({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const jwt = await getJwtFromServerCookie();
+  const jwt = getJwtFromCookie();
 
   const data = await ZoneDetail(id, jwt);
 
