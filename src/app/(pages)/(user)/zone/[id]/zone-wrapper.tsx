@@ -6,7 +6,10 @@ import UserCard from "@/app/components/shared/user-card";
 import { getProfileImage } from "@/utils/shared/profile.util";
 import ChatUI from "@/app/components/shared/chat-ui";
 import { useEffect, useState } from "react";
-import { connectAndSubscribeSocket } from "@/lib/client/socket.client.api";
+import {
+  connectAndSubscribeSocket,
+  disconnectSocket,
+} from "@/lib/client/socket.client.api";
 import ConfirmModal from "@/app/components/confirm-modal";
 import SettingModal from "./setting-modal";
 
@@ -56,9 +59,16 @@ export default function ZoneWrapper({
       },
     });
 
+    const handleBeforeUnload = () => {
+      disconnectSocket();
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
     return () => {
       clearTimeout(timeout);
       setConnected(false);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [joined, id]);
 
