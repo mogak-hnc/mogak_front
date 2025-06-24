@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { ZoneDetailResponse } from "@/types/zone.type";
-import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 import { ZoneDetail } from "@/lib/client/zone.client.api";
 
 const SpaceSetting = dynamic(() => import("./(setting)/zone-space-setting"));
@@ -21,8 +20,7 @@ export default function SettingModal({
 
   useEffect(() => {
     (async () => {
-      const jwt = getJwtFromCookie();
-      const res = await ZoneDetail(zoneId, jwt);
+      const res = await ZoneDetail(zoneId);
       setData(res);
     })();
   }, [zoneId]);

@@ -10,7 +10,7 @@ export default async function ZoneDetailMember({
   const { id } = await params;
   const jwt = getJwtFromCookie();
 
-  const data = await ZoneDetail(id, jwt);
+  const data = await ZoneDetail(id);
 
   return (
     <>

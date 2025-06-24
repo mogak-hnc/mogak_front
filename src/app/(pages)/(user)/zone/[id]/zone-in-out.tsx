@@ -44,7 +44,7 @@ export default function ZoneInOut({
       return;
     }
     onJoinSuccess(false);
-    ZoneLeave(zoneId, user.memberId);
+    await ZoneLeave(zoneId, user.memberId);
     await sendDetail(zoneId);
     disconnectSocket();
     router.push("/zone");

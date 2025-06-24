@@ -61,11 +61,11 @@ export default function ZoneWrapper({
       },
     });
 
-    const handleBeforeUnload = () => {
+    const handleBeforeUnload = async () => {
       if (!memberId) {
         return;
       }
-      ZoneLeave(id, memberId);
+      await ZoneLeave(id, memberId);
       disconnectSocket();
     };
 

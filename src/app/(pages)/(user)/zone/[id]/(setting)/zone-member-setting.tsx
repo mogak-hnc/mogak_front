@@ -5,12 +5,16 @@ import Button from "@/app/components/ui/button";
 import ConfirmModal from "@/app/components/confirm-modal";
 import { ZoneMemberInfo } from "@/types/zone.type";
 import { getProfileImage } from "@/utils/shared/profile.util";
+import { ZoneDetail, ZoneKick } from "@/lib/client/zone.client.api";
+import { useParams } from "next/navigation";
 
 export default function ZoneMemberSetting({
   memberData,
 }: {
   memberData: ZoneMemberInfo[];
 }) {
+  const params = useParams();
+  const zoneId = params?.id as string;
   const [members, setMembers] = useState(memberData);
   const [showModal, setShowModal] = useState(false);
   const [targetId, setTargetId] = useState<number | null>(null);
@@ -20,9 +24,16 @@ export default function ZoneMemberSetting({
     setShowModal(true);
   };
 
-  const confirmKick = () => {
+  const confirmKick = async () => {
     if (targetId !== null) {
-      setMembers((prev) => prev.filter((m) => m.memberId !== targetId));
+      try {
+        await ZoneKick(zoneId, String(targetId));
+
+        const loadMember = await ZoneDetail(zoneId);
+        setMembers(loadMember.zoneMemberInfoList);
+      } catch (err) {
+        console.log(`강제 탈퇴 실패 : `, err);
+      }
     }
     setShowModal(false);
     setTargetId(null);
