@@ -190,3 +190,30 @@ export async function ZoneKick(mogakZoneId: string, targetMemberId: string) {
 
   return await res.json();
 }
+
+export async function ZoneDelegateHost(mogakZoneId: string, newHostId: string) {
+  const token = getJwtFromCookie();
+  if (!token) {
+    throw new Error("JWT 토큰 없음 / 로그인 필요");
+  }
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/zone/${mogakZoneId}/delegate-host`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ newHostId }),
+    }
+  );
+
+  if (!res.ok) {
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`모각존 방장 위임 실패: ${res.status}`);
+  }
+
+  return await res.json();
+}

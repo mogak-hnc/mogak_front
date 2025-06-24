@@ -5,7 +5,11 @@ import Button from "@/app/components/ui/button";
 import ConfirmModal from "@/app/components/confirm-modal";
 import { ZoneMemberInfo } from "@/types/zone.type";
 import { getProfileImage } from "@/utils/shared/profile.util";
-import { ZoneDetail, ZoneKick } from "@/lib/client/zone.client.api";
+import {
+  ZoneDelegateHost,
+  ZoneDetail,
+  ZoneKick,
+} from "@/lib/client/zone.client.api";
 import { useParams } from "next/navigation";
 
 export default function ZoneMemberSetting({
@@ -18,10 +22,17 @@ export default function ZoneMemberSetting({
   const [members, setMembers] = useState(memberData);
   const [showModal, setShowModal] = useState(false);
   const [targetId, setTargetId] = useState<number | null>(null);
+  const [showDelegateModal, setShowDelegateModal] = useState(false);
+  const [targetDelegateId, setTargetDelegateId] = useState<number | null>(null);
 
   const openModal = (id: number) => {
     setTargetId(id);
     setShowModal(true);
+  };
+
+  const openDelegateModal = (id: number) => {
+    setTargetDelegateId(id);
+    setShowDelegateModal(true);
   };
 
   const confirmKick = async () => {
@@ -37,6 +48,21 @@ export default function ZoneMemberSetting({
     }
     setShowModal(false);
     setTargetId(null);
+  };
+
+  const confirmDelegate = async () => {
+    if (targetDelegateId !== null) {
+      try {
+        await ZoneDelegateHost(zoneId, String(targetDelegateId));
+
+        const loadMember = await ZoneDetail(zoneId);
+        setMembers(loadMember.zoneMemberInfoList);
+      } catch (err) {
+        console.log(`방장 위임 실패 : `, err);
+      }
+    }
+    setShowDelegateModal(false);
+    setTargetDelegateId(null);
   };
 
   return (
@@ -58,9 +84,22 @@ export default function ZoneMemberSetting({
             />
             <span className="font-medium">{m.nickname}</span>
           </div>
-          <Button onClick={() => openModal(m.memberId)}>강제 탈퇴</Button>
+          <Button onClick={() => openDelegateModal(m.memberId)}>
+            방장 위임
+          </Button>
+          <Button variant="danger" onClick={() => openModal(m.memberId)}>
+            강제 탈퇴
+          </Button>
         </div>
       ))}
+
+      {showDelegateModal && (
+        <ConfirmModal
+          message="방장을 이 멤버에게 위엄하시겠습니까?"
+          onConfirm={confirmDelegate}
+          onCancel={() => setShowDelegateModal(false)}
+        />
+      )}
 
       {showModal && (
         <ConfirmModal
