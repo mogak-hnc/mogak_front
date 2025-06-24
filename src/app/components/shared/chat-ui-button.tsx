@@ -36,6 +36,12 @@ export default function ChatUiButton({
     <div className="flex items-center gap-2 mt-4">
       <input
         onInput={msgHandler}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            sendChatHandler();
+          }
+        }}
         value={msg}
         type="text"
         placeholder="메시지를 입력하세요."
