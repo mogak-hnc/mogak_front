@@ -102,6 +102,8 @@ export async function ZoneDelete(mogakZoneId: number) {
 export async function ZoneLeave(mogakZoneId: string, memberId: string) {
   const jwt = getJwtFromCookie();
 
+  console.log("paylode : ", mogakZoneId, memberId);
+
   if (!jwt) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
   }
