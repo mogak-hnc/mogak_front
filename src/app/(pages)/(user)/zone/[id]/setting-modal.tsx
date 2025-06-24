@@ -69,7 +69,7 @@ export default function SettingModal({
 
         {data && tab === "space" && <SpaceSetting data={data} />}
         {data && tab === "member" && (
-          <MemberSetting data={data.zoneMemberInfoList} />
+          <MemberSetting memberData={data.zoneMemberInfoList} />
         )}
       </div>
     </div>
