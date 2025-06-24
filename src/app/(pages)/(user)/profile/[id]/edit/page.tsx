@@ -16,6 +16,7 @@ import EditImage from "./edit-image";
 import EditForm from "./edit-form";
 import EditButton from "./edit-button";
 import ConfirmModal from "@/app/components/confirm-modal";
+import Loading from "@/app/loading";
 
 export default function ProfileEditPage() {
   const params = useParams();
@@ -23,6 +24,7 @@ export default function ProfileEditPage() {
   const userId = params?.id as string;
 
   const [data, setData] = useState<ProfileInfoResponse | null>(null);
+  const [loading, setLoading] = useState(false);
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [deleteImage, setDeleteImage] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -72,6 +74,7 @@ export default function ProfileEditPage() {
     }
 
     try {
+      setLoading(true);
       await profilePatch(jwt, {
         nickname: formData.nickname,
         showBadge: formData.showBadge,
@@ -81,6 +84,8 @@ export default function ProfileEditPage() {
       router.push(`/profile/${userId}`);
     } catch (e) {
       console.error("수정 실패", e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -109,6 +114,10 @@ export default function ProfileEditPage() {
 
   if (!data) {
     return <div className="text-center py-10">로딩 중...</div>;
+  }
+
+  if (loading) {
+    return <Loading />;
   }
 
   return (
