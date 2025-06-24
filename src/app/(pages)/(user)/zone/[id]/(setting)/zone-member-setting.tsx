@@ -11,6 +11,7 @@ import {
   ZoneKick,
 } from "@/lib/client/zone.client.api";
 import { useParams } from "next/navigation";
+import { sendDetail } from "@/lib/client/socket.client.api";
 
 export default function ZoneMemberSetting({
   memberData,
@@ -42,6 +43,7 @@ export default function ZoneMemberSetting({
 
         const loadMember = await ZoneDetail(zoneId);
         setMembers(loadMember.zoneMemberInfoList);
+        await sendDetail(zoneId);
       } catch (err) {
         console.log(`강제 탈퇴 실패 : `, err);
       }
@@ -57,6 +59,7 @@ export default function ZoneMemberSetting({
 
         const loadMember = await ZoneDetail(zoneId);
         setMembers(loadMember.zoneMemberInfoList);
+        await sendDetail(zoneId);
       } catch (err) {
         console.log(`방장 위임 실패 : `, err);
       }
