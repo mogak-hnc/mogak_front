@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Button from "@/app/components/ui/button";
 import Input from "@/app/components/ui/input";
-import { ZoneEntryPost } from "@/lib/client/zone.client.api";
+import { ZoneEntryPost, ZoneLeave } from "@/lib/client/zone.client.api";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 import {
   decodeToken,
@@ -26,7 +26,7 @@ export default function ZoneInOut({
   hostId,
   joined,
   hasPwd,
-  joinedUserCount,
+  // joinedUserCount,
   onJoinSuccess,
 }: ZoneInProps) {
   const [user, setUser] = useState<JwtPayload | null>(null);
@@ -40,7 +40,11 @@ export default function ZoneInOut({
   const router = useRouter();
 
   const exitHandler = async () => {
+    if (!user) {
+      return;
+    }
     onJoinSuccess(false);
+    ZoneLeave(zoneId, user.memberId);
     await sendDetail(zoneId);
     disconnectSocket();
     router.push("/zone");

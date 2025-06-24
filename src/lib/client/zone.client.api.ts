@@ -99,6 +99,36 @@ export async function ZoneDelete(mogakZoneId: number) {
   return await res.json();
 }
 
+export async function ZoneLeave(mogakZoneId: string, memberId: string) {
+  const jwt = getJwtFromCookie();
+  console.log("jwt : ", jwt);
+  if (!jwt) {
+    throw new Error("JWT 토큰 없음 / 로그인 필요");
+  }
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/zone/leave`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `${jwt}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ mogakZoneId, memberId }),
+    }
+  );
+
+  if (!res.ok) {
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`${mogakZoneId}번 나가기 (leave) 실패: ${res.status}`);
+  }
+
+  const data: { mogakZoneId: string; memberId: string } = await res.json();
+
+  return data;
+}
+
 export async function ZoneDetail(id: string, jwt: string | null) {
   if (!jwt) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");

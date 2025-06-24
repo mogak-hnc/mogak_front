@@ -12,6 +12,7 @@ import {
 } from "@/lib/client/socket.client.api";
 import ConfirmModal from "@/app/components/confirm-modal";
 import SettingModal from "./setting-modal";
+import { ZoneLeave } from "@/lib/client/zone.client.api";
 
 export default function ZoneWrapper({
   id,
@@ -20,6 +21,7 @@ export default function ZoneWrapper({
   id: string;
   data: ZoneDetailResponse;
 }) {
+  const memberId = localStorage.getItem("jwt");
   const [joined, setJoined] = useState<boolean>(data.joined);
   const [showModal, setShowModal] = useState(false);
   const [loadData, setLoadData] = useState<ZoneDetailResponse>();
@@ -60,6 +62,10 @@ export default function ZoneWrapper({
     });
 
     const handleBeforeUnload = () => {
+      if (!memberId) {
+        return;
+      }
+      ZoneLeave(id, memberId);
       disconnectSocket();
     };
 
