@@ -12,7 +12,6 @@ import {
 } from "@/lib/client/socket.client.api";
 import ConfirmModal from "@/app/components/confirm-modal";
 import SettingModal from "./setting-modal";
-import { ZoneLeave } from "@/lib/client/zone.client.api";
 
 export default function ZoneWrapper({
   id,
