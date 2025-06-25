@@ -61,11 +61,21 @@ export default function ZoneWrapper({
       },
     });
 
-    const handleBeforeUnload = async () => {
+    const handleBeforeUnload = () => {
       if (!memberId) {
         return;
       }
-      await ZoneLeave(id, memberId);
+
+      const payload = new Blob(
+        [JSON.stringify({ mogakZoneId: id, memberId })],
+        { type: "application/json" }
+      );
+
+      navigator.sendBeacon(
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/zone/leave`,
+        payload
+      );
+
       disconnectSocket();
     };
 
