@@ -51,6 +51,10 @@ export default function ChatUI({ zoneId, joined }: ChatUiProps) {
     }
   }, [chatMessages]);
 
+  if (!joined && chatMessages.length === 0) {
+    return null;
+  }
+
   return (
     <div className="w-full max-w-md h-[600px] mx-auto p-4 bg-white rounded-3xl shadow border border-borders flex flex-col">
       <div ref={containerRef} className="flex-1 overflow-y-auto space-y-4">
