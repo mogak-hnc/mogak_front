@@ -1,58 +1,59 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { connectAndSubscribeSocket } from "@/lib/client/socket.client.api";
-import { ChatHistoryResponse } from "@/types/zone.type";
 import { getClientUser } from "@/utils/client/user.client.util";
 import { getProfileImage } from "@/utils/shared/profile.util";
-import { useEffect, useRef, useState } from "react";
 import ChatUiButton from "./chat-ui-button";
+import { ChatHistoryResponse } from "@/types/zone.type";
+import { ZoneChat } from "@/lib/client/zone.client.api";
+import { JwtPayload } from "@/utils/client/decode-token.client.util";
 
 type ChatUiProps = {
-  messages: ChatHistoryResponse[];
   zoneId: string;
   joined: boolean;
 };
 
-export default function ChatUI({ messages, zoneId, joined }: ChatUiProps) {
-  const user = getClientUser();
-
+export default function ChatUI({ zoneId, joined }: ChatUiProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const [mounted, setMounted] = useState<boolean>(false);
-  const [loadMsg, setLoadMsg] = useState<ChatHistoryResponse[]>();
+  const [user, setUser] = useState<JwtPayload | null>(null);
+  const [chatMessages, setChatMessages] = useState<ChatHistoryResponse[]>([]);
 
   useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }
-  }, [loadMsg]);
+    setUser(getClientUser());
+    const init = async () => {
+      try {
+        const res = await ZoneChat(zoneId);
+        setChatMessages(res.content ?? []);
+      } catch (err) {
+        console.error("초기 채팅 불러오기 실패:", err);
+      }
+    };
+
+    init();
+  }, [zoneId]);
 
   useEffect(() => {
-    setMounted(true);
-
     connectAndSubscribeSocket<ChatHistoryResponse>({
       topic: `/topic/api/mogak/zone/${zoneId}/message`,
       mogakZoneId: String(zoneId),
       onMessage: (parsedRes) => {
         console.log("받은 메시지:", parsedRes);
-
-        setLoadMsg((prev) => [...(prev ?? messages), parsedRes]);
+        setChatMessages((prev) => [...prev, parsedRes]);
       },
     });
-
-    return () => {};
   }, [zoneId]);
 
-  if (!mounted) {
-    return null;
-  }
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  }, [chatMessages]);
 
-  const chatMessages = loadMsg ?? messages;
-
-  if (!Array.isArray(chatMessages)) {
-    console.error("chatMessages는 배열이 아님:", chatMessages);
-    return null;
-  }
+  // if (!joined) {
+  //   return null;
+  // }
 
   return (
     <div className="w-full max-w-md h-[600px] mx-auto p-4 bg-white rounded-3xl shadow border border-borders flex flex-col">
@@ -74,7 +75,6 @@ export default function ChatUI({ messages, zoneId, joined }: ChatUiProps) {
                 alt="avatar"
                 className="w-8 h-8 rounded-full object-cover"
               />
-
               <div>
                 <p className="text-xs text-text">{msg.nickname}</p>
                 <div className="bg-white px-4 py-2 rounded-2xl rounded-tl-none border max-w-xs text-sm shadow-sm">

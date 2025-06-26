@@ -111,6 +111,26 @@ export interface ZoneStatusResponse {
   mogakZoneId: string;
 }
 
+interface PageSort {
+  empty: boolean;
+  sorted: boolean;
+  unsorted: boolean;
+}
+
+export interface ZoneChatResponse {
+  content: ChatHistoryResponse[];
+  pageable: Pageable;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+  size: number;
+  number: number;
+  sort: PageSort;
+  numberOfElements: number;
+  first: boolean;
+  empty: boolean;
+}
+
 export interface ZoneDetailResponse {
   tagNames: string[];
   hostMemberId: string;
@@ -120,7 +140,6 @@ export interface ZoneDetailResponse {
   joinedUserCount: number;
   imageUrl: string;
   zoneMemberInfoList: ZoneMemberInfo[];
-  chatHistoryResponses: ChatHistoryResponse[];
   joined: boolean;
   passwordRequired: boolean;
 }

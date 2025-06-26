@@ -21,6 +21,7 @@ export default function ZoneWrapper({
   data: ZoneDetailResponse;
 }) {
   const memberId = localStorage.getItem("jwt");
+
   const [joined, setJoined] = useState<boolean>(data.joined);
   const [showModal, setShowModal] = useState(false);
   const [loadData, setLoadData] = useState<ZoneDetailResponse>();
@@ -118,11 +119,7 @@ export default function ZoneWrapper({
       </div>
 
       <div className="w-full lg:w-[35%] min-w-[300px]">
-        <ChatUI
-          zoneId={id}
-          joined={joined}
-          messages={data.chatHistoryResponses}
-        />
+        <ChatUI zoneId={id} joined={joined} />
       </div>
 
       {showReconnectModal && (
