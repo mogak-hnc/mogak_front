@@ -15,9 +15,12 @@ export default function ZoneMainCard({
         <div className="space-y-1">
           <div className="flex items-center justify-between">
             {tag &&
-              tag.map((t) => (
-                <span className="bg-secondary text-text font-bold px-2 py-0.5 rounded">
-                  {tag}
+              tag.map((t, index) => (
+                <span
+                  key={index}
+                  className="bg-secondary text-text font-bold px-2 py-0.5 rounded"
+                >
+                  {t}
                 </span>
               ))}
 
