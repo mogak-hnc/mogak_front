@@ -95,7 +95,7 @@ export default function ZoneWrapper({
           zoneId={id}
           name={data.name}
           imageUrl={data.imageUrl}
-          tag={data.tagNames[0]}
+          tag={data.tagNames}
           joinedUserCount={(loadData ?? data)?.joinedUserCount}
           hostId={data.hostMemberId}
           joined={joined}

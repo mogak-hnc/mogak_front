@@ -14,7 +14,7 @@ export interface ZoneMainResponse {
 
 export interface ZoneMainProps {
   mogakZoneId: number;
-  tag?: string;
+  tag?: string[];
   title: string;
   participants: (string | null)[];
   hasPwd: boolean;
@@ -146,7 +146,7 @@ export interface ZoneDetailResponse {
 
 export interface ZoneHeaderProps {
   zoneId: string;
-  tag: string;
+  tag: string[];
   name: string;
   hostId: string;
   joinedUserCount: number;

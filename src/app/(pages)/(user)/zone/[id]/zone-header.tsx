@@ -31,9 +31,13 @@ export default function ZoneHeader({
       <div className="hidden dark:block absolute inset-0 bg-background-dark/80 z-0" />
 
       <div className="relative z-10 px-6">
-        <span className="block text-primary dark:text-primary text-xl mb-1">
-          #{tag}
-        </span>
+        <div className="flex gap-3">
+          {tag.map((t) => (
+            <span className="block text-primary dark:text-primary text-xl mb-1">
+              #{t}
+            </span>
+          ))}
+        </div>
         <span className="block text-primary dark:text-primary font-bold text-2xl mb-2">
           {name}
         </span>

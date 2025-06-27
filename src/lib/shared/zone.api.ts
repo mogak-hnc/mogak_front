@@ -21,7 +21,7 @@ export async function ZoneMain() {
   const data: ZoneMainProps[] = raw.map((item: ZoneMainResponse) => ({
     mogakZoneId: item.mogakZoneId,
     type: "studySpace",
-    tag: item.tagNames?.[0] ?? "",
+    tag: item.tagNames,
     title: item.name,
     participants: item.memberImageUrls ?? [],
     hasPwd: item.passwordRequired,
@@ -80,7 +80,7 @@ export async function ZoneSearch({
 
   const data: ZoneMainProps[] = raw.content.map((item: MogakZone) => ({
     mogakZoneId: item.mogakZoneId,
-    tag: item.tagNames?.[0] ?? "",
+    tag: item.tagNames,
     title: item.name,
     participants: item.memberImageUrls ?? [],
     hasPwd: item.passwordRequired,
