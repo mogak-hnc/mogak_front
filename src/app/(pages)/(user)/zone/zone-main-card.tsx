@@ -14,11 +14,13 @@ export default function ZoneMainCard({
       <div className="rounded-3xl p-4 shadow-md bg-white dark:bg-border-dark flex flex-col justify-between min-w-[280px] max-w-[320px] h-[180px]">
         <div className="space-y-1">
           <div className="flex items-center justify-between">
-            {tag && (
-              <span className="bg-secondary text-text font-bold px-2 py-0.5 rounded">
-                {tag}
-              </span>
-            )}
+            {tag &&
+              tag.map((t) => (
+                <span className="bg-secondary text-text font-bold px-2 py-0.5 rounded">
+                  {tag}
+                </span>
+              ))}
+
             {hasPwd && <span className="ml-2">🔒</span>}
           </div>
           <p className="text-lg font-bold text-text dark:text-text-dark truncate">
