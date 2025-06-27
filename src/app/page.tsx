@@ -48,7 +48,7 @@ export default async function Home() {
               <ZoneMainCard
                 key={space.mogakZoneId}
                 mogakZoneId={space.mogakZoneId}
-                tag={space.tagNames[0]}
+                tag={space.tagNames}
                 title={space.name}
                 participants={(space.memberImageUrls ?? []).filter(
                   (img): img is string => img !== null
