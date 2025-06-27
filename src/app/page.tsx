@@ -44,24 +44,32 @@ export default async function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {data.mogakZoneMainResponses.map((space) => (
-              <ZoneMainCard
-                key={space.mogakZoneId}
-                mogakZoneId={space.mogakZoneId}
-                tag={space.tagNames}
-                title={space.name}
-                participants={(space.memberImageUrls ?? []).filter(
-                  (img): img is string => img !== null
-                )}
-                hasPwd={space.passwordRequired}
-              />
-            ))}
+            {data.mogakZoneMainResponses.length > 0 ? (
+              data.mogakZoneMainResponses.map((space) => (
+                <ZoneMainCard
+                  key={space.mogakZoneId}
+                  mogakZoneId={space.mogakZoneId}
+                  tag={space.tagNames}
+                  title={space.name}
+                  participants={(space.memberImageUrls ?? []).filter(
+                    (img): img is string => img !== null
+                  )}
+                  hasPwd={space.passwordRequired}
+                />
+              ))
+            ) : (
+              <div className="col-span-full flex justify-center">
+                <p className="text-borders dark:text-border-dark text-center">
+                  아직 등록된 모각존이 없어요.
+                </p>
+              </div>
+            )}
           </div>
         </div>
         <div className="flex flex-col gap-4">
           <div className="flex justify-between items-center flex-wrap gap-2">
             <MainSubTitle
-              title="지금은 챌린지 할 시간"
+              title="챌린지 할 시간"
               description="현재 가장 많은 유저들이 참여 중인 챌린지를 살펴보세요."
             />
             <Link href="/challenge">
@@ -71,21 +79,29 @@ export default async function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {data.mogakChallengeResponses.map((challenge) => (
-              <ChallengeMainCard
-                key={challenge.challengeId}
-                challengeId={challenge.challengeId}
-                title={challenge.title}
-                description={`${convertDate(
-                  challenge.startDate
-                )} ~ ${convertDate(challenge.endDate)}`}
-                participants={(challenge.memberImageUrls ?? []).filter(
-                  (img): img is string => img !== null
-                )}
-                official={challenge.official}
-                status={challenge.status}
-              />
-            ))}
+            {data.mogakChallengeResponses.length > 0 ? (
+              data.mogakChallengeResponses.map((challenge) => (
+                <ChallengeMainCard
+                  key={challenge.challengeId}
+                  challengeId={challenge.challengeId}
+                  title={challenge.title}
+                  description={`${convertDate(
+                    challenge.startDate
+                  )} ~ ${convertDate(challenge.endDate)}`}
+                  participants={(challenge.memberImageUrls ?? []).filter(
+                    (img): img is string => img !== null
+                  )}
+                  official={challenge.official}
+                  status={challenge.status}
+                />
+              ))
+            ) : (
+              <div className="col-span-full flex justify-center">
+                <p className="text-borders dark:text-border-dark text-center">
+                  아직 등록된 모각챌이 없어요.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
