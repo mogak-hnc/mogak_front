@@ -32,8 +32,11 @@ export default function ZoneHeader({
 
       <div className="relative z-10 px-6">
         <div className="flex gap-3">
-          {tag.map((t) => (
-            <span className="block text-primary dark:text-primary text-xl mb-1">
+          {tag.map((t, index) => (
+            <span
+              key={index}
+              className="block text-primary dark:text-primary text-xl mb-1"
+            >
               #{t}
             </span>
           ))}
