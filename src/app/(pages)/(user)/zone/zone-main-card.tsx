@@ -13,14 +13,14 @@ export default function ZoneMainCard({
     <Link href={`/zone/${mogakZoneId}`}>
       <div className="rounded-3xl p-4 shadow-md bg-white dark:bg-border-dark flex flex-col justify-between min-w-[280px] max-w-[320px] h-[180px]">
         <div className="space-y-1">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
             {tag &&
               tag.map((t, index) => (
                 <span
                   key={index}
                   className="bg-secondary text-text font-bold px-2 py-0.5 rounded"
                 >
-                  {t}
+                  #{t}
                 </span>
               ))}
 

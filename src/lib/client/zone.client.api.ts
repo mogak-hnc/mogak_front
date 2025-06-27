@@ -184,7 +184,7 @@ export async function ZoneChat(id: string) {
   if (!res.ok) {
     const err = await res.text();
     console.error("서버 응답:", err);
-    throw new Error(`${id}번 모각존 채팅 상세 불러오기 실패: ${res.status}`);
+    throw new Error(`${id}번 모각존 상세 불러오기 실패: ${res.status}`);
   }
 
   const data: ZoneChatResponse = await res.json();

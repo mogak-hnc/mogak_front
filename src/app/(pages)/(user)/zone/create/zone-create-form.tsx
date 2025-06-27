@@ -52,6 +52,9 @@ export default function ZoneCreateForm({
 
       <FormField label="모각존 태그">
         <Input placeholder="기타" {...register("tag")} />
+        <p className="mt-1 text-sm text-borders dark:text-border-dark">
+          띄어쓰기하면 여러 개의 태그를 지정할 수 있어요.
+        </p>
       </FormField>
 
       <FormField label="인원 수">
