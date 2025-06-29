@@ -116,7 +116,7 @@ export default function SearchCardView({
           className="bg-white dark:bg-border-dark dark:text-text-dark rounded-md px-5 py-2"
         >
           <option value="recent">최신순</option>
-          <option value="participant">오래된 순</option>
+          <option value="participant">참가자 순</option>
         </select>
       </div>
 
