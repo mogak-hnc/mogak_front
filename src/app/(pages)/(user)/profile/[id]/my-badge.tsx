@@ -9,35 +9,37 @@ export default async function MyBadge({ id }: { id: string }) {
   const ownedBadgeIds = data.map((badge) => badge.badgeId);
 
   return (
-    <div className="bg-white dark:bg-border-dark p-4 rounded-xl shadow-md">
+    <div className="bg-white dark:bg-border-dark p-6 rounded-xl shadow">
       <h3 className="text-lg font-bold text-primary mb-4">보유 뱃지</h3>
 
       {allBadge.length > 0 ? (
-        <div className="grid grid-cols-5 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-5 sm:grid-cols-4 md:grid-cols-3 gap-4">
           {allBadge.map((badge) => {
             const isOwned = ownedBadgeIds.includes(badge.badgeId);
 
             return (
-              <div key={badge.badgeId} className="relative group w-20 h-20">
+              <div
+                key={badge.badgeId}
+                className="relative group w-20 h-20 mx-auto"
+              >
                 <img
                   src={badge.iconUrl}
                   alt={`badge-${badge.badgeId}`}
-                  className={`w-full h-full object-cover rounded-md transition
-              ${isOwned ? "" : "grayscale opacity-50"}`}
+                  className={`w-full h-full object-cover rounded-md transition ${
+                    isOwned ? "" : "grayscale opacity-50"
+                  }`}
                 />
-                <div
-                  className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2
-              w-max max-w-[160px] px-2 py-1 rounded bg-gray-800 text-white text-xs
-              opacity-0 group-hover:opacity-100 transition whitespace-pre-line z-10"
-                >
-                  <p>{badge.name}</p>
+                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-max max-w-[160px] px-2 py-1 rounded bg-gray-800 text-white text-xs opacity-0 group-hover:opacity-100 transition whitespace-pre-line z-10 text-center">
+                  {badge.name}
                 </div>
               </div>
             );
           })}
         </div>
       ) : (
-        <div className="text-sm">아직 등록된 뱃지가 없습니다.</div>
+        <div className="text-sm text-gray-500 dark:text-gray-400 text-center">
+          아직 등록된 뱃지가 없습니다.
+        </div>
       )}
     </div>
   );

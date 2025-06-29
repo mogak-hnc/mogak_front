@@ -4,8 +4,14 @@ import Button from "@/app/components/ui/button";
 import MyBadge from "./my-badge";
 // import MyChallenge from "./my-challenge";
 import MyProfile from "./my-profile";
-import { ProfileInfo } from "@/lib/server/profile.server.api";
+import {
+  ProfileChallenge,
+  ProfileInfo,
+  ProfileZone,
+} from "@/lib/server/profile.server.api";
 import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
+import MyZone from "./my-zone";
+import MyChallenge from "./my-challenge";
 
 export async function generateMetadata({
   params,
@@ -31,6 +37,8 @@ export default async function ProfilePage({
   const jwt = await getJwtFromServerCookie();
 
   const data = await ProfileInfo(id, jwt);
+  const zoneData = await ProfileZone(id, jwt);
+  const challengeData = await ProfileChallenge(id, jwt);
 
   if (!data)
     return (
@@ -50,7 +58,8 @@ export default async function ProfilePage({
       {data.showBadge && (
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
           <MyBadge id={id} />
-          {/*  <MyChallenge challenges={data.challenges ?? []} /> */}
+          <MyChallenge challenges={challengeData} />
+          <MyZone zones={zoneData} />
         </div>
       )}
     </div>

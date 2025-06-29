@@ -12,6 +12,16 @@ export interface ProfileProps {
   showBadge: boolean;
 }
 
+export interface ProfileZoneResponse {
+  zoneId: string;
+  name: string;
+}
+
+export interface ProfileChallengeResponse {
+  challengeId: string;
+  name: string;
+}
+
 export type ProfileBadgeType = "DURATION" | "COUNT" | "OFFICIAL";
 
 export interface ProfileBadgeProps {
