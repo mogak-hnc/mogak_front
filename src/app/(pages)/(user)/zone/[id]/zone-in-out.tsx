@@ -26,7 +26,6 @@ export default function ZoneInOut({
   hostId,
   joined,
   hasPwd,
-  // joinedUserCount,
   onJoinSuccess,
 }: ZoneInProps) {
   const [user, setUser] = useState<JwtPayload | null>(null);
@@ -43,6 +42,7 @@ export default function ZoneInOut({
     if (!user) {
       return;
     }
+
     onJoinSuccess(false);
     await ZoneLeave(zoneId, user.memberId);
     await sendDetail(zoneId);

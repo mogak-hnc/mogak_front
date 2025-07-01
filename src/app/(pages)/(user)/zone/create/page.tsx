@@ -24,8 +24,6 @@ export default function ZoneCreatePage() {
       router.push(`/zone/${res.mogakZoneId}`);
     } catch (err) {
       console.error("모각존 생성 실패", err);
-    } finally {
-      setIsLoading(false);
     }
   };
 

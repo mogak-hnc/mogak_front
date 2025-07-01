@@ -21,8 +21,6 @@ export default function ChallengeCreatePage() {
       router.push(`/challenge/${res.challengeId}`);
     } catch (err) {
       console.log("챌린지 생성 실패 : ", err);
-    } finally {
-      setIsLoading(false);
     }
   };
 
