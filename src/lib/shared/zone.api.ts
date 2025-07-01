@@ -2,33 +2,9 @@ import { TagsProps } from "@/types/shared.type";
 import {
   MogakZone,
   ZoneMainProps,
-  ZoneMainResponse,
   ZoneSearchProps,
   ZoneSearchResponse,
 } from "@/types/zone.type";
-
-export async function ZoneMain() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/zone`);
-
-  if (!res.ok) {
-    const err = await res.text();
-    console.error("서버 응답:", err);
-    throw new Error(`모각존 메인 불러오기 실패: ${res.status}`);
-  }
-
-  const raw: ZoneMainResponse[] = await res.json();
-
-  const data: ZoneMainProps[] = raw.map((item: ZoneMainResponse) => ({
-    mogakZoneId: item.mogakZoneId,
-    type: "studySpace",
-    tag: item.tagNames,
-    title: item.name,
-    participants: item.memberImageUrls ?? [],
-    hasPwd: item.passwordRequired,
-  }));
-
-  return data;
-}
 
 export async function ZoneTags() {
   const res = await fetch(
@@ -67,7 +43,7 @@ export async function ZoneSearch({
 
   const url = `${
     process.env.NEXT_PUBLIC_BACKEND_API_URL
-  }/zone/list?${query.toString()}`;
+  }/zone?${query.toString()}`;
 
   const res = await fetch(url);
 

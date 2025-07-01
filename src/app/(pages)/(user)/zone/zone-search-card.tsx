@@ -6,7 +6,7 @@ import SearchCardView from "@/app/components/shared/search-card-view";
 import { ZoneMainProps, ZoneSearchCardProps } from "@/types/zone.type";
 import { mapSort } from "@/utils/shared/sort.util";
 import ZoneMainCard from "./zone-main-card";
-import { ZoneMain, ZoneSearch } from "@/lib/shared/zone.api";
+import { ZoneSearch } from "@/lib/shared/zone.api";
 import { ZoneMainCardSkeleton } from "../../../components/skeleton/zone/zone-main-card-skeleton";
 
 export default function ZoneSearchCard({
@@ -21,9 +21,16 @@ export default function ZoneSearchCard({
   const [finalSort, setFinalSort] = useState(sort);
   const [data, setData] = useState<ZoneMainProps[]>([]);
   const [loading, setLoading] = useState(true);
-  const [initialLoaded, setInitialLoaded] = useState(false);
 
-  const fetchSearch = async () => {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [selectedTag, finalSort]);
+
+  const fetchData = async () => {
     setLoading(true);
     try {
       const { data } = await ZoneSearch({
@@ -35,34 +42,11 @@ export default function ZoneSearchCard({
       });
       setData(data);
     } catch (err) {
-      console.error("검색 실패", err);
+      console.error("모각존 불러오기 실패", err);
     } finally {
       setLoading(false);
     }
   };
-
-  const fetchInitial = async () => {
-    setLoading(true);
-    try {
-      const data = await ZoneMain();
-      setData(data);
-      setInitialLoaded(true);
-    } catch (err) {
-      console.error("초기 모각존 불러오기 실패", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchInitial();
-  }, []);
-
-  useEffect(() => {
-    if (initialLoaded) {
-      fetchSearch();
-    }
-  }, [selectedTag, finalSort]);
 
   const toggleTag = (tag: string) => {
     setSelectedTag((prev) => (prev === tag ? null : tag));
@@ -82,7 +66,7 @@ export default function ZoneSearchCard({
           onSortChange={setFinalSort}
           search={search}
           onSearchChange={setSearch}
-          onSearch={fetchSearch}
+          onSearch={fetchData}
         />
       </div>
 
