@@ -86,7 +86,7 @@ export async function sendDetail(zoneId: string) {
   }
 
   try {
-    await ensureConnected(zoneId);
+    await ensureConnected();
     await waitUntilConnected();
 
     stompClient!.publish({
@@ -116,7 +116,7 @@ export async function sendChat(
   }
 
   try {
-    await ensureConnected(zoneId);
+    await ensureConnected();
     await waitUntilConnected();
 
     stompClient!.publish({
@@ -147,7 +147,7 @@ export async function sendStatus(
   }
 
   try {
-    await ensureConnected(zoneId);
+    await ensureConnected();
     await waitUntilConnected();
 
     stompClient!.publish({
@@ -189,7 +189,7 @@ function waitUntilConnected(timeout = 3000): Promise<void> {
   });
 }
 
-export async function ensureConnected(mogakZoneId: string): Promise<void> {
+export async function ensureConnected(): Promise<void> {
   const token = getJwtFromCookie();
   if (!token) throw new Error("JWT 없음");
 
