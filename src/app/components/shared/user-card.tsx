@@ -17,6 +17,8 @@ export const statusColorMap: Record<StatusType, string> = {
     "text-primary dark:text-primary-dark border-primary dark:border-primary-dark",
   자리비움:
     "text-secondary dark:text-secondary-dark border-secondary dark:border-secondary-dark",
+  오프라인:
+    "text-borders dark:text-border-dark border-borders dark:border-border-dark",
 };
 
 export default function UserCard({
