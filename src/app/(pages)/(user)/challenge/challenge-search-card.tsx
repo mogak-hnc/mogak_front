@@ -23,22 +23,9 @@ export default function ChallengeSearchCard({
   const [finalSort, setFinalSort] = useState(sort);
   const [data, setData] = useState<ChallengeMainProps[]>([]);
   const [loading, setLoading] = useState(true);
-  const [initialLoaded, setInitialLoaded] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
 
-  const fetchInitial = async () => {
-    setLoading(true);
-    try {
-      const data = await ChallengeMain();
-      setData(data);
-      setInitialLoaded(true);
-    } catch (err) {
-      console.error("초기 챌린지 불러오기 실패", err);
-    }
-    setLoading(false);
-  };
-
-  const fetchSearch = async () => {
+  const fetchData = async () => {
     setLoading(true);
     try {
       const { data } = await ChallengeSearch({
@@ -51,19 +38,18 @@ export default function ChallengeSearchCard({
       });
       setData(data);
     } catch (err) {
-      console.error("검색 실패", err);
+      console.error("챌린지 검색 실패", err);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
-    fetchInitial();
+    fetchData();
   }, []);
 
   useEffect(() => {
-    if (initialLoaded) {
-      fetchSearch();
-    }
+    fetchData();
   }, [official, finalSort]);
 
   const toggleOfficial = () => {
@@ -83,7 +69,7 @@ export default function ChallengeSearchCard({
           onSortChange={setFinalSort}
           search={search}
           onSearchChange={setSearch}
-          onSearch={fetchSearch}
+          onSearch={fetchData}
           status={status}
           onStatusChange={setStatus}
         />

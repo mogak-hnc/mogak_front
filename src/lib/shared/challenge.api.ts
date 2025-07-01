@@ -4,6 +4,7 @@ import {
   ChallengeSearchRequest,
   ChallengeSearchResponse,
 } from "@/types/challenge.type";
+import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 import { convertDate } from "@/utils/shared/date.util";
 
 export async function ChallengeMain() {
@@ -41,6 +42,8 @@ export async function ChallengeSearch({
   size,
   status,
 }: ChallengeSearchRequest) {
+  const token = getJwtFromCookie();
+
   const query = new URLSearchParams();
 
   if (search) {
@@ -58,7 +61,7 @@ export async function ChallengeSearch({
 
   const url = `${
     process.env.NEXT_PUBLIC_BACKEND_API_URL
-  }/challenge/list?${query.toString()}`;
+  }/challenge?${query.toString()}`;
 
   const res = await fetch(url);
 
