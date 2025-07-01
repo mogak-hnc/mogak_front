@@ -44,8 +44,8 @@ export default async function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {data.mogakZoneMainResponses.length > 0 ? (
-              data.mogakZoneMainResponses.map((space) => (
+            {data.mogakZoneMainResponses.content.length > 0 ? (
+              data.mogakZoneMainResponses.content.map((space) => (
                 <ZoneMainCard
                   key={space.mogakZoneId}
                   mogakZoneId={space.mogakZoneId}
@@ -79,8 +79,8 @@ export default async function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {data.mogakChallengeResponses.length > 0 ? (
-              data.mogakChallengeResponses.map((challenge) => (
+            {data.mogakChallengeResponses.content.length > 0 ? (
+              data.mogakChallengeResponses.content.map((challenge) => (
                 <ChallengeMainCard
                   key={challenge.challengeId}
                   challengeId={challenge.challengeId}
@@ -88,7 +88,7 @@ export default async function Home() {
                   description={`${convertDate(
                     challenge.startDate
                   )} ~ ${convertDate(challenge.endDate)}`}
-                  participants={(challenge.memberImageUrls ?? []).filter(
+                  participants={(challenge.memberImageUrl ?? []).filter(
                     (img): img is string => img !== null
                   )}
                   official={challenge.official}

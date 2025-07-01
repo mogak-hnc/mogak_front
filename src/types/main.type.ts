@@ -1,23 +1,52 @@
 import { ChallengeStatusType } from "./challenge.type";
 
 export interface MainResponse {
-  mogakZoneMainResponses: MainZoneRequest[];
-  mogakChallengeResponses: MainChallengeRequest[];
+  mogakZoneMainResponses: PaginationResponse<MainZoneItem>;
+  mogakChallengeResponses: PaginationResponse<MainChallengeItem>;
 }
 
-export interface MainZoneRequest {
+export interface PaginationResponse<T> {
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  content: T[];
+  number: number;
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  numberOfElements: number;
+  pageable: {
+    offset: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    paged: boolean;
+    pageNumber: number;
+    pageSize: number;
+    unpaged: boolean;
+  };
+  first: boolean;
+  last: boolean;
+  empty: boolean;
+}
+
+export interface MainZoneItem {
   mogakZoneId: number;
   tagNames: string[];
   name: string;
-  memberImageUrls: string[] | null[];
+  memberImageUrls: (string | null)[];
   passwordRequired: boolean;
 }
 
-export interface MainChallengeRequest {
+export interface MainChallengeItem {
   challengeId: number;
   official: boolean;
   title: string;
-  memberImageUrls: string[] | null[];
+  memberImageUrl: string[];
   startDate: number[];
   endDate: number[];
   status: ChallengeStatusType;
