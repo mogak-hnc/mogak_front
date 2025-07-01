@@ -20,18 +20,21 @@ export default function ZoneWrapper({
   id: string;
   data: ZoneDetailResponse;
 }) {
-  const memberId = localStorage.getItem("jwt");
-
   const [joined, setJoined] = useState<boolean>(data.joined);
   const [showModal, setShowModal] = useState(false);
   const [loadData, setLoadData] = useState<ZoneDetailResponse>();
   const [connected, setConnected] = useState(false);
   const [showReconnectModal, setShowReconnectModal] = useState(false);
 
+  const [memberId, setMemberId] = useState<string | null>(null);
+
   useEffect(() => {
-    if (!joined) {
-      return;
-    }
+    const jwt = localStorage.getItem("jwt");
+    setMemberId(jwt);
+  }, []);
+
+  useEffect(() => {
+    if (!joined) return;
 
     const timeout = setTimeout(() => {
       if (!connected && id === data.hostMemberId) {
@@ -62,9 +65,7 @@ export default function ZoneWrapper({
     });
 
     const handleBeforeUnload = () => {
-      if (!memberId) {
-        return;
-      }
+      if (!memberId) return;
 
       const payload = new Blob(
         [JSON.stringify({ mogakZoneId: id, memberId })],
@@ -85,8 +86,9 @@ export default function ZoneWrapper({
       clearTimeout(timeout);
       setConnected(false);
       window.removeEventListener("beforeunload", handleBeforeUnload);
+      disconnectSocket();
     };
-  }, [joined, id]);
+  }, []);
 
   return (
     <div className="flex flex-col lg:flex-row gap-4">

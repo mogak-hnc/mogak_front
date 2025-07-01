@@ -191,31 +191,19 @@ function waitUntilConnected(timeout = 3000): Promise<void> {
 
 export async function ensureConnected(mogakZoneId: string): Promise<void> {
   const token = getJwtFromCookie();
-  if (!token) {
-    throw new Error("JWT 없음");
+  if (!token) throw new Error("JWT 없음");
+
+  if (stompClient && stompClient.connected) {
+    return;
   }
 
-  if (stompClient && stompClient.connected) return;
-
-  return new Promise((resolve, reject) => {
-    stompClient = new Client({
-      webSocketFactory: () =>
-        new SockJS(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/ws`),
-      connectHeaders: {
-        Authorization: token,
-        mogakZoneId,
-      },
-      reconnectDelay: 5000,
-      onConnect: () => {
-        console.log("ensureConnected: 연결 성공");
-        resolve();
-      },
-      onStompError: (frame) => {
-        console.error("ensureConnected: STOMP 에러", frame);
-        reject(new Error("웹소켓 연결 실패"));
-      },
-    });
-
+  if (stompClient && !stompClient.active) {
     stompClient.activate();
-  });
+    await waitUntilConnected();
+    return;
+  }
+
+  throw new Error(
+    "WebSocket이 먼저 설정되어야 함 (connectAndSubscribeSocket 사용)"
+  );
 }
