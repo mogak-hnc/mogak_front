@@ -34,7 +34,9 @@ export default function ZoneWrapper({
   }, []);
 
   useEffect(() => {
-    if (!joined) return;
+    if (!joined) {
+      return;
+    }
 
     const timeout = setTimeout(() => {
       if (!connected && id === data.hostMemberId) {
@@ -65,7 +67,9 @@ export default function ZoneWrapper({
     });
 
     const handleBeforeUnload = () => {
-      if (!memberId) return;
+      if (!memberId) {
+        return;
+      }
 
       const payload = new Blob(
         [JSON.stringify({ mogakZoneId: id, memberId })],
