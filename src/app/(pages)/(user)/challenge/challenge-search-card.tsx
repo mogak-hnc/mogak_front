@@ -11,6 +11,7 @@ import { mapSort } from "@/utils/shared/sort.util";
 import ChallengeMainCard from "./challenge-main-card";
 import { ChallengeSearch } from "@/lib/shared/challenge.api";
 import ChallengeMainCardSkeleton from "../../../components/skeleton/challenge/challenge-main-card-skeleton";
+import Pagination from "@/app/components/shared/paginaiton";
 
 export default function ChallengeSearchCard({
   title,
@@ -25,18 +26,24 @@ export default function ChallengeSearchCard({
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState<string | null>(null);
 
-  const fetchData = async () => {
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const fetchData = async (pageNumber = 0) => {
     setLoading(true);
     try {
-      const { data } = await ChallengeSearch({
+      const res = await ChallengeSearch({
         search,
         official,
         sort: mapSort(finalSort),
         status: status as ChallengeStatusType,
-        page: 0,
+        page: pageNumber,
         size: 12,
       });
-      setData(data);
+
+      setData(res.data || []);
+      setTotalPages(res.totalPages || 1);
+      setPage(pageNumber);
     } catch (err) {
       console.error("챌린지 검색 실패", err);
     } finally {
@@ -45,15 +52,20 @@ export default function ChallengeSearchCard({
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData(0);
   }, []);
 
   useEffect(() => {
-    fetchData();
-  }, [official, finalSort]);
+    fetchData(0);
+  }, [official, finalSort, status]);
 
   const toggleOfficial = () => {
     setOfficial((prev) => !prev);
+  };
+
+  const handlePageChange = (nextPage: number) => {
+    if (nextPage < 0 || nextPage >= totalPages) return;
+    fetchData(nextPage);
   };
 
   return (
@@ -69,7 +81,7 @@ export default function ChallengeSearchCard({
           onSortChange={setFinalSort}
           search={search}
           onSearchChange={setSearch}
-          onSearch={fetchData}
+          onSearch={() => fetchData(0)}
           status={status}
           onStatusChange={setStatus}
         />
@@ -98,6 +110,12 @@ export default function ChallengeSearchCard({
           </div>
         )}
       </div>
+
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        onPageChange={(next) => fetchData(next)}
+      />
     </>
   );
 }
