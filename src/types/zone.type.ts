@@ -54,6 +54,7 @@ export interface ZoneCreateRequest {
   maxCapacity: number;
   password: string;
   chatEnabled: boolean;
+  passwordRequired: boolean;
 }
 
 export interface ZoneSettingProps {

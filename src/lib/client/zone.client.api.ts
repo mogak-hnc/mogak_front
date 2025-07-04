@@ -7,6 +7,8 @@ import {
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 
 export async function ZoneCreatePost(input: ZoneCreateInput, imageFile?: File) {
+  console.log(input);
+
   const token = getJwtFromCookie();
   if (!token) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
@@ -17,6 +19,7 @@ export async function ZoneCreatePost(input: ZoneCreateInput, imageFile?: File) {
     tag: input.tag ?? "기타",
     maxCapacity: input.capacity,
     password: input.usePassword ? input.password : "",
+    passwordRequired: input.usePassword,
     chatEnabled: input.useChat,
   };
 
