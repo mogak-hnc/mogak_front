@@ -63,11 +63,6 @@ export default function ChallengeSearchCard({
     setOfficial((prev) => !prev);
   };
 
-  const handlePageChange = (nextPage: number) => {
-    if (nextPage < 0 || nextPage >= totalPages) return;
-    fetchData(nextPage);
-  };
-
   return (
     <>
       <div className="w-full flex justify-center">
