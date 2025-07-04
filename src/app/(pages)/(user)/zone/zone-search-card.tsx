@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import SearchCardView from "@/app/components/shared/search-card-view";
-
 import { ZoneMainProps, ZoneSearchCardProps } from "@/types/zone.type";
 import { mapSort } from "@/utils/shared/sort.util";
 import ZoneMainCard from "./zone-main-card";
 import { ZoneSearch } from "@/lib/shared/zone.api";
-import { ZoneMainCardSkeleton } from "../../../components/skeleton/zone/zone-main-card-skeleton";
+import { ZoneMainCardSkeleton } from "@/app/components/skeleton/zone/zone-main-card-skeleton";
+import Pagination from "@/app/components/shared/paginaiton";
 
 export default function ZoneSearchCard({
   title,
@@ -22,31 +22,39 @@ export default function ZoneSearchCard({
   const [data, setData] = useState<ZoneMainProps[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
 
-  useEffect(() => {
-    fetchData();
-  }, [selectedTag, finalSort]);
-
-  const fetchData = async () => {
+  const fetchData = async (pageNumber = 0) => {
     setLoading(true);
     try {
-      const { data } = await ZoneSearch({
+      const res = await ZoneSearch({
         search,
         tag: selectedTag ?? "",
         sort: mapSort(finalSort),
-        page: 0,
+        page: pageNumber,
         size: 12,
       });
-      setData(data);
+
+      console.log(res);
+
+      setData(res.data);
+      setPage(res.page);
+      setTotalPages(res.totalPages);
     } catch (err) {
       console.error("모각존 불러오기 실패", err);
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    fetchData(0);
+  }, [selectedTag, finalSort]);
 
   const toggleTag = (tag: string) => {
     setSelectedTag((prev) => (prev === tag ? null : tag));
@@ -66,7 +74,7 @@ export default function ZoneSearchCard({
           onSortChange={setFinalSort}
           search={search}
           onSearchChange={setSearch}
-          onSearch={fetchData}
+          onSearch={() => fetchData(0)}
         />
       </div>
 
@@ -89,6 +97,14 @@ export default function ZoneSearchCard({
             </div>
           )}
         </div>
+
+        {totalPages > 1 && (
+          <Pagination
+            page={page}
+            totalPages={totalPages}
+            onPageChange={fetchData}
+          />
+        )}
       </div>
     </>
   );
