@@ -2,7 +2,7 @@ import { MainResponse } from "@/types/main.type";
 
 export async function MainZoneChallenge() {
   const res = await fetch(`${process.env.BACKEND_API_URL}`, {
-    next: { revalidate: 30 },
+    next: { revalidate: 60 * 10 },
   });
 
   if (!res.ok) {
