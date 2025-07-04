@@ -2,6 +2,7 @@ import {
   ChallengeCreateInput,
   ChallengeCreateRequest,
   ChallengeCreateResponse,
+  ChallengeDetileResponse,
   ChallengeProofPostRequest,
 } from "@/types/challenge.type";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
@@ -130,4 +131,32 @@ export async function ChallengeDelete(challengeId: number) {
   }
 
   return await res.json();
+}
+
+export async function ChallengeDetail(id: string, jwt: string | null) {
+  if (!jwt) {
+    throw new Error("JWT 토큰 없음 / 로그인 필요");
+  }
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/challenge/${id}`,
+    {
+      method: "GET",
+      cache: "no-store",
+      headers: {
+        Authorization: `${jwt}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (!res.ok) {
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`${id}번 챌린지 디테일 실패: ${res.status}`);
+  }
+
+  const data: ChallengeDetileResponse = await res.json();
+
+  return data;
 }

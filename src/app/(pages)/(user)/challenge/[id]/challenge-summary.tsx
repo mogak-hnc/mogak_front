@@ -16,13 +16,17 @@ export function SummarySubtitle({ children }: { children: React.ReactNode }) {
   return <h4 className="font-bold text-primary mb-2">{children}</h4>;
 }
 
-export default function ChallengeSummary(props: ChallengeDetailSummaryProps) {
+export default function ChallengeSummary(
+  props: ChallengeDetailSummaryProps & { onRefetch: () => void }
+) {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
 
   const challengeIn = async () => {
     try {
       await ChallengeEntryPost(props.challengeId);
+      setShowModal(false);
+      props.onRefetch();
     } catch (err) {
       console.log(`챌린지 참여 실패 : ${err}`);
     }
