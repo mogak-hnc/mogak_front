@@ -8,27 +8,36 @@ import { ZoneDelete } from "@/lib/client/zone.client.api";
 import Loading from "@/app/loading";
 import { ZoneMainProps } from "@/types/zone.type";
 import { Column } from "@/types/admin.type";
+import Pagination from "@/app/components/shared/paginaiton";
 
 export default function AdminZonePage() {
   const [zones, setZones] = useState<ZoneMainProps[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+
   const [showModal, setShowModal] = useState(false);
   const [targetId, setTargetId] = useState<number | null>(null);
   const [targetName, setTargetName] = useState<string | null>(null);
 
-  const fetchZones = async () => {
+  const fetchZones = async (pageNumber = 0) => {
+    setLoading(true);
     try {
       const res = await ZoneSearch({
         sort: "recent",
-        page: 0,
-        size: 20,
+        page: pageNumber,
+        size: 10,
       });
 
       setZones(res.data);
+      setPage(pageNumber);
+      setTotalPages(res.totalPages);
     } catch (e) {
       console.error("에러:", e);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -44,10 +53,11 @@ export default function AdminZonePage() {
   const confirmDelete = async () => {
     if (targetId !== null) {
       await ZoneDelete(targetId);
-      await fetchZones();
+      await fetchZones(page);
     }
     setShowModal(false);
     setTargetId(null);
+    setTargetName(null);
   };
 
   const columns: Column<ZoneMainProps>[] = [
@@ -88,10 +98,18 @@ export default function AdminZonePage() {
       </h1>
       <AdminTable columns={columns} data={zones} />
 
+      {totalPages > 1 && (
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          onPageChange={fetchZones}
+        />
+      )}
+
       {showModal && (
         <ConfirmModal
           message={`정말 '${targetName}' 존을 삭제하시겠습니까?`}
-          onConfirm={() => confirmDelete()}
+          onConfirm={confirmDelete}
           onCancel={() => setShowModal(false)}
         />
       )}
