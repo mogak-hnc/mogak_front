@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import AdminTable from "@/app/components/admin/admin-table";
 import ConfirmModal from "@/app/components/confirm-modal";
+import Pagination from "@/app/components/shared/paginaiton";
 import { AdviceSearch } from "@/lib/shared/advice.api";
 import { AdviceContentProps } from "@/types/advice.type";
 import { convertTime } from "@/utils/shared/date.util";
@@ -11,23 +12,21 @@ import { Column } from "@/types/admin.type";
 
 export default function AdminAdvicePage() {
   const [adviceList, setAdviceList] = useState<AdviceContentProps[]>([]);
+  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [targetId, setTargetId] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchAdvice();
-  }, []);
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const fetchAdvice = async () => {
+  const fetchAdvice = async (pageNumber = 0) => {
+    setLoading(true);
     try {
       const res = await AdviceSearch({
         sort: "recent",
-        page: 0,
-        size: 20,
+        page: pageNumber,
+        size: 6,
       });
-
-      console.log(res);
 
       const formatted = res.content.map((item) => ({
         ...item,
@@ -35,6 +34,8 @@ export default function AdminAdvicePage() {
       }));
 
       setAdviceList(formatted);
+      setPage(pageNumber);
+      setTotalPages(res.totalPages);
     } catch (e) {
       console.error("고민 상담 목록 불러오기 실패", e);
     } finally {
@@ -42,19 +43,22 @@ export default function AdminAdvicePage() {
     }
   };
 
+  useEffect(() => {
+    fetchAdvice();
+  }, []);
+
   const openModal = (id: number) => {
     setTargetId(id);
     setShowModal(true);
   };
 
   const confirmDelete = async () => {
-    if (!targetId) {
-      return;
-    }
+    if (!targetId) return;
+
     await AdviceDelete(targetId);
-    setShowModal(false);
     setTargetId(null);
-    fetchAdvice();
+    setShowModal(false);
+    await fetchAdvice(page);
   };
 
   const columns: Column<AdviceContentProps>[] = [
@@ -69,7 +73,7 @@ export default function AdminAdvicePage() {
     {
       key: "actions",
       label: "관리",
-      render: (_, row: AdviceContentProps) => (
+      render: (_, row) => (
         <button
           className="text-sm px-2 py-1 bg-error dark:bg-error-dark text-white rounded"
           onClick={() => openModal(row.worryId)}
@@ -91,7 +95,16 @@ export default function AdminAdvicePage() {
           불러오는 중...
         </p>
       ) : (
-        <AdminTable columns={columns} data={adviceList} />
+        <>
+          <AdminTable columns={columns} data={adviceList} />
+          {totalPages > 1 && (
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              onPageChange={fetchAdvice}
+            />
+          )}
+        </>
       )}
 
       {showModal && (
