@@ -10,26 +10,34 @@ import { challengeMap } from "@/utils/shared/status.util";
 import Loading from "@/app/loading";
 import AdminTable from "@/app/components/admin/admin-table";
 import { Column } from "@/types/admin.type";
+import Pagination from "@/app/components/shared/paginaiton";
 
 export default function AdminChallengePage() {
   const [challenges, setChallenges] = useState<ChallengeMainProps[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+
   const [showModal, setShowModal] = useState(false);
   const [targetId, setTargetId] = useState<number | null>(null);
   const [targetName, setTargetName] = useState<string | null>(null);
 
-  const fetchChallenges = async () => {
+  const fetchChallenges = async (pageNumber = 0) => {
+    setLoading(true);
     try {
       const res = await ChallengeSearch({
         search: "",
         official: null,
         sort: "recent",
         status: "",
-        page: 0,
-        size: 20,
+        page: pageNumber,
+        size: 6,
       });
 
       setChallenges(res.data);
+      setPage(pageNumber);
+      setTotalPages(res.totalPages);
     } catch (e) {
       console.error("챌린지 목록 불러오기 실패", e);
     } finally {
@@ -51,7 +59,7 @@ export default function AdminChallengePage() {
     if (targetId !== null) {
       try {
         await ChallengeDelete(targetId);
-        await fetchChallenges();
+        await fetchChallenges(page);
       } catch (err) {
         console.error("챌린지 삭제 실패:", err);
       }
@@ -59,40 +67,39 @@ export default function AdminChallengePage() {
 
     setShowModal(false);
     setTargetId(null);
+    setTargetName(null);
   };
 
   const columns: Column<ChallengeMainProps>[] = [
     {
       key: "id",
       label: "ID",
-      render: (_, row: ChallengeMainProps) => `${row.challengeId}`,
+      render: (_, row) => `${row.challengeId}`,
     },
     {
       key: "title",
       label: "제목",
-      linkTo: (row: ChallengeMainProps) => `/challenge/${row.challengeId}`,
+      linkTo: (row) => `/challenge/${row.challengeId}`,
     },
     {
       key: "participants",
       label: "참가자 수",
-      render: (_, row: ChallengeMainProps) => {
-        return `${String(row.participants?.length) || "0"}`;
-      },
+      render: (_, row) => `${row.participants?.length ?? 0}`,
     },
     {
       key: "period",
       label: "기간",
-      render: (_, row: ChallengeMainProps) => `${row.description}`,
+      render: (_, row) => `${row.description}`,
     },
     {
       key: "status",
       label: "상태",
-      render: (_, row: ChallengeMainProps) => `${challengeMap[row.status]}`,
+      render: (_, row) => `${challengeMap[row.status]}`,
     },
     {
       key: "actions",
       label: "관리",
-      render: (_, row: ChallengeMainProps) => (
+      render: (_, row) => (
         <button
           className="text-sm px-2 py-1 bg-error dark:bg-error-dark text-white rounded"
           onClick={() => openModal(row.challengeId, row.title)}
@@ -103,9 +110,7 @@ export default function AdminChallengePage() {
     },
   ];
 
-  if (loading) {
-    return <Loading />;
-  }
+  if (loading) return <Loading />;
 
   return (
     <div className="flex flex-col gap-4">
@@ -120,7 +125,16 @@ export default function AdminChallengePage() {
           생성하기
         </Link>
       </div>
+
       <AdminTable columns={columns} data={challenges} />
+
+      {totalPages > 1 && (
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          onPageChange={fetchChallenges}
+        />
+      )}
 
       {showModal && (
         <ConfirmModal
