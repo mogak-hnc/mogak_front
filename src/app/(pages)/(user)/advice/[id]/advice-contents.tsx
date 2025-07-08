@@ -13,7 +13,7 @@ import { AdviceEmpathyPost } from "@/lib/client/advice.client.api";
 
 import AlertModal from "@/app/components/custom-modal";
 import { useRouter } from "next/navigation";
-import { getJwtFromCookie } from "@/utils/client/auth.client.util";
+import { useAuthStore } from "@/store/authStore";
 
 export default function AdviceContents({
   id,
@@ -30,6 +30,8 @@ export default function AdviceContents({
     timeArrayToSeconds(data.restTime)
   );
 
+  const jwt = useAuthStore((state) => state.jwt);
+
   useEffect(() => {
     const timer = setInterval(() => {
       setRestSeconds((prev) => (prev > 0 ? prev - 1 : 0));
@@ -38,7 +40,6 @@ export default function AdviceContents({
   }, []);
 
   const handleEmpathy = async () => {
-    const jwt = getJwtFromCookie();
     if (!jwt) {
       setShowModal(true);
       return;

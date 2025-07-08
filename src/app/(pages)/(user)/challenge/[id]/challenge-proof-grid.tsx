@@ -6,6 +6,7 @@ import { ChallengeProofList } from "@/lib/client/challenge.client.api";
 import Pagination from "@/app/components/shared/paginaiton";
 import { ChallengeProofItem } from "@/types/challenge.type";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
+import { useAuthStore } from "@/store/authStore";
 interface ChallengeProofGridProps {
   challengeId: string;
 }
@@ -17,10 +18,11 @@ export default function ChallengeProofGrid({
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
 
+  const jwt = useAuthStore((state) => state.jwt);
+
   useEffect(() => {
     async function fetchProofs() {
       try {
-        const jwt = getJwtFromCookie();
         const res = await ChallengeProofList(challengeId, jwt, page);
         setProofImages(res.content);
         setTotalPages(res.totalPages);

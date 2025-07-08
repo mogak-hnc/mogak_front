@@ -8,19 +8,15 @@ import {
   AdviceCommentPagination,
   AdviceCommentPost,
 } from "@/lib/client/advice.client.api";
-import { getJwtFromCookie } from "@/utils/client/auth.client.util";
+import { useAuthStore } from "@/store/authStore";
 
 export default function AdviceCommentsCard({ worryId }: { worryId: string }) {
   const [commentList, setCommentList] = useState<AdviceCommentContentProps[]>(
     []
   );
   const [input, setInput] = useState("");
-  const [jwt, setJwt] = useState<string | null>(null);
 
-  useEffect(() => {
-    const token = getJwtFromCookie();
-    setJwt(token);
-  }, []);
+  const jwt = useAuthStore((state) => state.jwt);
 
   useEffect(() => {
     if (worryId) {
