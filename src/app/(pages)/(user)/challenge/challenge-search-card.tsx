@@ -35,7 +35,7 @@ export default function ChallengeSearchCard({
       const res = await ChallengeSearch({
         search,
         official,
-        sort: mapSort(finalSort),
+        sort: finalSort,
         status: status as ChallengeStatusType,
         page: pageNumber,
         size: 12,
