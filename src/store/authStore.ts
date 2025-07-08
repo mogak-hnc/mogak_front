@@ -16,12 +16,12 @@ export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   login: (jwt) => {
     const decoded = decodeToken(jwt);
-    if (!decoded) {
-      return;
-    }
+    if (!decoded) return;
 
-    localStorage.setItem("jwt", jwt);
-    localStorage.setItem("memberId", String(decoded.memberId));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("jwt", jwt);
+      localStorage.setItem("memberId", String(decoded.memberId));
+    }
 
     set({
       isLoggedIn: true,
@@ -30,8 +30,10 @@ export const useAuthStore = create<AuthState>((set) => ({
     });
   },
   logout: () => {
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("memberId");
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("jwt");
+      localStorage.removeItem("memberId");
+    }
 
     set({
       isLoggedIn: false,

@@ -12,7 +12,6 @@ import {
 } from "@/lib/client/socket.client.api";
 import ConfirmModal from "@/app/components/confirm-modal";
 import SettingModal from "./setting-modal";
-import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 
 export default function ZoneWrapper({
