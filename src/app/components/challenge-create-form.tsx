@@ -28,19 +28,6 @@ export default function ChallengeCreateForm({
     formState: { errors },
   } = form;
 
-  const [badgeList, setBadgeList] = useState<AdminBadgeProps[]>([]);
-
-  useEffect(() => {
-    const loadBadges = async () => {
-      const badges = await adminBadgeList();
-      if (badges) {
-        setBadgeList(badges);
-      }
-    };
-
-    loadBadges();
-  }, []);
-
   return (
     <form
       onSubmit={form.handleSubmit(onSubmit)}
