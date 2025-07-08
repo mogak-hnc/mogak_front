@@ -1,4 +1,5 @@
 import { ProfileChallengeResponse } from "@/types/profile.type";
+import Link from "next/link";
 
 export default function MyChallenge({
   challenges,
@@ -19,11 +20,14 @@ export default function MyChallenge({
   return (
     <div className="bg-white dark:bg-border-dark p-6 rounded-xl shadow">
       <h3 className="text-lg font-bold text-primary mb-4">참여 중인 챌린지</h3>
-      <ul className="space-y-2 list-inside list-disc text-sm text-gray-800 dark:text-gray-300">
-        {challenges.map((challenge) => (
-          <li key={challenge.challengeId}>{challenge.name}</li>
-        ))}
-      </ul>
+      {challenges.map((challenge) => (
+        <Link
+          key={challenge.challengeId}
+          href={`/challenge/${challenge.challengeId}`}
+        >
+          <p>✷ {challenge.name}</p>
+        </Link>
+      ))}
     </div>
   );
 }
