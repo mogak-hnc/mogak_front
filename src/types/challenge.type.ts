@@ -132,6 +132,32 @@ export interface ChallengeDetailSummaryProps {
   joined: boolean;
 }
 
+export interface ChallengeDetileResponseContent {
+  official: boolean;
+  title: string;
+  startDate: number[];
+  endDate: number[];
+  totalParticipants: number;
+  survivorCount: number;
+  memberImageList: string[];
+  challengeOwnerId: number;
+  status: ChallengeStatusType;
+  joined: boolean;
+}
+export interface ChallengeProofResponse {
+  content: ChallengeProofItem[];
+  totalElements: number;
+  totalPages: number;
+  number: number;
+  size: number;
+}
+
+export interface ChallengeProofItem {
+  challengeArticleId: number;
+  memberId: number;
+  thumbnailUrl: string;
+}
+
 export interface ChallengeDetileResponse {
   official: boolean;
   title: string;
@@ -140,7 +166,6 @@ export interface ChallengeDetileResponse {
   totalParticipants: number;
   survivorCount: number;
   memberImageList: string[];
-  challengeArticlesThumbnail: string[];
   challengeOwnerId: number;
   status: ChallengeStatusType;
   joined: boolean;

@@ -4,6 +4,7 @@ import {
   ChallengeCreateResponse,
   ChallengeDetileResponse,
   ChallengeProofPostRequest,
+  ChallengeProofResponse,
 } from "@/types/challenge.type";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 
@@ -79,16 +80,17 @@ export async function ChallengeProofPost(payload: ChallengeProofPostRequest) {
 
   const formData = new FormData();
 
-  formData.append(
-    "request",
-    JSON.stringify({
-      description: `${payload.title} 챌린지의 오늘 인증을 완료했습니다!`,
-      images: payload.images,
-    })
-  );
+  const json = {
+    description: `${payload.title} 챌린지의 오늘 인증을 완료했습니다!`,
+  };
+  const requestBlob = new Blob([JSON.stringify(json)], {
+    type: "application/json",
+  });
+  formData.append("request", requestBlob);
+  formData.append("images", payload.images);
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/challenge/${payload.challengeId}/verification`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/challenge/${payload.challengeId}/article/verification`,
     {
       method: "POST",
       headers: {
@@ -105,7 +107,6 @@ export async function ChallengeProofPost(payload: ChallengeProofPostRequest) {
   }
 
   const data: { articleId: number } = await res.json();
-
   return data;
 }
 
@@ -158,6 +159,38 @@ export async function ChallengeDetail(id: string, jwt: string | null) {
   }
 
   const data: ChallengeDetileResponse = await res.json();
+
+  return data;
+}
+
+export async function ChallengeProofList(
+  id: string,
+  jwt: string | null,
+  page: number
+) {
+  if (!jwt) {
+    throw new Error("JWT 토큰 없음 / 로그인 필요");
+  }
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/challenge/${id}/article?page=${page}&size=10`,
+    {
+      method: "GET",
+      cache: "no-store",
+      headers: {
+        Authorization: `${jwt}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (!res.ok) {
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`${id}번 챌린지 인증 로드 실패: ${res.status}`);
+  }
+
+  const data: ChallengeProofResponse = await res.json();
 
   return data;
 }

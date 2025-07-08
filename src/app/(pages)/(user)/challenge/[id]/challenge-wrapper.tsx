@@ -54,7 +54,7 @@ export default function ChallengeWrapper({
           )}
         />
         {data.joined && data.status !== "BEFORE" && (
-          <ChallengeProofGrid proofImages={data.challengeArticlesThumbnail} />
+          <ChallengeProofGrid challengeId={id} />
         )}
       </div>
 

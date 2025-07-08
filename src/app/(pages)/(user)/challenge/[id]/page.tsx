@@ -26,6 +26,8 @@ export default async function ChallengeDetailPage({
   const jwt = await getJwtFromServerCookie();
 
   const data = await ChallengeDetail(id, jwt);
+
+  console.log(data);
   return (
     <div className="max-w-screen-xl mx-auto px-8 py-10">
       <ChallengeWrapper id={id} initial={data} />
