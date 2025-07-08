@@ -6,13 +6,7 @@ export function middleware(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
 
-  const protectedPaths = [
-    "/zone",
-    "/challenge",
-    "/advice/create",
-    "/login/info",
-    "/profile",
-  ];
+  const protectedPaths = ["/advice/create", "/login/info", "/profile"];
 
   const isProtected = protectedPaths.some((path) => pathname.startsWith(path));
 
@@ -49,8 +43,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/zone/:path*",
-    "/challenge/:path*",
     "/advice/create",
     "/login/info",
     "/profile/:path*",

@@ -6,6 +6,7 @@ import Input from "../ui/input";
 import { AiOutlineSearch } from "react-icons/ai";
 import { TagsProps } from "@/types/shared.type";
 import SubTitle from "./sub-title";
+import { useAuth } from "@/hooks/useAuth";
 
 type Props = {
   title: string;
@@ -45,6 +46,8 @@ export default function SearchCardView({
   status,
   onStatusChange,
 }: Props) {
+  const { isLoggedIn } = useAuth();
+
   return (
     <div className="flex flex-col w-fit items-center gap-2">
       <SubTitle contents={title} />
@@ -120,9 +123,13 @@ export default function SearchCardView({
         </select>
       </div>
 
-      <Link href={section === "모각존" ? `/zone/create` : `/challenge/create`}>
-        <Button>{section} 만들기</Button>
-      </Link>
+      {!isLoggedIn && (
+        <Link
+          href={section === "모각존" ? `/zone/create` : `/challenge/create`}
+        >
+          <Button>{section} 만들기</Button>
+        </Link>
+      )}
     </div>
   );
 }
