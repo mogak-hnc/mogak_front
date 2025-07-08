@@ -31,7 +31,7 @@ export default function ZoneSearchCard({
       const res = await ZoneSearch({
         search,
         tag: selectedTag ?? "",
-        sort: finalSort,
+        sort: mapSort(finalSort),
         page: pageNumber,
         size: 12,
       });
