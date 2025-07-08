@@ -19,7 +19,7 @@ export interface ProfileZoneResponse {
 
 export interface ProfileChallengeResponse {
   challengeId: string;
-  name: string;
+  title: string;
 }
 
 export type ProfileBadgeType = "DURATION" | "COUNT" | "OFFICIAL";

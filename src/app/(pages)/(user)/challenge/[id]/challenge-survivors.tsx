@@ -15,7 +15,7 @@ export default function ChallengeSurvivors({
   return (
     <Link href={`/challenge/${challengeId}/member`}>
       <h3 className="font-semibold text-primary dark:text-primary-dark mb-2">
-        생존자
+        참가자
       </h3>
       <div className="flex items-center gap-2">
         {avatars.map((src, i) => (

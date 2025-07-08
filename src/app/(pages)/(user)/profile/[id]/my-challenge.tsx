@@ -25,7 +25,7 @@ export default function MyChallenge({
           key={challenge.challengeId}
           href={`/challenge/${challenge.challengeId}`}
         >
-          <p>✷ {challenge.name}</p>
+          <p>✷ {challenge.title}</p>
         </Link>
       ))}
     </div>
