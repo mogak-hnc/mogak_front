@@ -36,8 +36,6 @@ export default function ZoneSearchCard({
         size: 12,
       });
 
-      console.log(res);
-
       setData(res.data);
       setPage(res.page);
       setTotalPages(res.totalPages);
