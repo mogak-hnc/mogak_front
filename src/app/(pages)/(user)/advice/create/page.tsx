@@ -7,6 +7,7 @@ import SubTitle from "@/app/components/shared/sub-title";
 import { AdviceCreatePost } from "@/lib/client/advice.client.api";
 import { useRouter } from "next/navigation";
 import { DURATION_MAP } from "@/utils/shared/advice-duration.util";
+import Loading from "@/app/loading";
 
 export default function AdviceWritePage() {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function AdviceWritePage() {
   const [content, setContent] = useState("");
   const [deleteAfter, setDeleteAfter] = useState(24);
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [titleError, setTitleError] = useState(false);
   const [contentError, setContentError] = useState(false);
@@ -47,6 +49,7 @@ export default function AdviceWritePage() {
     }
 
     try {
+      setLoading(true);
       const newAdviceId = await AdviceCreatePost({
         title: title.trim(),
         contents: content.trim(),
@@ -54,10 +57,15 @@ export default function AdviceWritePage() {
       });
       router.push(`/advice/${newAdviceId.worryId}`);
     } catch (err) {
+      setLoading(false);
       console.error("게시글 작성 실패", err);
       setErrorMsg("게시글 작성에 실패했습니다. 잠시 후 다시 시도해 주세요.");
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="max-w-3xl mx-auto px-4 mt-10 flex flex-col gap-6">
