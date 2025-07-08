@@ -123,7 +123,7 @@ export default function SearchCardView({
         </select>
       </div>
 
-      {!isLoggedIn && (
+      {isLoggedIn && (
         <Link
           href={section === "모각존" ? `/zone/create` : `/challenge/create`}
         >

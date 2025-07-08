@@ -9,6 +9,8 @@ import { ChallengeDetileResponse } from "@/types/challenge.type";
 import { ChallengeDetail } from "@/lib/client/challenge.client.api";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 import { useEffect, useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 export default function ChallengeWrapper({
   id,
@@ -17,10 +19,18 @@ export default function ChallengeWrapper({
   id: string;
   initial: ChallengeDetileResponse;
 }) {
+  const { isLoggedIn } = useAuth();
+  const router = useRouter();
+
   const jwt = getJwtFromCookie();
   const [data, setData] = useState<ChallengeDetileResponse>(initial);
 
   useEffect(() => {
+    if (!isLoggedIn) {
+      router.push(`/login`);
+      return;
+    }
+
     if (!jwt) {
       return;
     }

@@ -12,6 +12,8 @@ import {
 } from "@/lib/client/socket.client.api";
 import ConfirmModal from "@/app/components/confirm-modal";
 import SettingModal from "./setting-modal";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 export default function ZoneWrapper({
   id,
@@ -20,6 +22,7 @@ export default function ZoneWrapper({
   id: string;
   data: ZoneDetailResponse;
 }) {
+  const router = useRouter();
   const [joined, setJoined] = useState<boolean>(data.joined);
   const [showModal, setShowModal] = useState(false);
   const [loadData, setLoadData] = useState<ZoneDetailResponse>();
