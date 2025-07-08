@@ -12,11 +12,7 @@ type Props = {
 };
 
 export default function BadgeSelector({ form }: Props) {
-  const {
-    setValue,
-    watch,
-    formState: { errors },
-  } = form;
+  const { setValue, watch } = form;
 
   const [badgeList, setBadgeList] = useState<AdminBadgeProps[]>([]);
 
@@ -31,34 +27,36 @@ export default function BadgeSelector({ form }: Props) {
   const selectedId = watch("badgeId");
 
   return (
-    <div className="flex flex-col gap-2">
-      <div className="grid grid-cols-3 gap-4">
+    <div className="flex flex-col gap-2 items-center">
+      <div className="flex gap-3 justify-center">
         {badgeList.map((badge) => (
           <button
             key={badge.badgeId}
             type="button"
             onClick={() => setValue("badgeId", String(badge.badgeId))}
-            className={`border rounded p-2 flex flex-col items-center gap-1 transition
-              ${
-                String(selectedId) === String(badge.badgeId)
-                  ? "border-primary ring-2 ring-primary"
-                  : "border-gray-300 hover:border-gray-400"
-              }`}
+            className={`border rounded px-2 pt-2 pb-1 flex flex-col items-center transition
+            w-20 h-24
+            ${
+              selectedId === String(badge.badgeId)
+                ? "border-primary ring-2 ring-primary"
+                : "border-gray-300 hover:border-gray-400"
+            }`}
           >
-            <Image
-              src={badge.iconUrl}
-              alt={badge.name}
-              width={40}
-              height={40}
-              className="rounded"
-            />
-            <span className="text-sm">{badge.name}</span>
+            <div className="h-[40px] flex items-center justify-center">
+              <Image
+                src={badge.iconUrl}
+                alt={badge.name}
+                width={32}
+                height={32}
+                className="rounded"
+              />
+            </div>
+            <span className="text-xs text-center mt-1 leading-none">
+              {badge.name}
+            </span>
           </button>
         ))}
       </div>
-      {errors.badgeId && (
-        <p className="text-error text-sm mt-1">{errors.badgeId.message}</p>
-      )}
     </div>
   );
 }
