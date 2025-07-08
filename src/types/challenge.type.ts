@@ -144,6 +144,22 @@ export interface ChallengeDetileResponseContent {
   status: ChallengeStatusType;
   joined: boolean;
 }
+
+export interface ChallengeSurvivorsItem {
+  memberId: string;
+  nickname: string;
+  memberImageUrl: string;
+  survivor: boolean;
+}
+
+export interface ChallengeSurvivorsResponse {
+  content: ChallengeSurvivorsItem[];
+  totalElements: number;
+  totalPages: number;
+  number: number;
+  size: number;
+}
+
 export interface ChallengeProofResponse {
   content: ChallengeProofItem[];
   totalElements: number;

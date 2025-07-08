@@ -1,12 +1,19 @@
+"use client";
+
 import { ChallengeSurvivorsProps } from "@/types/challenge.type";
 import { getProfileImage } from "@/utils/shared/profile.util";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 export default function ChallengeSurvivors({
   avatars,
   extraCount = 0,
 }: ChallengeSurvivorsProps) {
+  const params = useParams();
+  const challengeId = params?.id as string;
+
   return (
-    <div>
+    <Link href={`/challenge/${challengeId}/member`}>
       <h3 className="font-semibold text-primary dark:text-primary-dark mb-2">
         생존자
       </h3>
@@ -25,6 +32,6 @@ export default function ChallengeSurvivors({
           </span>
         )}
       </div>
-    </div>
+    </Link>
   );
 }
