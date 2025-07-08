@@ -25,6 +25,7 @@ export type ChallengeForm = {
   description: string;
   startDate: string;
   endDate: string;
+  badgeId: string;
 };
 
 export interface ChallengeCreateFormProps {
@@ -150,12 +151,14 @@ export interface ChallengeCreateInput {
   description: string;
   startDate: string;
   endDate: string;
+  badgeId?: string;
 }
 
 export interface ChallengeCreateRequest {
   title: string;
   description: string;
   period: string;
+  badgeId?: string;
 }
 
 export interface ChallengeCreateResponse {

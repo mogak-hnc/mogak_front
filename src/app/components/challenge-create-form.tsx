@@ -6,6 +6,10 @@ import FormField from "@/app/components/shared/form-field";
 import { UseFormReturn } from "react-hook-form";
 import { ChallengeForm } from "@/types/challenge.type";
 import SubTitle from "./shared/sub-title";
+import { useEffect, useState } from "react";
+import { adminBadgeList } from "@/lib/client/badge.client.api";
+import { AdminBadgeProps } from "@/types/admin.type";
+import BadgeSelector from "../(pages)/admin/challenge/badge-selector";
 
 type Props = {
   form: UseFormReturn<ChallengeForm>;
@@ -23,6 +27,19 @@ export default function ChallengeCreateForm({
     watch,
     formState: { errors },
   } = form;
+
+  const [badgeList, setBadgeList] = useState<AdminBadgeProps[]>([]);
+
+  useEffect(() => {
+    const loadBadges = async () => {
+      const badges = await adminBadgeList();
+      if (badges) {
+        setBadgeList(badges);
+      }
+    };
+
+    loadBadges();
+  }, []);
 
   return (
     <form
@@ -106,6 +123,12 @@ export default function ChallengeCreateForm({
           </p>
         )}
       </FormField>
+
+      {isAdmin && (
+        <FormField label="뱃지 선택">
+          <BadgeSelector form={form} />
+        </FormField>
+      )}
 
       <Button type="submit">저장</Button>
     </form>

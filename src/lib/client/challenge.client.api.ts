@@ -17,6 +17,7 @@ export async function ChallengeCreatePost(input: ChallengeCreateInput) {
     title: input.name,
     description: input.description,
     period: `${input.startDate}~${input.endDate}`,
+    badgeId: input.badgeId,
   };
 
   const res = await fetch(
