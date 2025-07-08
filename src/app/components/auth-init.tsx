@@ -1,13 +1,19 @@
 "use client";
 
-import { useAuthStore } from "@/store/authStore";
 import { useEffect } from "react";
+import { useAuthStore } from "@/store/authStore";
+import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 
 export default function AuthInit() {
+  const { login } = useAuthStore();
+
   useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
+    const jwt = getJwtFromCookie();
     if (jwt) {
-      useAuthStore.getState().login(jwt);
+      console.log("[AuthInit] 쿠키에서 jwt 감지:", jwt);
+      login(jwt);
+    } else {
+      console.log("[AuthInit] 쿠키에 jwt 없음");
     }
   }, []);
 

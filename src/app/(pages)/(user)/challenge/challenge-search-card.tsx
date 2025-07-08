@@ -7,7 +7,6 @@ import {
   ChallengeSearchCardProps,
   ChallengeStatusType,
 } from "@/types/challenge.type";
-import { mapSort } from "@/utils/shared/sort.util";
 import ChallengeMainCard from "./challenge-main-card";
 import { ChallengeSearch } from "@/lib/shared/challenge.api";
 import ChallengeMainCardSkeleton from "../../../components/skeleton/challenge/challenge-main-card-skeleton";

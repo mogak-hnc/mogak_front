@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { JwtPayload } from "@/utils/client/decode-token.client.util";
 import { decodeToken } from "@/utils/client/decode-token.client.util";
+import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 
 interface AuthState {
   isLoggedIn: boolean;
@@ -8,6 +9,7 @@ interface AuthState {
   user: JwtPayload | null;
   login: (jwt: string) => void;
   logout: () => void;
+  hydrate: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -18,11 +20,6 @@ export const useAuthStore = create<AuthState>((set) => ({
     const decoded = decodeToken(jwt);
     if (!decoded) return;
 
-    if (typeof window !== "undefined") {
-      localStorage.setItem("jwt", jwt);
-      localStorage.setItem("memberId", String(decoded.memberId));
-    }
-
     set({
       isLoggedIn: true,
       jwt,
@@ -30,15 +27,24 @@ export const useAuthStore = create<AuthState>((set) => ({
     });
   },
   logout: () => {
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("jwt");
-      localStorage.removeItem("memberId");
-    }
-
     set({
       isLoggedIn: false,
       jwt: null,
       user: null,
+    });
+  },
+  hydrate: () => {
+    const jwt = getJwtFromCookie();
+    console.log("[hydrate] jwt from cookie:", jwt);
+    if (!jwt) return;
+
+    const decoded = decodeToken(jwt);
+    if (!decoded) return;
+
+    set({
+      isLoggedIn: true,
+      jwt,
+      user: decoded,
     });
   },
 }));

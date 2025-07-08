@@ -6,7 +6,7 @@ import Input from "../ui/input";
 import { AiOutlineSearch } from "react-icons/ai";
 import { TagsProps } from "@/types/shared.type";
 import SubTitle from "./sub-title";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuthStore } from "@/store/authStore";
 
 type Props = {
   title: string;
@@ -46,7 +46,7 @@ export default function SearchCardView({
   status,
   onStatusChange,
 }: Props) {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuthStore();
 
   return (
     <div className="flex flex-col w-fit items-center gap-2">
