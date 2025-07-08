@@ -1,6 +1,7 @@
 import { ChallengeDetail } from "@/lib/server/challenge.server.api";
 import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
 import ChallengeWrapper from "./challenge-wrapper";
+import { redirect } from "next/navigation";
 
 export async function generateMetadata({
   params,
@@ -25,9 +26,12 @@ export default async function ChallengeDetailPage({
   const { id } = await params;
   const jwt = await getJwtFromServerCookie();
 
+  if (!jwt) {
+    redirect("/login");
+  }
+
   const data = await ChallengeDetail(id, jwt);
 
-  console.log(data);
   return (
     <div className="max-w-screen-xl mx-auto px-8 py-10">
       <ChallengeWrapper id={id} initial={data} />

@@ -9,6 +9,7 @@ import { ChallengeDetileResponse } from "@/types/challenge.type";
 import { ChallengeDetail } from "@/lib/client/challenge.client.api";
 import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/authStore";
+import { useRouter } from "next/navigation";
 export default function ChallengeWrapper({
   id,
   initial,
