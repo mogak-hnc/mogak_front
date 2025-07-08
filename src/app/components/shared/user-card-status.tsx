@@ -1,8 +1,8 @@
 "use client";
 
 import { sendStatus } from "@/lib/client/socket.client.api";
+import { useAuthStore } from "@/store/authStore";
 import { ZoneUserCardStatusProps } from "@/types/zone.type";
-import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 import { decodeToken } from "@/utils/client/decode-token.client.util";
 import { useEffect, useState } from "react";
 
@@ -13,7 +13,7 @@ export default function UserCardStatus({
   statusColor,
   translatedStatus,
 }: ZoneUserCardStatusProps) {
-  const jwt = getJwtFromCookie();
+  const { jwt } = useAuthStore();
   const user = jwt ? decodeToken(jwt) : null;
 
   const [isClient, setIsClient] = useState(false);
@@ -23,7 +23,6 @@ export default function UserCardStatus({
   }, []);
 
   const statusHandler = async () => {
-    // console.log("statusHandler");
     await sendStatus(zoneId, study ? "RESTING" : "STUDYING", memberId);
   };
 

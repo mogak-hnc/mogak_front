@@ -5,7 +5,6 @@ import Image from "next/image";
 import { ChallengeProofList } from "@/lib/client/challenge.client.api";
 import Pagination from "@/app/components/shared/paginaiton";
 import { ChallengeProofItem } from "@/types/challenge.type";
-import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 import { useAuthStore } from "@/store/authStore";
 interface ChallengeProofGridProps {
   challengeId: string;

@@ -7,11 +7,8 @@ import ChallengeProofGrid from "./challenge-proof-grid";
 import ChallengeSummary from "./challenge-summary";
 import { ChallengeDetileResponse } from "@/types/challenge.type";
 import { ChallengeDetail } from "@/lib/client/challenge.client.api";
-import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 import { useEffect, useState } from "react";
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
-
+import { useAuthStore } from "@/store/authStore";
 export default function ChallengeWrapper({
   id,
   initial,
@@ -19,18 +16,10 @@ export default function ChallengeWrapper({
   id: string;
   initial: ChallengeDetileResponse;
 }) {
-  const { isLoggedIn } = useAuth();
-  const router = useRouter();
-
-  const jwt = getJwtFromCookie();
+  const { jwt } = useAuthStore();
   const [data, setData] = useState<ChallengeDetileResponse>(initial);
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      router.push(`/login`);
-      return;
-    }
-
     if (!jwt) {
       return;
     }

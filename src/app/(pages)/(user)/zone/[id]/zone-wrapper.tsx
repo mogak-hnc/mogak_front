@@ -30,8 +30,8 @@ export default function ZoneWrapper({
 
   const [memberId, setMemberId] = useState<string | null>(null);
 
+  const { jwt } = useAuthStore();
   useEffect(() => {
-    const { jwt } = useAuthStore();
     setMemberId(jwt);
   }, []);
 

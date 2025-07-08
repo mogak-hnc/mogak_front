@@ -11,12 +11,12 @@ import {
   profileInfo,
   profilePatch,
 } from "@/lib/client/profile.client.api";
-import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 import EditImage from "./edit-image";
 import EditForm from "./edit-form";
 import EditButton from "./edit-button";
 import ConfirmModal from "@/app/components/confirm-modal";
 import Loading from "@/app/loading";
+import { useAuthStore } from "@/store/authStore";
 
 export default function ProfileEditPage() {
   const params = useParams();
@@ -42,9 +42,10 @@ export default function ProfileEditPage() {
     defaultValues: { nickname: "", showBadge: true },
   });
 
+  const { jwt } = useAuthStore();
+
   useEffect(() => {
     const fetchInitial = async () => {
-      const jwt = getJwtFromCookie();
       if (!jwt) {
         return;
       }
@@ -68,7 +69,7 @@ export default function ProfileEditPage() {
   }, [userId, reset]);
 
   const onSubmit = async (formData: ProfileFormProps) => {
-    const jwt = getJwtFromCookie();
+    const { jwt } = useAuthStore();
     if (!jwt || !data) {
       return;
     }

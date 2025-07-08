@@ -1,8 +1,8 @@
 "use client";
 
 import Button from "@/app/components/ui/button";
+import { useAuthStore } from "@/store/authStore";
 import { ZoneInOutButtonProps } from "@/types/zone.type";
-import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 import {
   decodeToken,
   JwtPayload,
@@ -10,14 +10,13 @@ import {
 import { useEffect, useState } from "react";
 
 export default function ZoneSetting({
-  // zoneId,
   hostId,
   onOpenSetting,
 }: ZoneInOutButtonProps & { onOpenSetting: () => void }) {
   const [user, setUser] = useState<JwtPayload | null>(null);
 
+  const { jwt } = useAuthStore();
   useEffect(() => {
-    const jwt = getJwtFromCookie();
     if (!jwt) {
       return;
     }

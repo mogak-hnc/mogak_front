@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Button from "@/app/components/ui/button";
 import Input from "@/app/components/ui/input";
 import { ZoneEntryPost, ZoneLeave } from "@/lib/client/zone.client.api";
-import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 import {
   decodeToken,
   JwtPayload,
@@ -14,6 +13,7 @@ import SubTitle from "@/app/components/shared/sub-title";
 import { disconnectSocket, sendDetail } from "@/lib/client/socket.client.api";
 import { useRouter } from "next/navigation";
 import ConfirmModal from "@/app/components/confirm-modal";
+import { useAuthStore } from "@/store/authStore";
 
 type ZoneInProps = ZoneInOutButtonProps & {
   hasPwd: boolean;
@@ -50,8 +50,9 @@ export default function ZoneInOut({
     router.push("/zone");
   };
 
+  const { jwt } = useAuthStore();
+
   useEffect(() => {
-    const jwt = getJwtFromCookie();
     if (!jwt) {
       return;
     }
@@ -66,7 +67,6 @@ export default function ZoneInOut({
       return;
     }
 
-    const jwt = getJwtFromCookie();
     if (!jwt || !user) {
       return;
     }
