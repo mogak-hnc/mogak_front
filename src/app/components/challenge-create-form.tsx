@@ -6,9 +6,6 @@ import FormField from "@/app/components/shared/form-field";
 import { UseFormReturn } from "react-hook-form";
 import { ChallengeForm } from "@/types/challenge.type";
 import SubTitle from "./shared/sub-title";
-import { useEffect, useState } from "react";
-import { adminBadgeList } from "@/lib/client/badge.client.api";
-import { AdminBadgeProps } from "@/types/admin.type";
 import BadgeSelector from "../(pages)/admin/challenge/badge-selector";
 
 type Props = {
