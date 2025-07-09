@@ -30,7 +30,7 @@ export default function AdvicePreviewCard({
 
   return (
     <Link href={`/advice/${worryId}`}>
-      <div className="rounded-3xl p-4 shadow-md bg-white dark:bg-border-dark  text-sm flex flex-col justify-between w-[200px] h-[180px]">
+      <div className="rounded-3xl p-4 shadow-md bg-white dark:bg-border-dark  text-sm flex flex-col justify-between w-[180px] h-[180px]">
         <div className="flex flex-col gap-1">
           <span className="bg-secondary dark:bg-secondary-dark text-base text-black font-bold px-2 py-0.5 rounded w-fit">
             {title}

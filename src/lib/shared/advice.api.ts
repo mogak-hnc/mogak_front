@@ -1,24 +1,4 @@
-import {
-  AdviceMainResponse,
-  AdviceSearchRequest,
-  AdviceSearchResponse,
-} from "@/types/advice.type";
-
-export async function AdviceMain() {
-  const res = await fetch(`${process.env.BACKEND_API_URL}/worry`, {
-    next: { revalidate: 1 },
-  });
-
-  if (!res.ok) {
-    const err = await res.text();
-    console.error("서버 응답:", err);
-    throw new Error(`고민상담 메인 불러오기 실패: ${res.status}`);
-  }
-
-  const data: AdviceMainResponse = await res.json();
-
-  return data;
-}
+import { AdviceSearchRequest, AdviceSearchResponse } from "@/types/advice.type";
 
 export async function AdviceSearch({ sort, page, size }: AdviceSearchRequest) {
   const query = new URLSearchParams();
