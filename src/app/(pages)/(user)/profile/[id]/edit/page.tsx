@@ -69,7 +69,6 @@ export default function ProfileEditPage() {
   }, [userId, reset, jwt]);
 
   const onSubmit = async (formData: ProfileFormProps) => {
-    const { jwt } = useAuthStore();
     if (!jwt || !data) {
       return;
     }
