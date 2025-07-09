@@ -50,8 +50,6 @@ export function subscribe<T>(
   onMessage: (msg: T) => void
 ) {
   if (!stompClient || !stompClient.connected) {
-    // console.warn("소켓 연결 안 됨");
-    // connectAndSubscribeSocket({ topic, mogakZoneId: id, onMessage });
     return;
   }
 
@@ -67,7 +65,7 @@ export function subscribe<T>(
     (message: IMessage) => {
       try {
         const payload = JSON.parse(message.body);
-        console.log("수신된 메시지:", payload);
+        console.log("수신된 메시지:", payload, topic);
         onMessage(payload);
       } catch (err) {
         console.error("메시지 파싱 오류:", err);
