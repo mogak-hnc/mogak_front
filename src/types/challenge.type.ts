@@ -130,6 +130,7 @@ export interface ChallengeDetailSummaryProps {
   challengeOwnerId: number;
   status: ChallengeStatusType;
   joined: boolean;
+  badgeInfo: ChallengeDetailBadgeItem;
 }
 
 export interface ChallengeDetileResponseContent {
@@ -185,6 +186,13 @@ export interface ChallengeDetileResponse {
   challengeOwnerId: number;
   status: ChallengeStatusType;
   joined: boolean;
+  badgeInfo: ChallengeDetailBadgeItem;
+}
+
+export interface ChallengeDetailBadgeItem {
+  badgeId: string;
+  name: string;
+  badgeImageUrl: string;
 }
 
 export interface ChallengeCreateInput {

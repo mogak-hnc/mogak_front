@@ -13,6 +13,7 @@ import {
 } from "@/lib/client/challenge.client.api";
 import { getTimeDiffText } from "@/utils/shared/time.util";
 import { useAuthStore } from "@/store/authStore";
+import Image from "next/image";
 
 export function SummarySubtitle({ children }: { children: React.ReactNode }) {
   return <h4 className="font-bold text-primary mb-2">{children}</h4>;
@@ -77,9 +78,19 @@ export default function ChallengeSummary(
       )}
 
       {props.official && (
-        <p className="text-sm text-border-dark dark:text-borders">
-          이 챌린지를 완수하면 ●●● 뱃지를 획득해요!
-        </p>
+        <div className="text-sm flex gap-3 text-border-dark dark:text-borders">
+          <Image
+            src={props.badgeInfo.badgeImageUrl}
+            alt="뱃지 이미지"
+            width={24}
+            height={24}
+          />
+          이 챌린지를 완수하면
+          <p className="font-bold  text-secondary dark:text-secondary-dark">
+            [ {props.badgeInfo.name} ]
+          </p>
+          뱃지를 획득해요!
+        </div>
       )}
       {props.status !== "BEFORE" && (
         <>
