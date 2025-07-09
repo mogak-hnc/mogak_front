@@ -4,13 +4,15 @@ import Button from "@/app/components/ui/button";
 import { ChallengeDetailSummaryProps } from "@/types/challenge.type";
 import { ChallengeSummaryChart } from "./challenge-summary-chart";
 import { getDatePercent } from "@/utils/shared/date-percent.util";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ConfirmModal from "@/app/components/confirm-modal";
 import {
   ChallengeEntryPost,
   ChallengeProofPost,
+  ChallengeSurvivorsToday,
 } from "@/lib/client/challenge.client.api";
 import { getTimeDiffText } from "@/utils/shared/time.util";
+import { useAuthStore } from "@/store/authStore";
 
 export function SummarySubtitle({ children }: { children: React.ReactNode }) {
   return <h4 className="font-bold text-primary mb-2">{children}</h4>;
@@ -21,6 +23,17 @@ export default function ChallengeSummary(
 ) {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
+  const [todayCheck, setTodayCheck] = useState(true);
+  const { jwt } = useAuthStore();
+
+  useEffect(() => {
+    const check = async () => {
+      const loadCheck = await ChallengeSurvivorsToday(props.challengeId, jwt);
+      setTodayCheck(loadCheck);
+    };
+
+    check();
+  });
 
   const challengeIn = async () => {
     try {
@@ -81,7 +94,7 @@ export default function ChallengeSummary(
               value={props.survivorCount / props.totalParticipants}
             />
           </div>
-          {props.joined && props.status === "ONGOING" && (
+          {!todayCheck && props.joined && props.status === "ONGOING" && (
             <div className="border-t border-borders dark:border-border-dark pt-4">
               <SummarySubtitle>인증하기</SummarySubtitle>
               <input
