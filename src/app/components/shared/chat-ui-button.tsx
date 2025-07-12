@@ -15,8 +15,8 @@ export default function ChatUiButton({
 
   const [msg, setMsg] = useState<string>("");
 
-  const msgHandler = (e: FormEvent<HTMLInputElement>) => {
-    setMsg(e.currentTarget.value);
+  const msgHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMsg(e.target.value);
   };
 
   const sendChatHandler = async () => {
@@ -36,7 +36,7 @@ export default function ChatUiButton({
     <div className="flex items-center gap-2 mt-4">
       <input
         onInput={msgHandler}
-        onKeyDown={(e) => {
+        onKeyUp={(e) => {
           if (e.key === "Enter") {
             e.preventDefault();
             sendChatHandler();
