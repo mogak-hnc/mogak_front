@@ -1,3 +1,4 @@
+// socket.client.api.ts
 import SockJS from "sockjs-client";
 import { Client, IMessage } from "@stomp/stompjs";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
@@ -13,9 +14,23 @@ export function connectAndSubscribeSocket<T>({
   mogakZoneId: string;
   onMessage: (msg: T) => void;
 }) {
+  connectSocket();
+
+  const waitAndSubscribe = async () => {
+    try {
+      await waitUntilConnected();
+      subscribe(topic, mogakZoneId, onMessage);
+    } catch (e) {
+      console.error("소켓 연결 실패: 구독 못 함", e);
+    }
+  };
+
+  waitAndSubscribe();
+}
+
+export function connectSocket(): void {
   if (stompClient && stompClient.connected) {
-    console.log("이미 연결됨. 구독 바로 진행");
-    subscribe(topic, mogakZoneId, onMessage);
+    console.log("이미 연결됨");
     return;
   }
 
@@ -29,15 +44,13 @@ export function connectAndSubscribeSocket<T>({
       new SockJS(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/ws`),
     connectHeaders: {
       Authorization: token,
-      mogakZoneId,
     },
     reconnectDelay: 5000,
     onConnect: () => {
       console.log("웹소켓 연결 성공");
-      subscribe(topic, mogakZoneId, onMessage);
     },
     onStompError: (frame) => {
-      console.error("STOMP 에러", frame);
+      console.error("STOMP 에러:", frame);
     },
   });
 
@@ -46,9 +59,9 @@ export function connectAndSubscribeSocket<T>({
 
 export function subscribe<T>(
   topic: string,
-  id: string,
+  mogakZoneId: string,
   onMessage: (msg: T) => void
-) {
+): void {
   if (!stompClient || !stompClient.connected) {
     return;
   }
@@ -66,7 +79,7 @@ export function subscribe<T>(
       try {
         const payload = JSON.parse(message.body);
 
-        const isSystemBroadcast =
+        const isSystemMessage =
           typeof payload === "object" &&
           "sessionId" in payload &&
           "memberId" in payload &&
@@ -74,8 +87,7 @@ export function subscribe<T>(
           "name" in payload &&
           Object.keys(payload).length === 4;
 
-        if (isSystemBroadcast) {
-          console.log("시스템 브로커 메시지 무시:", payload);
+        if (isSystemMessage) {
           return;
         }
 
@@ -85,13 +97,11 @@ export function subscribe<T>(
         console.error("메시지 파싱 오류:", err);
       }
     },
-    { Authorization: jwt, mogakZoneId: id }
+    { Authorization: jwt, mogakZoneId }
   );
 }
 
 export async function sendDetail(zoneId: string) {
-  console.log("sendDetail");
-
   const jwt = getJwtFromCookie();
   if (!jwt) {
     return;
@@ -99,7 +109,6 @@ export async function sendDetail(zoneId: string) {
 
   try {
     await ensureConnected();
-    await waitUntilConnected();
 
     stompClient!.publish({
       destination: `/app/api/mogak/zone/${zoneId}`,
@@ -108,8 +117,6 @@ export async function sendDetail(zoneId: string) {
         mogakZoneId: String(zoneId),
       },
     });
-
-    console.log("detail 전송 성공");
   } catch (err) {
     console.error("detail 전송 실패", err);
   }
@@ -120,8 +127,6 @@ export async function sendChat(
   memberId: string,
   message: string
 ) {
-  console.log("sendChat");
-
   const jwt = getJwtFromCookie();
   if (!jwt) {
     return;
@@ -129,7 +134,6 @@ export async function sendChat(
 
   try {
     await ensureConnected();
-    await waitUntilConnected();
 
     stompClient!.publish({
       destination: `/app/api/mogak/zone/${zoneId}/message`,
@@ -139,8 +143,6 @@ export async function sendChat(
       },
       body: JSON.stringify({ memberId, message }),
     });
-
-    console.log("chat 전송 성공");
   } catch (err) {
     console.error("chat 전송 실패", err);
   }
@@ -151,8 +153,6 @@ export async function sendStatus(
   status: string,
   memberId: string
 ) {
-  console.log("sendStatus");
-
   const jwt = getJwtFromCookie();
   if (!jwt) {
     return;
@@ -160,7 +160,6 @@ export async function sendStatus(
 
   try {
     await ensureConnected();
-    await waitUntilConnected();
 
     stompClient!.publish({
       destination: `/app/api/mogak/zone/${zoneId}/status`,
@@ -176,8 +175,9 @@ export async function sendStatus(
 }
 
 export function disconnectSocket() {
-  if (stompClient && stompClient.connected) {
+  if (stompClient) {
     stompClient.deactivate();
+    stompClient = null;
     console.log("웹소켓 연결 종료");
   }
 }
@@ -190,8 +190,7 @@ function waitUntilConnected(timeout = 3000): Promise<void> {
       if (stompClient && stompClient.connected) {
         resolve();
       } else if (Date.now() - start > timeout) {
-        console.warn("소켓 연결 타임아웃");
-        reject();
+        reject(new Error("소켓 연결 타임아웃"));
       } else {
         setTimeout(check, 100);
       }
@@ -203,19 +202,17 @@ function waitUntilConnected(timeout = 3000): Promise<void> {
 
 export async function ensureConnected(): Promise<void> {
   const token = getJwtFromCookie();
-  if (!token) throw new Error("JWT 없음");
+  if (!token) {
+    throw new Error("JWT 없음");
+  }
 
   if (stompClient && stompClient.connected) {
     return;
   }
 
-  if (stompClient && !stompClient.active) {
-    stompClient.activate();
-    await waitUntilConnected();
-    return;
+  if (!stompClient) {
+    connectSocket();
   }
 
-  throw new Error(
-    "WebSocket이 먼저 설정되어야 함 (connectAndSubscribeSocket 사용)"
-  );
+  await waitUntilConnected();
 }
