@@ -65,6 +65,20 @@ export function subscribe<T>(
     (message: IMessage) => {
       try {
         const payload = JSON.parse(message.body);
+
+        const isSystemBroadcast =
+          typeof payload === "object" &&
+          "sessionId" in payload &&
+          "memberId" in payload &&
+          "mogakZoneId" in payload &&
+          "name" in payload &&
+          Object.keys(payload).length === 4;
+
+        if (isSystemBroadcast) {
+          console.log("시스템 브로커 메시지 무시:", payload);
+          return;
+        }
+
         console.log("수신된 메시지:", payload, topic);
         onMessage(payload);
       } catch (err) {
