@@ -8,7 +8,7 @@ export default function ZoneSetting({
   hostId,
   onOpenSetting,
 }: ZoneInOutButtonProps & { onOpenSetting: () => void }) {
-  const [user, setUser] = useState<String | null>(null);
+  const [user, setUser] = useState<string | null>(null);
 
   useEffect(() => {
     const memberId = localStorage.getItem("memberId");
