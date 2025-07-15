@@ -2,10 +2,6 @@
 
 import Button from "@/app/components/ui/button";
 import { ZoneInOutButtonProps } from "@/types/zone.type";
-import {
-  decodeToken,
-  JwtPayload,
-} from "@/utils/client/decode-token.client.util";
 import { useEffect, useState } from "react";
 
 export default function ZoneSetting({

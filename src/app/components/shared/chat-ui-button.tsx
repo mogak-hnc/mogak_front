@@ -2,7 +2,7 @@
 
 import { sendChat } from "@/lib/client/socket.client.api";
 import { getClientUser } from "@/utils/client/user.client.util";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 
 export default function ChatUiButton({
   zoneId,
