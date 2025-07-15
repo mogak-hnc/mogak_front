@@ -1,7 +1,6 @@
 "use client";
 
 import Button from "@/app/components/ui/button";
-import { useAuthStore } from "@/store/authStore";
 import { ZoneInOutButtonProps } from "@/types/zone.type";
 import {
   decodeToken,
@@ -13,20 +12,16 @@ export default function ZoneSetting({
   hostId,
   onOpenSetting,
 }: ZoneInOutButtonProps & { onOpenSetting: () => void }) {
-  const [user, setUser] = useState<JwtPayload | null>(null);
+  const [user, setUser] = useState<String | null>(null);
 
-  const { jwt } = useAuthStore();
   useEffect(() => {
-    if (!jwt) {
-      return;
-    }
-    const decoded = decodeToken(jwt);
-    setUser(decoded);
+    const memberId = localStorage.getItem("memberId");
+    setUser(memberId);
   }, []);
 
   return (
     <>
-      {String(user?.memberId) === String(hostId) && (
+      {String(user) === String(hostId) && (
         <Button onClick={onOpenSetting}>모각존 관리</Button>
       )}
     </>

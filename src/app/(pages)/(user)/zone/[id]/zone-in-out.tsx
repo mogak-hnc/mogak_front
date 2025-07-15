@@ -10,7 +10,11 @@ import {
 } from "@/utils/client/decode-token.client.util";
 import { ZoneInOutButtonProps } from "@/types/zone.type";
 import SubTitle from "@/app/components/shared/sub-title";
-import { disconnectSocket, sendDetail } from "@/lib/client/socket.client.api";
+import {
+  disconnectSocket,
+  ensureConnected,
+  sendDetail,
+} from "@/lib/client/socket.client.api";
 import { useRouter } from "next/navigation";
 import ConfirmModal from "@/app/components/confirm-modal";
 import { useAuthStore } from "@/store/authStore";
@@ -74,6 +78,8 @@ export default function ZoneInOut({
     try {
       onJoinSuccess(true);
       await ZoneEntryPost(zoneId, hasPwd ? password : "");
+
+      await ensureConnected();
       await sendDetail(zoneId);
 
       setShowModal(false);
