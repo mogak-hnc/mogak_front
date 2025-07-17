@@ -102,14 +102,21 @@ export default function ZoneWrapper({
           name={data.name}
           imageUrl={data.imageUrl}
           tag={data.tagNames}
-          joinedUserCount={(loadData ?? data)?.joinedUserCount}
+          joinedUserCount={loadData?.joinedUserCount ?? data.joinedUserCount}
           hostId={data.hostMemberId}
           joined={joined}
           onJoinSuccess={(b) => setJoined(b)}
           onOpenSetting={() => setShowModal(true)}
           hasPwd={data.passwordRequired}
         />
-        <UserCardWrapper zoneId={id} data={loadData ?? data} />
+        <UserCardWrapper
+          zoneId={id}
+          data={{
+            ...data,
+            zoneMemberInfoList:
+              loadData?.zoneMemberInfoList ?? data.zoneMemberInfoList,
+          }}
+        />
       </div>
 
       <div className="w-full lg:w-[35%] min-w-[300px]">

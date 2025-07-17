@@ -19,6 +19,10 @@ export default function UserCardWrapper({ zoneId, data }: Props) {
   const [members, setMembers] = useState(data.zoneMemberInfoList);
 
   useEffect(() => {
+    setMembers(data.zoneMemberInfoList);
+  }, [data.zoneMemberInfoList]);
+
+  useEffect(() => {
     connectAndSubscribeSocket<ZoneStatusResponse>({
       topic: `/topic/api/mogak/zone/${zoneId}/status`,
       mogakZoneId: zoneId,
