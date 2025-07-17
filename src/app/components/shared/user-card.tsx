@@ -68,7 +68,7 @@ export default function UserCard({
       )}
       <div className="ml-4 flex flex-col justify-center">
         <Link href={`/profile/${memberId}`}>
-          <p className="text-lg font-semibold ">{nickname}</p>{" "}
+          <p className="text-lg font-semibold ">{nickname}</p>
         </Link>
         {role ? (
           <p className="text-sm text-border-dark dark:text-borders">{role}</p>

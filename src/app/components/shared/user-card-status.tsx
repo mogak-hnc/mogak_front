@@ -4,7 +4,7 @@ import { sendStatus } from "@/lib/client/socket.client.api";
 import { useAuthStore } from "@/store/authStore";
 import { ZoneUserCardStatusProps } from "@/types/zone.type";
 import { decodeToken } from "@/utils/client/decode-token.client.util";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 
 export default function UserCardStatus({
   zoneId,
@@ -16,14 +16,18 @@ export default function UserCardStatus({
   const { jwt } = useAuthStore();
   const user = jwt ? decodeToken(jwt) : null;
 
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const isMyCard = useMemo(
+    () => String(user?.memberId) === String(memberId),
+    [user?.memberId, memberId]
+  );
 
   const statusHandler = async () => {
-    await sendStatus(zoneId, study ? "RESTING" : "STUDYING", memberId);
+    try {
+      await sendStatus(zoneId, study ? "RESTING" : "STUDYING", memberId);
+    } catch (err) {
+      console.error("상태 전송 실패", err);
+      alert("소켓 연결이 끊어졌어요. 새로고침 해 주세요.");
+    }
   };
 
   return (
@@ -34,7 +38,7 @@ export default function UserCardStatus({
         <span>✪</span>
         <span>{translatedStatus}</span>
       </div>
-      {isClient && String(user?.memberId) === String(memberId) && (
+      {isMyCard && (
         <button
           onClick={statusHandler}
           className="text-white text-xs py-1 my-3 rounded-lg bg-primary dark:bg-primary-dark"
