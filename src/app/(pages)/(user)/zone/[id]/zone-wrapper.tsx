@@ -1,9 +1,7 @@
 "use client";
 
-import { StatusType, ZoneDetailResponse } from "@/types/zone.type";
+import { ZoneDetailResponse } from "@/types/zone.type";
 import ZoneHeader from "./zone-header";
-import UserCard from "@/app/components/shared/user-card";
-import { getProfileImage } from "@/utils/shared/profile.util";
 import ChatUI from "@/app/components/shared/chat-ui";
 import { useEffect, useState } from "react";
 import {
@@ -13,6 +11,7 @@ import {
 import ConfirmModal from "@/app/components/confirm-modal";
 import SettingModal from "./setting-modal";
 import { useAuthStore } from "@/store/authStore";
+import UserCardWrapper from "./user-card-wrapper";
 
 export default function ZoneWrapper({
   id,
@@ -110,19 +109,7 @@ export default function ZoneWrapper({
           onOpenSetting={() => setShowModal(true)}
           hasPwd={data.passwordRequired}
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {(loadData ?? data)?.zoneMemberInfoList?.map((user) => (
-            <UserCard
-              key={user.memberId}
-              zoneId={id}
-              memberId={user.memberId}
-              nickname={user.nickname}
-              status={user.status as StatusType}
-              role={Number(data.hostMemberId) === user.memberId ? "방장" : ""}
-              image={getProfileImage(user.imageUrl)}
-            />
-          ))}
-        </div>
+        <UserCardWrapper zoneId={id} data={loadData ?? data} />
       </div>
 
       <div className="w-full lg:w-[35%] min-w-[300px]">
