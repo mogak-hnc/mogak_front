@@ -79,7 +79,7 @@ export default function ZoneInOut({
       onJoinSuccess(true);
       await ZoneEntryPost(zoneId, hasPwd ? password : "");
 
-      await ensureConnected();
+      await ensureConnected(zoneId);
       await sendDetail(zoneId);
 
       setShowModal(false);
