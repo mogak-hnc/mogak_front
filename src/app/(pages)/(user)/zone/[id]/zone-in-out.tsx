@@ -33,19 +33,28 @@ export default function ZoneInOut({
   onJoinSuccess,
 }: ZoneInProps) {
   const [user, setUser] = useState<JwtPayload | null>(null);
+  const [hydrated, setHydrated] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showExitModal, setShowExitModal] = useState(false);
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
   const focusPwd = useRef<HTMLInputElement>(null);
-
   const router = useRouter();
+  const { jwt } = useAuthStore();
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!jwt) return;
+    const decoded = decodeToken(jwt);
+    setUser(decoded);
+  }, [jwt]);
 
   const exitHandler = async () => {
-    if (!user) {
-      return;
-    }
+    if (!user) return;
 
     onJoinSuccess(false);
     await ZoneLeave(zoneId, user.memberId);
@@ -54,49 +63,34 @@ export default function ZoneInOut({
     router.push("/zone");
   };
 
-  const { jwt } = useAuthStore();
-
-  useEffect(() => {
-    if (!jwt) {
-      return;
-    }
-
-    const decoded = decodeToken(jwt);
-    setUser(decoded);
-  }, []);
-
   const handleJoin = async () => {
     if (hasPwd && !password) {
       focusPwd.current?.focus();
       return;
     }
 
-    if (!jwt || !user) {
-      return;
-    }
+    if (!jwt || !user) return;
 
     try {
       onJoinSuccess(true);
       await ZoneEntryPost(zoneId, hasPwd ? password : "");
-
       await ensureConnected(zoneId);
       await sendDetail(zoneId);
-
       setShowModal(false);
     } catch (err) {
-      console.log("모각존 입장 실패 : " + err);
+      console.error("모각존 입장 실패:", err);
       setPassword("");
       setErrorMsg("비밀번호가 틀렸습니다. 다시 입력해 보세요.");
     }
   };
 
-  if (!user) {
+  if (!hydrated) {
     return null;
   }
 
   return (
     <>
-      {joined && String(user.memberId) !== String(hostId) ? (
+      {joined && user && String(user.memberId) !== String(hostId) ? (
         <Button onClick={() => setShowExitModal(true)}>탈퇴하기</Button>
       ) : (
         <Button
@@ -109,6 +103,7 @@ export default function ZoneInOut({
               handleJoin();
             }
           }}
+          disabled={!user}
         >
           참가하기
         </Button>
