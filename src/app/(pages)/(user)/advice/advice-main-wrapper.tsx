@@ -52,7 +52,7 @@ export default function AdviceMainWrapper() {
             />
           ))
         ) : (
-          <div className="w-full text-center text-border-dark dark:text-borders">
+          <div className="w-full text-center text-border-dark dark:text-borders col-span-full">
             작성된 고민들이 모두 삭제되었어요.
             <br />
             비밀스러운 고민이 있다면 새로 작성해 보세요!
