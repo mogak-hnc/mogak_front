@@ -34,7 +34,7 @@ export default async function Home() {
           <div className="flex justify-between items-center whitespace-nowrap overflow-hidden">
             <MainSubTitle
               title="핫한 모각존"
-              description="현재 가장 많은 유저들이 공부 중인 모각존을 살펴 보세요."
+              description="현재 가장 많은 유저들이 공부 중인 모각존을 살펴보세요."
             />
             <Link href="/zone">
               <span className="text-sm text-secondary dark:text-secondary-dark">
