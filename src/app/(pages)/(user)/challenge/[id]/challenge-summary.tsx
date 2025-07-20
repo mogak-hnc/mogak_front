@@ -102,7 +102,7 @@ export default function ChallengeSummary(
             />
             <ChallengeSummaryChart
               label="생존자 비율"
-              value={props.survivorCount / props.totalParticipants}
+              value={(props.survivorCount / props.totalParticipants) * 100}
             />
           </div>
           {!todayCheck && props.joined && props.status === "ONGOING" && (
