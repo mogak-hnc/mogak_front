@@ -34,10 +34,6 @@ export default function ZoneWrapper({
   }, []);
 
   useEffect(() => {
-    if (!joined) {
-      return;
-    }
-
     const timeout = setTimeout(() => {
       if (!connected && id === data.hostMemberId) {
         console.warn("소켓 연결 실패: 재참가 필요");
