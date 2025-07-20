@@ -5,11 +5,14 @@ import kakaoLogin from "./kakao_login.png";
 import naverLogin from "./naver_login.png";
 import Link from "next/link";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { getClientUser } from "@/utils/client/user.client.util";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const nextPath = searchParams.get("next") || "/";
+
   useEffect(() => {
     if (getClientUser()) {
       router.push("/");
@@ -17,11 +20,15 @@ export default function LoginPage() {
   }, []);
 
   const handleKakaoLogin = () => {
-    window.location.href = "/api/internal/auth/kakao/login";
+    window.location.href = `/api/internal/auth/kakao/login?next=${encodeURIComponent(
+      nextPath
+    )}`;
   };
 
   const handleNaverLogin = () => {
-    window.location.href = "/api/internal/auth/naver/login";
+    window.location.href = `/api/internal/auth/naver/login?next=${encodeURIComponent(
+      nextPath
+    )}`;
   };
 
   return (

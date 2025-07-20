@@ -14,6 +14,7 @@ export default function AuthCallbackPage() {
   useEffect(() => {
     const memberId = params.get("memberId");
     const token = params.get("token");
+    const next = params.get("next") || "/";
 
     if (memberId) {
       localStorage.setItem("memberId", memberId);
@@ -25,7 +26,7 @@ export default function AuthCallbackPage() {
     }
 
     window.dispatchEvent(new Event("member:changed"));
-    router.replace("/");
+    router.replace(next);
   }, [params, router, login]);
 
   return <Loading />;

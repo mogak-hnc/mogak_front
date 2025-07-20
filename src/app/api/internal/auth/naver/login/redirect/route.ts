@@ -5,6 +5,7 @@ export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const code = url.searchParams.get("code");
     const state = url.searchParams.get("state");
+    const next = url.searchParams.get("next") || "/";
 
     if (!code || !state) {
       return NextResponse.json(
@@ -28,7 +29,6 @@ export async function GET(req: NextRequest) {
     });
 
     const tokenData = await tokenRes.json();
-
     if (!tokenData.access_token) {
       return NextResponse.json(
         { error: "Token fetch failed", tokenData },
@@ -43,7 +43,6 @@ export async function GET(req: NextRequest) {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-
     const userData = await userRes.json();
 
     const userInfo = {
@@ -64,14 +63,15 @@ export async function GET(req: NextRequest) {
 
     const { token, memberId } = await res.json();
 
-    const response = NextResponse.redirect(`${process.env.FRONTEND_API_URL}`);
-    response.cookies.set("jwt", token, { path: "/" });
-    response.cookies.set("provider", "naver");
+    const redirectUrl = `${
+      process.env.FRONTEND_API_URL
+    }/login/callback?memberId=${memberId}&token=${token}&next=${encodeURIComponent(
+      next
+    )}`;
 
-    response.headers.set(
-      "Location",
-      `${process.env.FRONTEND_API_URL}/login/callback?memberId=${memberId}`
-    );
+    const response = NextResponse.redirect(redirectUrl);
+    response.cookies.set("jwt", token, { path: "/", httpOnly: false });
+    response.cookies.set("provider", "naver");
 
     return response;
   } catch (err) {
