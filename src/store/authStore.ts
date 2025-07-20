@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import { JwtPayload } from "@/utils/client/decode-token.client.util";
 import { decodeToken } from "@/utils/client/decode-token.client.util";
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
@@ -12,39 +13,50 @@ interface AuthState {
   hydrate: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  isLoggedIn: false,
-  jwt: null,
-  user: null,
-  login: (jwt) => {
-    const decoded = decodeToken(jwt);
-    if (!decoded) return;
-
-    set({
-      isLoggedIn: true,
-      jwt,
-      user: decoded,
-    });
-  },
-  logout: () => {
-    set({
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
       isLoggedIn: false,
       jwt: null,
       user: null,
-    });
-  },
-  hydrate: () => {
-    const jwt = getJwtFromCookie();
-    console.log("[hydrate] jwt from cookie:", jwt);
-    if (!jwt) return;
+      login: (jwt) => {
+        const decoded = decodeToken(jwt);
+        if (!decoded) return;
 
-    const decoded = decodeToken(jwt);
-    if (!decoded) return;
+        set({
+          isLoggedIn: true,
+          jwt,
+          user: decoded,
+        });
+      },
+      logout: () => {
+        set({
+          isLoggedIn: false,
+          jwt: null,
+          user: null,
+        });
+      },
+      hydrate: () => {
+        const currentJwt = getJwtFromCookie();
+        if (!currentJwt) return;
 
-    set({
-      isLoggedIn: true,
-      jwt,
-      user: decoded,
-    });
-  },
-}));
+        const decoded = decodeToken(currentJwt);
+        if (!decoded) return;
+
+        set({
+          isLoggedIn: true,
+          jwt: currentJwt,
+          user: decoded,
+        });
+      },
+    }),
+    {
+      name: "auth-storage",
+      partialize: (state) => ({
+        isLoggedIn: state.isLoggedIn,
+        jwt: state.jwt,
+        user: state.user,
+      }),
+    }
+  )
+);
