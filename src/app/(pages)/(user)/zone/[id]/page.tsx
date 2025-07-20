@@ -13,10 +13,6 @@ export async function generateMetadata({
   const { id } = await params;
   const jwt = await getJwtFromServerCookie();
 
-  if (!jwt) {
-    redirect("/login");
-  }
-
   const data = await ZoneDetail(id, jwt);
 
   return {
@@ -34,7 +30,7 @@ export default async function ZoneDetailPage({
   const jwt = await getJwtFromServerCookie();
 
   if (!jwt) {
-    throw new Error("로그인 후 이용해 주세요.");
+    redirect("/login");
   }
 
   const data = await ZoneDetail(id, jwt);
