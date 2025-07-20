@@ -1,7 +1,6 @@
 import { ZoneDetail } from "@/lib/server/zone.server.api";
 import { getJwtFromServerCookie } from "@/utils/server/jwt.server.util";
 import ZoneWrapper from "./zone-wrapper";
-import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -28,10 +27,6 @@ export default async function ZoneDetailPage({
 }) {
   const { id } = await params;
   const jwt = await getJwtFromServerCookie();
-
-  if (!jwt) {
-    redirect("/login");
-  }
 
   const data = await ZoneDetail(id, jwt);
 
