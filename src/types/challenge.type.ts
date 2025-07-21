@@ -154,6 +154,21 @@ export interface ChallengeSurvivorsItem {
   leader: true;
 }
 
+export interface ChallengeProofDetailRequest {
+  challengeId: string;
+  articleId: string;
+}
+
+export interface ChallengeProofDetailResponse {
+  challengeArticleId: string;
+  description: string;
+  challengeId: string;
+  memberId: string;
+  nickname: string;
+  imageUrl: string[];
+  createdAt: string[];
+}
+
 export interface ChallengeSurvivorsResponse {
   content: ChallengeSurvivorsItem[];
   totalElements: number;
