@@ -10,7 +10,7 @@ interface AuthState {
   user: JwtPayload | null;
   login: (jwt: string) => void;
   logout: () => void;
-  hydrate: () => void;
+  restoreFromCookie: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -36,12 +36,16 @@ export const useAuthStore = create<AuthState>()(
           user: null,
         });
       },
-      hydrate: () => {
+      restoreFromCookie: () => {
         const currentJwt = getJwtFromCookie();
-        if (!currentJwt) return;
+        if (!currentJwt) {
+          return;
+        }
 
         const decoded = decodeToken(currentJwt);
-        if (!decoded) return;
+        if (!decoded) {
+          return;
+        }
 
         set({
           isLoggedIn: true,
@@ -52,11 +56,6 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "auth-storage",
-      partialize: (state) => ({
-        isLoggedIn: state.isLoggedIn,
-        jwt: state.jwt,
-        user: state.user,
-      }),
     }
   )
 );

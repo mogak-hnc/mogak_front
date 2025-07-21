@@ -143,7 +143,7 @@ export default function ChallengeMemberList({
       )}
       {modal && (
         <ConfirmModal
-          message={`${targetNickname} 님을 내보내시겠어요?`}
+          message={`${targetNickname} 님을 실패 처리할까요?`}
           onCancel={() => setModal(false)}
           onConfirm={handleResign}
         ></ConfirmModal>
