@@ -127,7 +127,7 @@ export default function ChallengeSummary(
               <SummarySubtitle>인증하기</SummarySubtitle>
 
               {todayCheck ? (
-                <p className="text-border-dark dark:text-borders text-sm mt-2">
+                <p className="text-borders dark:text-border-dark text-sm mt-2">
                   오늘 인증이 완료되었어요!
                 </p>
               ) : (
