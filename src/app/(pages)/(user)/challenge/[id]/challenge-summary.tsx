@@ -4,7 +4,7 @@ import Button from "@/app/components/ui/button";
 import { ChallengeDetailSummaryProps } from "@/types/challenge.type";
 import { ChallengeSummaryChart } from "./challenge-summary-chart";
 import { getDatePercent } from "@/utils/shared/date-percent.util";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ConfirmModal from "@/app/components/confirm-modal";
 import {
   ChallengeEntryPost,
