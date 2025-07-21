@@ -65,6 +65,8 @@ export default function ChallengeMemberList({
                       member.survivor ? "" : "grayscale"
                     }`}
                   />
+
+                  <span className="text-sm">{member.nickname}</span>
                   {member.leader ? (
                     <span className="px-2 py-0.5 text-xs font-semibold text-white bg-primary rounded-full">
                       방장
@@ -72,7 +74,6 @@ export default function ChallengeMemberList({
                   ) : (
                     <div className="h-[20px]" />
                   )}
-                  <span className="text-sm">{member.nickname}</span>
                 </div>
               </Link>
             ))}
