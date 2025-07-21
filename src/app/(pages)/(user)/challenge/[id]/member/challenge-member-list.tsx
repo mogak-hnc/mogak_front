@@ -43,7 +43,7 @@ export default function ChallengeMemberList({
     try {
       const result = await ChallengeSurvivorsList(challengeId, jwt, pageNum);
       const ownerCheck = await ChallengeOwnerCheck(challengeId, jwt);
-      console.log(challengeId, jwt);
+
       setData(result);
       setPage(pageNum);
       setIsLeader(ownerCheck);
