@@ -5,7 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import Pagination from "@/app/components/shared/paginaiton";
 import { getProfileImage } from "@/utils/shared/profile.util";
-import { ChallengeSurvivorsList } from "@/lib/client/challenge.client.api";
+import {
+  ChallengeOwnerCheck,
+  ChallengeSurvivorsList,
+} from "@/lib/client/challenge.client.api";
 import { ChallengeSurvivorsResponse } from "@/types/challenge.type";
 import { useAuthStore } from "@/store/authStore";
 
@@ -26,6 +29,7 @@ export default function ChallengeMemberList({
   const [data, setData] = useState<ChallengeSurvivorsResponse | null>(null);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [isLeader, setIsLeader] = useState(false);
 
   const { jwt } = useAuthStore();
 
@@ -33,8 +37,11 @@ export default function ChallengeMemberList({
     setLoading(true);
     try {
       const result = await ChallengeSurvivorsList(challengeId, jwt, pageNum);
+      const ownerCheck = await ChallengeOwnerCheck(challengeId, jwt);
+      console.log(challengeId, jwt);
       setData(result);
       setPage(pageNum);
+      setIsLeader(ownerCheck);
     } catch (e) {
       console.error("참가자 목록 불러오기 실패", e);
     } finally {
@@ -46,6 +53,10 @@ export default function ChallengeMemberList({
     fetchData(0);
   }, []);
 
+  const handleResign = (id: string) => {
+    alert(id);
+  };
+
   return (
     <div>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -54,28 +65,47 @@ export default function ChallengeMemberList({
               <ChallengeMemberSkeleton key={`skeleton-${i}`} />
             ))
           : data?.content.map((member) => (
-              <Link key={member.memberId} href={`/profile/${member.memberId}`}>
-                <div className="flex flex-col items-center gap-1 transition-transform duration-200 hover:scale-105">
-                  <Image
-                    src={getProfileImage(member.memberImageUrl)}
-                    alt={member.nickname}
-                    width={64}
-                    height={64}
-                    className={`rounded-full object-cover border ${
-                      member.survivor ? "" : "grayscale"
-                    }`}
-                  />
+              <div
+                key={member.memberId}
+                className="flex flex-col items-center gap-1 transition-transform duration-200 hover:scale-105"
+              >
+                <Image
+                  src={getProfileImage(member.memberImageUrl)}
+                  alt={member.nickname}
+                  width={64}
+                  height={64}
+                  className={`rounded-full object-cover border ${
+                    member.survivor ? "" : "grayscale"
+                  }`}
+                />
 
-                  <span className="text-sm">{member.nickname}</span>
-                  {member.leader ? (
-                    <span className="px-2 py-0.5 text-xs font-semibold text-white bg-primary rounded-full">
-                      방장
-                    </span>
-                  ) : (
-                    <div className="h-[20px]" />
+                <div className="flex items-center gap-3">
+                  <Link
+                    key={member.memberId}
+                    href={`/profile/${member.memberId}`}
+                  >
+                    <span className="text-sm">{member.nickname}</span>
+                  </Link>
+                  {!member.leader && isLeader && (
+                    <div>
+                      <span
+                        onClick={() => handleResign(member.memberId)}
+                        className="text-error dark:text-error-dark cursor-pointer"
+                      >
+                        x
+                      </span>
+                    </div>
                   )}
                 </div>
-              </Link>
+
+                {member.leader ? (
+                  <span className="px-2 py-0.5 text-xs font-semibold text-white bg-primary rounded-full">
+                    방장
+                  </span>
+                ) : (
+                  <div className="h-[20px]"></div>
+                )}
+              </div>
             ))}
       </div>
 
