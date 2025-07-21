@@ -12,6 +12,7 @@ import {
 } from "@/lib/client/challenge.client.api";
 import { ChallengeSurvivorsResponse } from "@/types/challenge.type";
 import { useAuthStore } from "@/store/authStore";
+import ConfirmModal from "@/app/components/confirm-modal";
 
 function ChallengeMemberSkeleton() {
   return (
@@ -31,6 +32,9 @@ export default function ChallengeMemberList({
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [isLeader, setIsLeader] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [targetId, setTargetId] = useState("");
+  const [targetNickname, setTargetNickname] = useState("");
 
   const { jwt } = useAuthStore();
 
@@ -54,9 +58,23 @@ export default function ChallengeMemberList({
     fetchData(0);
   }, []);
 
-  const handleResign = async (id: string) => {
-    const res = await ChallengeMemberPut({ challengeId, targetMemberId: id });
-    console.log(res);
+  const openModal = ({ id, nickname }: { id: string; nickname: string }) => {
+    setTargetId(id);
+    setTargetNickname(nickname);
+    setModal(true);
+  };
+
+  const handleResign = async () => {
+    try {
+      await ChallengeMemberPut({
+        challengeId,
+        targetMemberId: targetId,
+      });
+      setModal(false);
+      fetchData(1);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -88,10 +106,15 @@ export default function ChallengeMemberList({
                   >
                     <span className="text-sm">{member.nickname}</span>
                   </Link>
-                  {!member.leader && isLeader && (
+                  {!member.leader && isLeader && member.survivor && (
                     <div>
                       <span
-                        onClick={() => handleResign(member.memberId)}
+                        onClick={() =>
+                          openModal({
+                            id: member.memberId,
+                            nickname: member.nickname,
+                          })
+                        }
                         className="text-error dark:text-error-dark cursor-pointer"
                       >
                         x
@@ -117,6 +140,13 @@ export default function ChallengeMemberList({
           totalPages={data.totalPages}
           onPageChange={fetchData}
         />
+      )}
+      {modal && (
+        <ConfirmModal
+          message={`${targetNickname} 님을 내보내시겠어요?`}
+          onCancel={() => setModal(false)}
+          onConfirm={handleResign}
+        ></ConfirmModal>
       )}
     </div>
   );
