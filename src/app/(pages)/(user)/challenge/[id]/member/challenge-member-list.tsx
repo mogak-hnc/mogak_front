@@ -11,7 +11,6 @@ import {
   ChallengeSurvivorsList,
 } from "@/lib/client/challenge.client.api";
 import { ChallengeSurvivorsResponse } from "@/types/challenge.type";
-import { useAuthStore } from "@/store/authStore";
 import ConfirmModal from "@/app/components/confirm-modal";
 
 function ChallengeMemberSkeleton() {
@@ -35,8 +34,6 @@ export default function ChallengeMemberList({
   const [modal, setModal] = useState(false);
   const [targetId, setTargetId] = useState("");
   const [targetNickname, setTargetNickname] = useState("");
-
-  const { jwt } = useAuthStore();
 
   const fetchData = async (pageNum: number) => {
     setLoading(true);
