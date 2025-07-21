@@ -8,8 +8,13 @@ export function getDatePercent(startArr: number[], endArr: number[]): number {
   const totalDays = end.diff(start, "day");
   const passedDays = today.diff(start, "day");
 
-  if (totalDays <= 0) return 100;
-  if (passedDays <= 0) return 0;
+  if (totalDays <= 0) {
+    return 100;
+  }
+  if (passedDays < 0) {
+    return 0;
+  }
 
-  return Math.min(Math.round((passedDays / totalDays) * 100), 100);
+  const percent = (passedDays / totalDays) * 100;
+  return Math.min(Math.max(Math.round(percent), 1), 100);
 }
