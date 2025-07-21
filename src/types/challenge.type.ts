@@ -166,7 +166,7 @@ export interface ChallengeProofDetailResponse {
   memberId: string;
   nickname: string;
   imageUrl: string[];
-  createdAt: string[];
+  createdAt: number[];
 }
 
 export interface ChallengeSurvivorsResponse {
