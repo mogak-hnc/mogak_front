@@ -49,7 +49,12 @@ export default function ChatUiButton({
       />
       <button
         onClick={sendChatHandler}
-        className="text-white bg-primary dark:bg-primary-dark p-2 rounded-full"
+        disabled={!msg.trim()}
+        className={`p-2 rounded-full transition-colors ${
+          !msg.trim()
+            ? "bg-gray-300 cursor-not-allowed"
+            : "bg-primary dark:bg-primary-dark text-white"
+        }`}
       >
         <svg
           className="w-4 h-4"
