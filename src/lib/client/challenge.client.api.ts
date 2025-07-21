@@ -86,7 +86,7 @@ export async function ChallengeProofPost(payload: ChallengeProofPostRequest) {
   const formData = new FormData();
 
   const json = {
-    description: `${payload.title} 챌린지의 오늘 인증을 완료했습니다!`,
+    description: payload.title,
   };
   const requestBlob = new Blob([JSON.stringify(json)], {
     type: "application/json",

@@ -15,14 +15,7 @@ import { getTimeDiffText } from "@/utils/shared/time.util";
 import Image from "next/image";
 
 export function SummarySubtitle({ children }: { children: React.ReactNode }) {
-  return (
-    <h4
-      className="font-bold text-primary dark:text-primary-dark
-   mb-2"
-    >
-      {children}
-    </h4>
-  );
+  return <h4 className="font-bold text-primary mb-2">{children}</h4>;
 }
 
 export default function ChallengeSummary(
@@ -30,6 +23,7 @@ export default function ChallengeSummary(
 ) {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
+  const [description, setDescription] = useState<string>("");
   const [todayCheck, setTodayCheck] = useState(true);
   const [uploadError, setUploadError] = useState<string>("");
   const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -59,23 +53,28 @@ export default function ChallengeSummary(
       setUploadError("인증 사진을 첨부해 주세요.");
       return;
     }
+    if (description.trim().length === 0) {
+      setUploadError("설명을 입력해 주세요.");
+      return;
+    }
+
     setUploadError("");
     setIsUploading(true);
 
     try {
       await ChallengeProofPost({
         challengeId: props.challengeId,
-        title: props.title,
+        title: description.trim() || `오늘의 챌린지를 완료했어요!`,
         images: file,
       });
 
       setFile(null);
+      setDescription("");
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
 
       setTodayCheck(true);
-
       props.onRefetch();
     } catch (err) {
       console.error("인증 업로드 실패 " + err);
@@ -109,7 +108,7 @@ export default function ChallengeSummary(
             height={24}
           />
           이 챌린지를 완수하면
-          <p className="font-bold  text-secondary dark:text-secondary-dark">
+          <p className="font-bold text-secondary dark:text-secondary-dark">
             [ {props.badgeInfo.name} ]
           </p>
           뱃지를 획득해요!
@@ -152,6 +151,16 @@ export default function ChallengeSummary(
                     }}
                     className="text-sm"
                   />
+
+                  <input
+                    type="text"
+                    value={description}
+                    maxLength={100}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="인증 사진 설명 (최대 100자)"
+                    className="w-full mt-2 px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  />
+
                   <p
                     className={`text-error dark:text-error-dark text-xs mt-1 ${
                       uploadError ? "visible" : "invisible"
