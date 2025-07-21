@@ -19,6 +19,7 @@ export default function ChallengeWrapper({
 }) {
   const { jwt } = useAuthStore();
   const [data, setData] = useState<ChallengeDetileResponse>(initial);
+  const [refreshKey, setRefreshKey] = useState<number>(Date.now());
 
   useEffect(() => {
     if (!jwt) {
@@ -30,6 +31,7 @@ export default function ChallengeWrapper({
   const refetch = async () => {
     const reload = await ChallengeDetail(id);
     setData(reload);
+    setRefreshKey(Date.now());
   };
 
   return (
@@ -54,7 +56,7 @@ export default function ChallengeWrapper({
           )}
         />
         {data.joined && data.status !== "BEFORE" && (
-          <ChallengeProofGrid challengeId={id} />
+          <ChallengeProofGrid challengeId={id} refreshTrigger={refreshKey} />
         )}
       </div>
 

@@ -4,7 +4,7 @@ import Button from "@/app/components/ui/button";
 import { ChallengeDetailSummaryProps } from "@/types/challenge.type";
 import { ChallengeSummaryChart } from "./challenge-summary-chart";
 import { getDatePercent } from "@/utils/shared/date-percent.util";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ConfirmModal from "@/app/components/confirm-modal";
 import {
   ChallengeEntryPost,
@@ -12,7 +12,6 @@ import {
   ChallengeSurvivorsToday,
 } from "@/lib/client/challenge.client.api";
 import { getTimeDiffText } from "@/utils/shared/time.util";
-
 import Image from "next/image";
 
 export function SummarySubtitle({ children }: { children: React.ReactNode }) {
@@ -25,6 +24,9 @@ export default function ChallengeSummary(
   const [showModal, setShowModal] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const [todayCheck, setTodayCheck] = useState(true);
+  const [uploadError, setUploadError] = useState<string>("");
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     const check = async () => {
@@ -33,7 +35,7 @@ export default function ChallengeSummary(
     };
 
     check();
-  });
+  }, [props.challengeId]);
 
   const challengeIn = async () => {
     try {
@@ -47,8 +49,11 @@ export default function ChallengeSummary(
 
   const challengeProof = async () => {
     if (!file) {
+      setUploadError("인증 사진을 첨부해 주세요.");
       return;
     }
+    setUploadError("");
+    setIsUploading(true);
 
     try {
       await ChallengeProofPost({
@@ -56,8 +61,20 @@ export default function ChallengeSummary(
         title: props.title,
         images: file,
       });
+
+      setFile(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+
+      setTodayCheck(true);
+
+      props.onRefetch();
     } catch (err) {
       console.error("인증 업로드 실패 " + err);
+      setUploadError("업로드에 실패했습니다. 다시 시도해 주세요!");
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -92,7 +109,7 @@ export default function ChallengeSummary(
         </div>
       )}
       {props.status !== "BEFORE" && (
-        <>
+        <div>
           <div className="space-y-5">
             <SummarySubtitle>통계</SummarySubtitle>
             <ChallengeSummaryChart
@@ -104,24 +121,43 @@ export default function ChallengeSummary(
               value={(props.survivorCount / props.totalParticipants) * 100}
             />
           </div>
+
           {!todayCheck && props.joined && props.status === "ONGOING" && (
             <div className="border-t border-borders dark:border-border-dark pt-4">
               <SummarySubtitle>인증하기</SummarySubtitle>
               <input
+                ref={fileInputRef}
                 type="file"
                 accept="image/*"
                 onChange={(e) => {
                   const selected = e.target.files?.[0];
                   if (selected) {
                     setFile(selected);
+                    setUploadError("");
                   }
                 }}
                 className="text-sm"
               />
-              <Button onClick={challengeProof}>등록하기</Button>
+              <p
+                className={`text-red-500 text-xs mt-1 ${
+                  uploadError ? "visible" : "invisible"
+                }`}
+              >
+                {uploadError || "placeholder"}
+              </p>
+
+              {isUploading ? (
+                <Button disabled className="mt-2 bg-gray-400">
+                  업로드 중...
+                </Button>
+              ) : (
+                <Button onClick={challengeProof} className="mt-2">
+                  등록하기
+                </Button>
+              )}
             </div>
           )}
-        </>
+        </div>
       )}
       {showModal && (
         <ConfirmModal

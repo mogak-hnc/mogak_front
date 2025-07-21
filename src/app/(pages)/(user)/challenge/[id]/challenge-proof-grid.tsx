@@ -5,12 +5,15 @@ import Image from "next/image";
 import { ChallengeProofList } from "@/lib/client/challenge.client.api";
 import Pagination from "@/app/components/shared/paginaiton";
 import { ChallengeProofItem } from "@/types/challenge.type";
+
 interface ChallengeProofGridProps {
   challengeId: string;
+  refreshTrigger: number;
 }
 
 export default function ChallengeProofGrid({
   challengeId,
+  refreshTrigger,
 }: ChallengeProofGridProps) {
   const [proofImages, setProofImages] = useState<ChallengeProofItem[]>([]);
   const [page, setPage] = useState(0);
@@ -28,7 +31,7 @@ export default function ChallengeProofGrid({
     }
 
     fetchProofs();
-  }, [challengeId, page]);
+  }, [challengeId, page, refreshTrigger]);
 
   return (
     <div>
@@ -39,7 +42,7 @@ export default function ChallengeProofGrid({
           <div className="grid grid-cols-5 gap-2">
             {proofImages.map((src, i) => (
               <Image
-                key={i}
+                key={src.challengeArticleId || i}
                 src={src.thumbnailUrl}
                 alt={`proof-${i}`}
                 width={64}
