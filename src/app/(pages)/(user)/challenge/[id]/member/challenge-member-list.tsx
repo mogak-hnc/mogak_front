@@ -41,8 +41,8 @@ export default function ChallengeMemberList({
   const fetchData = async (pageNum: number) => {
     setLoading(true);
     try {
-      const result = await ChallengeSurvivorsList(challengeId, jwt, pageNum);
-      const ownerCheck = await ChallengeOwnerCheck(challengeId, jwt);
+      const result = await ChallengeSurvivorsList(challengeId, pageNum);
+      const ownerCheck = await ChallengeOwnerCheck(challengeId);
 
       setData(result);
       setPage(pageNum);
