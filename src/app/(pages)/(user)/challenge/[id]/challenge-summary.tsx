@@ -122,38 +122,47 @@ export default function ChallengeSummary(
             />
           </div>
 
-          {!todayCheck && props.joined && props.status === "ONGOING" && (
+          {props.joined && props.status === "ONGOING" && (
             <div className="border-t border-borders dark:border-border-dark pt-4">
               <SummarySubtitle>인증하기</SummarySubtitle>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  const selected = e.target.files?.[0];
-                  if (selected) {
-                    setFile(selected);
-                    setUploadError("");
-                  }
-                }}
-                className="text-sm"
-              />
-              <p
-                className={`text-red-500 text-xs mt-1 ${
-                  uploadError ? "visible" : "invisible"
-                }`}
-              >
-                {uploadError || "placeholder"}
-              </p>
 
-              {isUploading ? (
-                <Button disabled className="mt-2 bg-gray-400">
-                  업로드 중...
-                </Button>
+              {todayCheck ? (
+                <p className="text-border-dark dark:text-borders text-sm mt-2">
+                  오늘 인증이 완료되었어요!
+                </p>
               ) : (
-                <Button onClick={challengeProof} className="mt-2">
-                  등록하기
-                </Button>
+                <div>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const selected = e.target.files?.[0];
+                      if (selected) {
+                        setFile(selected);
+                        setUploadError("");
+                      }
+                    }}
+                    className="text-sm"
+                  />
+                  <p
+                    className={`text-error dark:text-error-dark text-xs mt-1 ${
+                      uploadError ? "visible" : "invisible"
+                    }`}
+                  >
+                    {uploadError || "placeholder"}
+                  </p>
+
+                  {isUploading ? (
+                    <Button disabled className="mt-2 bg-gray-400">
+                      업로드 중...
+                    </Button>
+                  ) : (
+                    <Button onClick={challengeProof} className="mt-2">
+                      등록하기
+                    </Button>
+                  )}
+                </div>
               )}
             </div>
           )}
