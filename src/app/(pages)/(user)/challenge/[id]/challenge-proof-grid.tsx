@@ -72,7 +72,7 @@ export default function ChallengeProofGrid({
           />
         </>
       ) : (
-        <div className="text-borders dark:text-border-dark text-sm">
+        <div className="text-border-dark dark:text-borders text-sm">
           아직 등록된 인증이 없습니다.
         </div>
       )}

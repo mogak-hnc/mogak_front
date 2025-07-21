@@ -15,7 +15,14 @@ import { getTimeDiffText } from "@/utils/shared/time.util";
 import Image from "next/image";
 
 export function SummarySubtitle({ children }: { children: React.ReactNode }) {
-  return <h4 className="font-bold text-primary mb-2">{children}</h4>;
+  return (
+    <h4
+      className="font-bold text-primary dark:text-primary-dark
+   mb-2"
+    >
+      {children}
+    </h4>
+  );
 }
 
 export default function ChallengeSummary(

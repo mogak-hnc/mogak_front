@@ -25,7 +25,6 @@ export default function ChallengeProofDetail({
       try {
         const res = await ChallengeArticleDetail({ challengeId, articleId });
         setData(res);
-        console.log(res);
       } catch (err) {
         console.error("인증 상세 불러오기 실패:", err);
       }
