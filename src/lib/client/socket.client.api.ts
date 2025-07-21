@@ -5,6 +5,11 @@ import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 let stompClient: Client | null = null;
 let isConnecting = false;
 
+const subscribedTopics = new Map<
+  string,
+  { mogakZoneId: string; onMessage: (msg: any) => void }
+>();
+
 export async function connectAndSubscribeSocket<T>({
   topic,
   mogakZoneId,
@@ -18,15 +23,22 @@ export async function connectAndSubscribeSocket<T>({
 
   const token = getJwtFromCookie();
   if (!token) {
-    console.log("❌ JWT 없음. 구독 중단");
+    console.log("[socket] JWT 없음. 구독 중단");
     return;
   }
 
-  await ensureConnected(mogakZoneId);
+  if (isConnecting) {
+    console.log("[socket] 다른 컴포넌트가 연결 중... 대기");
+    await waitUntilConnected();
+  } else if (!stompClient || !stompClient.connected) {
+    console.log("[socket] 새로운 웹소켓 연결 시도");
+    await ensureConnected(mogakZoneId);
+  } else {
+    console.log("[socket] 기존 웹소켓 연결 재사용");
+  }
+
   subscribe(topic, mogakZoneId, onMessage);
 }
-
-const subscribedTopics = new Set<string>();
 
 export function subscribe<T>(
   topic: string,
@@ -38,7 +50,7 @@ export function subscribe<T>(
   }
 
   if (subscribedTopics.has(topic)) {
-    console.log("⚠️ 이미 구독한 토픽:", topic);
+    console.log("[socket] 이미 구독한 토픽:", topic);
     return;
   }
 
@@ -47,12 +59,13 @@ export function subscribe<T>(
     return;
   }
 
-  console.log("📡 토픽 구독 시작:", topic);
+  console.log("[socket] 토픽 구독 시작:", topic);
   stompClient.subscribe(
     topic,
     (message: IMessage) => {
       try {
         const payload = JSON.parse(message.body);
+
         const isSystemBroadcast =
           typeof payload === "object" &&
           "sessionId" in payload &&
@@ -62,20 +75,20 @@ export function subscribe<T>(
           Object.keys(payload).length === 4;
 
         if (isSystemBroadcast) {
-          console.log("📭 시스템 브로드캐스트 무시:", payload);
+          console.log("[socket] 시스템 브로드캐스트 무시:", payload);
           return;
         }
 
-        console.log("📨 수신된 메시지:", payload, topic);
+        console.log("[socket] 수신된 메시지:", payload, topic);
         onMessage(payload);
       } catch (err) {
-        console.error("❗ 메시지 파싱 오류:", err);
+        console.error("[socket] 메시지 파싱 오류:", err);
       }
     },
     { Authorization: jwt, mogakZoneId }
   );
 
-  subscribedTopics.add(topic);
+  subscribedTopics.set(topic, { mogakZoneId, onMessage });
 }
 
 export async function ensureConnected(mogakZoneId: string): Promise<void> {
@@ -84,11 +97,7 @@ export async function ensureConnected(mogakZoneId: string): Promise<void> {
     throw new Error("JWT 없음");
   }
 
-  if (stompClient && stompClient.connected) {
-    return;
-  }
-
-  if (!stompClient) {
+  if (!stompClient || !stompClient.active) {
     stompClient = new Client({
       webSocketFactory: () =>
         new SockJS(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/mogak/ws`),
@@ -98,15 +107,18 @@ export async function ensureConnected(mogakZoneId: string): Promise<void> {
       },
       reconnectDelay: 5000,
       onConnect: () => {
-        console.log("✅ 웹소켓 연결 성공");
+        console.log("[socket] 웹소켓 연결 성공");
+        subscribedTopics.forEach((sub, topic) =>
+          subscribe(topic, sub.mogakZoneId, sub.onMessage)
+        );
       },
       onStompError: (frame) => {
-        console.error("❌ STOMP 에러:", frame);
+        console.error("[socket] STOMP 에러:", frame);
       },
     });
   }
 
-  if (!stompClient.active && !isConnecting) {
+  if (!stompClient.connected && !isConnecting) {
     isConnecting = true;
     stompClient.activate();
     await waitUntilConnected();
@@ -116,14 +128,14 @@ export async function ensureConnected(mogakZoneId: string): Promise<void> {
   }
 }
 
-function waitUntilConnected(timeout = 3000): Promise<void> {
+function waitUntilConnected(timeout = 10000): Promise<void> {
   return new Promise((resolve, reject) => {
     const start = Date.now();
     const check = () => {
       if (stompClient && stompClient.connected) {
         resolve();
       } else if (Date.now() - start > timeout) {
-        reject("❌ 소켓 연결 타임아웃");
+        reject("[socket] 소켓 연결 타임아웃");
       } else {
         setTimeout(check, 100);
       }
@@ -137,8 +149,7 @@ export async function sendStatus(
   status: string,
   memberId: string
 ) {
-  console.log("📤 sendStatus 호출됨");
-
+  console.log("[socket] sendStatus 호출됨");
   const jwt = getJwtFromCookie();
   if (!jwt) {
     return;
@@ -146,18 +157,14 @@ export async function sendStatus(
 
   try {
     await ensureConnected(zoneId);
-
     stompClient!.publish({
       destination: `/app/api/mogak/zone/${zoneId}/status`,
-      headers: {
-        Authorization: jwt,
-        mogakZoneId: String(zoneId),
-      },
+      headers: { Authorization: jwt, mogakZoneId: String(zoneId) },
       body: JSON.stringify({ memberId, status }),
     });
-    console.log("✅ status 전송 성공");
+    console.log("[socket] status 전송 성공");
   } catch (err) {
-    console.error("❌ status 전송 실패", err);
+    console.error("[socket] status 전송 실패", err);
   }
 }
 
@@ -167,7 +174,6 @@ export async function sendChat(
   message: string
 ) {
   console.log("📤 sendChat 호출됨");
-
   const jwt = getJwtFromCookie();
   if (!jwt) {
     return;
@@ -175,24 +181,19 @@ export async function sendChat(
 
   try {
     await ensureConnected(zoneId);
-
     stompClient!.publish({
       destination: `/app/api/mogak/zone/${zoneId}/message`,
-      headers: {
-        Authorization: jwt,
-        mogakZoneId: String(zoneId),
-      },
+      headers: { Authorization: jwt, mogakZoneId: String(zoneId) },
       body: JSON.stringify({ memberId, message }),
     });
     console.log("✅ chat 전송 성공");
   } catch (err) {
-    console.error("❌ chat 전송 실패", err);
+    console.error("[socket] chat 전송 실패", err);
   }
 }
 
 export async function sendDetail(zoneId: string) {
-  console.log("📤 sendDetail 호출됨");
-
+  console.log("[socket] sendDetail 호출됨");
   const jwt = getJwtFromCookie();
   if (!jwt) {
     return;
@@ -200,24 +201,22 @@ export async function sendDetail(zoneId: string) {
 
   try {
     await ensureConnected(zoneId);
-
     stompClient!.publish({
       destination: `/app/api/mogak/zone/${zoneId}`,
-      headers: {
-        Authorization: jwt,
-        mogakZoneId: String(zoneId),
-      },
+      headers: { Authorization: jwt, mogakZoneId: String(zoneId) },
     });
-
-    console.log("✅ detail 전송 성공");
+    console.log("[socket] detail 전송 성공");
   } catch (err) {
-    console.error("❌ detail 전송 실패", err);
+    console.error("[socket] detail 전송 실패", err);
   }
 }
 
 export function disconnectSocket() {
-  if (stompClient && stompClient.connected) {
+  if (stompClient) {
+    console.log("[socket] 웹소켓 연결 종료 및 구독 초기화");
     stompClient.deactivate();
-    console.log("🛑 웹소켓 연결 종료");
+    stompClient = null;
+    subscribedTopics.clear();
+    isConnecting = false;
   }
 }
