@@ -151,6 +151,7 @@ export interface ChallengeSurvivorsItem {
   nickname: string;
   memberImageUrl: string;
   survivor: boolean;
+  leader: true;
 }
 
 export interface ChallengeSurvivorsResponse {
