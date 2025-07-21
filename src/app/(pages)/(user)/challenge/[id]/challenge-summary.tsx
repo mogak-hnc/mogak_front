@@ -13,6 +13,7 @@ import {
 } from "@/lib/client/challenge.client.api";
 import { getTimeDiffText } from "@/utils/shared/time.util";
 import Image from "next/image";
+import ChallengeProofUploader from "./challenge-proof-uploader";
 
 export function SummarySubtitle({ children }: { children: React.ReactNode }) {
   return <h4 className="font-bold text-primary mb-2">{children}</h4>;
@@ -131,54 +132,18 @@ export default function ChallengeSummary(
           {props.joined && props.status === "ONGOING" && (
             <div className="border-t border-borders dark:border-border-dark pt-4">
               <SummarySubtitle>인증하기</SummarySubtitle>
-
               {todayCheck ? (
                 <p className="text-borders dark:text-border-dark text-sm mt-2">
                   오늘 인증이 완료되었어요!
                 </p>
               ) : (
-                <div>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const selected = e.target.files?.[0];
-                      if (selected) {
-                        setFile(selected);
-                        setUploadError("");
-                      }
-                    }}
-                    className="text-sm"
-                  />
-
-                  <input
-                    type="text"
-                    value={description}
-                    maxLength={100}
-                    onChange={(e) => setDescription(e.target.value)}
-                    placeholder="인증 사진 설명 (최대 100자)"
-                    className="w-full mt-2 px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-
-                  <p
-                    className={`text-error dark:text-error-dark text-xs mt-1 ${
-                      uploadError ? "visible" : "invisible"
-                    }`}
-                  >
-                    {uploadError || "placeholder"}
-                  </p>
-
-                  {isUploading ? (
-                    <Button disabled className="mt-2 bg-gray-400">
-                      업로드 중...
-                    </Button>
-                  ) : (
-                    <Button onClick={challengeProof} className="mt-2">
-                      등록하기
-                    </Button>
-                  )}
-                </div>
+                <ChallengeProofUploader
+                  challengeId={props.challengeId}
+                  onSuccess={() => {
+                    setTodayCheck(true);
+                    props.onRefetch();
+                  }}
+                />
               )}
             </div>
           )}
