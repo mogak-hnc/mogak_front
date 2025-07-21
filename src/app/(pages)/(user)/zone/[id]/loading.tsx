@@ -12,7 +12,6 @@ export default function Loading() {
           ))}
         </div>
       </div>
-      <div className="w-[35%]">{/*  ChatUI  */}</div>
     </div>
   );
 }

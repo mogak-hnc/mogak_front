@@ -91,6 +91,12 @@ export function subscribe<T>(
   subscribedTopics.set(topic, { mogakZoneId, onMessage });
 }
 
+let onConnectedCallback: (() => void) | null = null;
+
+export function setOnConnectedCallback(cb: () => void) {
+  onConnectedCallback = cb;
+}
+
 export async function ensureConnected(mogakZoneId: string): Promise<void> {
   const token = getJwtFromCookie();
   if (!token) {
@@ -108,6 +114,9 @@ export async function ensureConnected(mogakZoneId: string): Promise<void> {
       reconnectDelay: 5000,
       onConnect: () => {
         console.log("[socket] 웹소켓 연결 성공");
+        if (onConnectedCallback) {
+          onConnectedCallback();
+        }
         subscribedTopics.forEach((sub, topic) =>
           subscribe(topic, sub.mogakZoneId, sub.onMessage)
         );

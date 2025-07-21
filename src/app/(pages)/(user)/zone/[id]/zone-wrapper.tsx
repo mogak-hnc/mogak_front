@@ -7,11 +7,14 @@ import { useEffect, useState } from "react";
 import {
   connectAndSubscribeSocket,
   disconnectSocket,
+  setOnConnectedCallback,
 } from "@/lib/client/socket.client.api";
 import ConfirmModal from "@/app/components/confirm-modal";
 import SettingModal from "./setting-modal";
-import { useAuthStore } from "@/store/authStore";
 import UserCardWrapper from "./user-card-wrapper";
+
+import ZoneHeaderSkeleton from "@/app/components/skeleton/zone/zone-header-skeleton";
+import UserCardSkeleton from "@/app/components/skeleton/shared/user-card-skeleton";
 
 export default function ZoneWrapper({
   id,
@@ -26,14 +29,12 @@ export default function ZoneWrapper({
   const [connected, setConnected] = useState(false);
   const [showReconnectModal, setShowReconnectModal] = useState(false);
 
-  const [memberId, setMemberId] = useState<string | null>(null);
-
-  const { jwt } = useAuthStore();
   useEffect(() => {
-    setMemberId(jwt);
-  }, []);
+    setOnConnectedCallback(() => {
+      console.log("소켓 연결 완료");
+      setConnected(true);
+    });
 
-  useEffect(() => {
     const timeout = setTimeout(() => {
       if (!connected && id === data.hostMemberId) {
         console.warn("소켓 연결 실패: 재참가 필요");
@@ -46,11 +47,6 @@ export default function ZoneWrapper({
       topic: `/topic/api/mogak/zone/${id}`,
       mogakZoneId: id,
       onMessage: (parsedRes) => {
-        setConnected(true);
-        clearTimeout(timeout);
-
-        console.log("받은 메시지:", parsedRes);
-
         setLoadData((prev) => {
           const base = prev ?? data;
           return {
@@ -62,33 +58,30 @@ export default function ZoneWrapper({
       },
     });
 
-    const handleBeforeUnload = () => {
-      if (!memberId) {
-        return;
-      }
-
-      const payload = new Blob(
-        [JSON.stringify({ mogakZoneId: id, memberId })],
-        { type: "application/json" }
-      );
-
-      navigator.sendBeacon(
-        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/zone/leave`,
-        payload
-      );
-
-      disconnectSocket();
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
     return () => {
       clearTimeout(timeout);
       setConnected(false);
-      window.removeEventListener("beforeunload", handleBeforeUnload);
       disconnectSocket();
     };
   }, []);
+
+  if (!connected) {
+    return (
+      <div className="flex flex-col lg:flex-row gap-4">
+        <div className="w-full lg:w-[65%] flex flex-col gap-4">
+          <ZoneHeaderSkeleton />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {Array.from({ length: 6 }).map((_, idx) => (
+              <UserCardSkeleton key={idx} />
+            ))}
+          </div>
+        </div>
+        <div className="w-full lg:w-[35%] min-w-[300px]">
+          <div className="h-[600px] w-full rounded-3xl bg-gray-200 animate-pulse" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col lg:flex-row gap-4">
@@ -122,13 +115,8 @@ export default function ZoneWrapper({
       {showReconnectModal && (
         <ConfirmModal
           message="연결이 끊어졌어요. 다시 참가해 주세요!"
-          onConfirm={() => {
-            setShowReconnectModal(false);
-            window.location.reload();
-          }}
-          onCancel={() => {
-            setShowReconnectModal(false);
-          }}
+          onConfirm={() => window.location.reload()}
+          onCancel={() => setShowReconnectModal(false)}
         />
       )}
       {showModal && (
