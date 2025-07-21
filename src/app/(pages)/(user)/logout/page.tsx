@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
+import Loading from "@/app/loading";
 
 export default function LogoutPage() {
   const router = useRouter();
@@ -21,5 +22,5 @@ export default function LogoutPage() {
     router.push("/");
   }, [router, logout]);
 
-  return <div>로그아웃 중입니다...</div>;
+  return <Loading />;
 }
