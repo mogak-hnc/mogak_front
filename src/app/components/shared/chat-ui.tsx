@@ -47,7 +47,12 @@ export default function ChatUI({ zoneId, joined }: ChatUiProps) {
 
   useEffect(() => {
     if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+      const isAtBottom =
+        containerRef.current.scrollHeight - containerRef.current.scrollTop <=
+        containerRef.current.clientHeight + 10;
+      if (isAtBottom) {
+        containerRef.current.scrollTop = containerRef.current.scrollHeight;
+      }
     }
   }, [chatMessages]);
 
