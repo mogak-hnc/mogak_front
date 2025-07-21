@@ -114,7 +114,10 @@ export default function ChallengeProofUploader({
       </p>
 
       {isUploading ? (
-        <Button disabled className="mt-2 bg-gray-400 animate-pulse">
+        <Button
+          disabled
+          className="mt-2 bg-borders dark:bg-border-dark animate-pulse"
+        >
           업로드 중...
         </Button>
       ) : (

@@ -8,7 +8,6 @@ import { useEffect, useRef, useState } from "react";
 import ConfirmModal from "@/app/components/confirm-modal";
 import {
   ChallengeEntryPost,
-  ChallengeProofPost,
   ChallengeSurvivorsToday,
 } from "@/lib/client/challenge.client.api";
 import { getTimeDiffText } from "@/utils/shared/time.util";
@@ -22,13 +21,9 @@ export function SummarySubtitle({ children }: { children: React.ReactNode }) {
 export default function ChallengeSummary(
   props: ChallengeDetailSummaryProps & { onRefetch: () => void }
 ) {
+  console.log(props);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [file, setFile] = useState<File | null>(null);
-  const [description, setDescription] = useState<string>("");
   const [todayCheck, setTodayCheck] = useState(true);
-  const [uploadError, setUploadError] = useState<string>("");
-  const [isUploading, setIsUploading] = useState<boolean>(false);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     const check = async () => {
@@ -46,42 +41,6 @@ export default function ChallengeSummary(
       props.onRefetch();
     } catch (err) {
       console.log(`챌린지 참여 실패 : ${err}`);
-    }
-  };
-
-  const challengeProof = async () => {
-    if (!file) {
-      setUploadError("인증 사진을 첨부해 주세요.");
-      return;
-    }
-    if (description.trim().length === 0) {
-      setUploadError("설명을 입력해 주세요.");
-      return;
-    }
-
-    setUploadError("");
-    setIsUploading(true);
-
-    try {
-      await ChallengeProofPost({
-        challengeId: props.challengeId,
-        title: description.trim() || `오늘의 챌린지를 완료했어요!`,
-        images: file,
-      });
-
-      setFile(null);
-      setDescription("");
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
-
-      setTodayCheck(true);
-      props.onRefetch();
-    } catch (err) {
-      console.error("인증 업로드 실패 " + err);
-      setUploadError("업로드에 실패했습니다. 다시 시도해 주세요!");
-    } finally {
-      setIsUploading(false);
     }
   };
 
