@@ -3,6 +3,8 @@
 import { useRef, useState } from "react";
 import Button from "@/app/components/ui/button";
 import { ChallengeProofPost } from "@/lib/client/challenge.client.api";
+import Input from "@/app/components/ui/input";
+import clsx from "clsx";
 
 interface ChallengeProofUploaderProps {
   challengeId: string;
@@ -17,6 +19,7 @@ export default function ChallengeProofUploader({
   const [description, setDescription] = useState<string>("");
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadError, setUploadError] = useState<string>("");
+  const [shake, setShake] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleUpload = async () => {
@@ -26,6 +29,7 @@ export default function ChallengeProofUploader({
     }
     if (!description.trim()) {
       setUploadError("설명을 입력해 주세요.");
+      triggerShake();
       return;
     }
     setUploadError("");
@@ -51,8 +55,23 @@ export default function ChallengeProofUploader({
     }
   };
 
+  const triggerShake = () => {
+    setShake(true);
+    setTimeout(() => setShake(false), 500);
+  };
+
+  const handleDescriptionChange = (value: string) => {
+    if (value.length > 100) {
+      setUploadError("100자 이하로 입력해 주세요!");
+      triggerShake();
+      return;
+    }
+    setUploadError("");
+    setDescription(value);
+  };
+
   return (
-    <div>
+    <div className="flex flex-col gap-3">
       <input
         ref={fileInputRef}
         type="file"
@@ -64,20 +83,30 @@ export default function ChallengeProofUploader({
             setUploadError("");
           }
         }}
-        className="text-sm"
+        className="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 
+                   file:rounded-md file:border-0 file:text-sm file:font-semibold 
+                   file:bg-primary file:text-white hover:file:bg-primary-dark 
+                   transition"
       />
 
-      <input
-        type="text"
-        value={description}
-        maxLength={100}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="인증 사진 설명 (최대 100자)"
-        className="w-full mt-2 px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-      />
+      <div className="relative">
+        <Input
+          type="text"
+          value={description}
+          onChange={(e) => handleDescriptionChange(e.target.value)}
+          placeholder="오늘 인증을 설명해 주세요! (선택)"
+          className={clsx(
+            "w-full mt-1 px-3 py-2 border rounded text-sm focus:outline-none focus:ring-2 focus:ring-primary transition",
+            shake && "animate-shake"
+          )}
+        />
+        <span className="absolute right-2 bottom-1 text-xs text-gray-400">
+          {description.length}/100
+        </span>
+      </div>
 
       <p
-        className={`text-error dark:text-error-dark text-xs mt-1 ${
+        className={`text-error dark:text-error-dark text-xs min-h-[16px] ${
           uploadError ? "visible" : "invisible"
         }`}
       >
@@ -85,7 +114,7 @@ export default function ChallengeProofUploader({
       </p>
 
       {isUploading ? (
-        <Button disabled className="mt-2 bg-gray-400">
+        <Button disabled className="mt-2 bg-gray-400 animate-pulse">
           업로드 중...
         </Button>
       ) : (
