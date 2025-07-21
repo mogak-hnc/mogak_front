@@ -6,6 +6,7 @@ import Link from "next/link";
 import Pagination from "@/app/components/shared/paginaiton";
 import { getProfileImage } from "@/utils/shared/profile.util";
 import {
+  ChallengeMemberPut,
   ChallengeOwnerCheck,
   ChallengeSurvivorsList,
 } from "@/lib/client/challenge.client.api";
@@ -53,8 +54,9 @@ export default function ChallengeMemberList({
     fetchData(0);
   }, []);
 
-  const handleResign = (id: string) => {
-    alert(id);
+  const handleResign = async (id: string) => {
+    const res = await ChallengeMemberPut({ challengeId, targetMemberId: id });
+    console.log(res);
   };
 
   return (

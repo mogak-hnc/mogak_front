@@ -3,6 +3,8 @@ import {
   ChallengeCreateRequest,
   ChallengeCreateResponse,
   ChallengeDetileResponse,
+  ChallengeMemberPutRequest,
+  ChallengeMemberPutResponse,
   ChallengeProofPostRequest,
   ChallengeProofResponse,
   ChallengeSurvivorsResponse,
@@ -267,7 +269,6 @@ export async function ChallengeOwnerCheck(id: string, jwt: string | null) {
       method: "GET",
       headers: {
         Authorization: `${jwt}`,
-        // "Content-Type": "application/json",
       },
     }
   );
@@ -279,6 +280,37 @@ export async function ChallengeOwnerCheck(id: string, jwt: string | null) {
   }
 
   const data: boolean = await res.json();
+
+  return data;
+}
+
+export async function ChallengeMemberPut({
+  challengeId,
+  targetMemberId,
+}: ChallengeMemberPutRequest) {
+  const token = getJwtFromCookie();
+  if (!token) {
+    throw new Error("JWT 토큰 없음 / 로그인 필요");
+  }
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/challenge/${challengeId}/members/${targetMemberId}/survivor`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (!res.ok) {
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`챌린지 멤버 내보내기 실패: ${res.status}`);
+  }
+
+  const data: ChallengeMemberPutResponse = await res.json();
 
   return data;
 }

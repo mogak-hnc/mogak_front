@@ -162,6 +162,16 @@ export interface ChallengeSurvivorsResponse {
   size: number;
 }
 
+export interface ChallengeMemberPutRequest {
+  challengeId: string;
+  targetMemberId: string;
+}
+
+export interface ChallengeMemberPutResponse {
+  challengeId: string;
+  kickedMemberId: string;
+}
+
 export interface ChallengeProofResponse {
   content: ChallengeProofItem[];
   totalElements: number;
