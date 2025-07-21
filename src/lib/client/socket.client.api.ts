@@ -5,10 +5,12 @@ import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 let stompClient: Client | null = null;
 let isConnecting = false;
 
-const subscribedTopics = new Map<
-  string,
-  { mogakZoneId: string; onMessage: (msg: any) => void }
->();
+type TopicHandler<T = unknown> = {
+  mogakZoneId: string;
+  onMessage: (msg: T) => void;
+};
+
+const subscribedTopics = new Map<string, TopicHandler>();
 
 export async function connectAndSubscribeSocket<T>({
   topic,
@@ -88,7 +90,10 @@ export function subscribe<T>(
     { Authorization: jwt, mogakZoneId }
   );
 
-  subscribedTopics.set(topic, { mogakZoneId, onMessage });
+  subscribedTopics.set(topic, {
+    mogakZoneId,
+    onMessage: (msg) => onMessage(msg as T),
+  });
 }
 
 let onConnectedCallback: (() => void) | null = null;
