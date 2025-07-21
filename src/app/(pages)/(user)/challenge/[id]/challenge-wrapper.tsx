@@ -28,7 +28,7 @@ export default function ChallengeWrapper({
   }, []);
 
   const refetch = async () => {
-    const reload = await ChallengeDetail(id, jwt);
+    const reload = await ChallengeDetail(id);
     setData(reload);
   };
 

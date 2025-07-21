@@ -12,7 +12,7 @@ import {
   ChallengeSurvivorsToday,
 } from "@/lib/client/challenge.client.api";
 import { getTimeDiffText } from "@/utils/shared/time.util";
-import { useAuthStore } from "@/store/authStore";
+
 import Image from "next/image";
 
 export function SummarySubtitle({ children }: { children: React.ReactNode }) {
@@ -25,11 +25,10 @@ export default function ChallengeSummary(
   const [showModal, setShowModal] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const [todayCheck, setTodayCheck] = useState(true);
-  const { jwt } = useAuthStore();
 
   useEffect(() => {
     const check = async () => {
-      const loadCheck = await ChallengeSurvivorsToday(props.challengeId, jwt);
+      const loadCheck = await ChallengeSurvivorsToday(props.challengeId);
       setTodayCheck(loadCheck);
     };
 

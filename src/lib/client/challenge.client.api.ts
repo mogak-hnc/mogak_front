@@ -138,7 +138,8 @@ export async function ChallengeDelete(challengeId: number) {
   return await res.json();
 }
 
-export async function ChallengeDetail(id: string, jwt: string | null) {
+export async function ChallengeDetail(id: string) {
+  const jwt = getJwtFromCookie();
   if (!jwt) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
   }
@@ -166,11 +167,8 @@ export async function ChallengeDetail(id: string, jwt: string | null) {
   return data;
 }
 
-export async function ChallengeProofList(
-  id: string,
-  jwt: string | null,
-  page: number
-) {
+export async function ChallengeProofList(id: string, page: number) {
+  const jwt = getJwtFromCookie();
   if (!jwt) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
   }
@@ -198,11 +196,8 @@ export async function ChallengeProofList(
   return data;
 }
 
-export async function ChallengeSurvivorsList(
-  id: string,
-  jwt: string | null,
-  page: number
-) {
+export async function ChallengeSurvivorsList(id: string, page: number) {
+  const jwt = getJwtFromCookie();
   if (!jwt) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
   }
@@ -230,7 +225,8 @@ export async function ChallengeSurvivorsList(
   return data;
 }
 
-export async function ChallengeSurvivorsToday(id: string, jwt: string | null) {
+export async function ChallengeSurvivorsToday(id: string) {
+  const jwt = getJwtFromCookie();
   if (!jwt) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
   }
@@ -258,7 +254,8 @@ export async function ChallengeSurvivorsToday(id: string, jwt: string | null) {
   return data;
 }
 
-export async function ChallengeOwnerCheck(id: string, jwt: string | null) {
+export async function ChallengeOwnerCheck(id: string) {
+  const jwt = getJwtFromCookie();
   if (!jwt) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
   }
