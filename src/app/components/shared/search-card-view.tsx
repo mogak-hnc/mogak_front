@@ -118,8 +118,8 @@ export default function SearchCardView({
           onChange={(e) => onSortChange(e.target.value)}
           className="bg-white dark:bg-border-dark dark:text-text-dark rounded-md px-5 py-2"
         >
-          <option value="recent">최신순</option>
-          <option value="participant">참가자 순</option>
+          <option value="최신순">최신순</option>
+          <option value="참여순">참가자 순</option>
         </select>
       </div>
 

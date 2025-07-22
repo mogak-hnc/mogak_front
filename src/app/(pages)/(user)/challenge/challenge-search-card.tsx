@@ -11,6 +11,7 @@ import ChallengeMainCard from "./challenge-main-card";
 import { ChallengeSearch } from "@/lib/shared/challenge.api";
 import ChallengeMainCardSkeleton from "../../../components/skeleton/challenge/challenge-main-card-skeleton";
 import Pagination from "@/app/components/shared/paginaiton";
+import { mapSort } from "@/utils/shared/sort.util";
 
 export default function ChallengeSearchCard({
   title,
@@ -34,7 +35,7 @@ export default function ChallengeSearchCard({
       const res = await ChallengeSearch({
         search,
         official,
-        sort: finalSort,
+        sort: mapSort(finalSort),
         status: status as ChallengeStatusType,
         page: pageNumber,
         size: 12,

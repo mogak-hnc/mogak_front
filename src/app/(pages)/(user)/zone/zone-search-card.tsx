@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import SearchCardView from "@/app/components/shared/search-card-view";
 import { ZoneMainProps, ZoneSearchCardProps } from "@/types/zone.type";
-import { mapSort } from "@/utils/shared/sort.util";
 import ZoneMainCard from "./zone-main-card";
 import { ZoneSearch } from "@/lib/shared/zone.api";
 import { ZoneMainCardSkeleton } from "@/app/components/skeleton/zone/zone-main-card-skeleton";
 import Pagination from "@/app/components/shared/paginaiton";
+import { mapSort } from "@/utils/shared/sort.util";
 
 export default function ZoneSearchCard({
   title,

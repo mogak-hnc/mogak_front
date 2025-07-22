@@ -12,7 +12,7 @@ export default async function ChallengePage() {
         title="모각챌"
         description="모여서 각자, 챌린지하기!"
         tags={[{ name: "공식 챌린지" }]}
-        sort="recent"
+        sort="최신순"
         section="챌린지"
       />
     </div>
