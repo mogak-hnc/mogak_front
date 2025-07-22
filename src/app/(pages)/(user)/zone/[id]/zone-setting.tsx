@@ -18,7 +18,14 @@ export default function ZoneSetting({
   return (
     <>
       {String(user) === String(hostId) && (
-        <Button onClick={onOpenSetting}>모각존 관리</Button>
+        <Button
+          onClick={() => {
+            console.log("모각존 관리 버튼 클릭");
+            onOpenSetting();
+          }}
+        >
+          모각존 관리
+        </Button>
       )}
     </>
   );

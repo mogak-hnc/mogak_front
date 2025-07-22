@@ -25,7 +25,7 @@ export default function ZoneWrapper({
 }) {
   const [joined, setJoined] = useState<boolean>(data.joined);
   const [showModal, setShowModal] = useState(false);
-  const [loadData, setLoadData] = useState<ZoneDetailResponse>();
+  const [loadData, setLoadData] = useState<ZoneDetailResponse>(data);
   const [connected, setConnected] = useState(false);
   const [showReconnectModal, setShowReconnectModal] = useState(false);
 
@@ -67,19 +67,28 @@ export default function ZoneWrapper({
 
   if (!connected) {
     return (
-      <div className="flex flex-col lg:flex-row gap-4">
-        <div className="w-full lg:w-[65%] flex flex-col gap-4">
-          <ZoneHeaderSkeleton />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Array.from({ length: 6 }).map((_, idx) => (
-              <UserCardSkeleton key={idx} />
-            ))}
+      <>
+        <div className="flex flex-col lg:flex-row gap-4">
+          <div className="w-full lg:w-[65%] flex flex-col gap-4">
+            <ZoneHeaderSkeleton />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {Array.from({ length: 6 }).map((_, idx) => (
+                <UserCardSkeleton key={idx} />
+              ))}
+            </div>
+          </div>
+          <div className="w-full lg:w-[35%] min-w-[300px]">
+            <div className="h-[600px] w-full rounded-3xl bg-gray-200 animate-pulse" />
           </div>
         </div>
-        <div className="w-full lg:w-[35%] min-w-[300px]">
-          <div className="h-[600px] w-full rounded-3xl bg-gray-200 animate-pulse" />
-        </div>
-      </div>
+        {showModal && (loadData || data) && (
+          <SettingModal
+            zoneId={id}
+            data={loadData ?? data}
+            onClose={() => setShowModal(false)}
+          />
+        )}
+      </>
     );
   }
 
@@ -119,8 +128,12 @@ export default function ZoneWrapper({
           onCancel={() => setShowReconnectModal(false)}
         />
       )}
-      {showModal && (
-        <SettingModal zoneId={id} onClose={() => setShowModal(false)} />
+      {showModal && loadData && (
+        <SettingModal
+          zoneId={id}
+          data={loadData}
+          onClose={() => setShowModal(false)}
+        />
       )}
     </div>
   );

@@ -1,33 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import { ZoneDetailResponse } from "@/types/zone.type";
-import { ZoneDetail } from "@/lib/client/zone.client.api";
-
-const SpaceSetting = dynamic(() => import("./(setting)/zone-space-setting"));
-const MemberSetting = dynamic(() => import("./(setting)/zone-member-setting"));
+import { useEffect, useState } from "react";
+import ZoneSpaceSetting from "./(setting)/zone-space-setting";
+import ZoneMemberSetting from "./(setting)/zone-member-setting";
 
 export default function SettingModal({
-  zoneId,
+  data,
   onClose,
 }: {
   zoneId: string;
+  data: ZoneDetailResponse;
   onClose: () => void;
 }) {
   const [tab, setTab] = useState<"space" | "member">("space");
-  const [data, setData] = useState<ZoneDetailResponse | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      const res = await ZoneDetail(zoneId);
-      setData(res);
-    })();
-  }, [zoneId]);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
-
     return () => {
       document.body.style.overflow = "";
     };
@@ -65,9 +54,9 @@ export default function SettingModal({
           </button>
         </div>
 
-        {data && tab === "space" && <SpaceSetting data={data} />}
-        {data && tab === "member" && (
-          <MemberSetting memberData={data.zoneMemberInfoList} />
+        {tab === "space" && <ZoneSpaceSetting data={data} />}
+        {tab === "member" && (
+          <ZoneMemberSetting memberData={data.zoneMemberInfoList} />
         )}
       </div>
     </div>
