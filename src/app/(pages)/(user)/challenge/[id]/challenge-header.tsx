@@ -28,7 +28,7 @@ export default function ChallengeHeader({
         </p>
       </div>
       {String(memberId) === String(challengeOwnerId) && (
-        <Button variant="secondary">챌린지 관리</Button>
+        <Button variant="danger">챌린지 삭제하기</Button>
       )}
     </div>
   );

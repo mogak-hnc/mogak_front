@@ -98,7 +98,9 @@ export default function ZoneSpaceSetting({
       <div className="flex gap-2 mt-4">
         <Button type="submit">저장</Button>
         <Button type="reset">초기화</Button>
-        <Button onClick={() => setShowModal(true)}>모각존 삭제하기</Button>
+        <Button variant="danger" onClick={() => setShowModal(true)}>
+          모각존 삭제하기
+        </Button>
       </div>
 
       {showModal && (
