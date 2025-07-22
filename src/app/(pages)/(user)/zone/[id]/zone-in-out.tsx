@@ -54,7 +54,9 @@ export default function ZoneInOut({
   }, [jwt]);
 
   const exitHandler = async () => {
-    if (!user) return;
+    if (!user) {
+      return;
+    }
 
     onJoinSuccess(false);
     await ZoneLeave(zoneId, user.memberId);
@@ -69,7 +71,9 @@ export default function ZoneInOut({
       return;
     }
 
-    if (!jwt || !user) return;
+    if (!jwt || !user) {
+      return;
+    }
 
     try {
       onJoinSuccess(true);
@@ -90,8 +94,10 @@ export default function ZoneInOut({
 
   return (
     <>
-      {joined && user && String(user.memberId) !== String(hostId) ? (
-        <Button onClick={() => setShowExitModal(true)}>탈퇴하기</Button>
+      {joined && user ? (
+        String(user.memberId) === String(hostId) ? null : (
+          <Button onClick={() => setShowExitModal(true)}>탈퇴하기</Button>
+        )
       ) : (
         <Button
           onClick={() => {
