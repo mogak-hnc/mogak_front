@@ -130,6 +130,7 @@ export interface ChallengeDetailSummaryProps {
   challengeOwnerId: number;
   status: ChallengeStatusType;
   joined: boolean;
+  survive: boolean;
   badgeInfo: ChallengeDetailBadgeItem;
 }
 
@@ -212,6 +213,7 @@ export interface ChallengeDetileResponse {
   challengeOwnerId: number;
   status: ChallengeStatusType;
   joined: boolean;
+  survive: boolean;
   badgeInfo: ChallengeDetailBadgeItem;
 }
 

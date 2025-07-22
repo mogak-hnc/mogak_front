@@ -91,7 +91,11 @@ export default function ChallengeSummary(
           {props.joined && props.status === "ONGOING" && (
             <div className="border-t border-borders dark:border-border-dark pt-4">
               <SummarySubtitle>인증하기</SummarySubtitle>
-              {todayCheck ? (
+              {props.survive === false ? (
+                <p className="text-error dark:text-error-dark text-sm mt-2">
+                  챌린지에 실패했어요. 다른 챌린지로 재도전해 볼까요?
+                </p>
+              ) : todayCheck ? (
                 <p className="text-borders dark:text-border-dark text-sm mt-2">
                   오늘 인증이 완료되었어요!
                 </p>
