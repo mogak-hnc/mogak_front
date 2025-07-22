@@ -219,7 +219,8 @@ export async function ZoneKick(mogakZoneId: string, targetMemberId: string) {
     );
   }
 
-  return await res.json();
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
 }
 
 export async function ZoneDelegateHost(mogakZoneId: string, newHostId: string) {
@@ -231,7 +232,7 @@ export async function ZoneDelegateHost(mogakZoneId: string, newHostId: string) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/zone/${mogakZoneId}/delegate-host`,
     {
-      method: "DELETE",
+      method: "POST",
       headers: {
         Authorization: token,
         "Content-Type": "application/json",
@@ -246,7 +247,8 @@ export async function ZoneDelegateHost(mogakZoneId: string, newHostId: string) {
     throw new Error(`모각존 방장 위임 실패: ${res.status}`);
   }
 
-  return await res.json();
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
 }
 
 export async function ZonePut(mogakZoneId: string, imageFile?: File) {

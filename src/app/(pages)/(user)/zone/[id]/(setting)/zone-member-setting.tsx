@@ -12,14 +12,17 @@ import {
 } from "@/lib/client/zone.client.api";
 import { useParams } from "next/navigation";
 import { sendDetail } from "@/lib/client/socket.client.api";
+import SubTitle from "@/app/components/shared/sub-title";
 
 export default function ZoneMemberSetting({
   memberData,
 }: {
   memberData: ZoneMemberInfo[];
 }) {
+  const userId = localStorage.getItem("memberId");
   const params = useParams();
   const zoneId = params?.id as string;
+
   const [members, setMembers] = useState(memberData);
   const [showModal, setShowModal] = useState(false);
   const [targetId, setTargetId] = useState<number | null>(null);
@@ -56,10 +59,8 @@ export default function ZoneMemberSetting({
     if (targetDelegateId !== null) {
       try {
         await ZoneDelegateHost(zoneId, String(targetDelegateId));
-
-        const loadMember = await ZoneDetail(zoneId);
-        setMembers(loadMember.zoneMemberInfoList);
         await sendDetail(zoneId);
+        window.location.reload();
       } catch (err) {
         console.log(`방장 위임 실패 : `, err);
       } finally {
@@ -70,9 +71,7 @@ export default function ZoneMemberSetting({
 
   return (
     <div className="max-w-[600px] mx-auto flex flex-col gap-6 px-4">
-      <h1 className="text-xl font-bold text-primary dark:text-primary-dark">
-        모각존 멤버 관리
-      </h1>
+      <SubTitle contents="모각존 멤버 관리" />
 
       {members.map((m) => (
         <div
@@ -87,18 +86,22 @@ export default function ZoneMemberSetting({
             />
             <span className="font-medium">{m.nickname}</span>
           </div>
-          <Button onClick={() => openDelegateModal(m.memberId)}>
-            방장 위임
-          </Button>
-          <Button variant="danger" onClick={() => openModal(m.memberId)}>
-            강제 탈퇴
-          </Button>
+          {String(m.memberId) !== String(userId) && (
+            <div className="flex gap-3">
+              <Button onClick={() => openDelegateModal(m.memberId)}>
+                방장 위임
+              </Button>
+              <Button variant="danger" onClick={() => openModal(m.memberId)}>
+                강제 탈퇴
+              </Button>
+            </div>
+          )}
         </div>
       ))}
 
       {showDelegateModal && (
         <ConfirmModal
-          message="방장을 이 멤버에게 위엄하시겠습니까?"
+          message="방장을 이 멤버에게 위임할까요?"
           onConfirm={confirmDelegate}
           onCancel={() => setShowDelegateModal(false)}
         />
@@ -106,7 +109,7 @@ export default function ZoneMemberSetting({
 
       {showModal && (
         <ConfirmModal
-          message="정말로 이 멤버를 강제 탈퇴시키겠습니까?"
+          message="정말 이 멤버를 강제 탈퇴할까요?"
           onConfirm={confirmKick}
           onCancel={() => setShowModal(false)}
         />
