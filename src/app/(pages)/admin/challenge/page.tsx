@@ -58,7 +58,7 @@ export default function AdminChallengePage() {
   const confirmDelete = async () => {
     if (targetId !== null) {
       try {
-        await ChallengeDelete(targetId);
+        await ChallengeDelete(String(targetId));
         await fetchChallenges(page);
       } catch (err) {
         console.error("챌린지 삭제 실패:", err);
