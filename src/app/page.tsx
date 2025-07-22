@@ -70,7 +70,7 @@ export default async function Home() {
           <div className="flex justify-between items-center flex-wrap gap-2">
             <MainSubTitle
               title="챌린지 할 시간"
-              description="현재 가장 많은 유저들이 참여 중인 챌린지를 살펴보세요."
+              description="아직 시작 전, 가장 인기 있는 챌린지를 살펴보세요."
             />
             <Link href="/challenge">
               <span className="text-sm text-secondary dark:text-secondary-dark  ">
