@@ -46,10 +46,10 @@ export default function ZoneMemberSetting({
         await sendDetail(zoneId);
       } catch (err) {
         console.log(`강제 탈퇴 실패 : `, err);
+      } finally {
+        setTargetId(null);
       }
     }
-    setShowModal(false);
-    setTargetId(null);
   };
 
   const confirmDelegate = async () => {
@@ -62,10 +62,10 @@ export default function ZoneMemberSetting({
         await sendDetail(zoneId);
       } catch (err) {
         console.log(`방장 위임 실패 : `, err);
+      } finally {
+        setTargetDelegateId(null);
       }
     }
-    setShowDelegateModal(false);
-    setTargetDelegateId(null);
   };
 
   return (

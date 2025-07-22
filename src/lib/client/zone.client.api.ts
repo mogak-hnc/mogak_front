@@ -203,14 +203,13 @@ export async function ZoneKick(mogakZoneId: string, targetMemberId: string) {
   }
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/zone/${mogakZoneId}/kick`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/zone/${mogakZoneId}/kick?targetMemberId=${targetMemberId}`,
     {
-      method: "DELETE",
+      method: "POST",
       headers: {
         Authorization: `${jwt}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ targetMemberId }),
     }
   );
 
@@ -234,7 +233,7 @@ export async function ZoneDelegateHost(mogakZoneId: string, newHostId: string) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/zone/${mogakZoneId}/delegate-host`,
     {
-      method: "POST",
+      method: "DELETE",
       headers: {
         Authorization: token,
         "Content-Type": "application/json",
