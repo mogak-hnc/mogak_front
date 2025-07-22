@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import FormField from "@/app/components/shared/form-field";
 import Input from "@/app/components/ui/input";
-import Checkbox from "@/app/components/ui/checkbox";
 import Button from "@/app/components/ui/button";
 import ConfirmModal from "@/app/components/confirm-modal";
 import SubTitle from "@/app/components/shared/sub-title";

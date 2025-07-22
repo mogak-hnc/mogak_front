@@ -12,7 +12,6 @@ import {
 import ConfirmModal from "@/app/components/confirm-modal";
 import SettingModal from "./setting-modal";
 import UserCardWrapper from "./user-card-wrapper";
-
 import ZoneHeaderSkeleton from "@/app/components/skeleton/zone/zone-header-skeleton";
 import UserCardSkeleton from "@/app/components/skeleton/shared/user-card-skeleton";
 
@@ -85,6 +84,7 @@ export default function ZoneWrapper({
         </div>
         {showModal && (loadData || data) && (
           <SettingModal
+            onImageUpdate={(newUrl) => setZoneImage(newUrl)}
             zoneId={id}
             data={loadData ?? data}
             onClose={() => setShowModal(false)}
