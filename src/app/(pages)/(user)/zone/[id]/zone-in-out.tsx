@@ -21,6 +21,7 @@ import { useAuthStore } from "@/store/authStore";
 
 type ZoneInProps = ZoneInOutButtonProps & {
   hasPwd: boolean;
+  max: boolean;
   joinedUserCount: number;
   onJoinSuccess: (b: boolean) => void;
 };
@@ -29,6 +30,7 @@ export default function ZoneInOut({
   zoneId,
   hostId,
   joined,
+  max,
   hasPwd,
   onJoinSuccess,
 }: ZoneInProps) {
@@ -76,8 +78,8 @@ export default function ZoneInOut({
     }
 
     try {
-      onJoinSuccess(true);
       await ZoneEntryPost(zoneId, hasPwd ? password : "");
+      onJoinSuccess(true);
       await ensureConnected(zoneId);
       await sendDetail(zoneId);
       setShowModal(false);
@@ -100,6 +102,7 @@ export default function ZoneInOut({
         )
       ) : (
         <Button
+          variant={max ? "etc" : "secondary"}
           onClick={() => {
             if (hasPwd) {
               setPassword("");
@@ -109,7 +112,7 @@ export default function ZoneInOut({
               handleJoin();
             }
           }}
-          disabled={!user}
+          disabled={!user || max}
         >
           참가하기
         </Button>

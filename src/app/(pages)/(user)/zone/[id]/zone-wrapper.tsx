@@ -98,6 +98,7 @@ export default function ZoneWrapper({
     <div className="flex flex-col lg:flex-row gap-4">
       <div className="w-full lg:w-[65%] flex flex-col gap-4">
         <ZoneHeader
+          maxCapacity={data.maxCapacity}
           zoneId={id}
           name={data.name}
           imageUrl={zoneImage}

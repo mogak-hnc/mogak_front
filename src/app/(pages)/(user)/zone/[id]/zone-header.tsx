@@ -12,6 +12,7 @@ export default function ZoneHeader({
   imageUrl,
   joined,
   hasPwd,
+  maxCapacity,
   onJoinSuccess,
   onOpenSetting,
 }: ZoneHeaderProps & { onOpenSetting: () => void }) {
@@ -44,14 +45,31 @@ export default function ZoneHeader({
         <span className="block text-primary dark:text-primary font-bold text-2xl mb-2">
           {name}
         </span>
-        <span className="block my-2 text-border-dark dark:text-borders">
-          {joinedUserCount}명이 참가 중이에요!
-        </span>
+        <div className="flex items-center gap-1 text-sm">
+          <svg
+            className="w-4 h-4 text-primary dark:text-primary-dark"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M10 10a3 3 0 100-6 3 3 0 000 6zM2 18a8 8 0 1116 0H2z" />
+          </svg>
+          <span
+            className={`block my-2 text-sm ${
+              joinedUserCount === maxCapacity
+                ? "text-error dark:text-error-dark font-bold"
+                : "text-border-dark dark:text-borders"
+            }`}
+          >
+            {joinedUserCount} / {maxCapacity}명
+          </span>
+        </div>
+
         <div className="flex gap-2">
           <ZoneSetting {...props} onOpenSetting={() => onOpenSetting()} />
           <ZoneInOut
             {...props}
             hasPwd={hasPwd}
+            max={joinedUserCount === maxCapacity}
             joinedUserCount={joinedUserCount}
             onJoinSuccess={(b) => onJoinSuccess(b)}
           />

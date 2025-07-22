@@ -143,6 +143,7 @@ export interface ZoneDetailResponse {
   zoneMemberInfoList: ZoneMemberInfo[];
   joined: boolean;
   passwordRequired: boolean;
+  maxCapacity: number;
 }
 
 export interface ZoneHeaderProps {
@@ -153,6 +154,7 @@ export interface ZoneHeaderProps {
   joinedUserCount: number;
   imageUrl: string;
   joined: boolean;
+  maxCapacity: number;
   hasPwd: boolean;
   onJoinSuccess: (b: boolean) => void;
 }
