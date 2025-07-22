@@ -41,7 +41,7 @@ export default function ChallengeWrapper({
           status={data.status}
           title={data.title}
           description="챌린지에 참여하고 인증샷을 올려보세요!"
-          creatorMemberId={0}
+          challengeOwnerId={data.challengeOwnerId}
           startDate={convertDate(data.startDate)}
           endDate={convertDate(data.endDate)}
           official={data.official}

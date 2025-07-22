@@ -3,7 +3,7 @@ import { TagsProps } from "./shared.type";
 export interface ChallengeHeaderProps {
   title: string;
   description: string;
-  creatorMemberId: number;
+  challengeOwnerId: number;
   startDate: string;
   endDate: string;
   official: boolean;

@@ -4,14 +4,15 @@ import { challengeMap } from "@/utils/shared/status.util";
 
 export default function ChallengeHeader({
   title,
-  creatorMemberId,
+  challengeOwnerId,
   startDate,
   endDate,
   official,
   totalParticipants,
   status,
 }: ChallengeHeaderProps) {
-  const userId = 1;
+  const memberId = localStorage.getItem("memberId");
+
   return (
     <div className="flex items-center justify-between">
       <div>
@@ -26,7 +27,7 @@ export default function ChallengeHeader({
           {startDate}&nbsp;~&nbsp;{endDate}&nbsp;·&nbsp;{totalParticipants}명
         </p>
       </div>
-      {userId === creatorMemberId && (
+      {String(memberId) === String(challengeOwnerId) && (
         <Button variant="secondary">챌린지 관리</Button>
       )}
     </div>

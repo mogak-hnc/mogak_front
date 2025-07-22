@@ -21,7 +21,6 @@ export function SummarySubtitle({ children }: { children: React.ReactNode }) {
 export default function ChallengeSummary(
   props: ChallengeDetailSummaryProps & { onRefetch: () => void }
 ) {
-  console.log(props);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [todayCheck, setTodayCheck] = useState(true);
 
