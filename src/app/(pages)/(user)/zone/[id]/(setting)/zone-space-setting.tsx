@@ -31,7 +31,7 @@ export default function ZoneSpaceSetting({
     },
   });
 
-  const onSubmit = async (data: ZoneSettingProps) => {
+  const onSubmit = async () => {
     if (!photo) {
       return;
     }
