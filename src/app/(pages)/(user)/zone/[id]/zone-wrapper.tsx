@@ -29,6 +29,8 @@ export default function ZoneWrapper({
   const [connected, setConnected] = useState(false);
   const [showReconnectModal, setShowReconnectModal] = useState(false);
 
+  const [zoneImage, setZoneImage] = useState(data.imageUrl);
+
   useEffect(() => {
     setOnConnectedCallback(() => {
       console.log("소켓 연결 완료");
@@ -98,7 +100,7 @@ export default function ZoneWrapper({
         <ZoneHeader
           zoneId={id}
           name={data.name}
-          imageUrl={data.imageUrl}
+          imageUrl={zoneImage}
           tag={data.tagNames}
           joinedUserCount={loadData?.joinedUserCount ?? data.joinedUserCount}
           hostId={data.hostMemberId}
@@ -131,6 +133,7 @@ export default function ZoneWrapper({
       {showModal && loadData && (
         <SettingModal
           zoneId={id}
+          onImageUpdate={(newUrl) => setZoneImage(newUrl)}
           data={loadData}
           onClose={() => setShowModal(false)}
         />

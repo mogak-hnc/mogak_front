@@ -9,10 +9,12 @@ export default function SettingModal({
   zoneId,
   data,
   onClose,
+  onImageUpdate,
 }: {
   zoneId: string;
   data: ZoneDetailResponse;
   onClose: () => void;
+  onImageUpdate: (url: string) => void;
 }) {
   const [tab, setTab] = useState<"space" | "member">("space");
 
@@ -55,7 +57,13 @@ export default function SettingModal({
           </button>
         </div>
 
-        {tab === "space" && <ZoneSpaceSetting zoneId={zoneId} data={data} />}
+        {tab === "space" && (
+          <ZoneSpaceSetting
+            zoneId={zoneId}
+            data={data}
+            onImageUpdate={onImageUpdate}
+          />
+        )}
         {tab === "member" && (
           <ZoneMemberSetting memberData={data.zoneMemberInfoList} />
         )}

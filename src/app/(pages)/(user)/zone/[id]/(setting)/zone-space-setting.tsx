@@ -15,9 +15,11 @@ import { useRouter } from "next/navigation";
 export default function ZoneSpaceSetting({
   zoneId,
   data,
+  onImageUpdate,
 }: {
   zoneId: string;
   data: ZoneDetailResponse;
+  onImageUpdate: (url: string) => void;
 }) {
   const [photo, setPhoto] = useState<File | null>(null);
   const [showModal, setShowModal] = useState(false);
@@ -32,13 +34,13 @@ export default function ZoneSpaceSetting({
 
   const onSubmit = async (data: ZoneSettingProps) => {
     if (!photo) {
-      alert("수정할 이미지를 선택해 주세요.");
       return;
     }
 
     try {
-      console.log("모각존 수정 요청:", data, photo);
       await ZonePut(zoneId, photo);
+      const newUrl = photo && URL.createObjectURL(photo);
+      onImageUpdate(newUrl);
     } catch (err) {
       console.error("모각존 수정 실패:", err);
     }
