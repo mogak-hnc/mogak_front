@@ -6,6 +6,7 @@ import ZoneSpaceSetting from "./(setting)/zone-space-setting";
 import ZoneMemberSetting from "./(setting)/zone-member-setting";
 
 export default function SettingModal({
+  zoneId,
   data,
   onClose,
 }: {
@@ -54,7 +55,7 @@ export default function SettingModal({
           </button>
         </div>
 
-        {tab === "space" && <ZoneSpaceSetting data={data} />}
+        {tab === "space" && <ZoneSpaceSetting zoneId={zoneId} data={data} />}
         {tab === "member" && (
           <ZoneMemberSetting memberData={data.zoneMemberInfoList} />
         )}

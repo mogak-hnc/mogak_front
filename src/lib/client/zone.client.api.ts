@@ -7,8 +7,6 @@ import {
 import { getJwtFromCookie } from "@/utils/client/auth.client.util";
 
 export async function ZoneCreatePost(input: ZoneCreateInput, imageFile?: File) {
-  console.log(input);
-
   const token = getJwtFromCookie();
   if (!token) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
@@ -249,4 +247,37 @@ export async function ZoneDelegateHost(mogakZoneId: string, newHostId: string) {
   }
 
   return await res.json();
+}
+
+export async function ZonePut(mogakZoneId: string, imageFile?: File) {
+  const token = getJwtFromCookie();
+  if (!token) {
+    throw new Error("JWT 토큰 없음 / 로그인 필요");
+  }
+
+  const formData = new FormData();
+
+  if (imageFile) {
+    formData.append("image", imageFile);
+  }
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/zone/${mogakZoneId}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: token,
+      },
+      body: formData,
+    }
+  );
+
+  if (!res.ok) {
+    const err = await res.text();
+    console.error("서버 응답:", err);
+    throw new Error(`모각존 수정 실패: ${res.status}`);
+  }
+
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
 }

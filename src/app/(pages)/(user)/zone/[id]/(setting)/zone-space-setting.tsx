@@ -9,37 +9,50 @@ import Button from "@/app/components/ui/button";
 import ConfirmModal from "@/app/components/confirm-modal";
 import SubTitle from "@/app/components/shared/sub-title";
 import { ZoneDetailResponse, ZoneSettingProps } from "@/types/zone.type";
+import { ZoneDelete, ZonePut } from "@/lib/client/zone.client.api";
+import { useRouter } from "next/navigation";
 
 export default function ZoneSpaceSetting({
+  zoneId,
   data,
 }: {
+  zoneId: string;
   data: ZoneDetailResponse;
 }) {
   const [photo, setPhoto] = useState<File | null>(null);
   const [showModal, setShowModal] = useState(false);
 
-  const {
-    register,
-    watch,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ZoneSettingProps>({
+  const router = useRouter();
+
+  const { register, handleSubmit } = useForm<ZoneSettingProps>({
     defaultValues: {
       spaceName: data.name,
-      tag: data.tagNames[0],
-      usePassword: data.passwordRequired,
     },
   });
 
-  const usePassword = watch("usePassword");
+  const onSubmit = async (data: ZoneSettingProps) => {
+    if (!photo) {
+      alert("수정할 이미지를 선택해 주세요.");
+      return;
+    }
 
-  const onSubmit = (data: ZoneSettingProps) => {
-    console.log("저장된 값:", data, photo);
+    try {
+      console.log("모각존 수정 요청:", data, photo);
+      await ZonePut(zoneId, photo);
+    } catch (err) {
+      console.error("모각존 수정 실패:", err);
+    }
   };
 
-  const handleDelete = () => {
-    console.log("모각존 삭제 완료");
-    setShowModal(false);
+  const handleDelete = async () => {
+    try {
+      await ZoneDelete(Number(zoneId));
+      router.push("/zone");
+    } catch (err) {
+      console.log(`모각존 삭제 실패 : `, err);
+    } finally {
+      setShowModal(false);
+    }
   };
 
   return (
@@ -50,11 +63,7 @@ export default function ZoneSpaceSetting({
       <SubTitle contents="모각존 관리" />
 
       <FormField label="모각존 이름">
-        <Input {...register("spaceName", { required: true })} />
-      </FormField>
-
-      <FormField label="모각존 태그">
-        <Input {...register("tag")} />
+        <Input {...register("spaceName", { required: true })} disabled />
       </FormField>
 
       <FormField label="모각존 사진">
@@ -63,41 +72,13 @@ export default function ZoneSpaceSetting({
           onChange={(e) => setPhoto(e.target.files?.[0] ?? null)}
           className="text-sm"
         />
-        <p className="text-xs text-gray-500 mt-1">
+        <p className="text-xs text-border-dark dark:text-borders mt-1">
           {photo ? photo.name : "파일이 선택되지 않았습니다."}
         </p>
       </FormField>
 
-      <FormField label="비밀번호 관리">
-        <div className="flex items-center gap-4">
-          <Checkbox label="비밀번호 사용하기" {...register("usePassword")} />
-          <Input
-            placeholder="4글자 비밀번호"
-            type="password"
-            {...register("password", {
-              validate: (value) => {
-                if (usePassword && value.length !== 4) {
-                  return "비밀번호는 네 글자로 입력해 주세요.";
-                }
-                return true;
-              },
-            })}
-            disabled={!usePassword}
-            className={`w-40 ${
-              usePassword && `bg-white dark:bg-border-dark px-5 py-1 rounded-md`
-            }`}
-          />
-        </div>
-        {errors.password && (
-          <p className="text-error dark:text-error-dark text-sm">
-            {errors.password.message}
-          </p>
-        )}
-      </FormField>
-
       <div className="flex gap-2 mt-4">
         <Button type="submit">저장</Button>
-        <Button type="reset">초기화</Button>
         <Button variant="danger" onClick={() => setShowModal(true)}>
           모각존 삭제하기
         </Button>
