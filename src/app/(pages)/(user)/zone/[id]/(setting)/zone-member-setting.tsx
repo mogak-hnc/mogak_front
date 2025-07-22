@@ -50,6 +50,7 @@ export default function ZoneMemberSetting({
       } catch (err) {
         console.log(`강제 탈퇴 실패 : `, err);
       } finally {
+        setShowModal(false);
         setTargetId(null);
       }
     }
@@ -86,7 +87,7 @@ export default function ZoneMemberSetting({
             />
             <span className="font-medium">{m.nickname}</span>
           </div>
-          {String(m.memberId) !== String(userId) && (
+          {String(m.memberId) !== String(userId) ? (
             <div className="flex gap-3">
               <Button onClick={() => openDelegateModal(m.memberId)}>
                 방장 위임
@@ -95,6 +96,10 @@ export default function ZoneMemberSetting({
                 강제 탈퇴
               </Button>
             </div>
+          ) : (
+            <span className="text-sm text-white bg-primary dark:bg-primary-dark px-2 py-1 rounded-full">
+              방장
+            </span>
           )}
         </div>
       ))}
