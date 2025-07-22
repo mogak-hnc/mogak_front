@@ -1,6 +1,7 @@
 import { TagsProps } from "./shared.type";
 
 export interface ChallengeHeaderProps {
+  challengeId: string;
   title: string;
   description: string;
   challengeOwnerId: number;

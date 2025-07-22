@@ -115,7 +115,7 @@ export async function ChallengeProofPost(payload: ChallengeProofPostRequest) {
   return data;
 }
 
-export async function ChallengeDelete(challengeId: number) {
+export async function ChallengeDelete(challengeId: string) {
   const token = getJwtFromCookie();
   if (!token) {
     throw new Error("JWT 토큰 없음 / 로그인 필요");
