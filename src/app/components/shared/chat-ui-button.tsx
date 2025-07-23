@@ -20,6 +20,9 @@ export default function ChatUiButton({
   };
 
   const sendChatHandler = async () => {
+    if (!msg.trim()) {
+      return;
+    }
     try {
       await sendChat(zoneId, user?.memberId || "", msg);
       setMsg("");
@@ -35,8 +38,8 @@ export default function ChatUiButton({
   return (
     <div className="flex items-center gap-2 mt-4">
       <input
-        onInput={msgHandler}
-        onKeyUp={(e) => {
+        onChange={msgHandler}
+        onKeyDown={(e) => {
           if (e.key === "Enter") {
             e.preventDefault();
             sendChatHandler();
