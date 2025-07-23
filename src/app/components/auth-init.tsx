@@ -10,7 +10,6 @@ export default function AuthInit() {
   useEffect(() => {
     const jwt = getJwtFromCookie();
     if (jwt) {
-      console.log("[AuthInit] 쿠키에서 jwt 감지:", jwt);
       login(jwt);
     } else {
       console.log("[AuthInit] 쿠키에 jwt 없음");

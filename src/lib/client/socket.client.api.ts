@@ -21,7 +21,7 @@ export async function connectAndSubscribeSocket<T>({
   mogakZoneId: string;
   onMessage: (msg: T) => void;
 }) {
-  console.log("connectAndSubscribeSocket 시도 : ", topic);
+  // console.log("connectAndSubscribeSocket 시도 : ", topic);
 
   const token = getJwtFromCookie();
   if (!token) {
@@ -30,13 +30,13 @@ export async function connectAndSubscribeSocket<T>({
   }
 
   if (isConnecting) {
-    console.log("[socket] 다른 컴포넌트가 연결 중... 대기");
+    // console.log("[socket] 다른 컴포넌트가 연결 중... 대기");
     await waitUntilConnected();
   } else if (!stompClient || !stompClient.connected) {
-    console.log("[socket] 새로운 웹소켓 연결 시도");
+    // console.log("[socket] 새로운 웹소켓 연결 시도");
     await ensureConnected(mogakZoneId);
   } else {
-    console.log("[socket] 기존 웹소켓 연결 재사용");
+    // console.log("[socket] 기존 웹소켓 연결 재사용");
   }
 
   subscribe(topic, mogakZoneId, onMessage);
@@ -52,7 +52,7 @@ export function subscribe<T>(
   }
 
   if (subscribedTopics.has(topic)) {
-    console.log("[socket] 이미 구독한 토픽:", topic);
+    // console.log("[socket] 이미 구독한 토픽:", topic);
     return;
   }
 
@@ -77,7 +77,7 @@ export function subscribe<T>(
           Object.keys(payload).length === 4;
 
         if (isSystemBroadcast) {
-          console.log("[socket] 시스템 브로드캐스트 무시:", payload);
+          // console.log("[socket] 시스템 브로드캐스트 무시:", payload);
           return;
         }
 
@@ -163,7 +163,7 @@ export async function sendStatus(
   status: string,
   memberId: string
 ) {
-  console.log("[socket] sendStatus 호출됨");
+  // console.log("[socket] sendStatus 호출됨");
   const jwt = getJwtFromCookie();
   if (!jwt) {
     return;
@@ -176,7 +176,7 @@ export async function sendStatus(
       headers: { Authorization: jwt, mogakZoneId: String(zoneId) },
       body: JSON.stringify({ memberId, status }),
     });
-    console.log("[socket] status 전송 성공");
+    // console.log("[socket] status 전송 성공");
   } catch (err) {
     console.error("[socket] status 전송 실패", err);
   }
@@ -187,7 +187,7 @@ export async function sendChat(
   memberId: string,
   message: string
 ) {
-  console.log("📤 sendChat 호출됨");
+  // console.log("[socket] sendChat 호출됨");
   const jwt = getJwtFromCookie();
   if (!jwt) {
     return;
@@ -200,14 +200,14 @@ export async function sendChat(
       headers: { Authorization: jwt, mogakZoneId: String(zoneId) },
       body: JSON.stringify({ memberId, message }),
     });
-    console.log("✅ chat 전송 성공");
+    // console.log("[socket] chat 전송 성공");
   } catch (err) {
     console.error("[socket] chat 전송 실패", err);
   }
 }
 
 export async function sendDetail(zoneId: string) {
-  console.log("[socket] sendDetail 호출됨");
+  // console.log("[socket] sendDetail 호출됨");
   const jwt = getJwtFromCookie();
   if (!jwt) {
     return;
@@ -219,7 +219,7 @@ export async function sendDetail(zoneId: string) {
       destination: `/app/api/mogak/zone/${zoneId}`,
       headers: { Authorization: jwt, mogakZoneId: String(zoneId) },
     });
-    console.log("[socket] detail 전송 성공");
+    // console.log("[socket] detail 전송 성공");
   } catch (err) {
     console.error("[socket] detail 전송 실패", err);
   }
