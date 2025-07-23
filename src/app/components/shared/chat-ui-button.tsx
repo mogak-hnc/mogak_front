@@ -12,17 +12,15 @@ export default function ChatUiButton({
   joined: boolean;
 }) {
   const user = getClientUser();
-
   const [msg, setMsg] = useState<string>("");
 
   const msgHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMsg(e.target.value);
   };
 
-  const sendChatHandler = async () => {
-    if (!msg.trim()) {
-      return;
-    }
+  const sendChatHandler = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!msg.trim()) return;
     try {
       await sendChat(zoneId, user?.memberId || "", msg);
       setMsg("");
@@ -36,22 +34,16 @@ export default function ChatUiButton({
   }
 
   return (
-    <div className="flex items-center gap-2 mt-4">
+    <form onSubmit={sendChatHandler} className="flex items-center gap-2 mt-4">
       <input
         onChange={msgHandler}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            e.preventDefault();
-            sendChatHandler();
-          }
-        }}
         value={msg}
         type="text"
         placeholder="메시지를 입력하세요."
         className="flex-1 px-4 py-2 rounded-lg bg-gray-100 text-sm focus:outline-none"
       />
       <button
-        onClick={sendChatHandler}
+        type="submit"
         disabled={!msg.trim()}
         className={`p-2 rounded-full transition-colors ${
           !msg.trim()
@@ -73,6 +65,6 @@ export default function ChatUiButton({
           />
         </svg>
       </button>
-    </div>
+    </form>
   );
 }
