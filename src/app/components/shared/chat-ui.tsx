@@ -21,7 +21,7 @@ export default function ChatUI({ zoneId, joined }: ChatUiProps) {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
   const [page, setPage] = useState<number | null>(null);
-  const [totalPages, setTotalPages] = useState(0);
+  // const [totalPages, setTotalPages] = useState(0);
   const size = 15;
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -35,7 +35,7 @@ export default function ChatUI({ zoneId, joined }: ChatUiProps) {
     setLoading(true);
     try {
       const firstPageRes: ChatHistoryResponse = await ZoneChat(zoneId, 0, size);
-      setTotalPages(firstPageRes.totalPages);
+      // setTotalPages(firstPageRes.totalPages);
 
       const lastPage = Math.max(firstPageRes.totalPages - 1, 0);
       const lastRes: ChatHistoryResponse = await ZoneChat(

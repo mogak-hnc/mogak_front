@@ -103,11 +103,6 @@ export interface ZoneStatusResponse {
   mogakZoneId: string;
 }
 
-interface PageSort {
-  empty: boolean;
-  sorted: boolean;
-  unsorted: boolean;
-}
 export interface ChatMessage {
   memberId: number;
   mogakZoneId: number | null;
