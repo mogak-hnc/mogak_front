@@ -26,7 +26,6 @@ export default function UserCardStatus({
       await sendStatus(zoneId, study ? "RESTING" : "STUDYING", memberId);
     } catch (err) {
       console.error("상태 전송 실패", err);
-      alert("소켓 연결이 끊어졌어요. 새로고침 해 주세요.");
     }
   };
 

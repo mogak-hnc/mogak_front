@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import {
   connectAndSubscribeSocket,
   disconnectSocket,
+  sendStatus,
   setOnConnectedCallback,
 } from "@/lib/client/socket.client.api";
 import ConfirmModal from "@/app/components/confirm-modal";
@@ -27,7 +28,6 @@ export default function ZoneWrapper({
   const [loadData, setLoadData] = useState<ZoneDetailResponse>(data);
   const [connected, setConnected] = useState(false);
   const [showReconnectModal, setShowReconnectModal] = useState(false);
-
   const [zoneImage, setZoneImage] = useState(data.imageUrl);
 
   useEffect(() => {
@@ -57,6 +57,12 @@ export default function ZoneWrapper({
           };
         });
       },
+    }).then(() => {
+      const userId = localStorage.getItem("memberId");
+
+      if (joined) {
+        sendStatus(id, "RESTING", String(userId));
+      }
     });
 
     return () => {

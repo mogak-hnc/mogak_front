@@ -27,8 +27,6 @@ export default function UserCardWrapper({ zoneId, data }: Props) {
       topic: `/topic/api/mogak/zone/${zoneId}/status`,
       mogakZoneId: zoneId,
       onMessage: (parsedRes) => {
-        console.log("📥 상태 메시지 수신:", parsedRes);
-
         setMembers((prev) =>
           prev.map((m) =>
             String(m.memberId) === String(parsedRes.memberId)
