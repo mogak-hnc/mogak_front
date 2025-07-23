@@ -46,8 +46,6 @@ export default function SearchCardView({
   status,
   onStatusChange,
 }: Props) {
-  const { isLoggedIn } = useAuthStore();
-
   return (
     <div className="flex flex-col w-fit items-center gap-2">
       <SubTitle contents={title} />
@@ -123,13 +121,9 @@ export default function SearchCardView({
         </select>
       </div>
 
-      {isLoggedIn && (
-        <Link
-          href={section === "모각존" ? `/zone/create` : `/challenge/create`}
-        >
-          <Button>{section} 만들기</Button>
-        </Link>
-      )}
+      <Link href={section === "모각존" ? `/zone/create` : `/challenge/create`}>
+        <Button>{section} 만들기</Button>
+      </Link>
     </div>
   );
 }
