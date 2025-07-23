@@ -41,7 +41,6 @@ export default function AdminBadgePage() {
     if (data) {
       setBadges(data);
     }
-    console.log(data);
   };
 
   useEffect(() => {
