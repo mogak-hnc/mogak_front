@@ -1,5 +1,5 @@
 import {
-  ZoneChatResponse,
+  ChatHistoryResponse,
   ZoneCreateInput,
   ZoneCreateRequest,
   ZoneDetailResponse,
@@ -163,7 +163,7 @@ export async function ZoneDetail(id: string) {
   return data;
 }
 
-export async function ZoneChat(id: string) {
+export async function ZoneChat(id: string, page: number, size: number) {
   const jwt = getJwtFromCookie();
 
   if (!jwt) {
@@ -171,7 +171,7 @@ export async function ZoneChat(id: string) {
   }
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/zone/${id}/message`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/zone/${id}/message?page=${page}&size=${size}`,
     {
       method: "GET",
       cache: "no-store",
@@ -185,11 +185,10 @@ export async function ZoneChat(id: string) {
   if (!res.ok) {
     const err = await res.text();
     console.error("서버 응답:", err);
-    throw new Error(`${id}번 모각존 상세 불러오기 실패: ${res.status}`);
+    throw new Error(`${id}번 모각존 채팅 불러오기 실패: ${res.status}`);
   }
 
-  const data: ZoneChatResponse = await res.json();
-
+  const data: ChatHistoryResponse = await res.json();
   return data;
 }
 

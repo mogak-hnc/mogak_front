@@ -97,15 +97,6 @@ export interface ZoneSearchProps {
   size: number;
 }
 
-export interface ZoneChatResponse {
-  memberId: string;
-  mogakZoneId: string;
-  nickname: string;
-  imageUrl: string;
-  message: string;
-  now: string;
-}
-
 export interface ZoneStatusResponse {
   status: StatusType;
   memberId: string;
@@ -117,16 +108,36 @@ interface PageSort {
   sorted: boolean;
   unsorted: boolean;
 }
+export interface ChatMessage {
+  memberId: number;
+  mogakZoneId: number | null;
+  nickname: string;
+  imageUrl: string;
+  message: string;
+  now: string;
+}
 
-export interface ZoneChatResponse {
-  content: ChatHistoryResponse[];
+export interface Pageable {
+  pageNumber: number;
+  pageSize: number;
+  offset: number;
+  paged: boolean;
+  unpaged: boolean;
+}
+
+export interface ChatHistoryResponse {
+  content: ChatMessage[];
   pageable: Pageable;
   totalElements: number;
   totalPages: number;
   last: boolean;
   size: number;
   number: number;
-  sort: PageSort;
+  sort: {
+    empty: boolean;
+    unsorted: boolean;
+    sorted: boolean;
+  };
   numberOfElements: number;
   first: boolean;
   empty: boolean;
@@ -164,15 +175,6 @@ export interface ZoneMemberInfo {
   nickname: string;
   imageUrl: string;
   status: "STUDYING" | "WAITING" | "DONE" | string;
-}
-
-export interface ChatHistoryResponse {
-  memberId: number;
-  mogakZoneId: number;
-  nickname: string;
-  imageUrl: string;
-  message: string;
-  now: string;
 }
 
 export interface ZoneInOutButtonProps {
