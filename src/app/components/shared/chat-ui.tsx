@@ -21,34 +21,49 @@ export default function ChatUI({ zoneId, joined }: ChatUiProps) {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
   const [page, setPage] = useState<number | null>(null);
-  // const [totalPages, setTotalPages] = useState(0);
   const size = 15;
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
-    setUser(getClientUser());
+    if (typeof window !== "undefined") {
+      setUser(getClientUser());
+    }
     initMessages();
   }, [zoneId]);
 
   const initMessages = async () => {
     setLoading(true);
     try {
-      const firstPageRes: ChatHistoryResponse = await ZoneChat(zoneId, 0, size);
-      // setTotalPages(firstPageRes.totalPages);
+      const metaRes: ChatHistoryResponse = await ZoneChat(zoneId, 0, size);
+      const lastPage = Math.max(metaRes.totalPages - 1, 0);
 
-      const lastPage = Math.max(firstPageRes.totalPages - 1, 0);
       const lastRes: ChatHistoryResponse = await ZoneChat(
         zoneId,
         lastPage,
         size
       );
 
-      setChatMessages(lastRes.content);
-      setPage(lastPage);
-      setHasMore(lastPage > 0);
+      let combinedMessages = lastRes.content;
+      if (lastPage > 0) {
+        const prevRes: ChatHistoryResponse = await ZoneChat(
+          zoneId,
+          lastPage - 1,
+          size
+        );
+        combinedMessages = [...prevRes.content, ...lastRes.content];
+        setPage(lastPage - 1);
+        setHasMore(lastPage - 1 > 0);
+      } else {
+        setPage(lastPage);
+        setHasMore(false);
+      }
 
-      scrollToBottom();
+      setChatMessages(combinedMessages);
+
+      requestAnimationFrame(() => {
+        scrollToBottom();
+      });
     } catch (err) {
       console.error("초기 채팅 불러오기 실패:", err);
     } finally {
@@ -57,13 +72,13 @@ export default function ChatUI({ zoneId, joined }: ChatUiProps) {
   };
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     connectAndSubscribeSocket<ChatMessage>({
       topic: `/topic/api/mogak/zone/${zoneId}/message`,
       mogakZoneId: String(zoneId),
       onMessage: (parsedRes) => {
-        console.log("받은 메시지:", parsedRes);
         setChatMessages((prev) => [...prev, parsedRes]);
-        scrollToBottom();
+        requestAnimationFrame(() => scrollToBottom());
       },
     });
   }, [zoneId]);
@@ -101,9 +116,7 @@ export default function ChatUI({ zoneId, joined }: ChatUiProps) {
   };
 
   const handleScroll = () => {
-    if (!containerRef.current || loading || !hasMore) {
-      return;
-    }
+    if (!containerRef.current || loading || !hasMore) return;
     if (containerRef.current.scrollTop === 0) {
       loadPrevPage();
     }
@@ -121,9 +134,7 @@ export default function ChatUI({ zoneId, joined }: ChatUiProps) {
     };
   }, [page, hasMore, loading]);
 
-  if (!joined && chatMessages.length === 0) {
-    return null;
-  }
+  if (!joined && chatMessages.length === 0) return null;
 
   return (
     <div className="w-full max-w-md h-[600px] mx-auto p-4 bg-white rounded-3xl shadow border border-borders flex flex-col">
