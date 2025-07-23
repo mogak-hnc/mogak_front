@@ -3,7 +3,10 @@
 import ChallengeCreateForm from "@/app/components/challenge-create-form";
 import { useChallengeForm } from "@/app/components/use-challenge-form";
 import Loading from "@/app/loading";
-import { ChallengeCreatePost } from "@/lib/client/challenge.client.api";
+import {
+  ChallengeCreatePost,
+  ChallengeEntryPost,
+} from "@/lib/client/challenge.client.api";
 import { ChallengeForm } from "@/types/challenge.type";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -18,6 +21,8 @@ export default function ChallengeCreatePage() {
     try {
       setIsLoading(true);
       const res = await ChallengeCreatePost(data);
+      await ChallengeEntryPost(String(res.challengeId));
+
       router.push(`/challenge/${res.challengeId}`);
     } catch (err) {
       console.log("챌린지 생성 실패 : ", err);
