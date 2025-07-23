@@ -6,7 +6,6 @@ import Input from "../ui/input";
 import { AiOutlineSearch } from "react-icons/ai";
 import { TagsProps } from "@/types/shared.type";
 import SubTitle from "./sub-title";
-import { useAuthStore } from "@/store/authStore";
 
 type Props = {
   title: string;
