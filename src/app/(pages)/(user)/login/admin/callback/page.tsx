@@ -9,14 +9,20 @@ export default function AdminCallbackPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const admin = params.get("q");
+    const role = params.get("q");
 
-    if (admin) {
+    if (role === "admin") {
       localStorage.setItem("isAdmin", "admin");
+      window.dispatchEvent(new Event("member:changed"));
+      router.replace("/admin/zone");
+    } else if (role === "user") {
+      localStorage.removeItem("isAdmin");
+      localStorage.setItem("memberId", "3");
+      window.dispatchEvent(new Event("member:changed"));
+      router.replace("/");
+    } else {
+      router.replace("/login");
     }
-
-    window.dispatchEvent(new Event("member:changed"));
-    router.replace("/admin/zone");
   }, [params, router]);
 
   return <Loading />;

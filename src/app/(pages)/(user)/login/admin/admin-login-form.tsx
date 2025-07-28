@@ -31,6 +31,11 @@ export default function AdminLoginForm() {
       return;
     }
 
+    if (data.id === "testUser1") {
+      router.push("/login/admin/callback?q=user");
+      return;
+    }
+
     router.push("/login/admin/callback?q=admin");
   };
 
